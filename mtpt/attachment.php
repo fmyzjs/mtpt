@@ -21,7 +21,7 @@ $altsize = $_POST['altsize'];
 <link rel="stylesheet" href="<?php echo $css_uri."theme.css"?>" type="text/css">
 </head>
 <body class="inframe">
-<table width="100%">
+<div width="100%">
 <?php
 if ($Attach->enable_attachment())
 {
@@ -233,8 +233,8 @@ if ($Attach->enable_attachment())
 		}
 	}
 	print("<form enctype=\"multipart/form-data\" name=\"attachment\" method=\"post\" action=\"attachment.php\">");
-	print("<tr>");
-	print("<td class=\"embedded\" colspan=\"2\" align=left>");
+	print("<div>");
+	print("<div class=\"embedded\" colspan=\"2\" align=left>");
 	print("<input type=\"file\" name=\"file\"".($count_left ? "" : " disabled=\"disabled\"")." />&nbsp;");
 	print("<input type=\"checkbox\" name=\"altsize\" value=\"yes\"".($altsize == 'yes' ? " checked=\"checked\"" : "")." />".$lang_attachment['text_small_thumbnail']."&nbsp;");
 	print("<input type=\"submit\" name=\"submit\" value=\"".$lang_attachment['submit_upload']."\"".($count_left ? "" : " disabled=\"disabled\"")." /> ");
@@ -253,11 +253,11 @@ if ($Attach->enable_attachment())
 		print("<span title=\"".htmlspecialchars($allowedextsblock)."\"><i>".$lang_attachment['text_mouse_over_here']."</i></span>");
 	}
 
-	print("</td>");
-	print("</tr>");
+	print("</div>");
+	print("</div>");
 	print("</form>");
 }
 ?>
-</table>
+</div>
 </body>
 </html>

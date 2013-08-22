@@ -23,10 +23,10 @@ stdhead("Update Users Donated Amounts");
 ?>
 <h1>Update Users Donated Amounts</h1>
 <form method=post action=donated.php>
-<table border=1 cellspacing=0 cellpadding=5>
-<tr><td class=rowhead>User name</td><td><input type=text name=username size=40></td></tr>
-<tr><td class=rowhead>Donated</td><td><input type=uploaded name=donated size=5></td></tr>
-<tr><td colspan=2 align=center><input type=submit value="Okay" class=btn></td></tr>
-</table>
+<div border=1 cellspacing=0 cellpadding=5>
+<div><div class=rowhead>User name</div><div><input type=text name=username size=40></div></div>
+<div><div class=rowhead>Donated</div><div><input type=uploaded name=donated size=5></div></div>
+<div><div colspan=2 align=center><input type=submit value="Okay" class=btn></div></div>
+</div>
 </form>
 <?php stdfoot();

@@ -12,9 +12,9 @@ stderr($lang_log['std_error'], $lang_log['std_invalid_action']);
 
 function searchtable($title, $action, $opts = array()){
 		global $lang_log;
-		print("<table border=1 cellspacing=0 width=940 cellpadding=5>\n");
-		print("<tr><td class=colhead align=left>".$title."</td></tr>\n");
-		print("<tr><td class=toolbox align=left><form method=\"get\" action='" . $_SERVER['PHP_SELF'] . "'>\n");
+		print("<div border=1 cellspacing=0 width=940 cellpadding=5>\n");
+		print("<div><div class=colhead align=left>".$title."</div></div>\n");
+		print("<div><div class=toolbox align=left><form method=\"get\" action='" . $_SERVER['PHP_SELF'] . "'>\n");
 		if ($opts) {
 			print("<select name=search>");
 			foreach($opts as $value => $text)
@@ -24,7 +24,7 @@ function searchtable($title, $action, $opts = array()){
 		print("<input type=\"text\" name=\"query\" style=\"width:200px\" value=\"".$_GET['query']."\">\n");
 		print("<input type=\"hidden\" name=\"action\" value='".$action."'>&nbsp;&nbsp;");
 		print("<input type=submit value=" . $lang_log['submit_search'] . ">&nbsp;&nbsp;".$lang_log['text_other']."</form>\n");
-		print("</td></tr></table><br />\n");
+		print("</div></div></div><br />\n");
 }
 
 if (!in_array($action, $allowed_actions))
@@ -73,8 +73,8 @@ else {
 
 		//echo $pagertop;
 
-			print("<table width=940 border=1 cellspacing=0 cellpadding=5>\n");
-			print("<tr><td class=colhead align=center width=150px><img class=\"time\" src=\"pic/trans.gif\" alt=\"time\" title=\"".$lang_log['title_time_added']."\" /></td><td class=colhead align=left>".$lang_log['col_log']."</td><td class=colhead align=left>".$lang_log['col_reson']."</td></tr>\n");
+			print("<div width=940 border=1 cellspacing=0 cellpadding=5>\n");
+			print("<div><div class=colhead align=center width=150px><img class=\"time\" src=\"pic/trans.gif\" alt=\"time\" title=\"".$lang_log['title_time_added']."\" /></div><div class=colhead align=left>".$lang_log['col_log']."</div><div class=colhead align=left>".$lang_log['col_reson']."</div></div>\n");
 			while ($arr = mysql_fetch_assoc($res))
 			{
 				$color = "";
@@ -87,9 +87,9 @@ else {
 				$log .= '账号：';
 				$log .= $arr['user_name']."($arr[user_id])";
 
-				print("<tr><td class=\"rowfollow nowrap\" align=center>".$arr['op_time']."</td><td class=rowfollow align=left><font color='".$color."'>".htmlspecialchars($log)."</font></td><td class=rowfollow align=left><font color='".$color."'>".htmlspecialchars($arr['detail'])."</font></td></tr>\n");
+				print("<div><div class=\"rowfollow nowrap\" align=center>".$arr['op_time']."</div><div class=rowfollow align=left><font color='".$color."'>".htmlspecialchars($log)."</font></div><div class=rowfollow align=left><font color='".$color."'>".htmlspecialchars($arr['detail'])."</font></div></div>\n");
 			}
-			print("</table>");
+			print("</div>");
 	
 			echo $pagerbottom;
 		}

@@ -107,17 +107,17 @@ else
 	<?php echo $lang_confirm_resend['text_resend_confirmation_mail_note']?>
 	<p><?php echo $lang_confirm_resend['text_you_have'] ?><b><?php echo remaining ();?></b><?php echo $lang_confirm_resend['text_remaining_tries'] ?></p>
 	<form method="post" action="confirm_resend.php">
-	<table border="1" cellspacing="0" cellpadding="10">
-	<tr><td class="rowhead nowrap"><?php echo $lang_confirm_resend['row_registered_email'] ?></td>
-	<td class="rowfollow"><input type="text" style="width: 200px" name="email" /></td></tr>
-	<tr><td class="rowhead nowrap"><?php echo $lang_confirm_resend['row_new_password'] ?></td><td align="left"><input type="password" style="width: 200px" name="wantpassword" /><br />
-		<font class="small"><?php echo $lang_confirm_resend['text_password_note'] ?></font></td></tr>
-	<tr><td class="rowhead nowrap"><?php echo $lang_confirm_resend['row_enter_password_again'] ?></td><td align="left"><input type="password" style="width: 200px" name="passagain" /></td></tr>
+	<div border="1" cellspacing="0" cellpadding="10">
+	<div><div class="rowhead nowrap"><?php echo $lang_confirm_resend['row_registered_email'] ?></div>
+	<div class="rowfollow"><input type="text" style="width: 200px" name="email" /></div></div>
+	<div><div class="rowhead nowrap"><?php echo $lang_confirm_resend['row_new_password'] ?></div><div align="left"><input type="password" style="width: 200px" name="wantpassword" /><br />
+		<font class="small"><?php echo $lang_confirm_resend['text_password_note'] ?></font></div></div>
+	<div><div class="rowhead nowrap"><?php echo $lang_confirm_resend['row_enter_password_again'] ?></div><div align="left"><input type="password" style="width: 200px" name="passagain" /></div></div>
 	<?php
 	show_image_code();
 	?>
-	<tr><td class="toolbox" colspan="2" align="center"><input type="submit" class="btn" value="<?php echo $lang_confirm_resend['submit_send_it'] ?>" /></td></tr>
-	</table></form>
+	<div><div class="toolbox" colspan="2" align="center"><input type="submit" class="btn" value="<?php echo $lang_confirm_resend['submit_send_it'] ?>" /></div></div>
+	</div></form>
 	<?php
 	stdfoot();
 }

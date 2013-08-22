@@ -65,33 +65,33 @@ $now0time=(string)(date('Y-m-d',time()));
 			$mysql="select * from signin order by signindate desc,id";
 			$res=mysql_query($mysql);
 			while($rows=mysql_fetch_array($res)){
-				echo "<tr>";
-		        echo "<td>".get_username($rows[userid])."</td>";
-		        echo "<td>".$rows[signindate]."</td>";
-		        echo "<td>".($rows[signinleave]=='yes'?"<div align=\"center\"><img src=\"pic/signin/bing.gif\"/></div>":"&nbsp;")."</td>";
-		        echo "<td>".$rows[note]."</td>";
-		        echo "</tr>"; 
+				echo "<div>";
+		        echo "<div>".get_username($rows[userid])."</div>";
+		        echo "<div>".$rows[signindate]."</div>";
+		        echo "<div>".($rows[signinleave]=='yes'?"<div align=\"center\"><img src=\"pic/signin/bing.gif\"/></div>":"&nbsp;")."</div>";
+		        echo "<div>".$rows[note]."</div>";
+		        echo "</div>"; 
 				}
 			
 		}
     
     function echoout($mysqltext="",$classtext,$idtype){
 	    $res=mysql_query($mysqltext);
-    	echo "<tr><td colspan='8'><font size='4' color='white'><b>&nbsp;&nbsp;".$classtext."</b></font></td></tr>";
+    	echo "<div><div colspan='8'><font size='4' color='white'><b>&nbsp;&nbsp;".$classtext."</b></font></div></div>";
     	global $lang_signin;
     	global $onlineimg;
     	global $offlineimg;
     	global $sendpmimg;
     	global $dt;
     	while($rows=mysql_fetch_array($res)){
-	        echo "<tr>";
-	        echo "<td>".get_username($rows[$idtype])."</td>";
-	        echo "<td><div align=\"center\"><img src=\"pic/signin/".(signin_check($rows[$idtype])?"wb.gif":"dk.gif")."\"/></div></td>";
-	        echo "<td> ".(strtotime($rows['last_access']) > $dt ? $onlineimg : $offlineimg)."</td>";
-	        echo "<td><div align=\"center\"><a href=sendmessage.php?receiver=".$rows[$idtype]." title=\"".$lang_signin['title_send_pm']."\">".$sendpmimg."</a></div></td>";
-	        echo "<td>".(leave_check($rows[$idtype])?"<div align=\"center\"><img src=\"pic/signin/bing3.gif\"/></div>":"&nbsp;")."</td>";
-	        echo "<td>".$rows[note]."</td>";
-	        echo "</tr>"; 
+	        echo "<div>";
+	        echo "<div>".get_username($rows[$idtype])."</div>";
+	        echo "<div><div align=\"center\"><img src=\"pic/signin/".(signin_check($rows[$idtype])?"wb.gif":"dk.gif")."\"/></div></div>";
+	        echo "<div> ".(strtotime($rows['last_access']) > $dt ? $onlineimg : $offlineimg)."</div>";
+	        echo "<div><div align=\"center\"><a href=sendmessage.php?receiver=".$rows[$idtype]." title=\"".$lang_signin['title_send_pm']."\">".$sendpmimg."</a></div></div>";
+	        echo "<div>".(leave_check($rows[$idtype])?"<div align=\"center\"><img src=\"pic/signin/bing3.gif\"/></div>":"&nbsp;")."</div>";
+	        echo "<div>".$rows[note]."</div>";
+	        echo "</div>"; 
     	}
     }
 	function signin_check($userid){
@@ -152,16 +152,16 @@ $now0time=(string)(date('Y-m-d',time()));
 				begin_table(true,5);
 				?>
 	<caption><font face='黑体'size='6' color='blue'><?=$lang_signin['title_history']?></font></caption>
-	<tr><td colspan='4'><a href='signin.php'><?=$lang_signin['title_return_signin']?></a></td></tr>
-	<tr>
-         <td></td>
-         <td><?=$lang_signin['title_signin_time']?></td>
-         <td><?=$lang_signin['title_leave']?></td>
-         <td><?=$lang_signin['title_note']?></td>
-    </tr>
+	<div><div colspan='4'><a href='signin.php'><?=$lang_signin['title_return_signin']?></a></div></div>
+	<div>
+         <div></div>
+         <div><?=$lang_signin['title_signin_time']?></div>
+         <div><?=$lang_signin['title_leave']?></div>
+         <div><?=$lang_signin['title_note']?></div>
+    </div>
 				<?php
 				get_signin_history();
-				echo "<tr><td colspan=4><div align='right'>注:按时间顺序,如有失误，与cide无关</div></td></tr>";
+				echo "<div><div colspan=4><div align='right'>注:按时间顺序,如有失误，与cide无关</div></div></div>";
 				end_table();
 				die();
 			}
@@ -207,19 +207,19 @@ $dt = TIMENOW - $secs;
 	begin_frame($lang_signin['title_signin'],true,5,"100%","center");
 	echo "<p align=\"center\" ><font size='6' face=\"黑体\">".$lang_signin['title_signin2']."</font></p>";
 	begin_table(true,5);
-	echo "<tr><td colspan=\"5\"><a href=\"?signin=history\" title=\"".$lang_signin['title_history']."\">".$lang_signin['title_history']."</a></td><td align=\"right\">".( signin_check($CURUSER[id]) ? "<img class=\"ksdk\" src=\"pic/signin/wb.gif\"" : "<a href=\"?signin=yes\"><img class=\"ksdk\" src=\"pic/signin/ksdk.gif\"" ) ." alt=\"Quicksignin\" title=\"快速打卡\" /></a></td></tr>";
+	echo "<div><div colspan=\"5\"><a href=\"?signin=history\" title=\"".$lang_signin['title_history']."\">".$lang_signin['title_history']."</a></div><div align=\"right\">".( signin_check($CURUSER[id]) ? "<img class=\"ksdk\" src=\"pic/signin/wb.gif\"" : "<a href=\"?signin=yes\"><img class=\"ksdk\" src=\"pic/signin/ksdk.gif\"" ) ." alt=\"Quicksignin\" title=\"快速打卡\" /></a></div></div>";
 
 ?>
 
 
-	<tr>
-         <td></td>
-         <td><?=$lang_signin['title_todaySignin']?></td>
-         <td><?=$lang_signin['title_online']?></td>
-         <td><?=$lang_signin['title_contact']?></td>
-         <td><?=$lang_signin['title_leave']?></td>
-         <td><?=$lang_signin['title_note']?></td>
-    </tr>
+	<div>
+         <div></div>
+         <div><?=$lang_signin['title_todaySignin']?></div>
+         <div><?=$lang_signin['title_online']?></div>
+         <div><?=$lang_signin['title_contact']?></div>
+         <div><?=$lang_signin['title_leave']?></div>
+         <div><?=$lang_signin['title_note']?></div>
+    </div>
 <?php
 	//end_main_frame();	
 ?>
@@ -240,9 +240,9 @@ $dt = TIMENOW - $secs;
 /**
  * 这部分是分离出来的快速留言部分
  * print("<br /><br />");
- * print ("<table style='border:1px solid #000000;'><tr><td class=\"text\" align=\"center\"><b>".$lang_details['text_quick_comment']."</b><br /><br /><form id=\"compose\" name=\"comment\" method=\"post\" action=\"".htmlspecialchars("comment.php?action=add&type=torrent")."\" onsubmit=\"return postvalid(this);\"><input type=\"hidden\" name=\"pid\" value=\"".$id."\" /><br />");
+ * print ("<div style='border:1px solid #000000;'><div><div class=\"text\" align=\"center\"><b>".$lang_details['text_quick_comment']."</b><br /><br /><form id=\"compose\" name=\"comment\" method=\"post\" action=\"".htmlspecialchars("comment.php?action=add&type=torrent")."\" onsubmit=\"return postvalid(this);\"><input type=\"hidden\" name=\"pid\" value=\"".$id."\" /><br />");
  * quickreply('comment', 'body', $lang_details['submit_add_comment']);
- * print("</form></td></tr></table>");
+ * print("</form></div></div></div>");
  */
  end_main_frame();
 	$Cache->end_whole_row();

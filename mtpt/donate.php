@@ -33,12 +33,12 @@ else
 	stdhead($lang_donate['head_donation']);
 	begin_main_frame();
 	print("<h2>".$lang_donate['text_donate']."</h2>");
-	print("<table width=100%><tr>");
-	print("<td colspan=2 class=text align=left>".$lang_donate['text_donation_note']."</td></tr>");
-	print("<tr>");
+	print("<div width=100%><div>");
+	print("<div colspan=2 class=text align=left>".$lang_donate['text_donation_note']."</div></div>");
+	print("<div>");
 	if ($showpaypal){
 ?>
-<td class=text align=left valign=top <?php echo $tdattr?>>
+<div class=text align=left valign=top <?php echo $tdattr?>>
 <b><?php echo $lang_donate['text_donate_with_paypal']?></b><br /><br />
 <?php echo $lang_donate['text_donate_paypal_note']?>
  <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
@@ -74,12 +74,12 @@ foreach ($allowedDonationUsdAmounts as $amount) {
 <p align="center">
 <input type="image" src="pic/paypalbutton.gif" border="0" name="I1" alt="Make payments with PayPal">
 <br /><br /></p>
-</form></td>
+</form></div>
 <?php
 }
 if ($showalipay){
 ?>
-<td class=text align=left valign=top <?php echo $tdattr?>>
+<div class=text align=left valign=top <?php echo $tdattr?>>
 <b><?php echo $lang_donate['text_donate_with_alipay']?></b><br /><br />
 <form action="https://www.alipay.com/trade/fast_pay.htm" method="get">
 <?php echo $lang_donate['text_donate_alipay_note_one']."<b>".$alipay."</b>".$lang_donate['text_donate_alipay_note_two']?>
@@ -87,13 +87,13 @@ if ($showalipay){
 <p align="center">
 <input type="image" src="pic/alipaybutton.gif" border="0" name="I2" alt="Make payments with Alipay" />
 <br /><br /></p>
-</form></td>
+</form></div>
 <?php
 }
-print("</tr>");
-print("<tr><td class=text colspan=2 align=left>".$lang_donate['text_after_donation_note_one']
-."<a href=\"sendmessage.php?receiver=".$ACCOUNTANTID."\"><font class=\"striking\"><b>".$lang_donate['text_send_us']."</b></font></a>".$lang_donate['text_after_donation_note_two']."</td></tr>");
-print("</table>");
+print("</div>");
+print("<div><div class=text colspan=2 align=left>".$lang_donate['text_after_donation_note_one']
+."<a href=\"sendmessage.php?receiver=".$ACCOUNTANTID."\"><font class=\"striking\"><b>".$lang_donate['text_send_us']."</b></font></a>".$lang_donate['text_after_donation_note_two']."</div></div>");
+print("</div>");
 end_main_frame();
 stdfoot();
 }

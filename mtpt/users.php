@@ -128,16 +128,16 @@ $res = sql_query($sql) or sqlerr();
 
 $num = mysql_num_rows($res);
 
-print("<table border=1 cellspacing=0 cellpadding=5>\n");
-print("<tr><td class=colhead align=left>".$lang_users['col_user_name']."</td><td class=colhead>".$lang_users['col_registered']."</td><td class=colhead>".$lang_users['col_last_access']."</td><td class=colhead align=left>".$lang_users['col_class']."</td><td class=colhead>".$lang_users['col_country']."</td></tr>\n");
+print("<div border=1 cellspacing=0 cellpadding=5>\n");
+print("<div><div class=colhead align=left>".$lang_users['col_user_name']."</div><div class=colhead>".$lang_users['col_registered']."</div><div class=colhead>".$lang_users['col_last_access']."</div><div class=colhead align=left>".$lang_users['col_class']."</div><div class=colhead>".$lang_users['col_country']."</div></div>\n");
 for ($i = 0; $i < $num; ++$i)
 {
 $arr = mysql_fetch_assoc($res);
 
-print("<tr><td align=left>".get_username($arr['id'])."</td><td>".gettime($arr['added'], true, false)."</td><td>".gettime($arr['last_access'],true,false)."</td><td align=left>". get_user_class_name($arr['class'],false,true,true) . "</td><td align=center>".$arr['country']."</td></tr>");
+print("<div><div align=left>".get_username($arr['id'])."</div><div>".gettime($arr['added'], true, false)."</div><div>".gettime($arr['last_access'],true,false)."</div><div align=left>". get_user_class_name($arr['class'],false,true,true) . "</div><div align=center>".$arr['country']."</div></div>");
 }
 
-print("</table>");
+print("</div>");
 print($pagerbottom);
 
 stdfoot();

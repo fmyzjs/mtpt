@@ -4,9 +4,9 @@ dbconn();
 loggedinorreturn();
 stdhead("Video Formats");
 ?>
-<table class=main width=940 border=0 cellspacing=0 cellpadding=0><tr><td class=embedded>
+<div class=main width=940 border=0 cellspacing=0 cellpadding=0><div><div class=embedded>
 <h2>Downloaded a movie and don't know what CAM/TS/TC/SCR means?</h2>
-<table width=100% border=1 cellspacing=0 cellpadding=10><tr><td class=text> 
+<div width=100% border=1 cellspacing=0 cellpadding=10><div><div class=text> 
 
 <b>CAM -</b><br />
 <br />
@@ -197,8 +197,8 @@ Dupe is quite simply, if something exists already, then theres no reason for it 
 again without proper reason.<br />
 <br />
 <br />
-</td></tr></table>
-</td></tr></table>
+</div></div></div>
+</div></div></div>
 <br />
 <?php
 stdfoot();

@@ -70,11 +70,11 @@ function stdmsg($heading, $text, $htmlstrip = false)
 		$heading = htmlspecialchars(trim($heading));
 		$text = htmlspecialchars(trim($text));
 	}
-	print("<table align=\"center\" class=\"main\" width=\"500\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td class=\"embedded\">\n");
+	print("<div align=\"center\" class=\"main\" width=\"500\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><div><div class=\"embedded\">\n");
 	if ($heading)
 	print("<h2>".$heading."</h2>\n");
-	print("<table width=\"100%\" border=\"1\" cellspacing=\"0\" cellpadding=\"10\"><tr><td class=\"text\">");
-	print($text . "</td></tr></table></td></tr></table>\n");
+	print("<div width=\"100%\" border=\"1\" cellspacing=\"0\" cellpadding=\"10\"><div><div class=\"text\">");
+	print($text . "</div></div></div></div></div></div>\n");
 }
 
 function stderr($heading, $text, $htmlstrip = true, $head = true, $foot = true, $die = true)
@@ -87,9 +87,9 @@ function stderr($heading, $text, $htmlstrip = true, $head = true, $foot = true, 
 
 function sqlerr($file = '', $line = '')
 {
-	print("<table border=\"0\" bgcolor=\"blue\" align=\"left\" cellspacing=\"0\" cellpadding=\"10\" style=\"background: blue;\">" .
-	"<tr><td class=\"embedded\"><font color=\"white\"><h1>SQL Error</h1>\n" .
-	"<b>" . mysql_error() . ($file != '' && $line != '' ? "<p>in $file, line $line</p>" : "") . "</b></font></td></tr></table>");
+	print("<div border=\"0\" bgcolor=\"blue\" align=\"left\" cellspacing=\"0\" cellpadding=\"10\" style=\"background: blue;\">" .
+	"<div><div class=\"embedded\"><font color=\"white\"><h1>SQL Error</h1>\n" .
+	"<b>" . mysql_error() . ($file != '' && $line != '' ? "<p>in $file, line $line</p>" : "") . "</b></font></div></div></div>");
 	die;
 }
 
@@ -461,8 +461,8 @@ function int_check($value,$stdhead = false, $stdfood = true, $die = true, $log =
 				stderr($lang_functions['std_error'],$lang_functions['std_invalid_id']);
 			else
 			{
-				print ("<h2>".$lang_functions['std_error']."</h2><table width=\"100%\" border=\"1\" cellspacing=\"0\" cellpadding=\"10\"><tr><td class=\"text\">");
-				print ($lang_functions['std_invalid_id']."</td></tr></table>");
+				print ("<h2>".$lang_functions['std_error']."</h2><div width=\"100%\" border=\"1\" cellspacing=\"0\" cellpadding=\"10\"><div><div class=\"text\">");
+				print ($lang_functions['std_invalid_id']."</div></div></div>");
 			}
 			if ($stdfood)
 				stdfoot();
@@ -491,13 +491,13 @@ function begin_main_frame($caption = "", $center = false, $width = 100)
 	$tdextra .= " align=\"center\"";
 
 	$width = 940 * $width /100;
-	print("<table class=\"main\" width=\"".$width."\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">" .
-	"<tr><td class=\"embedded\" $tdextra>");
+	print("<div class=\"main\" width=\"".$width."\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">" .
+	"<div><div class=\"embedded\" $tdextra>");
 }
 
 function end_main_frame()
 {
-	print("</td></tr></table>\n");
+	print("</div></div></div>\n");
 }
 
 function begin_frame($caption = "", $center = false, $padding = 10, $width="100%", $caption_center="left")
@@ -507,13 +507,13 @@ function begin_frame($caption = "", $center = false, $padding = 10, $width="100%
 	if ($center)
 	$tdextra .= " align=\"center\"";
 
-	print(($caption ? "<h2 align=\"".$caption_center."\">".$caption."</h2>" : "") . "<table width=\"".$width."\" border=\"1\" cellspacing=\"0\" cellpadding=\"".$padding."\">" . "<tr><td class=\"text\" $tdextra>\n");
+	print(($caption ? "<h2 align=\"".$caption_center."\">".$caption."</h2>" : "") . "<div width=\"".$width."\" border=\"1\" cellspacing=\"0\" cellpadding=\"".$padding."\">" . "<div><div class=\"text\" $tdextra>\n");
 
 }
 
 function end_frame()
 {
-	print("</td></tr></table>\n");
+	print("</div></div></div>\n");
 }
 
 function begin_table($fullwidth = false, $padding = 5)
@@ -522,12 +522,12 @@ function begin_table($fullwidth = false, $padding = 5)
 
 	if ($fullwidth)
 	$width .= " width=50%";
-	print("<table class=\"main".$width."\" border=\"1\" cellspacing=\"0\" cellpadding=\"".$padding."\">");
+	print("<div class=\"main".$width."\" border=\"1\" cellspacing=\"0\" cellpadding=\"".$padding."\">");
 }
 
 function end_table()
 {
-	print("</table>\n");
+	print("</div>\n");
 }
 
 //-------- Inserts a smilies frame
@@ -538,9 +538,9 @@ function insert_smilies_frame()
 	global $lang_functions;
 	begin_frame($lang_functions['text_smilies'], true);
 	begin_table(false, 5);
-	print("<tr><td class=\"colhead\">".$lang_functions['col_type_something']."</td><td class=\"colhead\">".$lang_functions['col_to_make_a']."</td></tr>\n");
+	print("<div><div class=\"colhead\">".$lang_functions['col_type_something']."</div><div class=\"colhead\">".$lang_functions['col_to_make_a']."</div></div>\n");
 	for ($i=1; $i<192; $i++) {
-		print("<tr><td>[em$i]</td><td><img src=\"pic/smilies/".$i.".gif\" alt=\"[em$i]\" /></td></tr>\n");
+		print("<div><div>[em$i]</div><div><img src=\"pic/smilies/".$i.".gif\" alt=\"[em$i]\" /></div></div>\n");
 	}
 	end_table();
 	end_frame();
@@ -881,21 +881,21 @@ function simpletag(thetag)
 }
 //]]>
 </script>
-<table width="100%" cellspacing="0" cellpadding="5" border="0">
-<tr><td align="left" colspan="2">
-<table cellspacing="1" cellpadding="2" border="0">
-<tr>
-<td class="embedded"><input style="font-weight: bold;font-size:11px; margin-right:3px" type="button" name="b" value="加粗" onclick="javascript: simpletag('b')" /></td>
-<td class="embedded"><input class="codebuttons" style="font-style: italic;font-size:11px;margin-right:3px" type="button" name="i" value="斜体" onclick="javascript: simpletag('i')" /></td>
-<td class="embedded"><input class="codebuttons" style="text-decoration: underline;font-size:11px;margin-right:3px" type="button" name="u" value="下划线" onclick="javascript: simpletag('u')" /></td>
+<div width="100%" cellspacing="0" cellpadding="5" border="0">
+<div><div align="left" colspan="2">
+<div cellspacing="1" cellpadding="2" border="0">
+<div>
+<div class="embedded"><input style="font-weight: bold;font-size:11px; margin-right:3px" type="button" name="b" value="加粗" onclick="javascript: simpletag('b')" /></div>
+<div class="embedded"><input class="codebuttons" style="font-style: italic;font-size:11px;margin-right:3px" type="button" name="i" value="斜体" onclick="javascript: simpletag('i')" /></div>
+<div class="embedded"><input class="codebuttons" style="text-decoration: underline;font-size:11px;margin-right:3px" type="button" name="u" value="下划线" onclick="javascript: simpletag('u')" /></div>
 <?php
-print("<td class=\"embedded\"><input class=\"codebuttons\" style=\"font-size:11px;margin-right:3px\" type=\"button\" name='url' value='URL' onclick=\"javascript:tag_url('" . $lang_functions['js_prompt_enter_url'] . "','" . $lang_functions['js_prompt_enter_title'] . "','" . $lang_functions['js_prompt_error'] . "')\" /></td>");
-print("<td class=\"embedded\"><input class=\"codebuttons\" style=\"font-size:11px;margin-right:3px\" type=\"button\" name=\"IMG\" value=\"IMG\" onclick=\"javascript: tag_image('" . $lang_functions['js_prompt_enter_image_url'] . "','" . $lang_functions['js_prompt_error'] . "')\" /></td>");
-print("<td class=\"embedded\"><input type=\"button\" style=\"font-size:11px;margin-right:3px\" name=\"list\" value=\"List\" onclick=\"tag_list('" . addslashes($lang_functions['js_prompt_enter_item']) . "','" . $lang_functions['js_prompt_error'] . "')\" /></td>");
+print("<div class=\"embedded\"><input class=\"codebuttons\" style=\"font-size:11px;margin-right:3px\" type=\"button\" name='url' value='URL' onclick=\"javascript:tag_url('" . $lang_functions['js_prompt_enter_url'] . "','" . $lang_functions['js_prompt_enter_title'] . "','" . $lang_functions['js_prompt_error'] . "')\" /></div>");
+print("<div class=\"embedded\"><input class=\"codebuttons\" style=\"font-size:11px;margin-right:3px\" type=\"button\" name=\"IMG\" value=\"IMG\" onclick=\"javascript: tag_image('" . $lang_functions['js_prompt_enter_image_url'] . "','" . $lang_functions['js_prompt_error'] . "')\" /></div>");
+print("<div class=\"embedded\"><input type=\"button\" style=\"font-size:11px;margin-right:3px\" name=\"list\" value=\"List\" onclick=\"tag_list('" . addslashes($lang_functions['js_prompt_enter_item']) . "','" . $lang_functions['js_prompt_error'] . "')\" /></div>");
 ?>
-<td class="embedded"><input class="codebuttons" style="font-size:11px;margin-right:3px" type="button" name="quote" value="QUOTE" onclick="javascript: simpletag('quote')" /></td>
-<td class="embedded"><input style="font-size:11px;margin-right:3px" type="button" onclick='javascript:closeall();' name='tagcount' value="Close all tags" /></td>
-<td class="embedded"><select class="med codebuttons" style="margin-right:3px" name='color' onchange="alterfont(this.options[this.selectedIndex].value, 'color')">
+<div class="embedded"><input class="codebuttons" style="font-size:11px;margin-right:3px" type="button" name="quote" value="QUOTE" onclick="javascript: simpletag('quote')" /></div>
+<div class="embedded"><input style="font-size:11px;margin-right:3px" type="button" onclick='javascript:closeall();' name='tagcount' value="Close all tags" /></div>
+<div class="embedded"><select class="med codebuttons" style="margin-right:3px" name='color' onchange="alterfont(this.options[this.selectedIndex].value, 'color')">
 <option value='0'>--- <?php echo $lang_functions['select_color'] ?> ---</option>
 <option style="background-color: black" value="Black">Black</option>
 <option style="background-color: sienna" value="Sienna">Sienna</option>
@@ -937,8 +937,8 @@ print("<td class=\"embedded\"><input type=\"button\" style=\"font-size:11px;marg
 <option style="background-color: lightblue" value="LightBlue">Light Blue</option>
 <option style="background-color: plum" value="Plum">Plum</option>
 <option style="background-color: white" value="White">White</option>
-</select></td>
-<td class="embedded">
+</select></div>
+<div class="embedded">
 <select class="med codebuttons" name='font' onchange="alterfont(this.options[this.selectedIndex].value, 'font')">
 <option value="0">--- <?php echo $lang_functions['select_font'] ?> ---</option>
 <option value="Arial">Arial</option>
@@ -962,8 +962,8 @@ print("<td class=\"embedded\"><input type=\"button\" style=\"font-size:11px;marg
 <option value="Trebuchet MS">Trebuchet MS</option>
 <option value="Verdana">Verdana</option>
 </select>
-</td>
-<td class="embedded">
+</div>
+<div class="embedded">
 <select class="med codebuttons" name='size' onchange="alterfont(this.options[this.selectedIndex].value, 'size')">
 <option value="0">--- <?php echo $lang_functions['select_size'] ?> ---</option>
 <option value="1">1</option>
@@ -973,42 +973,42 @@ print("<td class=\"embedded\"><input type=\"button\" style=\"font-size:11px;marg
 <option value="5">5</option>
 <option value="6">6</option>
 <option value="7">7</option>
-</select></td></tr>
-</table>
-</td>
-</tr>
+</select></div></div>
+</div>
+</div>
+</div>
 <?php
 if ($enableattach_attachment == 'yes'){
 ?>
-<tr>
-<td colspan="2" valign="middle">
+<div>
+<div colspan="2" valign="middle">
 <iframe src="<?php echo get_protocol_prefix() . $BASEURL?>/attachment.php" width="100%" height="24" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
-</td>
-</tr>
+</div>
+</div>
 <?php
 }
-print("<tr>");
-print("<td align=\"left\"><textarea class=\"bbcode\" cols=\"100\" style=\"width: 650px;\" name=\"".$text."\" id=\"".$text."\" rows=\"20\" onkeydown=\"ctrlenter(event,'compose','qr')\">".$content."</textarea>");
+print("<div>");
+print("<div align=\"left\"><textarea class=\"bbcode\" cols=\"100\" style=\"width: 650px;\" name=\"".$text."\" id=\"".$text."\" rows=\"20\" onkeydown=\"ctrlenter(event,'compose','qr')\">".$content."</textarea>");
 ?>
-</td>
-<td align="center" width="99%">
-<table cellspacing="1" cellpadding="3">
-<tr>
+</div>
+<div align="center" width="99%">
+<div cellspacing="1" cellpadding="3">
+<div>
 <?php
 $i = 0;
 $quickSmilies = array(1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 13, 16, 17, 19, 20, 21, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 39, 40, 41);
 foreach ($quickSmilies as $smily) {
 	if ($i%4 == 0 && $i > 0) {
-		print('</tr><tr>');
+		print('</div><div>');
 	}
-	print("<td class=\"embedded\" style=\"padding: 3px;\">".getSmileIt($form, $text, $smily)."</td>");
+	print("<div class=\"embedded\" style=\"padding: 3px;\">".getSmileIt($form, $text, $smily)."</div>");
 	$i++;
 }
 ?>
-</tr></table>
+</div></div>
 <br />
 <a href="javascript:winop();"><?php echo $lang_functions['text_more_smilies'] ?></a>
-</td></tr></table>
+</div></div></div>
 <?php
 }
 
@@ -1044,28 +1044,28 @@ function begin_compose($title = "",$type="new", $body="", $hassubject=true, $sub
 		}
 	}
 	begin_frame($framename, true);
-	print("<table class=\"main\" width=\"100%\" border=\"1\" cellspacing=\"0\" cellpadding=\"5\">\n");
+	print("<div class=\"main\" width=\"100%\" border=\"1\" cellspacing=\"0\" cellpadding=\"5\">\n");
 	if ($hassubject){
-		print("<tr><td class=\"rowhead\">".$lang_functions['row_subject']."</td>" .
-"<td class=\"rowfollow\" align=\"left\"><input type=\"text\" style=\"width: 650px;\" name=\"subject\" maxlength=\"".$maxsubjectlength."\" value=\"".$subject."\" /><input name=\"onlyauthor\" type=\"checkbox\"");
+		print("<div><div class=\"rowhead\">".$lang_functions['row_subject']."</div>" .
+"<div class=\"rowfollow\" align=\"left\"><input type=\"text\" style=\"width: 650px;\" name=\"subject\" maxlength=\"".$maxsubjectlength."\" value=\"".$subject."\" /><input name=\"onlyauthor\" type=\"checkbox\"");
 		if($onlyauthor==1)print(" checked ");
-		print(" value=\"1\" />".$lang_functions['text_onlyauthor']."</td></tr>\n");
+		print(" value=\"1\" />".$lang_functions['text_onlyauthor']."</div></div>\n");
 	}
-	print("<tr><td class=\"rowhead\" valign=\"top\">".$lang_functions['row_body']."</td><td class=\"rowfollow\" align=\"left\"><span style=\"display: none;\" id=\"previewouter\"></span><div id=\"editorouter\">");
+	print("<div><div class=\"rowhead\" valign=\"top\">".$lang_functions['row_body']."</div><div class=\"rowfollow\" align=\"left\"><span style=\"display: none;\" id=\"previewouter\"></span><div id=\"editorouter\">");
 	textbbcode("compose","body", $body, false);
-	print("</div></td></tr>");
+	print("</div></div></div>");
 	if($type=="quote")
-		print("<tr><td colspan=\"2\" align=\"center\">给文内引用到的<select name=\"quotenum\"><option value=\"0\">0</option><option value=\"1\" selected>1</option><option value=\"2\">2</option><option value=\"3\">3</option></select>个用户发站内信提醒</td></tr>");
+		print("<div><div colspan=\"2\" align=\"center\">给文内引用到的<select name=\"quotenum\"><option value=\"0\">0</option><option value=\"1\" selected>1</option><option value=\"2\">2</option><option value=\"3\">3</option></select>个用户发站内信提醒</div></div>");
 }
 
 function end_compose(){
 	global $lang_functions;
-	print("<tr><td colspan=\"2\" align=\"center\"><table><tr><td class=\"embedded\"><input id=\"qr\" type=\"submit\" class=\"btn\" value=\"".$lang_functions['submit_submit']."\" /></td><td class=\"embedded\">");
+	print("<div><div colspan=\"2\" align=\"center\"><div><div><div class=\"embedded\"><input id=\"qr\" type=\"submit\" class=\"btn\" value=\"".$lang_functions['submit_submit']."\" /></div><div class=\"embedded\">");
 	print("<input type=\"button\" class=\"btn2\" name=\"previewbutton\" id=\"previewbutton\" value=\"".$lang_functions['submit_preview']."\" onclick=\"javascript:preview(this.parentNode);\" />");
 	print("<input type=\"button\" class=\"btn2\" style=\"display: none;\" name=\"unpreviewbutton\" id=\"unpreviewbutton\" value=\"".$lang_functions['submit_edit']."\" onclick=\"javascript:unpreview(this.parentNode);\" />");
-	print("</td></tr></table>");
-	print("</td></tr>");
-	print("</table>\n");
+	print("</div></div></div>");
+	print("</div></div>");
+	print("</div>\n");
 	end_frame();
 	print("<p align=\"center\"><a href=\"tags.php\" target=\"_blank\">".$lang_functions['text_tags']."</a> | <a href=\"smilies.php\" target=\"_blank\">".$lang_functions['text_smilies']."</a></p>\n");
 }
@@ -1641,11 +1641,11 @@ function show_image_code () {
 	if ($iv == "yes") {
 		unset($imagehash);
 		$imagehash = image_code () ;
-		print ("<tr><td class=\"rowhead\">".$lang_functions['row_security_image']."</td>");
-		print ("<td align=\"left\"><img src=\"".htmlspecialchars("image.php?action=regimage&imagehash=".$imagehash)."\" border=\"0\" alt=\"CAPTCHA\" /></td></tr>");
-		print ("<tr><td class=\"rowhead\">".$lang_functions['row_security_code']."</td><td align=\"left\">");
+		print ("<div><div class=\"rowhead\">".$lang_functions['row_security_image']."</div>");
+		print ("<div align=\"left\"><img src=\"".htmlspecialchars("image.php?action=regimage&imagehash=".$imagehash)."\" border=\"0\" alt=\"CAPTCHA\" /></div></div>");
+		print ("<div><div class=\"rowhead\">".$lang_functions['row_security_code']."</div><div align=\"left\">");
 		print("<input type=\"text\" autocomplete=\"off\" style=\"width: 180px; border: 1px solid gray\" name=\"imagestring\" value=\"\" />");
-		print("<input type=\"hidden\" name=\"imagehash\" value=\"$imagehash\" /></td></tr>");
+		print("<input type=\"hidden\" name=\"imagehash\" value=\"$imagehash\" /></div></div>");
 	}
 }
 
@@ -1794,7 +1794,7 @@ function dbconn($autoclean = false)
 		{
 			case 1040:
 			case 2002:
-				die("<html><head><meta http-equiv=refresh content=\"10 $_SERVER[REQUEST_URI]\"><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"></head><body><table border=0 width=100% height=100%><tr><td><h3 align=center>".$lang_functions['std_server_load_very_high']."</h3></td></tr></table></body></html>");
+				die("<html><head><meta http-equiv=refresh content=\"10 $_SERVER[REQUEST_URI]\"><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"></head><body><div border=0 width=100% height=100%><div><div><h3 align=center>".$lang_functions['std_server_load_very_high']."</h3></div></div></div></body></html>");
 			default:
 				die("[" . mysql_errno() . "] dbconn: mysql_connect: " . mysql_error());
 		}
@@ -2073,7 +2073,7 @@ function tr($x,$y,$noesc=0,$relation='') {
 		$a = htmlspecialchars($y);
 		$a = str_replace("\n", "<br />\n", $a);
 	}
-	print("<tr".( $relation ? " relation = \"$relation\"" : "")."><td class=\"rowhead nowrap\" valign=\"top\" align=\"right\">$x</td><td class=\"rowfollow\" valign=\"top\" align=\"left\">".$a."</td></tr>\n");
+	print("<div".( $relation ? " relation = \"$relation\"" : "")."><div class=\"rowhead nowrap\" valign=\"top\" align=\"right\">$x</div><div class=\"rowfollow\" valign=\"top\" align=\"left\">".$a."</div></div>\n");
 }
 
 function tr_small($x,$y,$noesc=0,$relation='') {
@@ -2083,7 +2083,7 @@ function tr_small($x,$y,$noesc=0,$relation='') {
 		$a = htmlspecialchars($y);
 		//$a = str_replace("\n", "<br />\n", $a);
 	}
-	print("<tr".( $relation ? " relation = \"$relation\"" : "")."><td width=\"1%\" class=\"rowhead nowrap\" valign=\"top\" align=\"right\">".$x."</td><td width=\"99%\" class=\"rowfollow\" valign=\"top\" align=\"left\">".$a."</td></tr>\n");
+	print("<div".( $relation ? " relation = \"$relation\"" : "")."><div width=\"1%\" class=\"rowhead nowrap\" valign=\"top\" align=\"right\">".$x."</div><div width=\"99%\" class=\"rowfollow\" valign=\"top\" align=\"left\">".$a."</div></div>\n");
 }
 
 function twotd($x,$y,$nosec=0){
@@ -2093,7 +2093,7 @@ function twotd($x,$y,$nosec=0){
 		$a = htmlspecialchars($y);
 		$a = str_replace("\n", "<br />\n", $a);
 	}
-	print("<td class=\"rowhead\">".$x."</td><td class=\"rowfollow\">".$y."</td>");
+	print("<div class=\"rowhead\">".$x."</div><div class=\"rowfollow\">".$y."</div>");
 }
 
 function validfilename($name) {
@@ -2402,9 +2402,9 @@ _background-attachment:fixed;
     }
 </style>
 <div id="roll"><div title="回到顶部" id="roll_top"></div><div title="转到底部" id="roll_bottom"></div></div>
-<table class="head" cellspacing="0" cellpadding="0" align="center">
-	<tr>
-		<td class="clear">
+<div class="head" cellspacing="0" cellpadding="0" align="center">
+	<div>
+		<div class="clear">
 <?php
 if ($logo_main == "")
 {
@@ -2420,8 +2420,8 @@ else
 <?php
 }
 ?>
-		</td>
-		<td class="clear nowrap" align="right" valign="middle">
+		</div>
+		<div class="clear nowrap" align="right" valign="middle">
 <?php if ($Advertisement->enable_ad()){
 		$headerad=$Advertisement->get_ad('header');
 		if ($headerad){
@@ -2433,12 +2433,12 @@ if ($enabledonation == 'yes'){?>
 <?php
 }
 ?>
-		</td>
-	</tr>
-</table>
+		</div>
+	</div>
+</div>
 
-<table class="mainouter" width="982" cellspacing="0" cellpadding="5" align="center">
-	<tr><td id="nav_block" class="text" align="center">
+<div class="mainouter" width="982" cellspacing="0" cellpadding="5" align="center">
+	<div><div id="nav_block" class="text" align="center">
 <?php if (!$CURUSER) { ?>
 			<a href="login.php"><font class="big"><b><?php echo $lang_functions['text_login'] ?></b></font></a>  ｜ <a href="signupcard.php"><font class="big"><b><?php echo $lang_functions['text_signupcard'] ?></b></font></a> ｜ <a href="signup.php?type=invite"><font class="big"><b><?php echo $lang_functions['text_invite_reg'] ?></b></font></a> ｜ <a href="signup.php"><font class="big"><b><?php echo $lang_functions['text_signup'] ?></b></font></a>
 <?php } 
@@ -2509,13 +2509,13 @@ if($connect == 'no'){
 	}
 }
 ?>
-<table id="info_block" cellpadding="4" cellspacing="0" border="0" width="100%"><tr>
-	<td><table width="100%" cellspacing="0" cellpadding="0" border="0"><tr>
-		<td class="bottom" align="left"><span class="medium"><?php echo $lang_functions['text_welcome_back'] ?>, <?php echo get_username($CURUSER['id'])?>  [<a href="logout.php"><?php echo $lang_functions['text_logout'] ?></a>] [<a href="usebonus.php"><?=$lang_functions['text_app']?></a>] <?php if (get_user_class() >= UC_MODERATOR) { ?> [<a href="staffpanel.php"><?php echo $lang_functions['text_staff_panel'] ?></a>] <?php }?> <?php if (get_user_class() >= UC_SYSOP) { ?> [<a href="settings.php"><?php echo $lang_functions['text_site_settings'] ?></a>]<?php } ?> [<a href="torrents.php?inclbookmarked=1&amp;allsec=1&amp;incldead=0"><?php echo $lang_functions['text_bookmarks'] ?></a>] <font class = 'color_bonus'><?php echo $lang_functions['text_bonus'] ?></font>[<a href="mybonus.php"><?php echo $lang_functions['text_use'] ?></a>]: <?php echo number_format((int)$CURUSER['seedbonus'], 0)?> <font class = 'color_invite'><?php echo $lang_functions['text_invite'] ?></font>[<a href="invite.php?id=<?php echo $CURUSER['id']?>"><?php echo $lang_functions['text_send'] ?></a>]: <?php echo $CURUSER['invites']?><br />
+<div id="info_block" cellpadding="4" cellspacing="0" border="0" width="100%"><div>
+	<div><div width="100%" cellspacing="0" cellpadding="0" border="0"><div>
+		<div class="bottom" align="left"><span class="medium"><?php echo $lang_functions['text_welcome_back'] ?>, <?php echo get_username($CURUSER['id'])?>  [<a href="logout.php"><?php echo $lang_functions['text_logout'] ?></a>] [<a href="usebonus.php"><?=$lang_functions['text_app']?></a>] <?php if (get_user_class() >= UC_MODERATOR) { ?> [<a href="staffpanel.php"><?php echo $lang_functions['text_staff_panel'] ?></a>] <?php }?> <?php if (get_user_class() >= UC_SYSOP) { ?> [<a href="settings.php"><?php echo $lang_functions['text_site_settings'] ?></a>]<?php } ?> [<a href="torrents.php?inclbookmarked=1&amp;allsec=1&amp;incldead=0"><?php echo $lang_functions['text_bookmarks'] ?></a>] <font class = 'color_bonus'><?php echo $lang_functions['text_bonus'] ?></font>[<a href="mybonus.php"><?php echo $lang_functions['text_use'] ?></a>]: <?php echo number_format((int)$CURUSER['seedbonus'], 0)?> <font class = 'color_invite'><?php echo $lang_functions['text_invite'] ?></font>[<a href="invite.php?id=<?php echo $CURUSER['id']?>"><?php echo $lang_functions['text_send'] ?></a>]: <?php echo $CURUSER['invites']?><br />
 
-	<font class="color_ratio"><?php echo $lang_functions['text_ratio'] ?></font> <?php echo $ratio?>  <font class='color_uploaded'><?php echo $lang_functions['text_uploaded'] ?></font> <?php echo mksize($CURUSER['uploaded'])?><font class='color_downloaded'> <?php echo $lang_functions['text_downloaded'] ?></font> <?php echo mksize($CURUSER['downloaded'])?>  <font class='color_active'><?php echo $lang_functions['text_active_torrents'] ?></font> <img class="arrowup" alt="Torrents seeding" title="<?php echo $lang_functions['title_torrents_seeding'] ?>" src="pic/trans.gif" /><?php echo $activeseed?>  <img class="arrowdown" alt="Torrents leeching" title="<?php echo $lang_functions['title_torrents_leeching'] ?>" src="pic/trans.gif" /><?php echo $activeleech?>&nbsp;&nbsp;<font class='color_connectable'><?php echo $lang_functions['text_connectable'] ?></font><?php echo $connectable?> <?php echo maxslots();?></span></td>
+	<font class="color_ratio"><?php echo $lang_functions['text_ratio'] ?></font> <?php echo $ratio?>  <font class='color_uploaded'><?php echo $lang_functions['text_uploaded'] ?></font> <?php echo mksize($CURUSER['uploaded'])?><font class='color_downloaded'> <?php echo $lang_functions['text_downloaded'] ?></font> <?php echo mksize($CURUSER['downloaded'])?>  <font class='color_active'><?php echo $lang_functions['text_active_torrents'] ?></font> <img class="arrowup" alt="Torrents seeding" title="<?php echo $lang_functions['title_torrents_seeding'] ?>" src="pic/trans.gif" /><?php echo $activeseed?>  <img class="arrowdown" alt="Torrents leeching" title="<?php echo $lang_functions['title_torrents_leeching'] ?>" src="pic/trans.gif" /><?php echo $activeleech?>&nbsp;&nbsp;<font class='color_connectable'><?php echo $lang_functions['text_connectable'] ?></font><?php echo $connectable?> <?php echo maxslots();?></span></div>
 
-	<td class="bottom" align="right"><span class="medium"><?php echo $lang_functions['text_the_time_is_now'] ?><?php echo $datum[hours].":".$datum[minutes]?><br />
+	<div class="bottom" align="right"><span class="medium"><?php echo $lang_functions['text_the_time_is_now'] ?><?php echo $datum[hours].":".$datum[minutes]?><br />
 
 <?php
 	if (get_user_class() >= $staffmem_class){
@@ -2543,13 +2543,13 @@ if($connect == 'no'){
 	print(" <a href=\"getrss.php\"><img class=\"rss\" alt=\"RSS\" title=\"".$lang_functions['title_get_rss']."\" src=\"pic/trans.gif\" /></a>");
 ?>
 
-	</span></td>
-	</tr></table></td>
-</tr></table>
+	</span></div>
+	</div></div></div>
+</div></div>
 
-</td></tr>
+</div></div>
 
-<tr><td id="outer" align="center" class="outer" style="padding-top: 20px; padding-bottom: 20px">
+<div><div id="outer" align="center" class="outer" style="padding-top: 20px; padding-bottom: 20px">
 <?php
 	if ($Advertisement->enable_ad()){
 			$belownavad=$Advertisement->get_ad('belownav');
@@ -2560,9 +2560,9 @@ if ($msgalert)
 {
 	function msgalert($url, $text, $bgcolor = "red")
 	{
-		print("<p><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\"><tr><td style='border: none; padding: 9px; background: ".$bgcolor."'>\n");
+		print("<p><div border=\"0\" cellspacing=\"0\" cellpadding=\"0\"><div><div style='border: none; padding: 9px; background: ".$bgcolor."'>\n");
 		print("<b><a href=\"".$url."\"><font face=\"verdana\" size=\"3\" color=\"white\">".$text."</font></a></b>");
-		print("</td></tr></table></p><br />");//修改于2011-11-23 @zhaojiajia
+		print("</div></div></div></p><br />");//修改于2011-11-23 @zhaojiajia
 	}
 	if($CURUSER['leechwarn'] == 'yes')
 	{
@@ -2669,9 +2669,9 @@ if ($msgalert)
 }
 		if ($offlinemsg)
 		{
-			print("<p><table width=\"737\" border=\"1\" cellspacing=\"0\" cellpadding=\"10\"><tr><td style='padding: 10px; background: red' class=\"text\" align=\"center\">\n");
+			print("<p><div width=\"737\" border=\"1\" cellspacing=\"0\" cellpadding=\"10\"><div><div style='padding: 10px; background: red' class=\"text\" align=\"center\">\n");
 			print("<font color=\"white\">".$lang_functions['text_website_offline_warning']."</font>");
-			print("</td></tr></table></p><br />\n");
+			print("</div></div></div></p><br />\n");
 		}
 }
 }
@@ -2680,7 +2680,7 @@ if ($msgalert)
 function stdfoot() {
 	global $SITENAME,$BASEURL,$Cache,$datefounded,$tstart,$icplicense_main,$add_key_shortcut,$query_name, $USERUPDATESET, $CURUSER, $enablesqldebug_tweak, $sqldebug_tweak, $Advertisement, $analyticscode_tweak;
 	global $lang_functions;
-	print("</td></tr></table>");
+	print("</div></div></div>");
 	print("<div id=\"footer\">");
 	if ($Advertisement->enable_ad()){
 			$footerad=$Advertisement->get_ad('footer');
@@ -2988,10 +2988,10 @@ function commenttable($rows, $type, $parent_id, $review = false)
 				echo "<div align=\"center\" style=\"margin-top: 10px\" id=\"ad_comment_".$count."\">".$commentad[$count-1]."</div>";
 			}
 		}
-		print("<div style=\"margin-top: 8pt; margin-bottom: 8pt;\"><table id=\"cid".$row["id"]."\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"100%\"><tr><td class=\"embedded\" width=\"99%\">#" . $row["id"] . "&nbsp;&nbsp;<font color=\"gray\">".$lang_functions['text_by']."</font>");
+		print("<div style=\"margin-top: 8pt; margin-bottom: 8pt;\"><div id=\"cid".$row["id"]."\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"100%\"><div><div class=\"embedded\" width=\"99%\">#" . $row["id"] . "&nbsp;&nbsp;<font color=\"gray\">".$lang_functions['text_by']."</font>");
 		print(get_username($row["user"],false,true,true,false,false,true));
 		print("&nbsp;&nbsp;<font color=\"gray\">".$lang_functions['text_at']."</font>".gettime($row["added"]).
-		($row["editedby"] && get_user_class() >= $commanage_class ? " - [<a href=\"comment.php?action=vieworiginal&amp;cid=".$row[id]."&amp;type=".$type."\">".$lang_functions['text_view_original']."</a>]" : "") . "</td><td class=\"embedded nowrap\" width=\"1%\"><a href=\"#top\"><img class=\"top\" src=\"pic/trans.gif\" alt=\"Top\" title=\"Top\" /></a>&nbsp;&nbsp;</td></tr></table></div>");
+		($row["editedby"] && get_user_class() >= $commanage_class ? " - [<a href=\"comment.php?action=vieworiginal&amp;cid=".$row[id]."&amp;type=".$type."\">".$lang_functions['text_view_original']."</a>]" : "") . "</div><div class=\"embedded nowrap\" width=\"1%\"><a href=\"#top\"><img class=\"top\" src=\"pic/trans.gif\" alt=\"Top\" title=\"Top\" /></a>&nbsp;&nbsp;</div></div></div></div>");
 		$avatar = ($CURUSER["avatars"] == "yes" ? htmlspecialchars(trim($userRow["avatar"])) : "");
 		if (!$avatar)
 			$avatar = "pic/default_avatar.png";
@@ -3002,18 +3002,18 @@ function commenttable($rows, $type, $parent_id, $review = false)
 			$text_editby = "<br /><p><font class=\"small\">".$lang_functions['text_last_edited_by'].get_username($row['editedby']).$lang_functions['text_edited_at'].$lastedittime."</font></p>\n";
 		}
 
-		print("<table class=\"main\" width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"5\">\n");
+		print("<div class=\"main\" width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"5\">\n");
 		$secs = 900;
 		$dt = sqlesc(date("Y-m-d H:i:s",(TIMENOW - $secs))); // calculate date.
-		print("<tr>\n");
-		print("<td class=\"rowfollow\" width=\"150\" valign=\"top\" style=\"padding: 0px;\">".return_avatar_image($avatar)."</td>\n");
-		print("<td class=\"rowfollow\" valign=\"top\"><br />".$text.$text_editby."</td>\n");
-		print("</tr>\n");
+		print("<div>\n");
+		print("<div class=\"rowfollow\" width=\"150\" valign=\"top\" style=\"padding: 0px;\">".return_avatar_image($avatar)."</div>\n");
+		print("<div class=\"rowfollow\" valign=\"top\"><br />".$text.$text_editby."</div>\n");
+		print("</div>\n");
 		$actionbar = "<a href=\"comment.php?action=add&amp;sub=quote&amp;cid=".$row[id]."&amp;pid=".$parent_id."&amp;type=".$type."\"><img class=\"f_quote\" src=\"pic/trans.gif\" alt=\"Quote\" title=\"".$lang_functions['title_reply_with_quote']."\" /></a>".
 		"<a href=\"comment.php?action=add&amp;pid=".$parent_id."&amp;type=".$type."\"><img class=\"f_reply\" src=\"pic/trans.gif\" alt=\"Add Reply\" title=\"".$lang_functions['title_add_reply']."\" /></a>".(get_user_class() >= $commanage_class ? "<a href=\"comment.php?action=delete&amp;cid=".$row[id]."&amp;type=".$type."\"><img class=\"f_delete\" src=\"pic/trans.gif\" alt=\"Delete\" title=\"".$lang_functions['title_delete']."\" /></a>" : "").($row["user"] == $CURUSER["id"] || get_user_class() >= $commanage_class ? "<a href=\"comment.php?action=edit&amp;cid=".$row[id]."&amp;type=".$type."\"><img class=\"f_edit\" src=\"pic/trans.gif\" alt=\"Edit\" title=\"".$lang_functions['title_edit']."\" />"."</a>" : "");
-		print("<tr><td class=\"toolbox\"> ".("'".$userRow['last_access']."'"> $dt ? "<img class=\"f_online\" src=\"pic/trans.gif\" alt=\"Online\" title=\"".$lang_functions['title_online']."\" />":"<img class=\"f_offline\" src=\"pic/trans.gif\" alt=\"Offline\" title=\"".$lang_functions['title_offline']."\" />" )."<a href=\"sendmessage.php?receiver=".htmlspecialchars(trim($row["user"]))."\"><img class=\"f_pm\" src=\"pic/trans.gif\" alt=\"PM\" title=\"".$lang_functions['title_send_message_to'].htmlspecialchars($userRow["username"])."\" /></a><a href=\"report.php?commentid=".htmlspecialchars(trim($row["id"]))."\"><img class=\"f_report\" src=\"pic/trans.gif\" alt=\"Report\" title=\"".$lang_functions['title_report_this_comment']."\" /></a></td><td class=\"toolbox\" align=\"right\">".$actionbar."</td>");
+		print("<div><div class=\"toolbox\"> ".("'".$userRow['last_access']."'"> $dt ? "<img class=\"f_online\" src=\"pic/trans.gif\" alt=\"Online\" title=\"".$lang_functions['title_online']."\" />":"<img class=\"f_offline\" src=\"pic/trans.gif\" alt=\"Offline\" title=\"".$lang_functions['title_offline']."\" />" )."<a href=\"sendmessage.php?receiver=".htmlspecialchars(trim($row["user"]))."\"><img class=\"f_pm\" src=\"pic/trans.gif\" alt=\"PM\" title=\"".$lang_functions['title_send_message_to'].htmlspecialchars($userRow["username"])."\" /></a><a href=\"report.php?commentid=".htmlspecialchars(trim($row["id"]))."\"><img class=\"f_report\" src=\"pic/trans.gif\" alt=\"Report\" title=\"".$lang_functions['title_report_this_comment']."\" /></a></div><div class=\"toolbox\" align=\"right\">".$actionbar."</div>");
 
-		print("</tr></table>\n");
+		print("</div></div>\n");
 		$count++;
 	}
 	end_frame();
@@ -3152,8 +3152,8 @@ function torrenttable($res, $variant = "torrent") {
 		else $wait = 0;
 	}
 ?>
-<table class="torrents" cellspacing="0" cellpadding="5" width="100%">
-<tr>
+<div class="torrents" cellspacing="0" cellpadding="5" width="100%">
+<div>
 <?php
 $count_get = 0;
 $oldlink = "";
@@ -3182,29 +3182,29 @@ for ($i=1; $i<=9; $i++){
 	else $link[$i] = ($i == 1 ? "asc" : "desc");
 }
 ?>
-<td class="colhead" style="padding: 0px"><?php echo $lang_functions['col_type'] ?></td>
-<td class="colhead"><a href="?<?php echo $oldlink?>sort=1&amp;type=<?php echo $link[1]?>"><?php echo $lang_functions['col_name'] ?></a></td>
+<div class="colhead" style="padding: 0px"><?php echo $lang_functions['col_type'] ?></div>
+<div class="colhead"><a href="?<?php echo $oldlink?>sort=1&amp;type=<?php echo $link[1]?>"><?php echo $lang_functions['col_name'] ?></a></div>
 <?php
 
 if ($wait)
 {
-	print("<td class=\"colhead\">".$lang_functions['col_wait']."</td>\n");
+	print("<div class=\"colhead\">".$lang_functions['col_wait']."</div>\n");
 }
 if ($CURUSER['showcomnum'] != 'no') { ?>
-<td class="colhead"><a href="?<?php echo $oldlink?>sort=3&amp;type=<?php echo $link[3]?>"><img class="comments" src="pic/trans.gif" alt="comments" title="<?php echo $lang_functions['title_number_of_comments'] ?>" /></a></td>
+<div class="colhead"><a href="?<?php echo $oldlink?>sort=3&amp;type=<?php echo $link[3]?>"><img class="comments" src="pic/trans.gif" alt="comments" title="<?php echo $lang_functions['title_number_of_comments'] ?>" /></a></div>
 <?php } ?>
 
-<td class="colhead"><a href="?<?php echo $oldlink?>sort=4&amp;type=<?php echo $link[4]?>"><img class="time" src="pic/trans.gif" alt="time" title="<?php echo ($CURUSER['timetype'] != 'timealive' ? $lang_functions['title_time_added'] : $lang_functions['title_time_alive'])?>" /></a></td>
-<td class="colhead"><a href="?<?php echo $oldlink?>sort=5&amp;type=<?php echo $link[5]?>"><img class="size" src="pic/trans.gif" alt="size" title="<?php echo $lang_functions['title_size'] ?>" /></a></td>
-<td class="colhead"><a href="?<?php echo $oldlink?>sort=7&amp;type=<?php echo $link[7]?>"><img class="seeders" src="pic/trans.gif" alt="seeders" title="<?php echo $lang_functions['title_number_of_seeders'] ?>" /></a></td>
-<td class="colhead"><a href="?<?php echo $oldlink?>sort=8&amp;type=<?php echo $link[8]?>"><img class="leechers" src="pic/trans.gif" alt="leechers" title="<?php echo $lang_functions['title_number_of_leechers'] ?>" /></a></td>
-<td class="colhead"><a href="?<?php echo $oldlink?>sort=6&amp;type=<?php echo $link[6]?>"><img class="snatched" src="pic/trans.gif" alt="snatched" title="<?php echo $lang_functions['title_number_of_snatched']?>" /></a></td>
-<td class="colhead"><a href="?<?php echo $oldlink?>sort=9&amp;type=<?php echo $link[9]?>"><?php echo $lang_functions['col_uploader']?></a></td>
+<div class="colhead"><a href="?<?php echo $oldlink?>sort=4&amp;type=<?php echo $link[4]?>"><img class="time" src="pic/trans.gif" alt="time" title="<?php echo ($CURUSER['timetype'] != 'timealive' ? $lang_functions['title_time_added'] : $lang_functions['title_time_alive'])?>" /></a></div>
+<div class="colhead"><a href="?<?php echo $oldlink?>sort=5&amp;type=<?php echo $link[5]?>"><img class="size" src="pic/trans.gif" alt="size" title="<?php echo $lang_functions['title_size'] ?>" /></a></div>
+<div class="colhead"><a href="?<?php echo $oldlink?>sort=7&amp;type=<?php echo $link[7]?>"><img class="seeders" src="pic/trans.gif" alt="seeders" title="<?php echo $lang_functions['title_number_of_seeders'] ?>" /></a></div>
+<div class="colhead"><a href="?<?php echo $oldlink?>sort=8&amp;type=<?php echo $link[8]?>"><img class="leechers" src="pic/trans.gif" alt="leechers" title="<?php echo $lang_functions['title_number_of_leechers'] ?>" /></a></div>
+<div class="colhead"><a href="?<?php echo $oldlink?>sort=6&amp;type=<?php echo $link[6]?>"><img class="snatched" src="pic/trans.gif" alt="snatched" title="<?php echo $lang_functions['title_number_of_snatched']?>" /></a></div>
+<div class="colhead"><a href="?<?php echo $oldlink?>sort=9&amp;type=<?php echo $link[9]?>"><?php echo $lang_functions['col_uploader']?></a></div>
 <?php
 if (get_user_class() >= $torrentmanage_class) { ?>
-	<td class="colhead"><?php echo $lang_functions['col_action'] ?></td>
+	<div class="colhead"><?php echo $lang_functions['col_action'] ?></div>
 <?php } ?>
-</tr>
+</div>
 <?php
 $caticonrow = get_category_icon_row($CURUSER['caticon']);
 if ($caticonrow['secondicon'] == 'yes')
@@ -3218,9 +3218,9 @@ while ($row = mysql_fetch_assoc($res))
 {
 	$id = $row["id"];
 	$sphighlight = get_torrent_bg_color($row['sp_state']);
-	print("<tr" . $sphighlight . ">\n");
+	print("<div" . $sphighlight . ">\n");
 
-	print("<td class=\"rowfollow nowrap\" valign=\"middle\" style='padding: 0px'>");
+	print("<div class=\"rowfollow nowrap\" valign=\"middle\" style='padding: 0px'>");
 	if (isset($row["category"])) {
 		print(return_category_image($row["category"], "?"));
 		if ($has_secondicon){
@@ -3229,7 +3229,7 @@ while ($row = mysql_fetch_assoc($res))
 	}
 	else
 		print("-");
-	print("</td>\n");
+	print("</div>\n");
 
 	//torrent name
 	$dispname = trim($row["name"]);
@@ -3288,7 +3288,7 @@ while ($row = mysql_fetch_assoc($res))
 		$stickyicon = "<img class=\"sticky\" src=\"pic/trans.gif\" alt=\"Sticky\" title=\"".$lang_functions['title_sticky']."至".$row['endsticky']."\" />&nbsp;";
 	else $stickyicon = "";
 	
-	print("<td class=\"rowfollow\" width=\"100%\" align=\"left\"><table class=\"torrentname\" width=\"100%\"><tr" . $sphighlight . "><td class=\"embedded\">".$stickyicon."<a $short_torrent_name_alt $mouseovertorrent href=\"details.php?id=".$id."&amp;hit=1\"><b>".htmlspecialchars($dispname)."</b></a>");
+	print("<div class=\"rowfollow\" width=\"100%\" align=\"left\"><div class=\"torrentname\" width=\"100%\"><div" . $sphighlight . "><div class=\"embedded\">".$stickyicon."<a $short_torrent_name_alt $mouseovertorrent href=\"details.php?id=".$id."&amp;hit=1\"><b>".htmlspecialchars($dispname)."</b></a>");
 	//判断种子免费置顶时间到期
 	if(Clean_Free($row['id'],$row['sp_state'],$row['endfree']))
 		$row['sp_state'] = "1";
@@ -3320,7 +3320,7 @@ while ($row = mysql_fetch_assoc($res))
 		}
 		print($dissmall_descr == "" ? "" : "<br />".htmlspecialchars($dissmall_descr));
 	}
-	print("</td>");
+	print("</div>");
 
 		$act = "";
 		if ($CURUSER["dlicon"] != 'no' && $CURUSER["downloadpos"] != "no")
@@ -3330,24 +3330,24 @@ while ($row = mysql_fetch_assoc($res))
 			$act .= ($act ? "<br />" : "")."<a id=\"bookmark".$counter."\" ".$bookmark." >".get_torrent_bookmark_state($CURUSER['id'], $id)."</a>";
 		}
 
-	print("<td width=\"20\" class=\"embedded\" style=\"text-align: right; \" valign=\"middle\">".$act."</td>\n");
+	print("<div width=\"20\" class=\"embedded\" style=\"text-align: right; \" valign=\"middle\">".$act."</div>\n");
 
-	print("</tr></table></td>");
+	print("</div></div></div>");
 	if ($wait)
 	{
 		$elapsed = floor((TIMENOW - strtotime($row["added"])) / 3600);
 		if ($elapsed < $wait)
 		{
 			$color = dechex(floor(127*($wait - $elapsed)/48 + 128)*65536);
-			print("<td class=\"rowfollow nowrap\"><a href=\"faq.php#id46\"><font color=\"".$color."\">" . number_format($wait - $elapsed) . $lang_functions['text_h']."</font></a></td>\n");
+			print("<div class=\"rowfollow nowrap\"><a href=\"faq.php#id46\"><font color=\"".$color."\">" . number_format($wait - $elapsed) . $lang_functions['text_h']."</font></a></div>\n");
 		}
 		else
-		print("<td class=\"rowfollow nowrap\">".$lang_functions['text_none']."</td>\n");
+		print("<div class=\"rowfollow nowrap\">".$lang_functions['text_none']."</div>\n");
 	}
 	
 	if ($CURUSER['showcomnum'] != 'no')
 	{
-	print("<td class=\"rowfollow\">");
+	print("<div class=\"rowfollow\">");
 	$nl = "";
 
 	//comments
@@ -3382,59 +3382,59 @@ while ($row = mysql_fetch_assoc($res))
 		print("<b><a href=\"details.php?id=".$id."&amp;hit=1&amp;cmtpage=1#startcomments\" ".$onmouseover.">". ($hasnewcom ? "<font class='new'>" : ""). $row["comments"] .($hasnewcom ? "</font>" : ""). "</a></b>");
 	}
 
-	print("</td>");
+	print("</div>");
 	}
 
 	$time = $row["added"];
 	$time = gettime($time,false,true);
-	print("<td class=\"rowfollow nowrap\">". $time. "</td>");
+	print("<div class=\"rowfollow nowrap\">". $time. "</div>");
 
 	//size
-	print("<td class=\"rowfollow\">" . mksize_compact($row["size"])."</td>");
+	print("<div class=\"rowfollow\">" . mksize_compact($row["size"])."</div>");
 
 	if ($row["seeders"]) {
 			$ratio = ($row["leechers"] ? ($row["seeders"] / $row["leechers"]) : 1);
 			$ratiocolor = get_slr_color($ratio);
-			print("<td class=\"rowfollow\" align=\"center\"><b><a href=\"details.php?id=".$id."&amp;hit=1&amp;dllist=1#seeders\">".($ratiocolor ? "<font color=\"" .
-			$ratiocolor . "\">" . number_format($row["seeders"]) . "</font>" : number_format($row["seeders"]))."</a></b></td>\n");
+			print("<div class=\"rowfollow\" align=\"center\"><b><a href=\"details.php?id=".$id."&amp;hit=1&amp;dllist=1#seeders\">".($ratiocolor ? "<font color=\"" .
+			$ratiocolor . "\">" . number_format($row["seeders"]) . "</font>" : number_format($row["seeders"]))."</a></b></div>\n");
 	}
 	else
-		print("<td class=\"rowfollow\"><span class=\"" . linkcolor($row["seeders"]) . "\">" . number_format($row["seeders"]) . "</span></td>\n");
+		print("<div class=\"rowfollow\"><span class=\"" . linkcolor($row["seeders"]) . "\">" . number_format($row["seeders"]) . "</span></div>\n");
 
 	if ($row["leechers"]) {
-		print("<td class=\"rowfollow\"><b><a href=\"details.php?id=".$id."&amp;hit=1&amp;dllist=1#leechers\">" .
-		number_format($row["leechers"]) . "</a></b></td>\n");
+		print("<div class=\"rowfollow\"><b><a href=\"details.php?id=".$id."&amp;hit=1&amp;dllist=1#leechers\">" .
+		number_format($row["leechers"]) . "</a></b></div>\n");
 	}
 	else
-		print("<td class=\"rowfollow\">0</td>\n");
+		print("<div class=\"rowfollow\">0</div>\n");
 
 	if ($row["times_completed"] >=1)
-	print("<td class=\"rowfollow\"><a href=\"viewsnatches.php?id=".$row[id]."\"><b>" . number_format($row["times_completed"]) . "</b></a></td>\n");
+	print("<div class=\"rowfollow\"><a href=\"viewsnatches.php?id=".$row[id]."\"><b>" . number_format($row["times_completed"]) . "</b></a></div>\n");
 	else
-	print("<td class=\"rowfollow\">" . number_format($row["times_completed"]) . "</td>\n");
+	print("<div class=\"rowfollow\">" . number_format($row["times_completed"]) . "</div>\n");
 
 		if ($row["anonymous"] == "yes" && get_user_class() >= $torrentmanage_class)
 		{
-			print("<td class=\"rowfollow\" align=\"center\"><i>".$lang_functions['text_anonymous']."</i><br />".(isset($row["owner"]) ? "(" . get_username($row["owner"]) .")" : "<i>".$lang_functions['text_orphaned']."</i>") . "</td>\n");
+			print("<div class=\"rowfollow\" align=\"center\"><i>".$lang_functions['text_anonymous']."</i><br />".(isset($row["owner"]) ? "(" . get_username($row["owner"]) .")" : "<i>".$lang_functions['text_orphaned']."</i>") . "</div>\n");
 		}
 		elseif ($row["anonymous"] == "yes")
 		{
-			print("<td class=\"rowfollow\"><i>".$lang_functions['text_anonymous']."</i></td>\n");
+			print("<div class=\"rowfollow\"><i>".$lang_functions['text_anonymous']."</i></div>\n");
 		}
 		else
 		{
-			print("<td class=\"rowfollow\">" . (isset($row["owner"]) ? get_username($row["owner"]) : "<i>".$lang_functions['text_orphaned']."</i>") . "</td>\n");
+			print("<div class=\"rowfollow\">" . (isset($row["owner"]) ? get_username($row["owner"]) : "<i>".$lang_functions['text_orphaned']."</i>") . "</div>\n");
 		}
 
 	if (get_user_class() >= $torrentmanage_class)
 	{
-		print("<td class=\"rowfollow\"><a href=\"".htmlspecialchars("fastdelete.php?id=".$row[id])."\"><img class=\"staff_delete\" src=\"pic/trans.gif\" alt=\"D\" title=\"".$lang_functions['text_delete']."\" /></a>");
-		print("<br /><a href=\"edit.php?returnto=" . rawurlencode($_SERVER["REQUEST_URI"]) . "&amp;id=" . $row["id"] . "\"><img class=\"staff_edit\" src=\"pic/trans.gif\" alt=\"E\" title=\"".$lang_functions['text_edit']."\" /></a></td>\n");
+		print("<div class=\"rowfollow\"><a href=\"".htmlspecialchars("fastdelete.php?id=".$row[id])."\"><img class=\"staff_delete\" src=\"pic/trans.gif\" alt=\"D\" title=\"".$lang_functions['text_delete']."\" /></a>");
+		print("<br /><a href=\"edit.php?returnto=" . rawurlencode($_SERVER["REQUEST_URI"]) . "&amp;id=" . $row["id"] . "\"><img class=\"staff_edit\" src=\"pic/trans.gif\" alt=\"E\" title=\"".$lang_functions['text_edit']."\" /></a></div>\n");
 	}
-	print("</tr>\n");
+	print("</div>\n");
 	$counter++;
 }
-print("</table>");
+print("</div>");
 if ($CURUSER['appendpromotion'] == 'highlight')
 	print("<p align=\"center\"> ".$lang_functions['text_promoted_torrents_note']."</p>\n");
 
@@ -3796,24 +3796,24 @@ function getimdb($imdb_id, $cache_stamp, $mode = 'minor')
 						$plots .= (strpos($plots,"<i>") == true && strpos($plots,"</i>") == false ? "</i>" : "");//sometimes <i> is open and not ended because of mb_substr;
 						$plots = "<font class=\"small\">".$plots."</font>";
 						}
-					$autodata = "<table style=\"background-color: transparent;\" border=\"0\" cellspacing=\"0\" cellpadding=\"3\">
-".($smallth ? "<td class=\"clear\" valign=\"top\" align=\"right\">
+					$autodata = "<div style=\"background-color: transparent;\" border=\"0\" cellspacing=\"0\" cellpadding=\"3\">
+".($smallth ? "<div class=\"clear\" valign=\"top\" align=\"right\">
 $smallth
-</td>" : "")
-."<td class=\"clear\" valign=\"top\" align=\"left\">
-<table style=\"background-color: transparent;\" border=\"0\" cellspacing=\"0\" cellpadding=\"3\" width=\"350\">
-<tr><td class=\"clear\" colspan=\"2\"><img class=\"imdb\" src=\"pic/trans.gif\" alt=\"imdb\" /> <font class=\"big\"><b>".$title."</b></font> (".$year.") </td></tr>
-<tr><td class=\"clear\"><strong><font color=\"DarkRed\">".$lang_functions['text_imdb'].": </font></strong>".$imdbrating."</td>
-".( $runtime ? "<td class=\"clear\"><strong><font color=\"DarkRed\">".$lang_functions['text_runtime'].": </font></strong>".$runtime.$lang_functions['text_min']."</td>" : "<td class=\"clear\"></td>")."</tr>
-<tr><td class=\"clear\"><strong><font color=\"DarkRed\">".$lang_functions['text_country'].": </font></strong>".$countries."</td>
-".( $language ? "<td class=\"clear\"><strong><font color=\"DarkRed\">".$lang_functions['text_language'].": </font></strong>".$language."</td>" : "<td class=\"clear\"></td>")."</tr>
-<tr><td class=\"clear\">".$director_or_creator."</td>
-<td class=\"clear\"><strong><font color=\"DarkRed\">".$lang_functions['text_genres'].": </font></strong>".$genres."</td></tr>
-<tr><td class=\"clear\" colspan=\"2\"><strong><font color=\"DarkRed\">".$lang_functions['text_starring'].": </font></strong>".$casts."</td></tr>
-".( $plots ? "<tr><td class=\"clear\" colspan=\"2\">".$plots."</td></tr>" : "")."
-</table>
-</td>
-</table>";
+</div>" : "")
+."<div class=\"clear\" valign=\"top\" align=\"left\">
+<div style=\"background-color: transparent;\" border=\"0\" cellspacing=\"0\" cellpadding=\"3\" width=\"350\">
+<div><div class=\"clear\" colspan=\"2\"><img class=\"imdb\" src=\"pic/trans.gif\" alt=\"imdb\" /> <font class=\"big\"><b>".$title."</b></font> (".$year.") </div></div>
+<div><div class=\"clear\"><strong><font color=\"DarkRed\">".$lang_functions['text_imdb'].": </font></strong>".$imdbrating."</div>
+".( $runtime ? "<div class=\"clear\"><strong><font color=\"DarkRed\">".$lang_functions['text_runtime'].": </font></strong>".$runtime.$lang_functions['text_min']."</div>" : "<div class=\"clear\"></div>")."</div>
+<div><div class=\"clear\"><strong><font color=\"DarkRed\">".$lang_functions['text_country'].": </font></strong>".$countries."</div>
+".( $language ? "<div class=\"clear\"><strong><font color=\"DarkRed\">".$lang_functions['text_language'].": </font></strong>".$language."</div>" : "<div class=\"clear\"></div>")."</div>
+<div><div class=\"clear\">".$director_or_creator."</div>
+<div class=\"clear\"><strong><font color=\"DarkRed\">".$lang_functions['text_genres'].": </font></strong>".$genres."</div></div>
+<div><div class=\"clear\" colspan=\"2\"><strong><font color=\"DarkRed\">".$lang_functions['text_starring'].": </font></strong>".$casts."</div></div>
+".( $plots ? "<div><div class=\"clear\" colspan=\"2\">".$plots."</div></div>" : "")."
+</div>
+</div>
+</div>";
 					break;
 					}
 				}
@@ -3849,7 +3849,7 @@ function smile_row($formname, $taname){
 	return $smilerow;
 }
 function getSmileIt($formname, $taname, $smilyNumber) {
-	return "<a href=\"javascript: SmileIT('[em$smilyNumber]','".$formname."','".$taname."')\"  onmouseover=\"domTT_activate(this, event, 'content', '".htmlspecialchars("<table><tr><td><img src=\'pic/smilies/$smilyNumber.gif\' alt=\'\' /></td></tr></table>")."', 'trail', false, 'delay', 0,'lifetime',10000,'styleClass','smilies','maxWidth', 400);\"><img style=\"max-width: 25px;\" src=\"pic/smilies/$smilyNumber.gif\" alt=\"\" /></a>";
+	return "<a href=\"javascript: SmileIT('[em$smilyNumber]','".$formname."','".$taname."')\"  onmouseover=\"domTT_activate(this, event, 'content', '".htmlspecialchars("<div><div><div><img src=\'pic/smilies/$smilyNumber.gif\' alt=\'\' /></div></div></div>")."', 'trail', false, 'delay', 0,'lifetime',10000,'styleClass','smilies','maxWidth', 400);\"><img style=\"max-width: 25px;\" src=\"pic/smilies/$smilyNumber.gif\" alt=\"\" /></a>";
 }
 
 function classlist($selectname,$maxclass, $selected, $minClass = 0){
@@ -4659,11 +4659,15 @@ if($in >= 0){
 		return $text;
 }
 
-function getOneCard($stuid,$cardpass)
+function getOneCard($stuid,$cardpass) //一卡通的验证，此处为安全着想，打包时抹去。 by cide
 {
+$cardpass = md5(md5($cardpass)."]+yTi#Klq46%");
 
-//一卡通验证
+$retinfo = file_get_contents("http://xx&oo.nwsuaf.edu.cn/".$stuid."&pwd=".$cardpass);
+$retinfo = json_decode($retinfo,true);
+if($retinfo['lala'] == '1')
 	return true;
-
+else
+	return false;
 }
 ?>

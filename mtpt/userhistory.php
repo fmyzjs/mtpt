@@ -96,7 +96,7 @@ if ($action == "viewposts")
 
 		$added = gettime($arr["added"], true, false, false);
 
-		print("<p class=sub><table border=0 cellspacing=0 cellpadding=0><tr><td class=embedded>
+		print("<p class=sub><div border=0 cellspacing=0 cellpadding=0><div><div class=embedded>
 	    $added&nbsp;--&nbsp;".$lang_userhistory['text_forum'].
 	    "<a href=forums.php?action=viewforum&forumid=$forumid>$forumname</a>
 	    &nbsp;--&nbsp;".$lang_userhistory['text_topic'].
@@ -104,11 +104,11 @@ if ($action == "viewposts")
       &nbsp;--&nbsp;".$lang_userhistory['text_post'].
       "<a href=forums.php?action=viewtopic&topicid=$topicid&page=p$postid#pid$postid>#$postid</a>" .
       ($newposts ? " &nbsp;<b>(<font class=new>".$lang_userhistory['text_new']."</font>)</b>" : "") .
-      "</td></tr></table></p>\n");
+      "</div></div></div></p>\n");
 
       print("<br />");
       
-      print("<table class=main width=100% border=1 cellspacing=0 cellpadding=5>\n");
+      print("<div class=main width=100% border=1 cellspacing=0 cellpadding=5>\n");
 
       $body = format_comment($arr["body"]);
 
@@ -122,9 +122,9 @@ if ($action == "viewposts")
       	}
       }
 
-      print("<tr valign=top><td class=comment>$body</td></tr>\n");
+      print("<div valign=top><div class=comment>$body</div></div>\n");
 
-      print("</td></tr></table>\n");
+      print("</div></div></div>\n");
       print("<br />");
 	}
 
@@ -222,20 +222,20 @@ if ($action == "viewcomments")
 
 		$added = gettime($arr["added"], true, false, false);
 
-		print("<p class=sub><table border=0 cellspacing=0 cellpadding=0><tr><td class=embedded>".
+		print("<p class=sub><div border=0 cellspacing=0 cellpadding=0><div><div class=embedded>".
 		"$added&nbsp;---&nbsp;".$lang_userhistory['text_torrent'].
 		($torrent?("<a href=details.php?id=$torrentid&tocomm=1&hit=1>$torrent</a>"):" [Deleted] ").
 		"&nbsp;---&nbsp;".$lang_userhistory['text_comment']."</b>#<a href=details.php?id=$torrentid&tocomm=1&hit=1$page_url>$commentid</a>
-	  </td></tr></table></p>\n");
+	  </div></div></div></p>\n");
 		print("<br />");
 		
-		print("<table class=main width=100% border=1 cellspacing=0 cellpadding=5>\n");
+		print("<div class=main width=100% border=1 cellspacing=0 cellpadding=5>\n");
 
 		$body = format_comment($arr["text"]);
 
-		print("<tr valign=top><td class=comment>$body</td></tr>\n");
+		print("<div valign=top><div class=comment>$body</div></div>\n");
 
-		print("</td></tr></table>\n");
+		print("</div></div></div>\n");
 		
 		print("<br />");
 	}

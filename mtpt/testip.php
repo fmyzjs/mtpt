@@ -19,18 +19,18 @@ if ($ip)
 	  stderr("Result", $lang_testip['text_resultip']."<b>". htmlspecialchars($ip) ."</b>".$lang_testip['text_notbanned'],false);
 	else
 	{
-	  $banstable = "<table class=main border=0 cellspacing=0 cellpadding=5>\n" .
-	    "<tr><td class=colhead>First</td><td class=colhead>Last</td><td class=colhead>Comment</td></tr>\n";
+	  $banstable = "<div class=main border=0 cellspacing=0 cellpadding=5>\n" .
+	    "<div><div class=colhead>First</div><div class=colhead>Last</div><div class=colhead>Comment</div></div>\n";
 	  while ($arr = mysql_fetch_assoc($res))
 	  {
 	    $first = long2ip($arr["first"]);
 	    $last = long2ip($arr["last"]);
 	    $comment = htmlspecialchars($arr["comment"]);
-	    $banstable .= "<tr><td>$first</td><td>$last</td><td>$comment</td></tr>\n";
+	    $banstable .= "<div><div>$first</div><div>$last</div><div>$comment</div></div>\n";
 	  }
-	  $banstable .= "</table>\n";
+	  $banstable .= "</div>\n";
 	
-	  stderr("结果", "<table border=0 cellspacing=0 cellpadding=0><tr><td class=embedded style='padding-right: 5px'><img src=pic/smilies/excl.gif></td><td class=embedded>The IP address <b>". htmlspecialchars($ip) ."</b> is banned:</td></tr></table><p>". $banstable ."</p>",false);
+	  stderr("结果", "<div border=0 cellspacing=0 cellpadding=0><div><div class=embedded style='padding-right: 5px'><img src=pic/smilies/excl.gif></div><div class=embedded>The IP address <b>". htmlspecialchars($ip) ."</b> is banned:</div></div></div><p>". $banstable ."</p>",false);
 	}
 }
 stdhead();
@@ -38,11 +38,11 @@ stdhead();
 ?>
 <h1><?php echo $lang_testip['head_testip']?></h1>
 <form method=post action=testip.php>
-<table border=1 cellspacing=0 cellpadding=5>
-<tr><td class=rowhead><?php echo $lang_testip['text_ip']?></td><td><input type=text name=ip></td></tr>
-<tr><td colspan=2 align=center><input type=submit class=btn></td></tr>
+<div border=1 cellspacing=0 cellpadding=5>
+<div><div class=rowhead><?php echo $lang_testip['text_ip']?></div><div><input type=text name=ip></div></div>
+<div><div colspan=2 align=center><input type=submit class=btn></div></div>
 </form>
-</table>
+</div>
 
 <?php
 stdfoot();

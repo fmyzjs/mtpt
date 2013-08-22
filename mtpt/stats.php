@@ -58,22 +58,22 @@ else
 {
 	begin_frame($lang_stats['head_uploader_stats'], True);
 	begin_table();
-	print("<tr>\n
-	<td class=colhead><a href=\"" . $_SERVER['PHP_SELF'] . "?uporder=uploader&catorder=$catorder\" class=colheadlink>".$lang_stats['text_username']."</a></td>\n
-	<td class=colhead><a href=\"" . $_SERVER['PHP_SELF'] . "?uporder=lastul&catorder=$catorder\" class=colheadlink>".$lang_stats['text_lastupload']."</a></td>\n
-	<td class=colhead><a href=\"" . $_SERVER['PHP_SELF'] . "?uporder=torrents&catorder=$catorder\" class=colheadlink>".$lang_stats['text_torrents']."</a></td>\n
-	<td class=colhead>".$lang_stats['text_torrents_perc']."</td>\n
-	<td class=colhead><a href=\"" . $_SERVER['PHP_SELF'] . "?uporder=peers&catorder=$catorder\" class=colheadlink>".$lang_stats['text_peers']."</a></td>\n
-	<td class=colhead>".$lang_stats['text_peers_perc']."</td>\n
-	</tr>\n");
+	print("<div>\n
+	<div class=colhead><a href=\"" . $_SERVER['PHP_SELF'] . "?uporder=uploader&catorder=$catorder\" class=colheadlink>".$lang_stats['text_username']."</a></div>\n
+	<div class=colhead><a href=\"" . $_SERVER['PHP_SELF'] . "?uporder=lastul&catorder=$catorder\" class=colheadlink>".$lang_stats['text_lastupload']."</a></div>\n
+	<div class=colhead><a href=\"" . $_SERVER['PHP_SELF'] . "?uporder=torrents&catorder=$catorder\" class=colheadlink>".$lang_stats['text_torrents']."</a></div>\n
+	<div class=colhead>".$lang_stats['text_torrents_perc']."</div>\n
+	<div class=colhead><a href=\"" . $_SERVER['PHP_SELF'] . "?uporder=peers&catorder=$catorder\" class=colheadlink>".$lang_stats['text_peers']."</a></div>\n
+	<div class=colhead>".$lang_stats['text_peers_perc']."</div>\n
+	</div>\n");
 	while ($uper = mysql_fetch_array($res))
 	{
-		print("<tr><td>" . get_username($uper['id']) . "</td>\n");
-		print("<td " . ($uper['last']?(">".$uper['last']." (".get_elapsed_time(strtotime($uper['last']))." ago)"):"align=center>---") . "</td>\n");
-		print("<td align=right>" . $uper['n_t'] . "</td>\n");
-		print("<td align=right>" . ($n_tor > 0?number_format(100 * $uper['n_t']/$n_tor,1)."%":"---") . "</td>\n");
-		print("<td align=right>" . $uper['n_p']."</td>\n");
-		print("<td align=right>" . ($n_peers > 0?number_format(100 * $uper['n_p']/$n_peers,1)."%":"---") . "</td></tr>\n");
+		print("<div><div>" . get_username($uper['id']) . "</div>\n");
+		print("<div " . ($uper['last']?(">".$uper['last']." (".get_elapsed_time(strtotime($uper['last']))." ago)"):"align=center>---") . "</div>\n");
+		print("<div align=right>" . $uper['n_t'] . "</div>\n");
+		print("<div align=right>" . ($n_tor > 0?number_format(100 * $uper['n_t']/$n_tor,1)."%":"---") . "</div>\n");
+		print("<div align=right>" . $uper['n_p']."</div>\n");
+		print("<div align=right>" . ($n_peers > 0?number_format(100 * $uper['n_p']/$n_peers,1)."%":"---") . "</div></div>\n");
 	}
 	end_table();
 	end_frame();
@@ -98,20 +98,20 @@ else
 
 	begin_frame($lang_stats['head_category_activity'], True);
 	begin_table();
-	print("<tr><td class=colhead><a href=\"" . $_SERVER['PHP_SELF'] . "?uporder=$uporder&catorder=category\" class=colheadlink>".$lang_stats['text_category']."</a></td>
-	<td class=colhead><a href=\"" . $_SERVER['PHP_SELF'] . "?uporder=$uporder&catorder=lastul\" class=colheadlink>".$lang_stats['text_lastupload']."</a></td>
-	<td class=colhead><a href=\"" . $_SERVER['PHP_SELF'] . "?uporder=$uporder&catorder=torrents\" class=colheadlink>".$lang_stats['text_torrents']."</a></td>
-	<td class=colhead>".$lang_stats['text_torrents_perc']."</td>
-	<td class=colhead><a href=\"" . $_SERVER['PHP_SELF'] . "?uporder=$uporder&catorder=peers\" class=colheadlink>".$lang_stats['text_peers']."</a></td>
-	<td class=colhead>".$lang_stats['text_peers_perc']."</td></tr>\n");
+	print("<div><div class=colhead><a href=\"" . $_SERVER['PHP_SELF'] . "?uporder=$uporder&catorder=category\" class=colheadlink>".$lang_stats['text_category']."</a></div>
+	<div class=colhead><a href=\"" . $_SERVER['PHP_SELF'] . "?uporder=$uporder&catorder=lastul\" class=colheadlink>".$lang_stats['text_lastupload']."</a></div>
+	<div class=colhead><a href=\"" . $_SERVER['PHP_SELF'] . "?uporder=$uporder&catorder=torrents\" class=colheadlink>".$lang_stats['text_torrents']."</a></div>
+	<div class=colhead>".$lang_stats['text_torrents_perc']."</div>
+	<div class=colhead><a href=\"" . $_SERVER['PHP_SELF'] . "?uporder=$uporder&catorder=peers\" class=colheadlink>".$lang_stats['text_peers']."</a></div>
+	<div class=colhead>".$lang_stats['text_peers_perc']."</div></div>\n");
 	while ($cat = mysql_fetch_array($res))
 	{
-		print("<tr><td class=rowhead>" . $cat['name'] . "</b></a></td>");
-		print("<td " . ($cat['last']?(">".$cat['last']." (".get_elapsed_time(strtotime($cat['last']))." ago)"):"align = center>---") ."</td>");
-		print("<td align=right>" . $cat['n_t'] . "</td>");
-		print("<td align=right>" . number_format(100 * $cat['n_t']/$n_tor,1) . "%</td>");
-		print("<td align=right>" . $cat['n_p'] . "</td>");
-		print("<td align=right>" . ($n_peers > 0?number_format(100 * $cat['n_p']/$n_peers,1)."%":"---") . "</td>\n");
+		print("<div><div class=rowhead>" . $cat['name'] . "</b></a></div>");
+		print("<div " . ($cat['last']?(">".$cat['last']." (".get_elapsed_time(strtotime($cat['last']))." ago)"):"align = center>---") ."</div>");
+		print("<div align=right>" . $cat['n_t'] . "</div>");
+		print("<div align=right>" . number_format(100 * $cat['n_t']/$n_tor,1) . "%</div>");
+		print("<div align=right>" . $cat['n_p'] . "</div>");
+		print("<div align=right>" . ($n_peers > 0?number_format(100 * $cat['n_p']/$n_peers,1)."%":"---") . "</div>\n");
 	}
 	end_table();
 	end_frame();

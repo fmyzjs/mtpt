@@ -13,14 +13,14 @@ header("Content-Type: text/xml; charset=utf-8");
 $id = 0 + $_GET['id'];
 if(isset($CURUSER))
 {
-	$s = "<table class=\"main\" border=\"1\" cellspacing=0 cellpadding=\"5\">\n";
+	$s = "<div class=\"main\" border=\"1\" cellspacing=0 cellpadding=\"5\">\n";
 
 	$subres = sql_query("SELECT * FROM files WHERE torrent = ".sqlesc($id)." ORDER BY id");
-	$s.="<tr><td class=colhead>".$lang_viewfilelist['col_path']."</td><td class=colhead align=center><img class=\"size\" src=\"pic/trans.gif\" alt=\"size\" /></td></tr>\n";
+	$s.="<div><div class=colhead>".$lang_viewfilelist['col_path']."</div><div class=colhead align=center><img class=\"size\" src=\"pic/trans.gif\" alt=\"size\" /></div></div>\n";
 	while ($subrow = mysql_fetch_array($subres)) {
-		$s .= "<tr><td class=rowfollow>" . $subrow["filename"] . "</td><td class=rowfollow align=\"right\">" . mksize($subrow["size"]) . "</td></tr>\n";
+		$s .= "<div><div class=rowfollow>" . $subrow["filename"] . "</div><div class=rowfollow align=\"right\">" . mksize($subrow["size"]) . "</div></div>\n";
 	}
-	$s .= "</table>\n";
+	$s .= "</div>\n";
 	echo $s;
 }
 ?>

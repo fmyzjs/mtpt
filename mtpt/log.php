@@ -48,9 +48,9 @@ function logmenu($selected = "dailylog"){
 
 function searchtable($title, $action, $opts = array()){
 		global $lang_log;
-		print("<table border=1 cellspacing=0 width=940 cellpadding=5>\n");
-		print("<tr><td class=colhead align=left>".$title."</td></tr>\n");
-		print("<tr><td class=toolbox align=left><form method=\"get\" action='" . $_SERVER['PHP_SELF'] . "'>\n");
+		print("<div border=1 cellspacing=0 width=940 cellpadding=5>\n");
+		print("<div><div class=colhead align=left>".$title."</div></div>\n");
+		print("<div><div class=toolbox align=left><form method=\"get\" action='" . $_SERVER['PHP_SELF'] . "'>\n");
 		print("<input type=\"text\" name=\"query\" style=\"width:500px\" value=\"".$_GET['query']."\">\n");
 		if ($opts) {
 			print($lang_log['text_in']."<select name=search>");
@@ -60,34 +60,34 @@ function searchtable($title, $action, $opts = array()){
 			}
 		print("<input type=\"hidden\" name=\"action\" value='".$action."'>&nbsp;&nbsp;");
 		print("<input type=submit value=" . $lang_log['submit_search'] . "></form>\n");
-		print("</td></tr></table><br />\n");
+		print("</div></div></div><br />\n");
 }
 
 function additem($title, $action){
 		global $lang_log;
-		print("<table border=1 cellspacing=0 width=940 cellpadding=5>\n");
-		print("<tr><td class=colhead align=left>".$title."</td></tr>\n");
-		print("<tr><td class=toolbox align=left><form method=\"post\" action='" . $_SERVER['PHP_SELF'] . "'>\n");
+		print("<div border=1 cellspacing=0 width=940 cellpadding=5>\n");
+		print("<div><div class=colhead align=left>".$title."</div></div>\n");
+		print("<div><div class=toolbox align=left><form method=\"post\" action='" . $_SERVER['PHP_SELF'] . "'>\n");
 		print("<textarea name=\"txt\" style=\"width:500px\" rows=\"3\" >".$row["txt"]."</textarea>\n");
 		print("<input type=\"hidden\" name=\"action\" value=".$action.">");
 		print("<input type=\"hidden\" name=\"do\" value=\"add\">");
 		print("<input type=submit value=" . $lang_log['submit_add'] . "></form>\n");
-		print("</td></tr></table><br />\n");
+		print("</div></div></div><br />\n");
 }
 
 function edititem($title, $action, $id){
 		global $lang_log;
 		$result = sql_query ("SELECT * FROM ".$action." where id = ".sqlesc($id)) or sqlerr(__FILE__, __LINE__);
 		if ($row = mysql_fetch_array($result)) {
-		print("<table border=1 cellspacing=0 width=940 cellpadding=5>\n");
-		print("<tr><td class=colhead align=left>".$title."</td></tr>\n");
-		print("<tr><td class=toolbox align=left><form method=\"post\" action='" . $_SERVER['PHP_SELF'] . "'>\n");
+		print("<div border=1 cellspacing=0 width=940 cellpadding=5>\n");
+		print("<div><div class=colhead align=left>".$title."</div></div>\n");
+		print("<div><div class=toolbox align=left><form method=\"post\" action='" . $_SERVER['PHP_SELF'] . "'>\n");
 		print("<textarea name=\"txt\" style=\"width:500px\" rows=\"3\" >".$row["txt"]."</textarea>\n");
 		print("<input type=\"hidden\" name=\"action\" value=".$action.">");
 		print("<input type=\"hidden\" name=\"do\" value=\"update\">");
 		print("<input type=\"hidden\" name=\"id\" value=".$id.">");
 		print("<input type=submit value=" . $lang_log['submit_okay'] . " style='height: 20px' /></form>\n");
-		print("</td></tr></table><br />\n");
+		print("</div></div></div><br />\n");
 		}
 }
 
@@ -126,8 +126,8 @@ else {
 // ------------- start: stats ------------------//
 ?>
 <h2><?php echo $lang_log['text_tracker_statistics'] ?></h2>
-<table width="100%"><tr><td class="text" align="center">
-<table width="60%" class="main" border="1" cellspacing="0" cellpadding="10">
+<div width="100%"><div><div class="text" align="center">
+<div width="60%" class="main" border="1" cellspacing="0" cellpadding="10">
 <?php
 	$Cache->new_page('stats_userslog', 3600, true);
 	if (!$Cache->get_page()){
@@ -143,43 +143,43 @@ else {
 	$registered_male = number_format(get_row_count("users", "WHERE gender='Male'"));
 	$registered_female = number_format(get_row_count("users", "WHERE gender='Female'"));
 ?>
-<tr>
+<div>
 <?php
 	twotd($lang_log['row_users_active_today'],$totalonlinetoday);
 	twotd($lang_log['row_users_active_this_week'],$totalonlineweek);
 ?>
-</tr>
-<tr>
+</div>
+<div>
 <?php
 	twotd($lang_log['row_registered_users'],$registered." / ".number_format($maxusers));
 	twotd($lang_log['row_unconfirmed_users'],$unverified);
 ?>
-</tr>
-<tr>
+</div>
+<div>
 <?php
 	twotd(get_user_class_name(UC_VIP,false,false,true),$VIP);
 	twotd($lang_log['row_donors']." <img class=\"star\" src=\"pic/trans.gif\" alt=\"Donor\" />",$donated);
 ?>
-</tr>
-<tr>
+</div>
+<div>
 <?php
 	twotd($lang_log['row_warned_users']." <img class=\"warned\" src=\"pic/trans.gif\" alt=\"warned\" />",$warned);
 	twotd($lang_log['row_banned_users']." <img class=\"disabled\" src=\"pic/trans.gif\" alt=\"disabled\" />",$disabled);
 ?>
-</tr>
-<tr>
+</div>
+<div>
 <?php
 	twotd($lang_log['row_male_users'],$registered_male);
 	twotd($lang_log['row_female_users'],$registered_female);
 ?>
-</tr>
+</div>
 <?php
 	$Cache->end_whole_row();
 	$Cache->cache_page();
 	}
 	echo $Cache->next_row();
 ?>
-<tr><td colspan="4" class="rowhead">&nbsp;</td></tr>
+<div><div colspan="4" class="rowhead">&nbsp;</div></div>
 <?php
 	$Cache->new_page('stats_torrentslog', 1800, true);
 	if (!$Cache->get_page() && 1){
@@ -203,49 +203,49 @@ else {
 	$totaldownloaded = get_row_sum("users","downloaded");
 	$totaldata = $totaldownloaded+$totaluploaded;
 ?>
-<tr>
+<div>
 <?php
 	twotd($lang_log['row_torrents'],$torrents);
 	twotd($lang_log['row_dead_torrents'],$dead);
 ?>
-</tr>
-<tr>
+</div>
+<div>
 <?php
 	twotd($lang_log['row_seeders'],$seeders);
 	twotd($lang_log['row_leechers'],$leechers);
 ?>
-</tr>
-<tr>
+</div>
+<div>
 <?php
 	twotd($lang_log['row_peers'],$peers);
 	twotd($lang_log['row_seeder_leecher_ratio'],$ratio."%");
 ?>
-</tr>
-<tr>
+</div>
+<div>
 <?php
 	twotd($lang_log['row_active_browsing_users'], $activewebusernow);
 	twotd($lang_log['row_tracker_active_users'], $activetrackerusernow);
 ?>
-</tr>
-<tr>
+</div>
+<div>
 <?php
 	twotd($lang_log['row_total_size_of_torrents'],$totaltorrentssize);
 	twotd($lang_log['row_total_uploaded'],mksize($totaluploaded));
 ?>
-</tr>
-<tr>
+</div>
+<div>
 <?php
 	twotd($lang_log['row_total_downloaded'],mksize($totaldownloaded));
 	twotd($lang_log['row_total_data'],mksize($totaldata));
 ?>
-</tr>
+</div>
 <?php
 	$Cache->end_whole_row();
 	$Cache->cache_page();
 	}
 	echo $Cache->next_row();
 ?>
-<tr><td colspan="4" class="rowhead">&nbsp;</td></tr>
+<div><div colspan="4" class="rowhead">&nbsp;</div></div>
 <?php
 	$Cache->new_page('stats_classeslog', 4535, true);
 	if (!$Cache->get_page()){
@@ -261,44 +261,44 @@ else {
 	$ultimateusers = number_format(get_row_count("users", "WHERE class=".UC_ULTIMATE_USER));
 	$nexusmasters = number_format(get_row_count("users", "WHERE class=".UC_NEXUS_MASTER));
 ?>
-<tr>
+<div>
 <?php
 	twotd(get_user_class_name(UC_PEASANT,false,false,true)." <img class=\"leechwarned\" src=\"pic/trans.gif\" alt=\"leechwarned\" />",$peasants);
 	twotd(get_user_class_name(UC_USER,false,false,true),$users);
 ?>
-</tr>
-<tr>
+</div>
+<div>
 <?php
 	twotd(get_user_class_name(UC_POWER_USER,false,false,true),$powerusers);
 	twotd(get_user_class_name(UC_ELITE_USER,false,false,true),$eliteusers);
 ?>
-</tr>
-<tr>
+</div>
+<div>
 <?php
 	twotd(get_user_class_name(UC_CRAZY_USER,false,false,true),$crazyusers);
 	twotd(get_user_class_name(UC_INSANE_USER,false,false,true),$insaneusers);
 ?>
-</tr>
-<tr>
+</div>
+<div>
 <?php
 	twotd(get_user_class_name(UC_VETERAN_USER,false,false,true),$veteranusers);
 	twotd(get_user_class_name(UC_EXTREME_USER,false,false,true),$extremeusers);
 ?>
-</tr>
-<tr>
+</div>
+<div>
 <?php
 	twotd(get_user_class_name(UC_ULTIMATE_USER,false,false,true),$ultimateusers);
 	twotd(get_user_class_name(UC_NEXUS_MASTER,false,false,true),$nexusmasters);
 ?>
-</tr>
+</div>
 <?php
 	$Cache->end_whole_row();
 	$Cache->cache_page();
 	}
 	echo $Cache->next_row();
 ?>
-</table>
-</td></tr></table>
+</div>
+</div></div></div>
 <?php
 // ------------- end: stats ------------------//
 		stdfoot();
@@ -349,8 +349,8 @@ else {
 
 		//echo $pagertop;
 
-			print("<table width=940 border=1 cellspacing=0 cellpadding=5>\n");
-			print("<tr><td class=colhead align=center><img class=\"time\" src=\"pic/trans.gif\" alt=\"time\" title=\"".$lang_log['title_time_added']."\" /></td><td class=colhead align=left>".$lang_log['col_event']."</td></tr>\n");
+			print("<div width=940 border=1 cellspacing=0 cellpadding=5>\n");
+			print("<div><div class=colhead align=center><img class=\"time\" src=\"pic/trans.gif\" alt=\"time\" title=\"".$lang_log['title_time_added']."\" /></div><div class=colhead align=left>".$lang_log['col_event']."</div></div>\n");
 			while ($arr = mysql_fetch_assoc($res))
 			{
 				$color = "";
@@ -359,9 +359,9 @@ else {
 				if (strpos($arr['txt'],'was added to the Request section')) $color = "purple";
 				if (strpos($arr['txt'],'was edited by')) $color = "blue";
 				if (strpos($arr['txt'],'settings updated by')) $color = "darkred";
-				print("<tr><td class=\"rowfollow nowrap\" align=center>".gettime($arr['added'],true,false)."</td><td class=rowfollow align=left><font color='".$color."'>".htmlspecialchars($arr['txt'])."</font></td></tr>\n");
+				print("<div><div class=\"rowfollow nowrap\" align=center>".gettime($arr['added'],true,false)."</div><div class=rowfollow align=left><font color='".$color."'>".htmlspecialchars($arr['txt'])."</font></div></div>\n");
 			}
-			print("</table>");
+			print("</div>");
 	
 			echo $pagerbottom;
 		}
@@ -419,14 +419,14 @@ else {
 
 		//echo $pagertop;
 
-			print("<table width=940 border=1 cellspacing=0 cellpadding=5>\n");
-			print("<tr><td class=colhead align=center>".$lang_log['col_date']."</td><td class=colhead align=left>".$lang_log['col_event']."</td>".(get_user_class() >= $chrmanage_class ? "<td class=colhead align=center>".$lang_log['col_modify']."</td>" : "")."</tr>\n");
+			print("<div width=940 border=1 cellspacing=0 cellpadding=5>\n");
+			print("<div><div class=colhead align=center>".$lang_log['col_date']."</div><div class=colhead align=left>".$lang_log['col_event']."</div>".(get_user_class() >= $chrmanage_class ? "<div class=colhead align=center>".$lang_log['col_modify']."</div>" : "")."</div>\n");
 			while ($arr = mysql_fetch_assoc($res))
 			{
 				$date = gettime($arr['added'],true,false);
-				print("<tr><td class=rowfollow align=center><nobr>$date</nobr></td><td class=rowfollow align=left>".format_comment($arr["txt"],true,false,true)."</td>".(get_user_class() >= $chrmanage_class ? "<td align=center nowrap><b><a href=\"".$PHP_SELF."?action=chronicle&do=edit&id=".$arr["id"]."\">".$lang_log['text_edit']."</a>&nbsp;|&nbsp;<a href=\"".$PHP_SELF."?action=chronicle&do=del&id=".$arr["id"]."\"><font color=red>".$lang_log['text_delete']."</font></a></b></td>" : "")."</tr>\n");
+				print("<div><div class=rowfollow align=center><nobr>$date</nobr></div><div class=rowfollow align=left>".format_comment($arr["txt"],true,false,true)."</div>".(get_user_class() >= $chrmanage_class ? "<div align=center nowrap><b><a href=\"".$PHP_SELF."?action=chronicle&do=edit&id=".$arr["id"]."\">".$lang_log['text_edit']."</a>&nbsp;|&nbsp;<a href=\"".$PHP_SELF."?action=chronicle&do=del&id=".$arr["id"]."\"><font color=red>".$lang_log['text_delete']."</font></a></b></div>" : "")."</div>\n");
 			}
-			print("</table>");
+			print("</div>");
 			echo $pagerbottom;
 		}
 
@@ -469,9 +469,9 @@ else {
 		//echo $pagertop;
 			while ($arr = mysql_fetch_assoc($res)){
 				$date = gettime($arr['added'],true,false);
-			print("<table width=940 border=1 cellspacing=0 cellpadding=5>\n");
-			print("<tr><td class=rowhead width='10%'>".$lang_log['col_title']."</td><td class=rowfollow align=left>".$arr["title"]." - <b>".$arr["status"]."</b></td></tr><tr><td class=rowhead width='10%'>".$lang_log['col_date']."</td><td class=rowfollow align=left>".$date."</td></tr><tr><td class=rowhead width='10%'>".$lang_log['col_body']."</td><td class=rowfollow align=left>".format_comment($arr["body"],false,false,true)."</td></tr>\n");
-			print("</table><br />");
+			print("<div width=940 border=1 cellspacing=0 cellpadding=5>\n");
+			print("<div><div class=rowhead width='10%'>".$lang_log['col_title']."</div><div class=rowfollow align=left>".$arr["title"]." - <b>".$arr["status"]."</b></div></div><div><div class=rowhead width='10%'>".$lang_log['col_date']."</div><div class=rowfollow align=left>".$date."</div></div><div><div class=rowhead width='10%'>".$lang_log['col_body']."</div><div class=rowfollow align=left>".format_comment($arr["body"],false,false,true)."</div></div>\n");
+			print("</div><br />");
 			}
 			echo $pagerbottom;
 		}
@@ -516,9 +516,9 @@ else {
 		//echo $pagertop;
 			while ($arr = mysql_fetch_assoc($res)){
 				$date = gettime($arr['added'],true,false);
-			print("<table width=940 border=1 cellspacing=0 cellpadding=5>\n");
-			print("<tr><td class=rowhead width='10%'>".$lang_log['col_title']."</td><td class=rowfollow align=left>".$arr["title"]."</td></tr><tr><td class=rowhead width='10%'>".$lang_log['col_date']."</td><td class=rowfollow align=left>".$date."</td></tr><tr><td class=rowhead width='10%'>".$lang_log['col_body']."</td><td class=rowfollow align=left>".format_comment($arr["body"],false,false,true)."</td></tr>\n");
-			print("</table><br />");
+			print("<div width=940 border=1 cellspacing=0 cellpadding=5>\n");
+			print("<div><div class=rowhead width='10%'>".$lang_log['col_title']."</div><div class=rowfollow align=left>".$arr["title"]."</div></div><div><div class=rowhead width='10%'>".$lang_log['col_date']."</div><div class=rowfollow align=left>".$date."</div></div><div><div class=rowhead width='10%'>".$lang_log['col_body']."</div><div class=rowfollow align=left>".format_comment($arr["body"],false,false,true)."</div></div>\n");
+			print("</div><br />");
 			}
 			echo $pagerbottom;
 		}
@@ -563,8 +563,8 @@ else {
   $polls = sql_query("SELECT * FROM polls ORDER BY id DESC LIMIT 1," . ($pollcount - 1 )) or sqlerr();
   stdhead($lang_log['head_previous_polls']);
   		logmenu("poll");
-  		print("<table border=1 cellspacing=0 width=940 cellpadding=5>\n");
-		//print("<tr><td class=colhead align=center>".$lang_log['text_previous_polls']."</td></tr>\n");
+  		print("<div border=1 cellspacing=0 width=940 cellpadding=5>\n");
+		//print("<div><div class=colhead align=center>".$lang_log['text_previous_polls']."</div></div>\n");
 
     function srt($a,$b)
     {
@@ -580,7 +580,7 @@ else {
     $poll["option10"], $poll["option11"], $poll["option12"], $poll["option13"], $poll["option14"],
     $poll["option15"], $poll["option16"], $poll["option17"], $poll["option18"], $poll["option19"]);
 
-    print("<tr><td align=center>\n");
+    print("<div><div align=center>\n");
 
     print("<p class=sub>");
     $added = gettime($poll['added'], true, false);
@@ -597,7 +597,7 @@ else {
 
 		print("</p>\n");
 
-    print("<table class=main border=1 cellspacing=0 cellpadding=5><tr><td class=text>\n");
+    print("<div class=main border=1 cellspacing=0 cellpadding=5><div><div class=text>\n");
 
     print("<p align=center><b>" . $poll["question"] . "</b></p>");
 
@@ -617,7 +617,7 @@ else {
       if ($o[$i])
         $os[$i] = array($vs[$i], $o[$i]);
 
-    print("<table width=100% class=main border=0 cellspacing=0 cellpadding=0>\n");
+    print("<div width=100% class=main border=0 cellspacing=0 cellpadding=0>\n");
     $i = 0;
     while ($a = $os[$i])
     {
@@ -625,19 +625,19 @@ else {
 	  		$p = round($a[0] / $tvotes * 100);
 	  	else
 				$p = 0;
-      print("<tr><td class=embedded>" . $a[1] . "&nbsp;&nbsp;</td><td class=\"embedded nowrap\">" .
-        "<img class=\"bar_end\" src=\"pic/trans.gif\" alt=\"\" /><img class=\"unsltbar\" src=\"pic/trans.gif\" style=\"width: " . ($p * 3) . "px\" /><img class=\"bar_end\" src=\"pic/trans.gif\" alt=\"\" /> $p%</td></tr>\n");
+      print("<div><div class=embedded>" . $a[1] . "&nbsp;&nbsp;</div><div class=\"embedded nowrap\">" .
+        "<img class=\"bar_end\" src=\"pic/trans.gif\" alt=\"\" /><img class=\"unsltbar\" src=\"pic/trans.gif\" style=\"width: " . ($p * 3) . "px\" /><img class=\"bar_end\" src=\"pic/trans.gif\" alt=\"\" /> $p%</div></div>\n");
       ++$i;
     }
-    print("</table>\n");
+    print("</div>\n");
 	$tvotes = number_format($tvotes);
     print("<p align=center>".$lang_log['text_votes']."$tvotes</p>\n");
 
-    print("</td></tr></table><br /><br />\n");
+    print("</div></div></div><br /><br />\n");
 
-    print("</p></td></tr>\n");
+    print("</p></div></div>\n");
 }
-	print("</table>");
+	print("</div>");
 		print($lang_log['time_zone_note']);
 		stdfoot();
 		die;

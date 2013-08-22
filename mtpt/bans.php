@@ -43,28 +43,28 @@ if (mysql_num_rows($res) == 0)
   print("<p align=center><b>".$lang_bans['text_nothing']."</b></p>\n");
 else
 {
-  print("<table border=1 cellspacing=0 cellpadding=5>\n");
-  print("<tr><td class=colhead>".$lang_bans['text_addtime']."</td><td class=colhead align=left>".$lang_bans['text_firstip']."</td><td class=colhead align=left>".$lang_bans['text_lastip']."</td>".
-    "<td class=colhead align=left>".$lang_bans['text_by']."</td><td class=colhead align=left>".$lang_bans['text_comment']."</td><td class=colhead>".$lang_bans['text_act']."</td></tr>\n");
+  print("<div border=1 cellspacing=0 cellpadding=5>\n");
+  print("<div><div class=colhead>".$lang_bans['text_addtime']."</div><div class=colhead align=left>".$lang_bans['text_firstip']."</div><div class=colhead align=left>".$lang_bans['text_lastip']."</div>".
+    "<div class=colhead align=left>".$lang_bans['text_by']."</div><div class=colhead align=left>".$lang_bans['text_comment']."</div><div class=colhead>".$lang_bans['text_act']."</div></div>\n");
 
   while ($arr = mysql_fetch_assoc($res))
   {
- 	  print("<tr><td>".gettime($arr[added])."</td><td align=left>".long2ip($arr[first])."</td><td align=left>".long2ip($arr[last])."</td><td align=left>". get_username($arr['addedby']) .
- 	    "</td><td align=left>$arr[comment]</td><td><a href=bans.php?remove=$arr[id]>".$lang_bans['text_remove']."</a></td></tr>\n");
+ 	  print("<div><div>".gettime($arr[added])."</div><div align=left>".long2ip($arr[first])."</div><div align=left>".long2ip($arr[last])."</div><div align=left>". get_username($arr['addedby']) .
+ 	    "</div><div align=left>$arr[comment]</div><div><a href=bans.php?remove=$arr[id]>".$lang_bans['text_remove']."</a></div></div>\n");
   }
-  print("</table>\n");
+  print("</div>\n");
 }
 
 if (get_user_class() >= UC_ADMINISTRATOR)
 {
 	print("<h1>".$lang_bans['head_addban']."</h1>\n");
-	print("<table border=1 cellspacing=0 cellpadding=5>\n");
+	print("<div border=1 cellspacing=0 cellpadding=5>\n");
 	print("<form method=post action=bans.php>\n");
-	print("<tr><td class=rowhead>".$lang_bans['text_firstip']."</td><td><input type=text name=first size=40></td></tr>\n");
-	print("<tr><td class=rowhead>".$lang_bans['text_lastip']."</td><td><input type=text name=last size=40></td></tr>\n");
-	print("<tr><td class=rowhead>".$lang_bans['text_comment']."</td><td><input type=text name=comment size=40></td></tr>\n");
-	print("<tr><td colspan=2 align=center><input type=submit value='".$lang_bans['submit_add']."' class=btn></td></tr>\n");
-	print("</form>\n</table>\n");
+	print("<div><div class=rowhead>".$lang_bans['text_firstip']."</div><div><input type=text name=first size=40></div></div>\n");
+	print("<div><div class=rowhead>".$lang_bans['text_lastip']."</div><div><input type=text name=last size=40></div></div>\n");
+	print("<div><div class=rowhead>".$lang_bans['text_comment']."</div><div><input type=text name=comment size=40></div></div>\n");
+	print("<div><div colspan=2 align=center><input type=submit value='".$lang_bans['submit_add']."' class=btn></div></div>\n");
+	print("</form>\n</div>\n");
 }
 
 stdfoot();

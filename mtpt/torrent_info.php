@@ -117,7 +117,7 @@ print("<div align=center><h1>$row[name]</h1>");
 $dict = bdec_file($fn, (1024*1024));
 
 // Start table
-print("<table width=750 border=1 cellspacing=0 cellpadding=5><td>");
+print("<div width=750 border=1 cellspacing=0 cellpadding=5><div>");
 
 $dict['value']['info']['value']['pieces']['value'] = "0x".bin2hex(substr($dict['value']['info']['value']['pieces']['value'], 0, 25))."...";
 
@@ -129,7 +129,7 @@ echo "</ul>";
 
 // End table
 
-print("</td></table>");
+print("</div></div>");
 
 
 ?>

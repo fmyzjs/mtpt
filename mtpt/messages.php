@@ -56,10 +56,10 @@ stdhead($mailbox_name);
 	print("<font color=\"#AA0000\">系统会<b>自动清理短消息收件箱内超过1个月的旧信息</b><br />自定义添加的信箱中的短消息系统不会自动删除（在<b>短消息界面下部的[短信箱管理]</b>中设置）望周知</font>");
 ?>
 <?php messagemenu($mailbox)?>
-<table border="0" cellpadding="4" cellspacing="0" width="737">
-<tr><td class=colhead align=left><?php echo $lang_messages['col_search_message'] ?></td></tr>
-<tr><td class=toolbox align=center><?php echo insertJumpTo($mailbox);?></td></tr>
-</table>
+<div border="0" cellpadding="4" cellspacing="0" width="737">
+<div><div class=colhead align=left><?php echo $lang_messages['col_search_message'] ?></div></div>
+<div><div class=toolbox align=center><?php echo insertJumpTo($mailbox);?></div></div>
+</div>
 
 <?php
 //search
@@ -116,16 +116,16 @@ echo $pagertop;
 ?>
 <form action="messages.php" method="post">
 <input type="hidden" name="action" value="moveordel">
-<table border="0" cellpadding="4" cellspacing="0" width="737">
-<tr>
-<td width="1%" class="colhead" align="center"><?php echo $lang_messages['col_status'] ?></td>
-<td class="colhead" align="left"><?php echo $lang_messages['col_subject'] ?> </td>
+<div border="0" cellpadding="4" cellspacing="0" width="737">
+<div>
+<div width="1%" class="colhead" align="center"><?php echo $lang_messages['col_status'] ?></div>
+<div class="colhead" align="left"><?php echo $lang_messages['col_subject'] ?> </div>
 <?php
-print("<td width=\"35%\" class=\"colhead\" align=\"left\">$sender_receiver</td>");
+print("<div width=\"35%\" class=\"colhead\" align=\"left\">$sender_receiver</div>");
 ?>
-<td width="1%" class="colhead" align="center"><img class="time" src="pic/trans.gif" alt="time" title="<?php echo $lang_messages['col_date'] ?>" /></td>
-<td width="1%" class="colhead" align="center"><?php echo $lang_messages['col_act'] ?></td>
-</tr>
+<div width="1%" class="colhead" align="center"><img class="time" src="pic/trans.gif" alt="time" title="<?php echo $lang_messages['col_date'] ?>" /></div>
+<div width="1%" class="colhead" align="center"><?php echo $lang_messages['col_act'] ?></div>
+</div>
 <?php
 while ($row = mysql_fetch_assoc($res))
 {
@@ -150,21 +150,21 @@ $subject = $lang_messages['text_no_subject'];
 
 if ($row['unread'] == 'yes')
 {
-echo("<tr>\n<td class=rowfollow align=center><img class=\"unreadpm\" src=\"pic/trans.gif\" alt=\"Unread\" title=".$lang_messages['title_unread']." /></td>\n");
+echo("<div>\n<div class=rowfollow align=center><img class=\"unreadpm\" src=\"pic/trans.gif\" alt=\"Unread\" title=".$lang_messages['title_unread']." /></div>\n");
 }
 else
 {
-echo("<tr>\n<td class=rowfollow align=center><img class=\"readpm\" src=\"pic/trans.gif\" alt=\"Read\" title=".$lang_messages['title_read']." /></td>\n");
+echo("<div>\n<div class=rowfollow align=center><img class=\"readpm\" src=\"pic/trans.gif\" alt=\"Read\" title=".$lang_messages['title_read']." /></div>\n");
 }
-echo("<td class=rowfollow align=left><a href=\"messages.php?action=viewmessage&id=" . $row['id'] . "\">" .
-$subject . "</a></td>\n");
-echo("<td class=rowfollow align=left>$username</td>\n");
-echo("<td class=rowfollow nowrap>" . gettime($row['added'],true,false) . "</td>\n");
-echo("<td class=rowfollow><input class=checkbox type=\"checkbox\" name=\"messages[]\" value=\"" . $row['id'] . "\"></td>\n</tr>\n");
+echo("<div class=rowfollow align=left><a href=\"messages.php?action=viewmessage&id=" . $row['id'] . "\">" .
+$subject . "</a></div>\n");
+echo("<div class=rowfollow align=left>$username</div>\n");
+echo("<div class=rowfollow nowrap>" . gettime($row['added'],true,false) . "</div>\n");
+echo("<div class=rowfollow><input class=checkbox type=\"checkbox\" name=\"messages[]\" value=\"" . $row['id'] . "\"></div>\n</div>\n");
 }
 ?>
-<tr class="colhead">
-<td colspan="5" align="right" class="colhead"><input class=btn type="button" value="<?php echo $lang_messages['input_check_all']; ?>" onClick="this.value=check(form,'<?php echo $lang_messages['input_check_all'] ?>','<?php echo $lang_messages['input_uncheck_all'] ?>')"> 
+<div class="colhead">
+<div colspan="5" align="right" class="colhead"><input class=btn type="button" value="<?php echo $lang_messages['input_check_all']; ?>" onClick="this.value=check(form,'<?php echo $lang_messages['input_check_all'] ?>','<?php echo $lang_messages['input_uncheck_all'] ?>')"> 
 <?php if($mailbox != PM_SENTBOX) print("<input class=btn type=\"submit\" name=\"markread\" value=\"".$lang_messages['submit_mark_as_read']."\">") ?>
 <input class=btn type="submit" name="delete" value=<?php echo $lang_messages['submit_delete']?>>
 <?php if($mailbox != PM_SENTBOX){ ?>
@@ -186,13 +186,13 @@ if($mailbox != PM_SENTBOX){
 print("</form>");
      */ ?>
         </select>
-      </td>
-    </tr>
+      </div>
+    </div>
   
-  </form><tr><td class=toolbox colspan=5>
+  </form><div><div class=toolbox colspan=5>
 <div align="center"><img class="unreadpm" src="pic/trans.gif" alt="Unread" title="<?php echo $lang_messages['title_unread'] ?>" /><a href="messages.php?action=viewmailbox&box=<?php echo $mailbox?>&unread=yes"><?php echo $lang_messages['text_unread_messages'] ?></a>
 <img class="readpm" src="pic/trans.gif" alt="Read" title="<?php echo $lang_messages['title_read'] ?>" /><a href="messages.php?action=viewmailbox&box=<?php echo $mailbox?>&unread=no"><?php echo $lang_messages['text_read_messages'] ?></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a href="messages.php?action=editmailboxes"><b><?php echo $lang_messages['text_mailbox_manager'] ?></a></b></div></td></tr></table>
+<a href="messages.php?action=editmailboxes"><b><?php echo $lang_messages['text_mailbox_manager'] ?></a></b></div></div></div></div>
 <?php
 }
 stdfoot();
@@ -263,20 +263,20 @@ stdhead("PM ($subject)"); ?>
 $mailbox = ($message['sender'] == $CURUSER['id'] ? -1 : $message['location']);
 messagemenu($mailbox);
 ?>
-<table width="737" border="0" cellpadding="4" cellspacing="0">
-<tr>
-<td width="50%" class="colhead" align="left"><?php echo $from?></td>
-<td width="50%" class="colhead" align="left"><?php echo $lang_messages['col_date'] ?></td>
-</tr>
-<tr>
-<td class="rowfollow" align="left"><?php echo $sender?></td>
-<td class="rowfollow" align="left"><?php echo gettime($added,true,false)?>&nbsp;&nbsp;<?php echo $unread?></td>
-</tr>
-<tr>
-<td colspan="2" align="left"><?php echo $body?></td>
-</tr>
-<tr>
-<td align=left>
+<div width="737" border="0" cellpadding="4" cellspacing="0">
+<div>
+<div width="50%" class="colhead" align="left"><?php echo $from?></div>
+<div width="50%" class="colhead" align="left"><?php echo $lang_messages['col_date'] ?></div>
+</div>
+<div>
+<div class="rowfollow" align="left"><?php echo $sender?></div>
+<div class="rowfollow" align="left"><?php echo gettime($added,true,false)?>&nbsp;&nbsp;<?php echo $unread?></div>
+</div>
+<div>
+<div colspan="2" align="left"><?php echo $body?></div>
+</div>
+<div>
+<div align=left>
 <?php if($message['sender'] != $CURUSER['id']){
 print("<form action=\"messages.php\" method=\"post\"><input type=\"hidden\" name=\"action\" value=\"moveordel\"><input type=\"hidden\" name=\"id\" value=".$pm_id.">
 <input type=\"submit\" name=\"move\" value=".$lang_messages['submit_move_to']."><select name=\"box\"><option value=\"1\">".$lang_messages['text_inbox']."</option>");
@@ -288,11 +288,11 @@ echo("<option value=\"" . $row['boxnumber'] . "\">" . htmlspecialchars($row['nam
 print("</select></form>");
 }
 ?>
-</td><td align="right" ><font color=white>[ <a href="messages.php?action=deletemessage&id=<?php echo $pm_id?>"><?php echo $lang_messages['text_delete'] ?></a> ]<?php echo $reply?> [ <a
+</div><div align="right" ><font color=white>[ <a href="messages.php?action=deletemessage&id=<?php echo $pm_id?>"><?php echo $lang_messages['text_delete'] ?></a> ]<?php echo $reply?> [ <a
 
-href="messages.php?action=forward&id=<?php echo $pm_id?>"><?php echo $lang_messages['text_forward_pm'] ?></a> ]</font></td>
-</tr>
-</table>
+href="messages.php?action=forward&id=<?php echo $pm_id?>"><?php echo $lang_messages['text_forward_pm'] ?></a> ]</font></div>
+</div>
+</div>
 <?php
 stdfoot();
 }
@@ -466,35 +466,35 @@ $body = "-------- Original Message from " . $orig_name2 . " --------<br />" . fo
 
 stdhead($subject);?>
 <h1 align="center"><?php echo $lang_messages['text_forward_pm'] ?></h1>
-<table border="0" cellpadding="4" cellspacing="0"  width="737">
+<div border="0" cellpadding="4" cellspacing="0"  width="737">
 <form action="takemessage.php" method="post">
 <input type="hidden" name="forward" value="1">
 <input type="hidden" name="origmsg" value="<?php echo $pm_id?>">
-<tr>
-<td class="rowhead" align="right"><?php echo $lang_messages['row_to'] ?></td>
-<td class="rowfollow" align=left><input type="text" name="to" style="width: 200px"></td>
-</tr>
-<tr>
-<td class="rowhead" align="right"><?php echo $lang_messages['row_original_receiver'] ?></td>
-<td class="rowfollow" align=left><?php echo $from_name?></td>
-</tr>
-<tr>
-<td class="rowhead" align="right"><?php echo $lang_messages['row_original_sender'] ?></td>
-<td class="rowfollow" align=left><?php echo $orig_name?></td>
-</tr>
-<tr>
-<td class="rowhead" align="right"><?php echo $lang_messages['row_subject'] ?></td>
-<td class="rowfollow" align=left><input type="text" name="subject" value="<?php echo $subject?>" style="width: 500px"></td>
-</tr>
-<tr>
-<td class="rowhead" align="right" valign="top"><nobr><?php echo $lang_messages['row_message'] ?></nobr></td>
-<td class="rowfollow" align=left><textarea name="body" style="width: 500px" rows="8"></textarea><br /><?php echo $body?></td>
-</tr>
-<tr>
-<td class=toolbox colspan="2" align="center"><input class=checkbox type="checkbox" name="save" value="yes"<?php echo $CURUSER['savepms'] == 'yes'?" checked":""?>><?php echo $lang_messages['checkbox_save_message'] ?>&nbsp;
-<input type="submit" class="btn" value=<?php echo $lang_messages['submit_forward']?>></td>
-</tr>
-</table>
+<div>
+<div class="rowhead" align="right"><?php echo $lang_messages['row_to'] ?></div>
+<div class="rowfollow" align=left><input type="text" name="to" style="width: 200px"></div>
+</div>
+<div>
+<div class="rowhead" align="right"><?php echo $lang_messages['row_original_receiver'] ?></div>
+<div class="rowfollow" align=left><?php echo $from_name?></div>
+</div>
+<div>
+<div class="rowhead" align="right"><?php echo $lang_messages['row_original_sender'] ?></div>
+<div class="rowfollow" align=left><?php echo $orig_name?></div>
+</div>
+<div>
+<div class="rowhead" align="right"><?php echo $lang_messages['row_subject'] ?></div>
+<div class="rowfollow" align=left><input type="text" name="subject" value="<?php echo $subject?>" style="width: 500px"></div>
+</div>
+<div>
+<div class="rowhead" align="right" valign="top"><nobr><?php echo $lang_messages['row_message'] ?></nobr></div>
+<div class="rowfollow" align=left><textarea name="body" style="width: 500px" rows="8"></textarea><br /><?php echo $body?></div>
+</div>
+<div>
+<div class=toolbox colspan="2" align="center"><input class=checkbox type="checkbox" name="save" value="yes"<?php echo $CURUSER['savepms'] == 'yes'?" checked":""?>><?php echo $lang_messages['checkbox_save_message'] ?>&nbsp;
+<input type="submit" class="btn" value=<?php echo $lang_messages['submit_forward']?>></div>
+</div>
+</div>
 </form>
 <?php
 stdfoot();
@@ -505,12 +505,12 @@ $res = sql_query("SELECT * FROM pmboxes WHERE userid=" . sqlesc($CURUSER['id']))
 
 stdhead($lang_messages['head_editing_mailboxes']); ?>
 <h1><?php echo $lang_messages['text_editing_mailboxes'] ?></h1>
-<table width="737" border="0" cellpadding="4" cellspacing="0">
-<tr>
-<td class="colhead" align="left"><?php echo $lang_messages['text_add_mailboxes'] ?></td>
-</tr>
-<tr>
-<td align=left><?php echo $lang_messages['text_extra_mailboxes_note'] ?><br />
+<div width="737" border="0" cellpadding="4" cellspacing="0">
+<div>
+<div class="colhead" align="left"><?php echo $lang_messages['text_add_mailboxes'] ?></div>
+</div>
+<div>
+<div align=left><?php echo $lang_messages['text_extra_mailboxes_note'] ?><br />
 <form action="messages.php" method="get">
 <input type="hidden" name="action" value="editmailboxes2">
 <input type="hidden" name="action2" value="add">
@@ -519,13 +519,13 @@ stdhead($lang_messages['head_editing_mailboxes']); ?>
 <input type="text" name="new2" size="40" maxlength="14"><br />
 <input type="text" name="new3" size="40" maxlength="14"><br />
 <input type="submit" value="<?php echo $lang_messages['submit_add'] ?>">
-</form></td>
-</tr>
-<tr>
-<td class="colhead" align=left><?php echo $lang_messages['text_edit_mailboxes'] ?></td>
-</tr>
-<tr>
-<td align=left><?php echo $lang_messages['text_edit_mailboxes_note'] ?>
+</form></div>
+</div>
+<div>
+<div class="colhead" align=left><?php echo $lang_messages['text_edit_mailboxes'] ?></div>
+</div>
+<div>
+<div align=left><?php echo $lang_messages['text_edit_mailboxes_note'] ?>
 <form action="messages.php" method="get">
 <input type="hidden" name="action" value="editmailboxes2">
 <input type="hidden" name="action2" value="edit">
@@ -548,9 +548,9 @@ echo("<input type=\"text\" name=\"edit$id\" value=\"$name\" size=\"40\" maxlengt
 }
 echo("<input type=\"submit\" value=".$lang_messages['submit_edit'].">");
 }
-?></form></td>
-</tr>
-</table>
+?></form></div>
+</div>
+</div>
 <?php
 stdfoot();
 }

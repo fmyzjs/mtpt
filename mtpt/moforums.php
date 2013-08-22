@@ -78,39 +78,39 @@ if ($act == "forum")
 <h2 class=transparentbg align=center><a class=faqlink href=forummanage.php><?php echo $lang_moforums['text_forum_management']?></a><b>--></b><?php echo $lang_moforums['text_overforum_management']?></h2>
 <br />
 <?php
-echo '<table width="100%"  border="0" align="center" cellpadding="2" cellspacing="0">';
-echo "<tr><td class=colhead align=left>".$lang_moforums['col_name']."</td><td class=colhead>".$lang_moforums['col_viewed_by']."</td><td class=colhead>".$lang_moforums['col_modify']."</td></tr>";
+echo '<div width="100%"  border="0" align="center" cellpadding="2" cellspacing="0">';
+echo "<div><div class=colhead align=left>".$lang_moforums['col_name']."</div><div class=colhead>".$lang_moforums['col_viewed_by']."</div><div class=colhead>".$lang_moforums['col_modify']."</div></div>";
 $result = sql_query ("SELECT  * FROM overforums ORDER BY sort ASC");
 if ($row = mysql_fetch_array($result)) {
 do {
 
 
-echo "<tr><td><a href=forums.php?action=forumview&forid=".$row["id"]."><b>".htmlspecialchars($row["name"])."</b></a><br />".$row["description"]."</td>";
-echo "<td>" . get_user_class_name($row["minclassview"],false,true,true) . "</td><td><b><a href=\"".$PHP_SELF."?action=editforum&id=".$row["id"]."\">".$lang_moforums['text_edit']."</a>&nbsp;|&nbsp;<a href=\"javascript:confirm_delete('".$row["id"]."', '".$lang_moforums['js_sure_to_delete_overforum']."', '');\"><font color=red>".$lang_moforums['text_delete']."</font></a></b></td></tr>";
+echo "<div><div><a href=forums.php?action=forumview&forid=".$row["id"]."><b>".htmlspecialchars($row["name"])."</b></a><br />".$row["description"]."</div>";
+echo "<div>" . get_user_class_name($row["minclassview"],false,true,true) . "</div><div><b><a href=\"".$PHP_SELF."?action=editforum&id=".$row["id"]."\">".$lang_moforums['text_edit']."</a>&nbsp;|&nbsp;<a href=\"javascript:confirm_delete('".$row["id"]."', '".$lang_moforums['js_sure_to_delete_overforum']."', '');\"><font color=red>".$lang_moforums['text_delete']."</font></a></b></div></div>";
 
 
 } while($row = mysql_fetch_array($result));
-} else {print "<tr><td colspan=3>".$lang_moforums['text_no_records_found']."</td></tr>";}
-echo "</table>";
+} else {print "<div><div colspan=3>".$lang_moforums['text_no_records_found']."</div></div>";}
+echo "</div>";
 ?>
 <br /><br />
 <form method=post action="<?php echo $PHP_SELF;?>">
-<table width="100%"  border="0" cellspacing="0" cellpadding="3" align="center">
-<tr align="center">
-    <td colspan="2" class=colhead><?php echo $lang_moforums['text_new_overforum']?></td>
-  </tr>
-  <tr>
-    <td><b><?php echo $lang_moforums['text_overforum_name']?></td>
-    <td><input name="name" type="text" style="width: 200px" maxlength="60"></td>
-  </tr>
-  <tr>
-    <td><b><?php echo $lang_moforums['text_overforum_description']?></td>
-    <td><input name="desc" type="text" style="width: 400px" maxlength="200"></td>
-  </tr>
+<div width="100%"  border="0" cellspacing="0" cellpadding="3" align="center">
+<div align="center">
+    <div colspan="2" class=colhead><?php echo $lang_moforums['text_new_overforum']?></div>
+  </div>
+  <div>
+    <div><b><?php echo $lang_moforums['text_overforum_name']?></div>
+    <div><input name="name" type="text" style="width: 200px" maxlength="60"></div>
+  </div>
+  <div>
+    <div><b><?php echo $lang_moforums['text_overforum_description']?></div>
+    <div><input name="desc" type="text" style="width: 400px" maxlength="200"></div>
+  </div>
 
-    <tr>
-    <td><b><?php echo $lang_moforums['text_minimum_view_permission']?></td>
-    <td>
+    <div>
+    <div><b><?php echo $lang_moforums['text_minimum_view_permission']?></div>
+    <div>
     <select name=viewclass>\n
 <?php
 	     $maxclass = get_user_class();
@@ -118,12 +118,12 @@ echo "</table>";
 	    print("<option value=$i" . ($user["class"] == $i ? " selected" : "") . ">$prefix" . get_user_class_name($i,false,true,true) . "\n");
 ?>
 	</select>
-    </td>
-  </tr>
+    </div>
+  </div>
 
-    <tr>
-    <td><b><?php echo $lang_moforums['text_overforum_order']?></td>
-    <td>
+    <div>
+    <div><b><?php echo $lang_moforums['text_overforum_order']?></div>
+    <div>
     <select name=sort>
 <?php
 $res = sql_query ("SELECT sort FROM overforums");
@@ -133,13 +133,13 @@ $nr = mysql_num_rows($res);
 	    print("<option value=$i>$i \n");
 ?>
 	</select>
-    <?php echo $lang_forummanage['text_overforum_order_note']?></td>
-  </tr>
+    <?php echo $lang_forummanage['text_overforum_order_note']?></div>
+  </div>
 
-  <tr align="center">
-    <td colspan="2"><input type="hidden" name="action" value="addforum"><input type="submit" name="Submit" value="<?php echo $lang_moforums['submit_make_overforum']?>"></td>
-  </tr>
-</table>
+  <div align="center">
+    <div colspan="2"><input type="hidden" name="action" value="addforum"><input type="submit" name="Submit" value="<?php echo $lang_moforums['submit_make_overforum']?>"></div>
+  </div>
+</div>
 
 <?php
 }
@@ -159,23 +159,23 @@ do {
 ?>
 <h2 class=transparentbg align=center><a class=faqlink href=forummanage.php><?php echo $lang_moforums['text_forum_management']?></a><b>--></b><a class=faqlink href=moforums.php><?php echo $lang_moforums['text_overforum_management']?></a><b>--></b><?php echo $lang_moforums['text_edit_overforum']?></h2><br />
 <form method=post action="<?php echo $PHP_SELF;?>">
-<table width="100%"  border="0" cellspacing="0" cellpadding="3" align="center">
-<tr align="center">
-    <td colspan="2" class=colhead><?php echo $lang_moforums['text_edit_overforum']?> -- <?php echo htmlspecialchars($row["name"]);?></td>
-  </tr>
+<div width="100%"  border="0" cellspacing="0" cellpadding="3" align="center">
+<div align="center">
+    <div colspan="2" class=colhead><?php echo $lang_moforums['text_edit_overforum']?> -- <?php echo htmlspecialchars($row["name"]);?></div>
+  </div>
 
-    <td><b><?php echo $lang_moforums['text_overforum_name']?></td>
-    <td><input name="name" type="text" style="width: 200px" maxlength="60" value="<?php echo $row["name"];?>"></td>
-  </tr>
-  <tr>
-    <td><b><?php echo $lang_moforums['text_overforum_description']?></td>
-    <td><input name="desc" type="text" style="width: 400px" maxlength="200" value="<?php echo $row["description"];?>"></td>
-  </tr>
+    <div><b><?php echo $lang_moforums['text_overforum_name']?></div>
+    <div><input name="name" type="text" style="width: 200px" maxlength="60" value="<?php echo $row["name"];?>"></div>
+  </div>
+  <div>
+    <div><b><?php echo $lang_moforums['text_overforum_description']?></div>
+    <div><input name="desc" type="text" style="width: 400px" maxlength="200" value="<?php echo $row["description"];?>"></div>
+  </div>
 
 
-    <tr>
-    <td><b><?php echo $lang_moforums['text_minimum_view_permission']?></td>
-    <td>
+    <div>
+    <div><b><?php echo $lang_moforums['text_minimum_view_permission']?></div>
+    <div>
     <select name=viewclass>
 <?php
 	     $maxclass = get_user_class();
@@ -183,13 +183,13 @@ do {
 	    print("<option value=$i" . ($row["minclassview"] == $i ? " selected" : "") . ">$prefix" . get_user_class_name($i,false,true,true) . "\n");
 ?>
 	</select>
-    </td>
-  </tr>
+    </div>
+  </div>
 
 
-    <tr>
-    <td><b><?php echo $lang_moforums['text_overforum_order']?></td>
-    <td>
+    <div>
+    <div><b><?php echo $lang_moforums['text_overforum_order']?></div>
+    <div>
     <select name=sort>
 <?php
 $res = sql_query ("SELECT sort FROM overforums");
@@ -200,13 +200,13 @@ $nr = mysql_num_rows($res);
 ?>
 	</select>
 	<?php echo $lang_moforums['text_overforum_order_note']?>
-    </td>
-  </tr>
+    </div>
+  </div>
 
-  <tr align="center">
-    <td colspan="2"><input type="hidden" name="action" value="editforum"><input type="hidden" name="id" value="<?php echo $id;?>"><input type="submit" name="Submit" value="<?php echo $lang_moforums['submit_edit_overforum']?>"></td>
-  </tr>
-</table>
+  <div align="center">
+    <div colspan="2"><input type="hidden" name="action" value="editforum"><input type="hidden" name="id" value="<?php echo $id;?>"><input type="submit" name="Submit" value="<?php echo $lang_moforums['submit_edit_overforum']?>"></div>
+  </div>
+</div>
 
 <?php
 } while($row = mysql_fetch_array($result));

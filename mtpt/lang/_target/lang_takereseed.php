@@ -14,7 +14,7 @@ $lang_takereseed_target = array
 	'msg_reseed_request' => "续种请求",
 	'msg_reseed_user' => "用户",
 	'msg_ask_reseed' => "请求你续种该种子 - ",
-	'msg_thank_you' => " ！谢谢你！",
+	'msg_thank_you' => " ！谢谢你！续种及辅种教程请点击：http://pt.nwsuaf6.edu.cn/faq.php#id42",
 	),
 	'cht' => array
 	(

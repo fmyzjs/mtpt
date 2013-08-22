@@ -7,7 +7,7 @@ if (get_user_class() < UC_ADMINISTRATOR)
 stderr("Sorry", "Access denied.");
 stdhead("Mass PM", false);
 ?>
-<table class=main width=737 border=0 cellspacing=0 cellpadding=0><tr><td class=embedded>
+<div class=main width=737 border=0 cellspacing=0 cellpadding=0><div><div class=embedded>
 <div align=center>
 <h1><?php echo $lang_staffmess['head_masspm']?></a></h1>
 <form method=post action=takestaffmess.php>
@@ -20,108 +20,108 @@ if ($_GET["returnto"] || $_SERVER["HTTP_REFERER"])
 <?php
 }
 ?>
-<table cellspacing=0 cellpadding=5>
+<div cellspacing=0 cellpadding=5>
 <?php
 if ($_GET["sent"] == 1) {
 ?>
-<tr><td colspan=2><font color=red><b><?php echo $lang_staffmess['text_send_done']?></font></b></tr></td>
+<div><div colspan=2><font color=red><b><?php echo $lang_staffmess['text_send_done']?></font></b></div></div>
 <?php
 }
 ?>
-<tr>
-<td><b><?php echo $lang_staffmess['text_sendto']?></b><br />
-  <table style="border: 0" width="100%" cellpadding="0" cellspacing="0">
-    <tr>
-             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="0">
-             </td>
-             <td style="border: 0"><?php echo $lang_functions['text_peasant']?></td>
+<div>
+<div><b><?php echo $lang_staffmess['text_sendto']?></b><br />
+  <div style="border: 0" width="100%" cellpadding="0" cellspacing="0">
+    <div>
+             <div style="border: 0" width="20"><input type="checkbox" name="clases[]" value="0">
+             </div>
+             <div style="border: 0"><?php echo $lang_functions['text_peasant']?></div>
 
-             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="1">
-             </td>
-             <td style="border: 0"><?php echo $lang_functions['text_user']?></td>
+             <div style="border: 0" width="20"><input type="checkbox" name="clases[]" value="1">
+             </div>
+             <div style="border: 0"><?php echo $lang_functions['text_user']?></div>
 
-             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="2">
-             </td>
-             <td style="border: 0"><?php echo $lang_functions['text_power_user']?></td>
+             <div style="border: 0" width="20"><input type="checkbox" name="clases[]" value="2">
+             </div>
+             <div style="border: 0"><?php echo $lang_functions['text_power_user']?></div>
 
-             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="3">
-             </td>
-             <td style="border: 0"><?php echo $lang_functions['text_elite_user']?></td>
-      </tr>
-    <tr>
-             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="4">
-             </td>
-             <td style="border: 0"><?php echo $lang_functions['text_crazy_user']?></td>
+             <div style="border: 0" width="20"><input type="checkbox" name="clases[]" value="3">
+             </div>
+             <div style="border: 0"><?php echo $lang_functions['text_elite_user']?></div>
+      </div>
+    <div>
+             <div style="border: 0" width="20"><input type="checkbox" name="clases[]" value="4">
+             </div>
+             <div style="border: 0"><?php echo $lang_functions['text_crazy_user']?></div>
 
-             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="5">
-             </td>
-             <td style="border: 0"><?php echo $lang_functions['text_insane_user']?></td>
+             <div style="border: 0" width="20"><input type="checkbox" name="clases[]" value="5">
+             </div>
+             <div style="border: 0"><?php echo $lang_functions['text_insane_user']?></div>
 
-             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="6">
-             </td>
-             <td style="border: 0"><?php echo $lang_functions['text_veteran_user']?></td>
+             <div style="border: 0" width="20"><input type="checkbox" name="clases[]" value="6">
+             </div>
+             <div style="border: 0"><?php echo $lang_functions['text_veteran_user']?></div>
 
-             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="7">
-             </td>
-             <td style="border: 0"><?php echo $lang_functions['text_extreme_user']?></td>
-      </tr>
+             <div style="border: 0" width="20"><input type="checkbox" name="clases[]" value="7">
+             </div>
+             <div style="border: 0"><?php echo $lang_functions['text_extreme_user']?></div>
+      </div>
 
-    <tr>
-             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="8">
-             </td>
-             <td style="border: 0"><?php echo $lang_functions['text_ultimate_user']?></td>
+    <div>
+             <div style="border: 0" width="20"><input type="checkbox" name="clases[]" value="8">
+             </div>
+             <div style="border: 0"><?php echo $lang_functions['text_ultimate_user']?></div>
 
-             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="9">
-             </td>
-             <td style="border: 0"><?php echo $lang_functions['text_nexus_master']?></td>
+             <div style="border: 0" width="20"><input type="checkbox" name="clases[]" value="9">
+             </div>
+             <div style="border: 0"><?php echo $lang_functions['text_nexus_master']?></div>
 
-             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="10">
-             </td>
-             <td style="border: 0"><?php echo $lang_functions['text_vip']?></td>
+             <div style="border: 0" width="20"><input type="checkbox" name="clases[]" value="10">
+             </div>
+             <div style="border: 0"><?php echo $lang_functions['text_vip']?></div>
 
-             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="11">
-             </td>
-             <td style="border: 0"><?php echo $lang_functions['text_uploader']?></td>
-      </tr>
+             <div style="border: 0" width="20"><input type="checkbox" name="clases[]" value="11">
+             </div>
+             <div style="border: 0"><?php echo $lang_functions['text_uploader']?></div>
+      </div>
 
-    <tr>
-             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="12">
-             </td>
-             <td style="border: 0"><?php echo $lang_functions['text_moderators']?></td>
+    <div>
+             <div style="border: 0" width="20"><input type="checkbox" name="clases[]" value="12">
+             </div>
+             <div style="border: 0"><?php echo $lang_functions['text_moderators']?></div>
 
-             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="13">
-             </td>
-             <td style="border: 0"><?php echo $lang_functions['text_administrators']?></td>
+             <div style="border: 0" width="20"><input type="checkbox" name="clases[]" value="13">
+             </div>
+             <div style="border: 0"><?php echo $lang_functions['text_administrators']?></div>
 
-             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="14">
-             </td>
-             <td style="border: 0"><?php echo $lang_functions['text_sysops']?></td>
+             <div style="border: 0" width="20"><input type="checkbox" name="clases[]" value="14">
+             </div>
+             <div style="border: 0"><?php echo $lang_functions['text_sysops']?></div>
 
-             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="15">
-             </td>
-             <td style="border: 0"><?php echo $lang_functions['text_staff_leader']?></td>
+             <div style="border: 0" width="20"><input type="checkbox" name="clases[]" value="15">
+             </div>
+             <div style="border: 0"><?php echo $lang_functions['text_staff_leader']?></div>
 	
-       <td style="border: 0">&nbsp;</td>
-       <td style="border: 0">&nbsp;</td>
-      </tr>
-    </table>
-  </td>
-</tr>
-<tr><td><?php echo $lang_staffmess['text_subject']?><input type=text name=subject size=75></tr></td>
-<tr><td><textarea name=msg cols=80 rows=15><?php echo $body?></textarea></td></tr>
-<tr>
-<td colspan=1><div align="center"><b><?php echo $lang_staffmess['text_sender']?></b>
+       <div style="border: 0">&nbsp;</div>
+       <div style="border: 0">&nbsp;</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div><div><?php echo $lang_staffmess['text_subject']?><input type=text name=subject size=75></div></div>
+<div><div><textarea name=msg cols=80 rows=15><?php echo $body?></textarea></div></div>
+<div>
+<div colspan=1><div align="center"><b><?php echo $lang_staffmess['text_sender']?></b>
 <?php echo $CURUSER['username']?>
 <input name="sender" type="radio" value="self" checked>
 &nbsp; System
 <input name="sender" type="radio" value="system">
-</div></td></tr>
-<tr><td colspan=1 align=center><input type=submit value="<?php echo $lang_staffmess['submit_do']?>" class=btn></td></tr>
-</table>
+</div></div></div>
+<div><div colspan=1 align=center><input type=submit value="<?php echo $lang_staffmess['submit_do']?>" class=btn></div></div>
+</div>
 <input type=hidden name=receiver value=<?php echo $receiver?>>
 </form>
 
- </div></td></tr></table>
+ </div></div></div></div>
 <br />
 <?php echo $lang_staffmess['text_note']?>
 <?php

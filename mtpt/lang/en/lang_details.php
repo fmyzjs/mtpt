@@ -17,6 +17,7 @@ $lang_details = array
 	'text_free_two_times_up' => "2X Free",
 	'text_half_down' => "50%",
 	'row_download' => "Download",
+	'row_share' => "Share",
 	'row_download_method' => "Method",
 	'row_mouseclick' => "<font color=red>↑ The right mouse button 'Save Target As',then use</font>",
 	'row_openfile' => "<font color=red>to download.</font>",

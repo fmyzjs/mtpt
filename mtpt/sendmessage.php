@@ -47,13 +47,13 @@ parked();
 		print("<input type=hidden name=returnto value=\"".(htmlspecialchars($_GET["returnto"]) ? htmlspecialchars($_GET["returnto"]) : htmlspecialchars($_SERVER["HTTP_REFERER"]))."\">");
 	$title = $lang_sendmessage['text_message_to'].get_username($receiver);
 	begin_compose($title, ($replyto ? "reply" : "new"), $body, true, $subject);
-	print("<tr><td class=toolbox colspan=2 align=center>");
+	print("<div><div class=toolbox colspan=2 align=center>");
 	if ($replyto) {
 		print("<input type=checkbox name='delete' value='yes' ".($CURUSER['deletepms'] == 'yes' ? " checked" : "").">".$lang_sendmessage['checkbox_delete_message_replying_to']."<input type=hidden name=origmsg value=".$replyto.">");
 	}
 
 	print("<input type=checkbox name='save' value='yes' ". ($CURUSER['savepms'] == 'yes' ? " checked" : "").">".$lang_sendmessage['checkbox_save_message_to_sendbox']);
-	print("</td></tr>");
+	print("</div></div>");
 	end_compose();
 	end_main_frame();
 	stdfoot();

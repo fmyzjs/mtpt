@@ -503,6 +503,7 @@ ul.menu
 	list-style-type: none;
 	white-space: nowrap;
 	text-align: center;
+	padding:0;
 }
 ul.menu li
 {
@@ -569,13 +570,13 @@ A.StaffLeader_Name:visited{color: #8b0000}
 A.SysOp_Name:link{color: #a0522d}
 A.SysOp_Name:visited{color: #a0522d}
 
-.Administrator_Name{color: #4b0082}
-A.Administrator_Name:link{color: #4b0082}
-A.Administrator_Name:visited{color: #4b0082}
+.Administrator_Name{color: #a0522d}
+A.Administrator_Name:link{color: #a0522d}
+A.Administrator_Name:visited{color: #a0522d}
 
-.Moderator_Name{color: #6495ED}
-A.Moderator_Name:link{color: #6495ED}
-A.Moderator_Name:visited{color: #6495ED}
+.Moderator_Name{color: #004B97}
+A.Moderator_Name:link{color: #004B97}
+A.Moderator_Name:visited{color: #004B97}
 
 .ForumModerator_Name{COLOR: #1cc6d5}
 A.ForumModerator_Name:link{COLOR: #1cc6d5}
@@ -584,6 +585,10 @@ A.ForumModerator_Name:visited{COLOR: #1cc6d5}
 .Retiree_Name{COLOR: #1cc6d5}
 A.Retiree_Name:link{COLOR: #1cc6d5}
 A.Retiree_Name:visited{COLOR: #1cc6d5}
+
+.Downloader_Name{color: #FF359A}
+A.Downloader_Name:link{color: #FF359A}
+A.Downloader_Name:visited{color: #FF359A}
 
 .Uploader_Name{color: #DC143C}
 A.Uploader_Name:link{color: #DC143C}

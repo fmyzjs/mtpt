@@ -214,34 +214,34 @@ begin_main_frame();
 ?>
 <script type="text/javascript" src="play21.js"></script>
 <h1 align="center">小游戏：21点(临时开放测试中，很多地方还不完善)</h1>
-<table align="center">
-<tr>
-<td width=300>庄家的牌：<font id=computernum></font></td><td width=300>你的牌：<font id=playnum></font></td><td>操作：<font id=mess></font></td>
-</tr>
-<tr>
-<td height=80>
+<div align="center">
+<div>
+<div width=300>庄家的牌：<font id=computernum></font></div><div width=300>你的牌：<font id=playnum></font></div><div>操作：<font id=mess></font></div>
+</div>
+<div>
+<div height=80>
 <font size="+2" id=computerpark></font>
-</td>
-<td>
+</div>
+<div>
 <font size="+2" id=playpark></font>
-</td>
-<td>
+</div>
+<div>
 <input type=button id=startpark value="开始">
 <input type=button id=retpark value="拿牌">
 <input type=button id=stoppark value="停牌">
-</td>
-</tr>
-</table>
+</div>
+</div>
+</div>
 <br /><br />
-<table>
-<tr><td>
+<div>
+<div><div>
 玩法规则:
-</td></tr>
-<tr><td>
+</div></div>
+<div><div>
 &nbsp&nbsp&nbsp&nbsp21点一般用到1-8副牌。庄家给每个玩家发两张牌，牌面朝下；给自己发两张牌，一张牌面朝上(叫明牌)，一张牌面朝下(叫暗牌)。大家手中扑克点数的计算是：K、Q、J 和 10 牌都算作 10 点。 A 牌既可算作1 点也可算作11 点，由玩家自己决定。其余所有2 至9 牌均按其原面值计算。
 <br />&nbsp&nbsp&nbsp&nbsp首先玩家开始要牌，如果玩家拿到的前两张牌是一张 A 和一张10点牌，就拥有黑杰克 (Blackjack)；此时，如果庄家没有黑杰克，玩家就能赢得2倍的赌金（1赔2）。没有黑杰克的玩家可以继续拿牌，可以随意要多少张。目的是尽量往21点靠，靠得越近越好，最好就是21点了。在要牌的过程中，如果所有的牌加起来超过21点，玩家就输了——叫爆掉(Bust)，游戏也就结束了。假如玩家没爆掉，又决定不再要牌了，这时庄家就把他的那张暗牌打开来。庄家根据自己的情况拿牌，一般到17点或17点以上不再拿牌，但也有可能15到16点甚至12到13点就不再拿牌或者18到19点继续拿牌。假如庄家爆掉了，那他就输了。假如他没爆掉，那么你就与他比点数大小，大为赢。一样的点数为平手，你可以把你的赌注拿回来.
-</td></tr>
-</table>
+</div></div>
+</div>
 <?
 end_main_frame();
 stdfoot();

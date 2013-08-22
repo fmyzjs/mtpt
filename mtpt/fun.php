@@ -105,11 +105,11 @@ if ($row){
 	if (!$Cache->get_page()){
 		$Cache->add_row();
 		$Cache->add_part();
-		print("<table border=0 cellspacing=0 cellpadding=2 width='100%'><tr><td class=shoutrow align=center><font class=big>".$title."</font><font class=small>".$lang_fun['text_posted_by']);
+		print("<div border=0 cellspacing=0 cellpadding=2 width='100%'><div><div class=shoutrow align=center><font class=big>".$title."</font><font class=small>".$lang_fun['text_posted_by']);
 		$Cache->end_part();
 		$Cache->add_part();
-		print("</font></td></tr><tr><td class=shoutrow>\n");
-		print(format_comment($row['body'], true, true, true)."</td></tr></table>");
+		print("</font></div></div><div><div class=shoutrow>\n");
+		print(format_comment($row['body'], true, true, true)."</div></div></div>");
 		$Cache->end_part();
 		$Cache->end_row();
 		$Cache->cache_page();

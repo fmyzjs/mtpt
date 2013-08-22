@@ -27,12 +27,12 @@ stderr("Success", "用户：".htmlspecialchars($name)."</b> 删除成功",false)
 stdhead("Delete account");
 ?>
 <h1>Delete account</h1>
-<table border=1 cellspacing=0 cellpadding=5>
+<div border=1 cellspacing=0 cellpadding=5>
 <form method=post action=delacctadmin.php>
-<tr><td class=rowhead>User name</td><td><input size=40 name=userid></td></tr>
+<div><div class=rowhead>User name</div><div><input size=40 name=userid></div></div>
 
-<tr><td colspan=2><input type=submit class=btn value='Delete'></td></tr>
+<div><div colspan=2><input type=submit class=btn value='Delete'></div></div>
 </form>
-</table>
+</div>
 <?php
 stdfoot();

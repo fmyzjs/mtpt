@@ -22,22 +22,22 @@ function SmileIT(smile,form,text){
 }
 </script>
 
-<table class="lista" width="100%" cellpadding="1" cellspacing="1">
+<div class="lista" width="100%" cellpadding="1" cellspacing="1">
 <?php
 $count = 0;
 for($i=1; $i<130; $i++) {
   if ($count % 3==0)
-     print("\n<tr>");
+     print("\n<div>");
 
-     print("\n\t<td class=\"lista\" align=\"center\"><a href=\"javascript: SmileIT('[em$i]','".$_GET["form"]."','".$_GET["text"]."')\"><img src=\"pic/smilies/$i.gif\" alt=\"\" ></a></td>");
+     print("\n\t<div class=\"lista\" align=\"center\"><a href=\"javascript: SmileIT('[em$i]','".$_GET["form"]."','".$_GET["text"]."')\"><img src=\"pic/smilies/$i.gif\" alt=\"\" ></a></div>");
      $count++;
 
   if ($count % 3==0)
-     print("\n</tr>");
+     print("\n</div>");
 }
 
 ?>
-</table>
+</div>
 <div align="center">
  <a href="javascript: window.close()"><?php echo $lang_moresmilies['text_close']?></a>
 </div>

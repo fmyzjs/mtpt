@@ -26,9 +26,9 @@ stdhead("Add user");
 ?>
 <h1><?php echo $lang_adduser['head_keywords']?></h1>
 <form method=post action=delkeywords.php>
-<table border=1 cellspacing=0 cellpadding=5>
-<tr><td class=rowhead><?php echo $lang_adduser['text_keywords']?></td><td><input type=text name=keywords size=40></td></tr>
-<tr><td colspan=2 align=center><input type=submit value="<?php echo $lang_adduser['submit_del_keywords']?>" name="delsubmit" class=btn></td></tr>
-</table>
+<div border=1 cellspacing=0 cellpadding=5>
+<div><div class=rowhead><?php echo $lang_adduser['text_keywords']?></div><div><input type=text name=keywords size=40></div></div>
+<div><div colspan=2 align=center><input type=submit value="<?php echo $lang_adduser['submit_del_keywords']?>" name="delsubmit" class=btn></div></div>
+</div>
 </form>
 <?php stdfoot();

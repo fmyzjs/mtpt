@@ -31,43 +31,43 @@ stdhead($CURUSER['username'] . $lang_mybonus['head_karma_page']);
 
 	$bonus = number_format((int)$CURUSER['seedbonus'], 0);
 if (!$action) {
-	print("<table align=\"center\" width=\"940\" border=\"1\" cellspacing=\"0\" cellpadding=\"3\">\n");
-	print("<tr><td class=\"colhead\" colspan=\"4\" align=\"center\"><font class=\"big\">".$SITENAME.$lang_mybonus['text_karma_system']."</font></td></tr>\n");
+	print("<div align=\"center\" width=\"940\" border=\"1\" cellspacing=\"0\" cellpadding=\"3\">\n");
+	print("<div><div class=\"colhead\" colspan=\"4\" align=\"center\"><font class=\"big\">".$SITENAME.$lang_mybonus['text_karma_system']."</font></div></div>\n");
 ?>
-<tr><td class="text" align="center" colspan="4"><?php echo $lang_mybonus['text_exchange_your_karma']?><?php echo $bonus?><?php echo $lang_mybonus['text_for_goodies'] ?>
-<br /><b><?php echo $lang_mybonus['text_no_buttons_note'] ?></b></td></tr>
+<div><div class="text" align="center" colspan="4"><?php echo $lang_mybonus['text_exchange_your_karma']?><?php echo $bonus?><?php echo $lang_mybonus['text_for_goodies'] ?>
+<br /><b><?php echo $lang_mybonus['text_no_buttons_note'] ?></b></div></div>
 <?php
 
-print("<tr><td class=\"colhead\" align=\"center\">".$lang_mybonus['col_option']."</td>".
-"<td class=\"colhead\" align=\"left\">".$lang_mybonus['col_description']."</td>".
-"<td class=\"colhead\" align=\"center\">".$lang_mybonus['col_points']."</td>".
-"<td class=\"colhead\" align=\"center\">".$lang_mybonus['col_trade']."</td>".
-"</tr>");
+print("<div><div class=\"colhead\" align=\"center\">".$lang_mybonus['col_option']."</div>".
+"<div class=\"colhead\" align=\"left\">".$lang_mybonus['col_description']."</div>".
+"<div class=\"colhead\" align=\"center\">".$lang_mybonus['col_points']."</div>".
+"<div class=\"colhead\" align=\"center\">".$lang_mybonus['col_trade']."</div>".
+"</div>");
 for ($i=1; $i <=2; $i++)
 {
 	$bonusarray = bonusarray($i);
-	print("<tr>");
+	print("<div>");
 	print("<form action=\"?action=exchange\" method=\"post\">");
-	print("<td class=\"rowhead_center\"><input type=\"hidden\" name=\"option\" value=\"".$i."\" /><b>".$i."</b></td>");
+	print("<div class=\"rowhead_center\"><input type=\"hidden\" name=\"option\" value=\"".$i."\" /><b>".$i."</b></div>");
 	if ($i==1){  //碰运气
-			$otheroption = "<table width=\"100%\"><tr><td class=\"embedded\"><b>".$lang_mybonus['text_to_be_play']."</b><input type=\"text\" name=\"luckbonus\" id=\"luckbonus\" style='width: 80px' />".$lang_mybonus['text_karma_points']."</td></tr></table>";
-			print("<td class=\"rowfollow\" align='left'><h1>".$bonusarray['name']."</h1>".$bonusarray['description']."$otheroption</td><td class=\"rowfollow nowrap\" align='center'>".$lang_mybonus['text_min']."25<br />".$lang_mybonus['text_max']."1,000</td>");
+			$otheroption = "<div width=\"100%\"><div><div class=\"embedded\"><b>".$lang_mybonus['text_to_be_play']."</b><input type=\"text\" name=\"luckbonus\" id=\"luckbonus\" style='width: 80px' />".$lang_mybonus['text_karma_points']."</div></div></div>";
+			print("<div class=\"rowfollow\" align='left'><h1>".$bonusarray['name']."</h1>".$bonusarray['description']."$otheroption</div><div class=\"rowfollow nowrap\" align='center'>".$lang_mybonus['text_min']."25<br />".$lang_mybonus['text_max']."1,000</div>");
 	}
 	if ($i==2){  //21点
-			$otheroption = "<table width=\"100%\"><tr><td class=\"embedded\"><b><a href=play21.php>".$lang_mybonus['text_play21']."</a></b></td></tr></table>";
-			print("<td class=\"rowfollow\" align='left'><h1>".$otheroption."</h1></td><td></td>");
+			$otheroption = "<div width=\"100%\"><div><div class=\"embedded\"><b><a href=play21.php>".$lang_mybonus['text_play21']."</a></b></div></div></div>";
+			print("<div class=\"rowfollow\" align='left'><h1>".$otheroption."</h1></div><div></div>");
 	}
 
 	if($CURUSER['seedbonus'] >= $bonusarray['points'])
 	{
 		if ($i==1){
 			if($memcache->get('app_luck_'.$CURUSER['id'])!='')
-			print("<td class=\"rowfollow\" align=\"center\"><input type=\"submit\" name=\"submit\" disabled=\"true\" value=\"".$lang_mybonus['submit_karma_luck']."\" /><br />上次时间：<br />".$memcache->get('app_luck_'.$CURUSER['id'])."</td>");
+			print("<div class=\"rowfollow\" align=\"center\"><input type=\"submit\" name=\"submit\" disabled=\"true\" value=\"".$lang_mybonus['submit_karma_luck']."\" /><br />上次时间：<br />".$memcache->get('app_luck_'.$CURUSER['id'])."</div>");
 			else
-			print("<td class=\"rowfollow\" align=\"center\"><input type=\"submit\" name=\"submit\" value=\"".$lang_mybonus['submit_karma_luck']."\" /></td>");
+			print("<div class=\"rowfollow\" align=\"center\"><input type=\"submit\" name=\"submit\" value=\"".$lang_mybonus['submit_karma_luck']."\" /></div>");
 		}
 		elseif ($i==2){
-			print("<td class=\"rowfollow\" align=\"center\"></td>");
+			print("<div class=\"rowfollow\" align=\"center\"></div>");
 		}
 		else
 		{
@@ -78,36 +78,36 @@ for ($i=1; $i <=2; $i++)
 			}
 			else $ratio = $ratiolimit_bonus + 1; //Ratio always above limit
 			if ($ratiolimit_bonus > 0 && $ratio > $ratiolimit_bonus){
-				print("<td class=\"rowfollow\" align=\"center\"><input type=\"submit\" name=\"submit\" value=\"".$lang_mybonus['text_ratio_too_high']."\" disabled=\"disabled\" /></td>");
+				print("<div class=\"rowfollow\" align=\"center\"><input type=\"submit\" name=\"submit\" value=\"".$lang_mybonus['text_ratio_too_high']."\" disabled=\"disabled\" /></div>");
 			}
-			else print("<td class=\"rowfollow\" align=\"center\"><input type=\"submit\" name=\"submit\" value=\"".$lang_mybonus['submit_exchange']."\" /></td>");
+			else print("<div class=\"rowfollow\" align=\"center\"><input type=\"submit\" name=\"submit\" value=\"".$lang_mybonus['submit_exchange']."\" /></div>");
 		}
 	}
 	else
 	{
-		print("<td class=\"rowfollow\" align=\"center\"><input type=\"submit\" name=\"submit\" value=\"".$lang_mybonus['text_more_points_needed']."\" disabled=\"disabled\" /></td>");
+		print("<div class=\"rowfollow\" align=\"center\"><input type=\"submit\" name=\"submit\" value=\"".$lang_mybonus['text_more_points_needed']."\" disabled=\"disabled\" /></div>");
 	}
 	print("</form>");
-	print("</tr>");
+	print("</div>");
 	
 }
-print("</table><br />");
+print("</div><br />");
 }
 
 if($action == "viewluck"){
 	$lucklog = array();
 	$lucklog = json_decode($memcache->get('app_luck_log'));
 	$lucklog = array_reverse($lucklog);
-		print("<table width=100%>");
-		print("<tr><td height=30>");
+		print("<div width=100%>");
+		print("<div><div height=30>");
 		print("显示近1000条玩家游戏记录");
-		print("</tr></td>");
+		print("</div></div>");
 	foreach ($lucklog as $log){
-		print("<tr><td height=30>");
+		print("<div><div height=30>");
 		print($log."<br />");
-		print("</tr></td>");
+		print("</div></div>");
 	}
-		print("</table>");
+		print("</div>");
 }
 
 // Bonus exchange

@@ -139,16 +139,16 @@ else
   	<p><b><?php echo $lang_recover['text_note'] ?><?php echo $maxloginattempts;?></b><?php echo $lang_recover['text_ban_ip'] ?></p>
 	<p><?php echo $lang_recover['text_you_have'] ?><b><?php echo remaining ();?></b><?php echo $lang_recover['text_remaining_tries'] ?></p>
 	<form method="post" action="cardrecover.php">
-	<table border="1" cellspacing="0" cellpadding="10">
-	<tr><td class="rowhead"><?php echo $lang_recover['row_registered_stuid'] ?></td>
-	<td class="rowfollow"><input type="text" style="width: 150px" name="stuid" /></td></tr>
-	<tr><td class="rowhead"><?php echo $lang_recover['row_registered_pass'] ?></td>
-	<td class="rowfollow"><input type="password" style="width: 150px" name="password" /></td></tr>
+	<div border="1" cellspacing="0" cellpadding="10">
+	<div><div class="rowhead"><?php echo $lang_recover['row_registered_stuid'] ?></div>
+	<div class="rowfollow"><input type="text" style="width: 150px" name="stuid" /></div></div>
+	<div><div class="rowhead"><?php echo $lang_recover['row_registered_pass'] ?></div>
+	<div class="rowfollow"><input type="password" style="width: 150px" name="password" /></div></div>
 	<?php
 	show_image_code ();
 	?>
-	<tr><td class="toolbox" colspan="2" align="center"><input type="submit" value="<?php echo $lang_recover['submit_recover_it'] ?>" class="btn" /></td></tr>
-	</table></form>
+	<div><div class="toolbox" colspan="2" align="center"><input type="submit" value="<?php echo $lang_recover['submit_recover_it'] ?>" class="btn" /></div></div>
+	</div></form>
 	<?php
 	stdfoot();
 }

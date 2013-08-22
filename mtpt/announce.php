@@ -74,7 +74,7 @@ elseif ($az['showclienterror'] == 'yes'){
 	$Cache->delete_value('user_passkey_'.$passkey.'_content');
 }
 
-function Clean_Free($id, $state, $endtime)	//......
+function Clean_Free($id, $state, $endtime)	//清除免费标记
 {
 	if($state != "1" && $endtime != "0000-00-00 00:00:00"){
 		if($endtime < date("Y-m-d H:i:s",time())){
@@ -244,8 +244,8 @@ else // continue an existing session
 	if ($az["class"] == UC_VIP)
 		$downseedbonus = 0;
 	else
-		$downseedbonus = $truedownthis/1024 * 0.000001;	//..........K
-	$upseedbonus = $trueupthis/1024 * 0.0000012;		//..........K
+		$downseedbonus = $truedownthis/1024 * 0.000001;	//下载影响积分，单位每K
+	$upseedbonus = $trueupthis/1024 * 0.0000012;		//上传影响积分，单位每K
 
 	if (!$is_cheater && ($trueupthis > 0 || $truedownthis > 0))
 	{
@@ -372,7 +372,7 @@ else
 {
 if(validip($ip)){
 	$sockres = @pfsockopen("[".$ip."]", $port, $errno, $errstr, 5); 
-	//......
+	//可连接否解决
 }else
 	$sockres = @pfsockopen($ip, $port, $errno, $errstr, 5);
 	if($errno == "111"){
@@ -413,4 +413,3 @@ if(count($USERUPDATESET) && $userid)
 }
 benc_resp_raw($resp);
 ?>
-

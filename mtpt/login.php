@@ -30,7 +30,7 @@ foreach ($langs as $row)
 $s .= "\n</select>";
 ?>
 
-<p><?php echo $lang_login['text_QQ']?></p>
+<p></p>
 
 <?php
 
@@ -45,9 +45,9 @@ if (!empty($_GET["returnto"])) {
 ?>
 <form method="post" action="takelogin.php">
 
-<table border="0" cellpadding="5">
-<tr><td class="rowhead"><?php echo $lang_login['rowhead_username']?></td><td class="rowfollow" align="left"><input type="text" name="username" style="width: 180px; border: 1px solid gray" /></td></tr>
-<tr><td class="rowhead"><?php echo $lang_login['rowhead_password']?></td><td class="rowfollow" align="left"><input type="password" name="password" style="width: 180px; border: 1px solid gray"/></td></tr>
+<div border="0" cellpadding="5">
+<div><div class="rowhead"><?php echo $lang_login['rowhead_username']?></div><div class="rowfollow" align="left"><input type="text" name="username" style="width: 180px; border: 1px solid gray" /></div></div>
+<div><div class="rowhead"><?php echo $lang_login['rowhead_password']?></div><div class="rowfollow" align="left"><input type="password" name="password" style="width: 180px; border: 1px solid gray"/></div></div>
 <?php
 show_image_code ();
 if ($securelogin == "yes") 
@@ -65,21 +65,20 @@ elseif ($securetracker == "op")
 	$sectra = "";
 ?>
 
-<tr><td class="rowhead"><?php echo $lang_login['text_auto_logout']?></td><td class="rowfollow" align="left"><input class="checkbox" type="checkbox" name="logout" value="yes"/><?php echo $lang_login['checkbox_auto_logout']?></td></tr>
+<div><div class="rowhead"><?php echo $lang_login['text_auto_logout']?></div><div class="rowfollow" align="left"><input class="checkbox" type="checkbox" name="logout" value="yes"/><?php echo $lang_login['checkbox_auto_logout']?></div></div>
 
-<tr><td class="toolbox" colspan="2" align="center">
+<div><div class="toolbox" colspan="2" align="center">
 <input type="submit" value="<?php echo $lang_login['button_login']?>" class="btn" /> <input type="reset" value="<?php echo $lang_login['button_reset']?>" class="btn" />
 <?php
 if ($smtptype != 'none'){
 ?>
-</td></tr>
-<tr><td class="toolbox" colspan="2" align="center">
-<p><?php echo $lang_login['p_forget_pass_recover']?></p>
-<p><?php echo $lang_login['p_forget_pass_cardrecover']?></p>
-<p><?php echo $lang_login['p_user_log']?></p>
-</td></tr>
-</table>
-
+</div></div>
+<div><div class="toolbox" colspan="2" align="center">
+<p><?php echo $lang_login['p_forget_pass_recover']?> &nbsp&nbsp&nbsp<?php echo $lang_login['p_forget_pass_cardrecover']?> &nbsp  &nbsp <?php echo $lang_login['p_user_log']?></p>
+<p><?php echo $lang_login['text_QQ']?></p>
+</div></div>
+</div>
+<p></p>
 <?php
 
 if (isset($returnto))
@@ -94,10 +93,10 @@ if (isset($returnto))
 <?php
 }
 if ($showhelpbox_main != 'no'){?>
-<table width="700" class="main" border="0" cellspacing="0" cellpadding="0"><tr><td class="embedded">
+<div width="700" class="main" border="0" cellspacing="0" cellpadding="0"><div><div class="embedded">
 <h2><?php echo $lang_login['text_helpbox'] ?><font class="small"> - <?php echo $lang_login['text_helpbox_note'] ?><font id= "waittime" color="red"></font></h2>
 <?php
-print("<table width='100%' border='1' cellspacing='0' cellpadding='1'><tr><td class=\"text\">\n");
+print("<div width='100%' border='1' cellspacing='0' cellpadding='1'><div><div class=\"text\">\n");
 	if ($Advertisement->enable_ad()){
 		$shout_ad = $Advertisement->get_ad('shoutlogin');
 		print("<div id=\"ad_shoutindex\">".$shout_ad[0]."</div>");
@@ -123,6 +122,6 @@ print("<form action='" . get_protocol_prefix() . $BASEURL . "/shoutbox.php' id='
 print($lang_login['text_message']."<input type='text' id=\"hbtext\" name='shbox_text' autocomplete='off' style='width: 500px; border: 1px solid gray' ><input type='submit' id='hbsubmit' class='btn' name='shout' value=\"".$lang_login['sumbit_shout']."\" /><input type='reset' class='btn' value=".$lang_login['submit_clear']." /> <input type='hidden' name='sent' value='yes'><input type='hidden' name='type' value='helpbox' />\n");
 print("<div id=sbword style=\"display: none\">".$lang_login['sumbit_shout']."</div>");
 print(smile_row("shbox","shbox_text"));
-print("</td></tr></table></form></td></tr></table>");
+print("</div></div></div></form></div></div></div>");
 }
 stdfoot();

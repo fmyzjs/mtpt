@@ -110,24 +110,24 @@ print("<div align=right valign=top>".$lang_signup['text_select_lang']. $s . "</d
 </script>
 <form method="post" action="takecard.php">
 <?php if ($type == 'invite') print("<input type=\"hidden\" name=\"inviter\" value=\"".$inviter."\"><input type=hidden name=type value='invite'");?>
-<table border="1" cellspacing="0" cellpadding="10">
+<div border="1" cellspacing="0" cellpadding="10">
 <?php
-print("<tr><td class=text align=center colspan=2>".$lang_signup['text_cookies_note']."</td></tr>");
+print("<div><div class=text align=center colspan=2>".$lang_signup['text_cookies_note']."</div></div>");
 ?>
-<tr><td class=rowhead><?php echo $lang_signup['row_desired_username'] ?></td><td class=rowfollow align=left><input type="text" style="width: 200px" id="wantusername" name="wantusername" /><span id="usernamespan" style="color:red">&nbsp;</span><br />
-<font class=small><?php echo $lang_signup['text_allowed_characters'] ?></font></td></tr>
-<tr><td class=rowhead><?php echo $lang_signup['row_pick_a_password'] ?></td><td class=rowfollow align=left><input type="password" style="width: 200px" name="wantpassword" id="wantpassword" /><span id="passwordspan" style="color:red">&nbsp;</span><br />
-	<font class=small><?php echo $lang_signup['text_minimum_six_characters'] ?></font></td></tr>
-<tr><td class=rowhead><?php echo $lang_signup['row_enter_password_again'] ?></td><td class=rowfollow align=left><input type="password" style="width: 200px" name="passagain" id="passagain" /><span id="passagainspan" style="color:red"></span></td></tr>
-<? if(empty($_GET['invitenumber'])){ ?><tr><td class=rowhead><?php echo $lang_signup['row_enter_stuid'] ?></td><td class=rowfollow align=left><input type="text" style="width: 200px" name="stuid" id="stuid"/><span id="stuidspan" style="color:red">&nbsp;</span></td></tr>
-<tr><td class=rowhead><?php echo $lang_signup['row_enter_cardpass'] ?></td><td class=rowfollow align=left><input name="cardpass" type="password" style="width: 200px" id="cardpass" /><span id="cardpassspan" style="color:red">&nbsp;</span></td></tr>
+<div><div class=rowhead><?php echo $lang_signup['row_desired_username'] ?></div><div class=rowfollow align=left><input type="text" style="width: 200px" id="wantusername" name="wantusername" /><span id="usernamespan" style="color:red">&nbsp;</span><br />
+<font class=small><?php echo $lang_signup['text_allowed_characters'] ?></font></div></div>
+<div><div class=rowhead><?php echo $lang_signup['row_pick_a_password'] ?></div><div class=rowfollow align=left><input type="password" style="width: 200px" name="wantpassword" id="wantpassword" /><span id="passwordspan" style="color:red">&nbsp;</span><br />
+	<font class=small><?php echo $lang_signup['text_minimum_six_characters'] ?></font></div></div>
+<div><div class=rowhead><?php echo $lang_signup['row_enter_password_again'] ?></div><div class=rowfollow align=left><input type="password" style="width: 200px" name="passagain" id="passagain" /><span id="passagainspan" style="color:red"></span></div></div>
+<? if(empty($_GET['invitenumber'])){ ?><div><div class=rowhead><?php echo $lang_signup['row_enter_stuid'] ?></div><div class=rowfollow align=left><input type="text" style="width: 200px" name="stuid" id="stuid"/><span id="stuidspan" style="color:red">&nbsp;</span></div></div>
+<div><div class=rowhead><?php echo $lang_signup['row_enter_cardpass'] ?></div><div class=rowfollow align=left><input name="cardpass" type="password" style="width: 200px" id="cardpass" /><span id="cardpassspan" style="color:red">&nbsp;</span></div></div>
 <? } ?>
 <?php
 show_image_code ();
 ?>
-<tr><td class=rowhead><?php echo $lang_signup['row_email_address'] ?></td><td class=rowfollow align=left><input type="text" style="width: 200px" name="email" id="email" /><span id="emailspan" style="color:red">&nbsp;</span><table width=250 border=0 cellspacing=0 cellpadding=0><tr><td class=embedded><font class=small><?php echo ($restrictemaildomain == 'yes' ? $lang_signup['text_email_note'].allowedemails() : "") ?></td></tr>
-</font></td></tr></table>
-</td></tr>
+<div><div class=rowhead><?php echo $lang_signup['row_email_address'] ?></div><div class=rowfollow align=left><input type="text" style="width: 200px" name="email" id="email" /><span id="emailspan" style="color:red">&nbsp;</span><div width=250 border=0 cellspacing=0 cellpadding=0><div><div class=embedded><font class=small><?php echo ($restrictemaildomain == 'yes' ? $lang_signup['text_email_note'].allowedemails() : "") ?></div></div>
+</font></div></div></div>
+</div></div>
 <?php $countries = "<option value=\"8\">---- ".$lang_signup['select_none_selected']." ----</option>n";
 $ct_r = sql_query("SELECT id,name FROM countries ORDER BY name") or die;
 while ($ct_a = mysql_fetch_array($ct_r))
@@ -142,14 +142,14 @@ $schools .= "<option value=$sc_a[id]" . ($sc_a['id'] == 35 ? " selected" : "") .
 tr($lang_signup['row_school'], "<select name=school>$schools</select>", 1);
 }
 ?>
-<tr><td class=rowhead><?php echo $lang_signup['row_gender'] ?></td><td class=rowfollow align=left>
-<input type=radio name=gender id=gender1 value=Male><?php echo $lang_signup['radio_male'] ?><input type=radio name=gender id=gender2 value=Female><?php echo $lang_signup['radio_female'] ?><span id="genderspan" style="color:red">&nbsp;</span></td></tr>
-<tr><td class=rowhead><?php echo $lang_signup['row_verification'] ?></td><td class=rowfollow align=left><input type=checkbox name=rulesverify id=relesverify value=yes><?php echo $lang_signup['checkbox_read_rules'] ?><span id="rulesverifyspan" style="color:red">&nbsp;</span><br />
+<div><div class=rowhead><?php echo $lang_signup['row_gender'] ?></div><div class=rowfollow align=left>
+<input type=radio name=gender id=gender1 value=Male><?php echo $lang_signup['radio_male'] ?><input type=radio name=gender id=gender2 value=Female><?php echo $lang_signup['radio_female'] ?><span id="genderspan" style="color:red">&nbsp;</span></div></div>
+<div><div class=rowhead><?php echo $lang_signup['row_verification'] ?></div><div class=rowfollow align=left><input type=checkbox name=rulesverify id=relesverify value=yes><?php echo $lang_signup['checkbox_read_rules'] ?><span id="rulesverifyspan" style="color:red">&nbsp;</span><br />
 <input type=checkbox name=faqverify id=faqverify value=yes><?php echo $lang_signup['checkbox_read_faq'] ?><span id="faqverifyspan" style="color:red">&nbsp;</span> <br />
-<input type=checkbox name=ageverify id=ageverify value=yes><?php echo $lang_signup['checkbox_age'] ?><span id="ageverifyspan" style="color:red">&nbsp;</span></td></tr>
+<input type=checkbox name=ageverify id=ageverify value=yes><?php echo $lang_signup['checkbox_age'] ?><span id="ageverifyspan" style="color:red">&nbsp;</span></div></div>
 <input type=hidden name=hash value=<?php echo $code?>>
-<tr><td class=toolbox colspan="2" align="center"><font color=red><b><?php echo $lang_signup['text_all_fields_required'] ?></b><p></font><input type=submit id=cardsubmit value=<?php echo $lang_signup['submit_sign_up'] ?> style='height: 25px'></td></tr>
-</table>
+<div><div class=toolbox colspan="2" align="center"><font color=red><b><?php echo $lang_signup['text_all_fields_required'] ?></b><p></font><input type=submit id=cardsubmit value=<?php echo $lang_signup['submit_sign_up'] ?> style='height: 25px'></div></div>
+</div>
 </form>
 <?php
 stdfoot();

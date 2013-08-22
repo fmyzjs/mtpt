@@ -29,23 +29,23 @@ if (get_user_class() >= UC_MODERATOR)
 				 				if (mysql_num_rows($res) == 0)		
 				 				print("<b>BitBucket Log is empty</b>\n");	
 				 				else {		
-					 				print("<table align='center' border='0' cellspacing='0' cellpadding='5'>\n");		
+					 				print("<div align='center' border='0' cellspacing='0' cellpadding='5'>\n");		
 					 				while ($arr = mysql_fetch_assoc($res)) {
 						 				$date = substr($arr['added'], 0, strpos($arr['added'], " "));			
 						 				$time = substr($arr['added'], strpos($arr['added'], " ") + 1);			
 						 				$name = $arr["name"];
 						 				list($width, $height, $type, $attr) = getimagesize("" . get_protocol_prefix() . "$BASEURL/$bitbucket/$name");								 				
 						 				$url = str_replace(" ", "%20", htmlspecialchars("$bitbucket/$name"));
-						 				print("<tr>");
-						 				print("<td><center><a href=$url><img src=\"".$url."\" border=0 onLoad='SetSize(this, 400)'></a></center>");			
+						 				print("<div>");
+						 				print("<div><center><a href=$url><img src=\"".$url."\" border=0 onLoad='SetSize(this, 400)'></a></center>");			
 						 				print("Uploaded by:  " . get_username($arr[owner]). "<br />");
 						 				print("(#$arr[id]) Filename: $name ($width&nbsp;x&nbsp;$height)");			
 						 				if (get_user_class() >= UC_MODERATOR)				
 						 				print(" <b><a href=?delete=$arr[id]>[Delete]</a></b><br />");			
 						 				print("Added: $date $time");			
-						 				print("</tr>");		
+						 				print("</div>");		
 						 				}		
-						 				print("</table>");	
+						 				print("</div>");	
 						 				}	
 						 				echo 
 						 				$pagerbottom;	

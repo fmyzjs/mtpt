@@ -28,9 +28,9 @@ $action = isset($_POST['action']) ? $_POST['action'] : 'showmenu';
 $allowed_actions = array('basicsettings','mainsettings','smtpsettings','securitysettings','authoritysettings','tweaksettings', 'botsettings','codesettings','bonussettings','accountsettings','torrentsettings', 'attachmentsettings', 'advertisementsettings', 'savesettings_basic', 'savesettings_main','savesettings_smtp','savesettings_security','savesettings_authority','savesettings_tweak','savesettings_bot','savesettings_code','savesettings_bonus', 'savesettings_account','savesettings_torrent', 'savesettings_attachment', 'savesettings_advertisement', 'showmenu');
 if (!in_array($action, $allowed_actions))
 $action = 'showmenu';
-$notice = "<h1 align=\"center\"><a class=\"faqlink\" href=\"settings.php\">".$lang_settings['text_website_settings']."</a></h1><table cellspacing=\"0\" cellpadding=\"10\" width=\"940\"><tr><td colspan=\"2\" style='padding: 10px; background: black' align=\"center\">
+$notice = "<h1 align=\"center\"><a class=\"faqlink\" href=\"settings.php\">".$lang_settings['text_website_settings']."</a></h1><div cellspacing=\"0\" cellpadding=\"10\" width=\"940\"><div><div colspan=\"2\" style='padding: 10px; background: black' align=\"center\">
 <font color=\"white\">".$lang_settings['text_configuration_file_saving_note']."
-</font></td></tr>";
+</font></div></div>";
 
 if ($action == 'savesettings_main')	// save main
 {
@@ -255,7 +255,7 @@ elseif ($action == 'smtpsettings')	// stmp settings
 	$smtp_select = "<input type=\"radio\" name=\"smtptype\" value=\"default\" onclick=\"document.getElementById('smtp_advanced').style.display='none'; document.getElementById('smtp_external').style.display='none';\"".($SMTP['smtptype'] == "default" ? " checked" : "")."> ". $lang_settings['text_smtp_default'] . "<br /><input type=\"radio\" name=\"smtptype\" value=\"advanced\" onclick=\"document.getElementById('smtp_advanced').style.display=''; document.getElementById('smtp_external').style.display='none';\"".($SMTP['smtptype'] == "advanced" ? " checked" : "")."> " . $lang_settings['text_smtp_advanced']."<br /><input type=\"radio\" name=\"smtptype\" value=\"external\" onclick=\"document.getElementById('smtp_advanced').style.display='none'; document.getElementById('smtp_external').style.display='';\"".($SMTP['smtptype'] == "external" ? " checked" : "")."> " . $lang_settings['text_smtp_external']."<br /><input type=\"radio\" name=\"smtptype\" value=\"none\" onclick=\"document.getElementById('smtp_advanced').style.display='none'; document.getElementById('smtp_external').style.display='none';\"".($SMTP['smtptype'] == "none" ? " checked" : "")."> " . $lang_settings['text_smtp_none'];
 	tr($lang_settings['row_mail_function_type'], $smtp_select, 1);
 	print("</tbody><tbody id=\"smtp_advanced\"".($SMTP['smtptype'] == "advanced" ? "" : " style=\"display: none;\"").">");
-	print("<tr><td colspan=2 align=center><b>".$lang_settings['text_setting_for_advanced_type']."</b></td></tr>");
+	print("<div><div colspan=2 align=center><b>".$lang_settings['text_setting_for_advanced_type']."</b></div></div>");
 	tr($lang_settings['row_smtp_host'],"<input type='text' style=\"width: 300px\" name=smtp_host value='".($SMTP['smtp_host'] ? $SMTP['smtp_host'] : "localhost")."'> ".$lang_settings['text_smtp_host_note'], 1);
 	tr($lang_settings['row_smtp_port'],"<input type='text' style=\"width: 300px\" name=smtp_port value='".($SMTP['smtp_port'] ? $SMTP['smtp_port'] : "25")."'> ".$lang_settings['text_smtp_port_note'], 1);
 	if (strtoupper(substr(PHP_OS,0,3)=='WIN'))
@@ -263,14 +263,14 @@ elseif ($action == 'smtpsettings')	// stmp settings
 	else
 		tr($lang_settings['row_smtp_sendmail_path'], $lang_settings['text_smtp_sendmail_path_note'], 1);
 	print("</tbody><tbody id=\"smtp_external\"".($SMTP['smtptype'] == "external" ? "" : " style=\"display: none;\"").">");
-	print("<tr><td colspan=2 align=center><b>".$lang_settings['text_setting_for_external_type']."</b></td></tr>");
+	print("<div><div colspan=2 align=center><b>".$lang_settings['text_setting_for_external_type']."</b></div></div>");
 	tr($lang_settings['row_outgoing_mail_address'], "<input type=text name=smtpaddress style=\"width: 300px\" ".($SMTP['smtpaddress'] ? "value=\"".$SMTP['smtpaddress']."\"" : "")."> ".$lang_settings['text_outgoing_mail_address_note'], 1);
 	tr($lang_settings['row_outgoing_mail_port'], "<input type=text name=smtpport style=\"width: 300px\" ".($SMTP['smtpport'] ? "value=\"".$SMTP['smtpport']."\"" : "")."> ".$lang_settings['text_outgoing_mail_port_note'], 1);
 	tr($lang_settings['row_smtp_account_name'], "<input type=text name=accountname style=\"width: 300px\" ".($SMTP['accountname'] ? "value=\"".$SMTP['accountname']."\"" : "")."> ".$lang_settings['text_smtp_account_name_note'], 1);
 	tr($lang_settings['row_smtp_account_password'], "<input type=password name=accountpassword style=\"width: 300px\" ".($SMTP['accountpassword'] ? "value=\"".$SMTP['accountpassword']."\"" : "")."> ".$lang_settings['text_smtp_account_password_note'], 1);
 	print("</tbody><tbody>");
 	tr($lang_settings['row_save_settings'],"<input type='submit' name='save' value='".$lang_settings['submit_save_settings']."'>", 1);
-print ("<tr><td colspan=2 align=center>".$lang_settings['text_mail_test_note']."<a href=\"mailtest.php\" target=\"_blank\"><b>".$lang_settings['text_here']."</b></a></td></tr>");
+print ("<div><div colspan=2 align=center>".$lang_settings['text_mail_test_note']."<a href=\"mailtest.php\" target=\"_blank\"><b>".$lang_settings['text_here']."</b></a></div></div>");
 print ("</form>");
 print("</tbody>");
 }
@@ -412,11 +412,11 @@ elseif ($action == 'bonussettings'){
 	stdhead($lang_settings['head_bonus_settings']);
 	print ($notice);
 	print ("<form method='post' action='".$_SERVER["SCRIPT_NAME"]."'><input type='hidden' name='action' value='savesettings_bonus'>");
-	print("<tr><td colspan=2 align=center><b>".$lang_settings['text_bonus_by_seeding']."</b></td></tr>");
+	print("<div><div colspan=2 align=center><b>".$lang_settings['text_bonus_by_seeding']."</b></div></div>");
 	tr($lang_settings['row_donor_gets_double'], $lang_settings['text_donor_gets']."<input type='text' style=\"width: 50px\" name=donortimes value='".(isset($BONUS["donortimes"]) ? $BONUS["donortimes"] : 2 )."'>".$lang_settings['text_times_as_many'],1);
 	tr($lang_settings['row_basic_seeding_bonus'], $lang_settings['text_user_would_get']."<input type='text' style=\"width: 50px\" name=perseeding value='".(isset($BONUS["perseeding"]) ? $BONUS["perseeding"] : 1 )."'>".$lang_settings['text_bonus_points']."<input type='text' style=\"width: 50px\" name=maxseeding value='".(isset($BONUS["maxseeding"]) ? $BONUS["maxseeding"] : 7 )."'>".$lang_settings['text_torrents_default'], 1);
 	tr($lang_settings['row_seeding_formula'], $lang_settings['text_bonus_formula_one']."<br />&nbsp;&nbsp;&nbsp;&nbsp;<img src=pic/bonusformulaa.png alt=\"A = sigma( ( 1 - 10 ^ ( - Ti / T0 ) ) * Si * ( 1 + sqrt( 2 ) * 10 ^ ( - ( Ni - 1 ) / ( N0 - 1 ) ) )\" title=\"A = sigma( ( 1 - 10 ^ ( - Ti / T0 ) ) * Si * ( 1 + sqrt( 2 ) * 10 ^ ( - ( Ni - 1 ) / ( N0 - 1 ) ) )\"><br />&nbsp;&nbsp;&nbsp;&nbsp;<img src=pic/bonusformulab.png alt=\"B = B0 * 2 / pi * arctan( A / L )\" title=\"B = B0 * 2 / pi * arctan( A / L )\"><br />".$lang_settings['text_where']."<ul><li>".$lang_settings['text_bonus_formula_two']."</li><li>".$lang_settings['text_bonus_formula_three']."<input type='text' style=\"width: 50px\" name=tzero value='".(isset($BONUS["tzero"]) ? $BONUS["tzero"] : 4 )."'>".$lang_settings['text_bonus_formula_four']."</li><li>".$lang_settings['text_bonus_formula_five']."</li><li>".$lang_settings['text_bonus_formula_six']."<input type='text' style=\"width: 50px\" name=nzero value='".(isset($BONUS["nzero"]) ? $BONUS["nzero"] : 7 )."'>".$lang_settings['text_bonus_formula_seven']."</li><li>".$lang_settings['text_bonus_formula_eight']."</li><li>".$lang_settings['text_bonus_formula_nine']."<input type='text' style=\"width: 50px\" name=bzero value='".(isset($BONUS["bzero"]) ? $BONUS["bzero"] : 100 )."'>".$lang_settings['text_bonus_formula_ten']."</li><li>".$lang_settings['text_bonus_formula_eleven']."<input type='text' style=\"width: 50px\" name=l value='".(isset($BONUS["l"]) ? $BONUS["l"] : 300 )."'>".$lang_settings['text_bonus_formula_twelve']."</li></ul>\n", 1);
-	print("<tr><td colspan=2 align=center><b>".$lang_settings['text_misc_ways_get_bonus']."</b></td></tr>");
+	print("<div><div colspan=2 align=center><b>".$lang_settings['text_misc_ways_get_bonus']."</b></div></div>");
 	tr($lang_settings['row_uploading_torrent'],$lang_settings['text_user_would_get']."<input type='text' style=\"width: 50px\" name=uploadtorrent value='".(isset($BONUS["uploadtorrent"]) ? $BONUS["uploadtorrent"] : 15 )."'>".$lang_settings['text_uploading_torrent_note'], 1);
 	tr($lang_settings['row_uploading_subtitle'],$lang_settings['text_user_would_get']."<input type='text' style=\"width: 50px\" name=uploadsubtitle value='".(isset($BONUS["uploadsubtitle"]) ? $BONUS["uploadsubtitle"] : 5 )."'>".$lang_settings['text_uploading_subtitle_note'], 1);
 	tr($lang_settings['row_starting_topic'],$lang_settings['text_user_would_get']."<input type='text' style=\"width: 50px\" name=starttopic value='".(isset($BONUS["starttopic"]) ? $BONUS["starttopic"] : 2 )."'>".$lang_settings['text_starting_topic_note'], 1);
@@ -428,7 +428,7 @@ elseif ($action == 'bonussettings'){
 	tr($lang_settings['row_saying_thanks'], $lang_settings['text_giver_and_receiver_get']."<input type='text' style=\"width: 50px\" name=saythanks value='".(isset($BONUS["saythanks"]) ? $BONUS["saythanks"] : 0.5 )."'>".$lang_settings['text_saying_thanks_and']."<input type='text' style=\"width: 50px\" name=receivethanks value='".(isset($BONUS["receivethanks"]) ? $BONUS["receivethanks"] : 0 )."'>".$lang_settings['text_saying_thanks_default'], 1);
 	tr($lang_settings['row_funbox_stuff_reward'],$lang_settings['text_user_would_get']."<input type='text' style=\"width: 50px\" name=funboxreward value='".(isset($BONUS["funboxreward"]) ? $BONUS["funboxreward"] : 5 )."'>".$lang_settings['text_funbox_stuff_reward_note'], 1);
 	tr($lang_settings['row_promotion_link_click'],$lang_settings['text_user_would_get']."<input type='text' style=\"width: 50px\" name=prolinkpoint value='".(isset($BONUS["prolinkpoint"]) ? $BONUS["prolinkpoint"] : 0 )."'>".$lang_settings['text_promotion_link_note_one']."<input type='text' style=\"width: 50px\" name=prolinktime value='".(isset($BONUS["prolinktime"]) ? $BONUS["prolinktime"] : 600 )."'>".$lang_settings['text_promotion_link_note_two'], 1);
-	print("<tr><td colspan=2 align=center><b>".$lang_settings['text_things_cost_bonus']."</b></td></tr>");
+	print("<div><div colspan=2 align=center><b>".$lang_settings['text_things_cost_bonus']."</b></div></div>");
 	tr($lang_settings['row_one_gb_credit'],$lang_settings['text_it_costs_user']."<input type='text' style=\"width: 50px\" name=onegbupload value='".(isset($BONUS["onegbupload"]) ? $BONUS["onegbupload"] : 300 )."'>".$lang_settings['text_one_gb_credit_note'], 1);
 	tr($lang_settings['row_five_gb_credit'],$lang_settings['text_it_costs_user']."<input type='text' style=\"width: 50px\" name=fivegbupload value='".(isset($BONUS["fivegbupload"]) ? $BONUS["fivegbupload"] : 800 )."'>".$lang_settings['text_five_gb_credit_note'], 1);
 	tr($lang_settings['row_ten_gb_credit'],$lang_settings['text_it_costs_user']."<input type='text' style=\"width: 50px\" name=tengbupload value='".(isset($BONUS["tengbupload"]) ? $BONUS["tengbupload"] : 1200 )."'>".$lang_settings['text_ten_gb_credit_note'], 1);
@@ -446,13 +446,13 @@ elseif ($action == 'accountsettings'){
 	print ($notice);
 	$maxclass = UC_VIP;
 	print ("<form method='post' action='".$_SERVER["SCRIPT_NAME"]."'><input type='hidden' name='action' value='savesettings_account'>");
-	print("<tr><td colspan=2 align=center><b>".$lang_settings['text_delete_inactive_accounts']."</b></td></tr>");
+	print("<div><div colspan=2 align=center><b>".$lang_settings['text_delete_inactive_accounts']."</b></div></div>");
 	tr($lang_settings['row_never_delete'],classlist('neverdelete',$maxclass,$ACCOUNT['neverdelete']).$lang_settings['text_never_delete'].get_user_class_name(UC_VETERAN_USER,false,true,true), 1);
 	tr($lang_settings['row_never_delete_if_packed'],classlist('neverdeletepacked',$maxclass,$ACCOUNT['neverdeletepacked']).$lang_settings['text_never_delete_if_packed'].get_user_class_name(UC_ELITE_USER,false,true,true), 1);
 	tr($lang_settings['row_delete_packed'],$lang_settings['text_delete_packed_note_one']."<input type='text' style=\"width: 50px\" name=deletepacked value='".(isset($ACCOUNT["deletepacked"]) ? $ACCOUNT["deletepacked"] : 400 )."'>".$lang_settings['text_delete_packed_note_two'], 1);
 	tr($lang_settings['row_delete_unpacked'],$lang_settings['text_delete_unpacked_note_one']."<input type='text' style=\"width: 50px\" name=deleteunpacked value='".(isset($ACCOUNT["deleteunpacked"]) ? $ACCOUNT["deleteunpacked"] : 150 )."'>".$lang_settings['text_delete_unpacked_note_two'], 1);
 	tr($lang_settings['row_delete_no_transfer'],$lang_settings['text_delete_transfer_note_one']."<input type='text' style=\"width: 50px\" name=deletenotransfer value='".(isset($ACCOUNT["deletenotransfer"]) ? $ACCOUNT["deletenotransfer"] : 60 )."'>".$lang_settings['text_delete_transfer_note_two']."<input type='text' style=\"width: 50px\" name=deletenotransfertwo value='".(isset($ACCOUNT["deletenotransfertwo"]) ? $ACCOUNT["deletenotransfertwo"] : 0 )."'>".$lang_settings['text_delete_transfer_note_three'], 1);
-	print("<tr><td colspan=2 align=center><b>".$lang_settings['text_user_promotion_demotion']."</b></td></tr>");
+	print("<div><div colspan=2 align=center><b>".$lang_settings['text_user_promotion_demotion']."</b></div></div>");
 	tr($lang_settings['row_ban_peasant_one'].get_user_class_name(UC_PEASANT,false,false,true).$lang_settings['row_ban_peasant_two'],get_user_class_name(UC_PEASANT,false,true,true).$lang_settings['text_ban_peasant_note_one']."<input type='text' style=\"width: 50px\" name=deletepeasant value='".(isset($ACCOUNT["deletepeasant"]) ? $ACCOUNT["deletepeasant"] : 30 )."'>".$lang_settings['text_ban_peasant_note_two'], 1);
 	tr($lang_settings['row_demoted_to_peasant_one'].get_user_class_name(UC_PEASANT,false,false,true).$lang_settings['row_demoted_to_peasant_two'],$lang_settings['text_demoted_peasant_note_one'].get_user_class_name(UC_PEASANT,false,true,true).$lang_settings['text_demoted_peasant_note_two']."<br /><ul>
 		<li>".$lang_settings['text_downloaded_amount_larger_than']."<input type='text' style=\"width: 50px\" name=psdlone value='".(isset($ACCOUNT["psdlone"]) ? $ACCOUNT["psdlone"] : 50 )."'>".$lang_settings['text_and_ratio_below']."<input type='text' style=\"width: 50px\" name=psratioone value='".(isset($ACCOUNT["psratioone"]) ? $ACCOUNT["psratioone"] : 0.4 )."'>".$lang_settings['text_demote_peasant_default_one']."</li>
@@ -624,6 +624,6 @@ elseif ($action == 'showmenu')	// settings main page
 	tr($lang_settings['row_advertisement_settings'], "<form method='post' action='".$_SERVER["SCRIPT_NAME"]."'><input type='hidden' name='action' value='advertisementsettings'><input type='submit' value=\"".$lang_settings['submit_advertisement_settings']."\"> ".$lang_settings['text_advertisement_settings_note']."</form>", 1);
 	tr($lang_settings['row_code_settings'], "<form method='post' action='".$_SERVER["SCRIPT_NAME"]."'><input type='hidden' name='action' value='codesettings'><input type='submit' value=\"".$lang_settings['submit_code_settings']."\"> ".$lang_settings['text_code_settings_note']."</form>", 1);
 }
-print("</table>");
+print("</div>");
 stdfoot();
 ?>

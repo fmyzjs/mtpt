@@ -97,61 +97,61 @@ else
 	begin_main_frame();
 ?>
 <h2><?php echo $title?></h2>
-<table width="100%"><tr>
-<td colspan="2" class="text" align="left"><p><?php echo $note?></p></td></tr>
-<tr>
+<div width="100%"><div>
+<div colspan="2" class="text" align="left"><p><?php echo $note?></p></div></div>
+<div>
 <?php
 if ($showrationotice)
 {
 ?>
-<td class="text" align="left" valign="top" <?php echo $tdattr?>>
+<div class="text" align="left" valign="top" <?php echo $tdattr?>>
 <h3><?php echo $lang_downloadnotice['text_this_is_private_tracker']?></h3>
 <p><?php echo $lang_downloadnotice['text_private_tracker_note_one']?><i>(<?php echo $lang_downloadnotice['text_learn_more']?><a class="faqlink" href="<?php echo NEXUSWIKIURL?>/Private Tracker" target="_blank"><?php echo $lang_downloadnotice['text_nexuswiki']?></a>)</i></p>
 <p><?php echo $lang_downloadnotice['text_private_tracker_note_two']?><i>(<?php echo $lang_downloadnotice['text_see_ratio']?><a class="faqlink" href="faq.php#id23" target="_blank"><?php echo $lang_downloadnotice['text_faq']?></a>)</i></p>
 <p><?php echo $lang_downloadnotice['text_private_tracker_note_three']?></p>
 <img src="pic/ratio.png" alt="ratio" />
 <p><?php echo $lang_downloadnotice['text_private_tracker_note_four']?></p>
-</td>
+</div>
 <?php
 }
 if ($showclientnotice)
 {
 ?>
-<td class="text" align="left" valign="top" <?php echo $tdattr?>>
+<div class="text" align="left" valign="top" <?php echo $tdattr?>>
 <h3><?php echo $lang_downloadnotice['text_use_allowed_clients']?></h3>
 <p><?php echo $lang_downloadnotice['text_allowed_clients_note_one']?><i>(<?php echo $lang_downloadnotice['text_why_banned']?><a class="faqlink" href="<?php echo NEXUSWIKIURL?>/客户端测试报告" target="_blank"><?php echo $lang_downloadnotice['text_nexuswiki']?></a>)</i></p>
 <p><?php echo $lang_downloadnotice['text_allowed_clients_note_two']?><a class='faqlink' href='faq.php#id29' target='_blank'><?php echo $lang_downloadnotice['text_faq']?></a><?php echo $lang_downloadnotice['text_allowed_clients_note_three']?></p>
-<table width="100%">
-<tr>
-<td class="embedded" style="text-align: center; padding: 5px;" width="50%">
+<div width="100%">
+<div>
+<div class="embedded" style="text-align: center; padding: 5px;" width="50%">
 <a href="http://www.utorrent.com/download.php" target="_blank" title="<?php echo $lang_downloadnotice['title_download']?>uTorrent"><img src="pic/utorrentbig.png" alt="uTorrent" /></a>
-</td>
-<td class="embedded" style="text-align: center; padding: 5px;" width="50%">
+</div>
+<div class="embedded" style="text-align: center; padding: 5px;" width="50%">
 <a href="http://azureus.sourceforge.net/download.php" target="_blank" title="<?php echo $lang_downloadnotice['title_download']?>Vuze"><img src="pic/vuzebig.png" alt="Vuze" /></a>
-</td>
-</tr>
-<tr>
-<td class="embedded" style="text-align: center; padding: 5px;">
+</div>
+</div>
+<div>
+<div class="embedded" style="text-align: center; padding: 5px;">
 <div class="big"><a href="http://www.utorrent.com/download.php" target="_blank" title="<?php echo $lang_downloadnotice['title_download']?>uTorrent"><b>uTorrent</b></a></div>
 <div><?php echo $lang_downloadnotice['text_for']?>Windows</div>
-</td>
-<td class="embedded" style="text-align: center; padding: 5px;">
+</div>
+<div class="embedded" style="text-align: center; padding: 5px;">
 <div class="big"><a href="http://azureus.sourceforge.net/download.php" target="_blank" title="<?php echo $lang_downloadnotice['title_download']?>Vuze"><b>Vuze</b></a></div>
 <div><?php echo $lang_downloadnotice['text_for']?>Windows, Linux, Mac OS X</div>
-</td>
-</tr>
-</table>
-</td>
+</div>
+</div>
+</div>
+</div>
 <?php
 }
 ?>
-</tr>
+</div>
 <?php
 if ($torrentid)
 {
 ?>
-<tr>
-<td class="text" colspan="2">
+<div>
+<div class="text" colspan="2">
 <form action="?" method="post"><p><?php echo $lang_downloadnotice['text_for_more_information_read']?><a class="faqlink" href="rules.php" target="_blank"><?php echo $lang_downloadnotice['text_rules']?></a><?php echo $lang_downloadnotice['text_and']?><a class="faqlink" href="faq.php" target="_blank"><?php echo $lang_downloadnotice['text_faq']?></a><br />
 <input type="hidden" name="id" value="<?php echo $torrentid?>" />
 <input type="hidden" name="type" value="<?php echo htmlspecialchars($type)?>" />
@@ -172,12 +172,12 @@ if (!$showbonusnotice)
 }
 ?>
 </form>
-</td>
-</tr>
+</div>
+</div>
 <?php
 }
 ?>
-</table>
+</div>
 <?php
 	end_main_frame();
 	stdfoot();

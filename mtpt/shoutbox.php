@@ -120,14 +120,14 @@ else
 <script type="text/javascript" src="jquerylib/jquery-1.5.2.min.js"></script>
 <script type="text/javascript">
 	function retuser(value){
-		$("#shbox_text", window.parent.document).val("[To][b]"+value+"[/b]：");
+		$("#shbox_text", window.parent.document).val("@[b]"+value+"[/b]：");
 		$("#shbox_text", window.parent.document).focus();
-		$("#hbtext", window.parent.document).val("[To][b]"+value+"[/b]：");
+		$("#hbtext", window.parent.document).val("@[b]"+value+"[/b]：");
 		$("#hbtext", window.parent.document).focus();
 	}
 </script>
 <?
-	print("<table border='0' cellspacing='0' cellpadding='2' width='100%' align='left'>\n");
+	print("<div border='0' cellspacing='0' cellpadding='2' width='100%' align='left'>\n");
 	$i = 1;
 	while ($arr = mysql_fetch_assoc($res))
 	{
@@ -152,12 +152,12 @@ else
 		else $time = get_elapsed_time($arr["date"]).$lang_shoutbox['text_ago'];
 		$messtext = $arr["text"];
 		$messtext = str_replace($CURUSER['username'],"[color=Red]".$CURUSER['username']."[/color]",$messtext);  //将回复给自己的名字染红
-		print("<tr><td class=\"shoutrow\"><span class='date'>[".$time."]</span> ".
-$del ." <span onclick=\"retuser('".$arr2["username"]."');\" style=\"cursor:pointer;\">[Re]</span> ". $username." " . format_comment($messtext,true,false,true,true,600,true,false)."
-</td></tr>\n");
+		print("<div><div class=\"shoutrow\"><span class='date'>[".$time."]</span> ".
+$del ." <span onclick=\"retuser('".$arr2["username"]."');\" style=\"cursor:pointer;\">[@]</span> ". $username." " . format_comment($messtext,true,false,true,true,600,true,false)."
+</div></div>\n");
 		$i++;
 	}
-	print("</table>");
+	print("</div>");
 }
 ?>
 </body>

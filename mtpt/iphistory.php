@@ -41,12 +41,12 @@ print("<h1 align=\"center\">".$lang_iphistory['text_historical_ip_by'] . get_use
 if ($countrows > $perpage)
 echo $pagertop;
 
-print("<table width=500 border=1 cellspacing=0 cellpadding=5 align=center>\n");
-print("<tr>\n
-<td class=colhead>".$lang_iphistory['col_last_access']."</td>\n
-<td class=colhead>".$lang_iphistory['col_ip']."</td>\n
-<td class=colhead>".$lang_iphistory['col_hostname']."</td>\n
-</tr>\n");
+print("<div width=500 border=1 cellspacing=0 cellpadding=5 align=center>\n");
+print("<div>\n
+<div class=colhead>".$lang_iphistory['col_last_access']."</div>\n
+<div class=colhead>".$lang_iphistory['col_ip']."</div>\n
+<div class=colhead>".$lang_iphistory['col_hostname']."</div>\n
+</div>\n");
 while ($arr = mysql_fetch_array($res))
 {
 $addr = "";
@@ -76,12 +76,12 @@ else
 $ipshow = "<a href=\"ipsearch.php?ip=". $arr['ip'] ."\">" . $arr['ip'] ."</a>";
 }
 $date = gettime($arr["access"]);
-print("<tr><td>".$date."</td>\n");
-print("<td>".$ipshow."</td>\n");
-print("<td>".$addr."</td></tr>\n");
+print("<div><div>".$date."</div>\n");
+print("<div>".$ipshow."</div>\n");
+print("<div>".$addr."</div></div>\n");
 }
 
-print("</table>");
+print("</div>");
 
 echo $pagerbottom;
 

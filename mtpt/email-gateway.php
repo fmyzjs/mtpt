@@ -48,18 +48,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 
 stdhead("E-mail gateway");
 ?>
-<p><table border=0 class=main cellspacing=0 cellpadding=0><tr>
-<td class=embedded style='padding-left: 10px'><font size=3><b>Send e-mail to <?php echo $username;?></b></font></td>
-</tr></table></p>
-<table border=1 cellspacing=0 cellpadding=5>
+<p><div border=0 class=main cellspacing=0 cellpadding=0><div>
+<div class=embedded style='padding-left: 10px'><font size=3><b>Send e-mail to <?php echo $username;?></b></font></div>
+</div></div></p>
+<div border=1 cellspacing=0 cellpadding=5>
 <form method=post action=email-gateway.php?id=<?php echo $id?>>
-<tr><td class=rowhead>Your name</td><td><input type=text name=from size=80></td></tr>
-<tr><td class=rowhead>Your e-mail</td><td><input type=text name=from_email size=80></td></tr>
-<tr><td class=rowhead>Subject</td><td><input type=text name=subject size=80></td></tr>
-<tr><td class=rowhead>Message</td><td><textarea name=message cols=80 rows=20></textarea></td></tr>
-<tr><td colspan=2 align=center><input type=submit value="Send" class=btn></td></tr>
+<div><div class=rowhead>Your name</div><div><input type=text name=from size=80></div></div>
+<div><div class=rowhead>Your e-mail</div><div><input type=text name=from_email size=80></div></div>
+<div><div class=rowhead>Subject</div><div><input type=text name=subject size=80></div></div>
+<div><div class=rowhead>Message</div><div><textarea name=message cols=80 rows=20></textarea></div></div>
+<div><div colspan=2 align=center><input type=submit value="Send" class=btn></div></div>
 </form>
-</table>
+</div>
 <p>
 <font class=small><b>Note:</b> Your IP-address will be logged and visible to the recipient to prevent abuse.<br />
 Make sure to supply a valid e-mail address if you expect a reply.</font>

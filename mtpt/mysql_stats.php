@@ -148,13 +148,13 @@ $row = mysql_fetch_row($res);
 //echo sprintf("Server Status Uptime", timespanFormat($serverStatus['Uptime']), localisedDate($row[0])) . "\n";
 ?>
 
-	<table id="torrenttable" border="1"><tr><td>
+	<div id="torrenttable" border="1"><div><div>
 
 <?php
 print($lang_mysql_stats['text_running']."<font color=red>". timespanFormat($serverStatus['Uptime'])."</font>" .$lang_mysql_stats['text_started']."<font color=red>" .localisedDate($row[0])) . "</font>\n";
 ?>
 
-	</td></tr></table>
+	</div></div></div>
 
 <?php
 mysql_free_result($res);
@@ -176,92 +176,92 @@ unset($tmp_array);
     <li>
         <b><?php echo $lang_mysql_stats['text_server_traffic']?></b> <?php echo $lang_mysql_stats['text_traffic_desc']?>
         <br />
-        <table border="0">
-            <tr>
-                <td valign="top">
-                    <table id="torrenttable" border="0">
-                        <tr>
+        <div border="0">
+            <div>
+                <div valign="top">
+                    <div id="torrenttable" border="0">
+                        <div>
                             <th colspan="2" bgcolor="lightgrey"><?php echo $lang_mysql_stats['text_traffic']?></th>
                             <th bgcolor="lightgrey"><?php echo $lang_mysql_stats['text_perhour']?></th>
-                        </tr>
-                        <tr>
-                            <td bgcolor="#EFF3FF"><?php echo $lang_mysql_stats['form_received']?></td>
-                            <td bgcolor="#EFF3FF" align="right">&nbsp;<?php echo join(' ', formatByteDown($serverStatus['Bytes_received'])); ?>&nbsp;</td>
-                            <td bgcolor="#EFF3FF" align="right">&nbsp;<?php echo join(' ', formatByteDown($serverStatus['Bytes_received'] * 3600 / $serverStatus['Uptime'])); ?>&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td bgcolor="#EFF3FF"><?php echo $lang_mysql_stats['form_sent']?></td>
-                            <td bgcolor="#EFF3FF" align="right">&nbsp;<?php echo join(' ', formatByteDown($serverStatus['Bytes_sent'])); ?>&nbsp;</td>
-                            <td bgcolor="#EFF3FF" align="right">&nbsp;<?php echo join(' ', formatByteDown($serverStatus['Bytes_sent'] * 3600 / $serverStatus['Uptime'])); ?>&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td bgcolor="lightgrey"><?php echo $lang_mysql_stats['form_total']?></td>
-                            <td bgcolor="lightgrey" align="right">&nbsp;<?php echo join(' ', formatByteDown($serverStatus['Bytes_received'] + $serverStatus['Bytes_sent'])); ?>&nbsp;</td>
-                            <td bgcolor="lightgrey" align="right">&nbsp;<?php echo join(' ', formatByteDown(($serverStatus['Bytes_received'] + $serverStatus['Bytes_sent']) * 3600 / $serverStatus['Uptime'])); ?>&nbsp;</td>
-                        </tr>
-                    </table>
-                </td>
-                <td valign="top">
-                    <table id="torrenttable" border="0">
-                        <tr>
+                        </div>
+                        <div>
+                            <div bgcolor="#EFF3FF"><?php echo $lang_mysql_stats['form_received']?></div>
+                            <div bgcolor="#EFF3FF" align="right">&nbsp;<?php echo join(' ', formatByteDown($serverStatus['Bytes_received'])); ?>&nbsp;</div>
+                            <div bgcolor="#EFF3FF" align="right">&nbsp;<?php echo join(' ', formatByteDown($serverStatus['Bytes_received'] * 3600 / $serverStatus['Uptime'])); ?>&nbsp;</div>
+                        </div>
+                        <div>
+                            <div bgcolor="#EFF3FF"><?php echo $lang_mysql_stats['form_sent']?></div>
+                            <div bgcolor="#EFF3FF" align="right">&nbsp;<?php echo join(' ', formatByteDown($serverStatus['Bytes_sent'])); ?>&nbsp;</div>
+                            <div bgcolor="#EFF3FF" align="right">&nbsp;<?php echo join(' ', formatByteDown($serverStatus['Bytes_sent'] * 3600 / $serverStatus['Uptime'])); ?>&nbsp;</div>
+                        </div>
+                        <div>
+                            <div bgcolor="lightgrey"><?php echo $lang_mysql_stats['form_total']?></div>
+                            <div bgcolor="lightgrey" align="right">&nbsp;<?php echo join(' ', formatByteDown($serverStatus['Bytes_received'] + $serverStatus['Bytes_sent'])); ?>&nbsp;</div>
+                            <div bgcolor="lightgrey" align="right">&nbsp;<?php echo join(' ', formatByteDown(($serverStatus['Bytes_received'] + $serverStatus['Bytes_sent']) * 3600 / $serverStatus['Uptime'])); ?>&nbsp;</div>
+                        </div>
+                    </div>
+                </div>
+                <div valign="top">
+                    <div id="torrenttable" border="0">
+                        <div>
                             <th colspan="2" bgcolor="lightgrey"><?php echo $lang_mysql_stats['text_connections']?></th>
                             <th bgcolor="lightgrey"><?php echo $lang_mysql_stats['text_perhour']?></th>
                             <th bgcolor="lightgrey"><?php echo $lang_mysql_stats['text_percentage']?></th>
-                        </tr>
-                        <tr>
-                            <td bgcolor="#EFF3FF"><?php echo $lang_mysql_stats['form_failed']?></td>
-                            <td bgcolor="#EFF3FF" align="right">&nbsp;<?php echo number_format($serverStatus['Aborted_connects'], 0, '.', ','); ?>&nbsp;</td>
-                            <td bgcolor="#EFF3FF" align="right">&nbsp;<?php echo number_format(($serverStatus['Aborted_connects'] * 3600 / $serverStatus['Uptime']), 2, '.', ','); ?>&nbsp;</td>
-                            <td bgcolor="#EFF3FF" align="right">&nbsp;<?php echo ($serverStatus['Connections'] > 0 ) ? number_format(($serverStatus['Aborted_connects'] * 100 / $serverStatus['Connections']), 2, '.', ',') . '&nbsp;%' : '---'; ?>&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td bgcolor="#EFF3FF"><?php echo $lang_mysql_stats['form_aborted']?></td>
-                            <td bgcolor="#EFF3FF" align="right">&nbsp;<?php echo number_format($serverStatus['Aborted_clients'], 0, '.', ','); ?>&nbsp;</td>
-                            <td bgcolor="#EFF3FF" align="right">&nbsp;<?php echo number_format(($serverStatus['Aborted_clients'] * 3600 / $serverStatus['Uptime']), 2, '.', ','); ?>&nbsp;</td>
-                            <td bgcolor="#EFF3FF" align="right">&nbsp;<?php echo ($serverStatus['Connections'] > 0 ) ? number_format(($serverStatus['Aborted_clients'] * 100 / $serverStatus['Connections']), 2 , '.', ',') . '&nbsp;%' : '---'; ?>&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td bgcolor="lightgrey"><?php echo $lang_mysql_stats['form_total']?></td>
-                            <td bgcolor="lightgrey" align="right">&nbsp;<?php echo number_format($serverStatus['Connections'], 0, '.', ','); ?>&nbsp;</td>
-                            <td bgcolor="lightgrey" align="right">&nbsp;<?php echo number_format(($serverStatus['Connections'] * 3600 / $serverStatus['Uptime']), 2, '.', ','); ?>&nbsp;</td>
-                            <td bgcolor="lightgrey" align="right">&nbsp;<?php echo number_format(100, 2, '.', ','); ?>&nbsp;%&nbsp;</td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
+                        </div>
+                        <div>
+                            <div bgcolor="#EFF3FF"><?php echo $lang_mysql_stats['form_failed']?></div>
+                            <div bgcolor="#EFF3FF" align="right">&nbsp;<?php echo number_format($serverStatus['Aborted_connects'], 0, '.', ','); ?>&nbsp;</div>
+                            <div bgcolor="#EFF3FF" align="right">&nbsp;<?php echo number_format(($serverStatus['Aborted_connects'] * 3600 / $serverStatus['Uptime']), 2, '.', ','); ?>&nbsp;</div>
+                            <div bgcolor="#EFF3FF" align="right">&nbsp;<?php echo ($serverStatus['Connections'] > 0 ) ? number_format(($serverStatus['Aborted_connects'] * 100 / $serverStatus['Connections']), 2, '.', ',') . '&nbsp;%' : '---'; ?>&nbsp;</div>
+                        </div>
+                        <div>
+                            <div bgcolor="#EFF3FF"><?php echo $lang_mysql_stats['form_aborted']?></div>
+                            <div bgcolor="#EFF3FF" align="right">&nbsp;<?php echo number_format($serverStatus['Aborted_clients'], 0, '.', ','); ?>&nbsp;</div>
+                            <div bgcolor="#EFF3FF" align="right">&nbsp;<?php echo number_format(($serverStatus['Aborted_clients'] * 3600 / $serverStatus['Uptime']), 2, '.', ','); ?>&nbsp;</div>
+                            <div bgcolor="#EFF3FF" align="right">&nbsp;<?php echo ($serverStatus['Connections'] > 0 ) ? number_format(($serverStatus['Aborted_clients'] * 100 / $serverStatus['Connections']), 2 , '.', ',') . '&nbsp;%' : '---'; ?>&nbsp;</div>
+                        </div>
+                        <div>
+                            <div bgcolor="lightgrey"><?php echo $lang_mysql_stats['form_total']?></div>
+                            <div bgcolor="lightgrey" align="right">&nbsp;<?php echo number_format($serverStatus['Connections'], 0, '.', ','); ?>&nbsp;</div>
+                            <div bgcolor="lightgrey" align="right">&nbsp;<?php echo number_format(($serverStatus['Connections'] * 3600 / $serverStatus['Uptime']), 2, '.', ','); ?>&nbsp;</div>
+                            <div bgcolor="lightgrey" align="right">&nbsp;<?php echo number_format(100, 2, '.', ','); ?>&nbsp;%&nbsp;</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </li>
     <br />
     <li>
         <?php print("<b>".$lang_mysql_stats['text_server_query']."</b>".$lang_mysql_stats['text_query_desca']. number_format($serverStatus['Questions'], 0, '.', ',').$lang_mysql_stats['text_query_descb']."\n"); ?>
-        <table border="0">
-            <tr>
-                <td colspan="2">
+        <div border="0">
+            <div>
+                <div colspan="2">
                     <br />
-                    <table id="torrenttable" border="0" align="right">
-                        <tr>
+                    <div id="torrenttable" border="0" align="right">
+                        <div>
                             <th bgcolor="lightgrey"><?php echo $lang_mysql_stats['form_total']?></th>
                             <th bgcolor="lightgrey"><?php echo $lang_mysql_stats['text_perhour']?></th>
                             <th bgcolor="lightgrey"><?php echo $lang_mysql_stats['text_perminute']?></th>
                             <th bgcolor="lightgrey"><?php echo $lang_mysql_stats['text_persecond']?></th>
-                        </tr>
-                        <tr>
-                            <td bgcolor="#EFF3FF" align="right">&nbsp;<?php echo number_format($serverStatus['Questions'], 0, '.', ','); ?>&nbsp;</td>
-                            <td bgcolor="#EFF3FF" align="right">&nbsp;<?php echo number_format(($serverStatus['Questions'] * 3600 / $serverStatus['Uptime']), 2, '.', ','); ?>&nbsp;</td>
-                            <td bgcolor="#EFF3FF" align="right">&nbsp;<?php echo number_format(($serverStatus['Questions'] * 60 / $serverStatus['Uptime']), 2, '.', ','); ?>&nbsp;</td>
-                            <td bgcolor="#EFF3FF" align="right">&nbsp;<?php echo number_format(($serverStatus['Questions'] / $serverStatus['Uptime']), 2, '.', ','); ?>&nbsp;</td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td valign="top">
-                    <table id="torrenttable" border="0">
-                        <tr>
+                        </div>
+                        <div>
+                            <div bgcolor="#EFF3FF" align="right">&nbsp;<?php echo number_format($serverStatus['Questions'], 0, '.', ','); ?>&nbsp;</div>
+                            <div bgcolor="#EFF3FF" align="right">&nbsp;<?php echo number_format(($serverStatus['Questions'] * 3600 / $serverStatus['Uptime']), 2, '.', ','); ?>&nbsp;</div>
+                            <div bgcolor="#EFF3FF" align="right">&nbsp;<?php echo number_format(($serverStatus['Questions'] * 60 / $serverStatus['Uptime']), 2, '.', ','); ?>&nbsp;</div>
+                            <div bgcolor="#EFF3FF" align="right">&nbsp;<?php echo number_format(($serverStatus['Questions'] / $serverStatus['Uptime']), 2, '.', ','); ?>&nbsp;</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div valign="top">
+                    <div id="torrenttable" border="0">
+                        <div>
                             <th colspan="2" bgcolor="lightgrey"><?php echo $lang_mysql_stats['form_querytype']?></th>
                             <th bgcolor="lightgrey"><?php echo $lang_mysql_stats['text_perhour']?></th>
                             <th bgcolor="lightgrey"><?php echo $lang_mysql_stats['text_percentage']?></th>
-                        </tr>
+                        </div>
 <?php
 
 $useBgcolorOne = TRUE;
@@ -272,36 +272,36 @@ foreach ($queryStats as $name => $value) {
 // the number of connections is not an item of the Query types
 // but is included in Questions. Then the total of the percentages is 100.
 ?>
-                        <tr>
-                            <td bgcolor="#EFF3FF">&nbsp;<?php echo htmlspecialchars($name); ?>&nbsp;</td>
-                            <td bgcolor="#EFF3FF" align="right">&nbsp;<?php echo number_format($value, 0, '.', ','); ?>&nbsp;</td>
-                            <td bgcolor="#EFF3FF" align="right">&nbsp;<?php echo number_format(($value * 3600 / $serverStatus['Uptime']), 2, '.', ','); ?>&nbsp;</td>
-                            <td bgcolor="#EFF3FF" align="right">&nbsp;<?php echo number_format(($value * 100 / ($serverStatus['Questions'] - $serverStatus['Connections'])), 2, '.', ','); ?>&nbsp;%&nbsp;</td>
-                        </tr>
+                        <div>
+                            <div bgcolor="#EFF3FF">&nbsp;<?php echo htmlspecialchars($name); ?>&nbsp;</div>
+                            <div bgcolor="#EFF3FF" align="right">&nbsp;<?php echo number_format($value, 0, '.', ','); ?>&nbsp;</div>
+                            <div bgcolor="#EFF3FF" align="right">&nbsp;<?php echo number_format(($value * 3600 / $serverStatus['Uptime']), 2, '.', ','); ?>&nbsp;</div>
+                            <div bgcolor="#EFF3FF" align="right">&nbsp;<?php echo number_format(($value * 100 / ($serverStatus['Questions'] - $serverStatus['Connections'])), 2, '.', ','); ?>&nbsp;%&nbsp;</div>
+                        </div>
 <?php
     $useBgcolorOne = !$useBgcolorOne;
     if (++$countRows == ceil(count($queryStats) / 2)) {
         $useBgcolorOne = TRUE;
 ?>
-                    </table>
-                </td>
-                <td valign="top">
-                    <table id="torrenttable" border="0">
-                        <tr>
+                    </div>
+                </div>
+                <div valign="top">
+                    <div id="torrenttable" border="0">
+                        <div>
                             <th colspan="2" bgcolor="lightgrey"><?php echo $lang_mysql_stats['form_querytype']?></th>
                             <th bgcolor="lightgrey"><?php echo $lang_mysql_stats['text_perhour']?></th>
                             <th bgcolor="lightgrey"><?php echo $lang_mysql_stats['text_percentage']?></th>
-                        </tr>
+                        </div>
 <?php
     }
 }
 unset($countRows);
 unset($useBgcolorOne);
 ?>
-                    </table>
-                </td>
-            </tr>
-        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </li>
 <?php
 //Unset used variables
@@ -318,45 +318,45 @@ if (!empty($serverStatus)) {
     <br />
     <li>
         <b><?php echo $lang_mysql_stats['text_server_status']?></b><br />
-        <table border="0">
-            <tr>
-                <td valign="top">
-                    <table id="torrenttable" border="0">
-                        <tr>
+        <div border="0">
+            <div>
+                <div valign="top">
+                    <div id="torrenttable" border="0">
+                        <div>
                             <th bgcolor="lightgrey"><?php echo $lang_mysql_stats['form_variable']?></th>
                             <th bgcolor="lightgrey"><?php echo $lang_mysql_stats['form_value']?></th>
-                        </tr>
+                        </div>
 <?php
     $useBgcolorOne = TRUE;
     $countRows = 0;
     foreach($serverStatus AS $name => $value) {
 ?>
-                        <tr>
-                            <td bgcolor="#EFF3FF">&nbsp;<?php echo htmlspecialchars(str_replace('_', ' ', $name)); ?>&nbsp;</td>
-                            <td bgcolor="#EFF3FF" align="right">&nbsp;<?php echo htmlspecialchars($value); ?>&nbsp;</td>
-                        </tr>
+                        <div>
+                            <div bgcolor="#EFF3FF">&nbsp;<?php echo htmlspecialchars(str_replace('_', ' ', $name)); ?>&nbsp;</div>
+                            <div bgcolor="#EFF3FF" align="right">&nbsp;<?php echo htmlspecialchars($value); ?>&nbsp;</div>
+                        </div>
 <?php
         $useBgcolorOne = !$useBgcolorOne;
         if (++$countRows == ceil(count($serverStatus) / 3) || $countRows == ceil(count($serverStatus) * 2 / 3)) {
             $useBgcolorOne = TRUE;
 ?>
-                    </table>
-                </td>
-                <td valign="top">
-                    <table id="torrenttable" border="0">
-                        <tr>
+                    </div>
+                </div>
+                <div valign="top">
+                    <div id="torrenttable" border="0">
+                        <div>
                             <th bgcolor="lightgrey"><?php echo $lang_mysql_stats['form_variable']?></th>
                             <th bgcolor="lightgrey"><?php echo $lang_mysql_stats['form_value']?></th>
-                        </tr>
+                        </div>
 <?php
         }
     }
     unset($useBgcolorOne);
 ?>
-                    </table>
-                </td>
-            </tr>
-        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </li>
 <?php
 }

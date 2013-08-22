@@ -21,15 +21,15 @@ begin_frame($lang_linksmanage['text_apply_for_links'], true,10,"100%","center");
 	print("<p>".$lang_linksmanage['text_red_star_required']."</p>");
 ?>
 <form method=post action="<?php echo $_SERVER["PHP_SELF"];?>">
-<table table class=main border=1 cellspacing=0 cellpadding=5>
-<tr><td class=rowhead><?php echo $lang_linksmanage['text_site_name']?><font color=red>*</font></td><td class=rowfollow align=left><input type=text name=linkname style="width: 200px">&nbsp;&nbsp;<font class=small><?php echo $lang_linksmanage['text_sitename_note']?></font></td></tr>
-<tr><td class=rowhead><?php echo $lang_linksmanage['text_url']?><font color=red>*</font></td><td class=rowfollow align=left><input type=text name=url style="width: 200px">&nbsp;&nbsp;<font class=small><?php echo $lang_linksmanage['text_url_note']?></font></td></tr>
-<tr><td class=rowhead><?php echo $lang_linksmanage['text_title']?></td><td class=rowfollow align=left><input type=text name=title style="width: 200px">&nbsp;&nbsp;<font class=small><?php echo $lang_linksmanage['text_title_note']?></font></td></tr>
-<tr><td class=rowhead><?php echo $lang_linksmanage['text_administrator']?><font color=red>*</font></td><td class=rowfollow align=left><input type=text name=admin style="width: 200px">&nbsp;&nbsp;<font class=small><?php echo $lang_linksmanage['text_administrator_note']?></font></td></tr>
-<tr><td class=rowhead><?php echo $lang_linksmanage['text_email']?><font color=red>*</font></td><td class=rowfollow align=left><input type=text name=email style="width: 200px">&nbsp;&nbsp;<font class=small><?php echo $lang_linksmanage['text_email_note']?></font></td></tr>
-<tr><td class=rowhead><?php echo $lang_linksmanage['text_reason']?><font color=red>*</font></td><td class=rowfollow align=left><textarea name=reason style="width: 400px" rows=10></textarea></td></tr>
-<tr><td colspan=2 align=center><input type="hidden" name="action" value="newapply"><input type=submit value="<?php echo $lang_linksmanage['submit_okay']?>" class=btn><input type=reset class=btn value="<?php echo $lang_linksmanage['submit_reset']?>"></td></tr>
-</table>
+<div table class=main border=1 cellspacing=0 cellpadding=5>
+<div><div class=rowhead><?php echo $lang_linksmanage['text_site_name']?><font color=red>*</font></div><div class=rowfollow align=left><input type=text name=linkname style="width: 200px">&nbsp;&nbsp;<font class=small><?php echo $lang_linksmanage['text_sitename_note']?></font></div></div>
+<div><div class=rowhead><?php echo $lang_linksmanage['text_url']?><font color=red>*</font></div><div class=rowfollow align=left><input type=text name=url style="width: 200px">&nbsp;&nbsp;<font class=small><?php echo $lang_linksmanage['text_url_note']?></font></div></div>
+<div><div class=rowhead><?php echo $lang_linksmanage['text_title']?></div><div class=rowfollow align=left><input type=text name=title style="width: 200px">&nbsp;&nbsp;<font class=small><?php echo $lang_linksmanage['text_title_note']?></font></div></div>
+<div><div class=rowhead><?php echo $lang_linksmanage['text_administrator']?><font color=red>*</font></div><div class=rowfollow align=left><input type=text name=admin style="width: 200px">&nbsp;&nbsp;<font class=small><?php echo $lang_linksmanage['text_administrator_note']?></font></div></div>
+<div><div class=rowhead><?php echo $lang_linksmanage['text_email']?><font color=red>*</font></div><div class=rowfollow align=left><input type=text name=email style="width: 200px">&nbsp;&nbsp;<font class=small><?php echo $lang_linksmanage['text_email_note']?></font></div></div>
+<div><div class=rowhead><?php echo $lang_linksmanage['text_reason']?><font color=red>*</font></div><div class=rowfollow align=left><textarea name=reason style="width: 400px" rows=10></textarea></div></div>
+<div><div colspan=2 align=center><input type="hidden" name="action" value="newapply"><input type=submit value="<?php echo $lang_linksmanage['submit_okay']?>" class=btn><input type=reset class=btn value="<?php echo $lang_linksmanage['submit_reset']?>"></div></div>
+</div>
 </form>
 <?php
 	end_frame();
@@ -128,24 +128,24 @@ stdhead($lang_linksmanage['std_links_manage']);
 ?>
 <h1><?php echo $lang_linksmanage['text_add_link']?></h1>
 <form method=post action="<?php echo $_SERVER["PHP_SELF"];?>">
-<table border=1 cellspacing=0 cellpadding=5>
-<tr><td class=rowhead><?php echo $lang_linksmanage['text_site_name']?></td><td><input type=text name=linkname style="width: 200px"></td></tr>
-<tr><td class=rowhead><?php echo $lang_linksmanage['text_url']?></td><td><input type=text name=url style="width: 200px"></td></tr>
-<tr><td class=rowhead><?php echo $lang_linksmanage['text_title']?></td><td><input type=text name=title style="width: 200px"></td></tr>
-<tr><td colspan=2 align=center><input type="hidden" name="action" value="add"><input type=submit value="<?php echo $lang_linksmanage['submit_okay']?>" class=btn></td></tr>
-</table>
+<div border=1 cellspacing=0 cellpadding=5>
+<div><div class=rowhead><?php echo $lang_linksmanage['text_site_name']?></div><div><input type=text name=linkname style="width: 200px"></div></div>
+<div><div class=rowhead><?php echo $lang_linksmanage['text_url']?></div><div><input type=text name=url style="width: 200px"></div></div>
+<div><div class=rowhead><?php echo $lang_linksmanage['text_title']?></div><div><input type=text name=title style="width: 200px"></div></div>
+<div><div colspan=2 align=center><input type="hidden" name="action" value="add"><input type=submit value="<?php echo $lang_linksmanage['submit_okay']?>" class=btn></div></div>
+</div>
 </form>
 <?php
 echo '<h1>'.$lang_linksmanage['text_manage_links'].'</h1>';
-echo '<table width="80%"  border="0" align="center" cellpadding="2" cellspacing="0">';
-echo "<tr><td class=colhead align=left>".$lang_linksmanage['text_site_name']."</td><td class=colhead>".$lang_linksmanage['text_url']."</td><td class=colhead>".$lang_linksmanage['text_title']."</td><td class=colhead align=center>".$lang_linksmanage['text_modify']."</td></tr>";
+echo '<div width="80%"  border="0" align="center" cellpadding="2" cellspacing="0">';
+echo "<div><div class=colhead align=left>".$lang_linksmanage['text_site_name']."</div><div class=colhead>".$lang_linksmanage['text_url']."</div><div class=colhead>".$lang_linksmanage['text_title']."</div><div class=colhead align=center>".$lang_linksmanage['text_modify']."</div></div>";
 $result = sql_query ("SELECT * FROM links ORDER BY id ASC");
 if ($row = mysql_fetch_array($result)) {
 do {
-echo "<tr><td>".$row["name"]."</td><td>".$row["url"]."</td><td>".$row["title"]. "</td><td align=center nowrap><b><a href=\"".$PHP_SELF."?action=edit&id=".$row["id"]."\">".$lang_linksmanage['text_edit']."</a>&nbsp;|&nbsp;<a href=\"javascript:confirm_delete('".$row["id"]."', '".$lang_linksmanage['js_sure_to_delete_link']."', '');\"><font color=red>".$lang_linksmanage['text_delete']."</font></a></b></td></tr>";
+echo "<div><div>".$row["name"]."</div><div>".$row["url"]."</div><div>".$row["title"]. "</div><div align=center nowrap><b><a href=\"".$PHP_SELF."?action=edit&id=".$row["id"]."\">".$lang_linksmanage['text_edit']."</a>&nbsp;|&nbsp;<a href=\"javascript:confirm_delete('".$row["id"]."', '".$lang_linksmanage['js_sure_to_delete_link']."', '');\"><font color=red>".$lang_linksmanage['text_delete']."</font></a></b></div></div>";
 } while($row = mysql_fetch_array($result));
-} else {print "<tr><td colspan=4>".$lang_linksmanage['text_no_links_found']."</td></tr>";}
-echo "</table>";
+} else {print "<div><div colspan=4>".$lang_linksmanage['text_no_links_found']."</div></div>";}
+echo "</div>";
 ?>
 <?php if ($_GET['action'] == "edit") {
 $id = 0 + ($_GET["id"]);
@@ -154,12 +154,12 @@ if ($row = mysql_fetch_array($result)) {
 ?>
 <h1><?php echo $lang_linksmanage['text_edit_link']?></h1>
 <form method=post action="<?php echo $_SERVER['PHP_SELF'];?>">
-<table border=1 cellspacing=0 cellpadding=5>
-<tr><td class=rowhead><?php echo $lang_linksmanage['text_site_name']?></td><td><input type=text name=linkname size=40 value="<?php echo $row['name'];?>"></td></tr>
-<tr><td class=rowhead><?php echo $lang_linksmanage['text_url']?></td><td><input type=text name=url size=40 value="<?php echo $row["url"];?>"></td></tr>
-<tr><td class=rowhead><?php echo $lang_linksmanage['text_title']?></td><td><input type=text name=title size=40 value="<?php echo $row["title"];?>"></td></tr>
-<tr><td colspan=2 align=center><input type="hidden" name=id value="<?php echo $row["id"];?>"><input type="hidden" name="action" value="editlink"><input type=submit value="<?php echo $lang_linksmanage['submit_okay']?>" class=btn></td></tr>
-</table>
+<div border=1 cellspacing=0 cellpadding=5>
+<div><div class=rowhead><?php echo $lang_linksmanage['text_site_name']?></div><div><input type=text name=linkname size=40 value="<?php echo $row['name'];?>"></div></div>
+<div><div class=rowhead><?php echo $lang_linksmanage['text_url']?></div><div><input type=text name=url size=40 value="<?php echo $row["url"];?>"></div></div>
+<div><div class=rowhead><?php echo $lang_linksmanage['text_title']?></div><div><input type=text name=title size=40 value="<?php echo $row["title"];?>"></div></div>
+<div><div colspan=2 align=center><input type="hidden" name=id value="<?php echo $row["id"];?>"><input type="hidden" name="action" value="editlink"><input type=submit value="<?php echo $lang_linksmanage['submit_okay']?>" class=btn></div></div>
+</div>
 </form>
 <?php
 }

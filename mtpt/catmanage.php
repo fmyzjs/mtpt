@@ -152,29 +152,29 @@ function print_sub_category_list($type)
 		list($pagertop, $pagerbottom, $limit) = pager($perpage, $num, "?");
 		$res = sql_query("SELECT * FROM ".$dbtablename." ORDER BY sort_index ASC ".$limit) or sqlerr(__FILE__, __LINE__);
 ?>
-<table border="1" cellspacing="0" cellpadding="5" width="940">
-<tr>
-<td class="colhead"><?php echo $lang_catmanage['col_id']?></td>
-<td class="colhead"><?php echo $lang_catmanage['col_lid']?></td>
-<td class="colhead"><?php echo $lang_catmanage['col_name']?></td>
-<td class="colhead"><?php echo $lang_catmanage['col_order']?></td>
-<td class="colhead"><?php echo $lang_catmanage['col_action']?></td>
-</tr>
+<div border="1" cellspacing="0" cellpadding="5" width="940">
+<div>
+<div class="colhead"><?php echo $lang_catmanage['col_id']?></div>
+<div class="colhead"><?php echo $lang_catmanage['col_lid']?></div>
+<div class="colhead"><?php echo $lang_catmanage['col_name']?></div>
+<div class="colhead"><?php echo $lang_catmanage['col_order']?></div>
+<div class="colhead"><?php echo $lang_catmanage['col_action']?></div>
+</div>
 <?php
 		while ($row = mysql_fetch_array($res))
 		{
 ?>
-<tr>
-<td class="colfollow"><?php echo $row['id']?></td>
-<td class="colfollow"><?php echo $row['lid']?></td>
-<td class="colfollow"><?php echo htmlspecialchars($row['name'])?></td>
-<td class="colfollow"><?php echo $row['sort_index']?></td>
-<td class="colfollow"><a href="javascript:confirm_delete('<?php echo $row['id']?>', '<?php echo $lang_catmanage['js_sure_to_delete_this']?>', 'type=<?php echo $type?>');"><?php echo $lang_catmanage['text_delete']?></a> | <a href="?action=edit&amp;type=<?php echo $type?>&amp;id=<?php echo $row['id']?>"><?php echo $lang_catmanage['text_edit']?></a></td>
-</tr>
+<div>
+<div class="colfollow"><?php echo $row['id']?></div>
+<div class="colfollow"><?php echo $row['lid']?></div>
+<div class="colfollow"><?php echo htmlspecialchars($row['name'])?></div>
+<div class="colfollow"><?php echo $row['sort_index']?></div>
+<div class="colfollow"><a href="javascript:confirm_delete('<?php echo $row['id']?>', '<?php echo $lang_catmanage['js_sure_to_delete_this']?>', 'type=<?php echo $type?>');"><?php echo $lang_catmanage['text_delete']?></a> | <a href="?action=edit&amp;type=<?php echo $type?>&amp;id=<?php echo $row['id']?>"><?php echo $lang_catmanage['text_edit']?></a></div>
+</div>
 <?php
 		}
 ?>
-</table>
+</div>
 <?php
 print($pagerbottom);
 	}
@@ -192,7 +192,7 @@ function print_category_editor($type, $row='')
 <div style="width: 940px">
 <h1 align="center"><a class="faqlink" href="?action=view&amp;type=<?php echo $type?>"><?php echo $typename?></a></h1>
 <div>
-<table border="1" cellspacing="0" cellpadding="10" width="100%">
+<div border="1" cellspacing="0" cellpadding="10" width="100%">
 <?php
 		if ($type=='searchbox')
 		{
@@ -250,7 +250,7 @@ function print_category_editor($type, $row='')
 				$comment = '';
 			}
 ?>
-<tr><td colspan="2"><?php echo $lang_catmanage['text_icon_directory_note']?></td></tr>
+<div><div colspan="2"><?php echo $lang_catmanage['text_icon_directory_note']?></div></div>
 <?php
 			tr($lang_catmanage['col_name']."<font color=\"red\">*</font>", "<input type=\"text\" name=\"name\" value=\"".htmlspecialchars($name)."\" style=\"width: 300px\" /> " . $lang_catmanage['text_category_icon_name_note'], 1);
 			tr($lang_catmanage['col_folder']."<font color=\"red\">*</font>", "<input type=\"text\" name=\"folder\" value=\"".htmlspecialchars($folder)."\" style=\"width: 300px\" /><br />" . $lang_catmanage['text_folder_note'], 1);
@@ -318,7 +318,7 @@ function print_category_editor($type, $row='')
 			tr($lang_catmanage['col_order'], "<input type=\"text\" name=\"sort_index\" value=\"".$sort_index."\" style=\"width: 100px\" /> " . $lang_catmanage['text_order_note'], 1);
 		}
 ?>
-</table>
+</div>
 </div>
 <div style="text-align: center; margin-top: 10px;">
 <input type="submit" value="<?php echo $lang_catmanage['submit_submit']?>" />
@@ -345,13 +345,13 @@ function print_sub_category_editor($type, $row='')
 ?>
 <div style="width: 940px">
 <h1 align="center"><a class="faqlink" href="?action=view&amp;type=<?php echo $type?>"><?php echo $typename?></a></h1>
-<table border="1" cellspacing="0" cellpadding="10" width="100%">
+<div border="1" cellspacing="0" cellpadding="10" width="100%">
 <?php
 tr($lang_catmanage['col_name']."<font color=\"red\">*</font>", "<input type=\"text\" name=\"name\" value=\"".htmlspecialchars($name)."\" style=\"width: 300px\" /> " . $lang_catmanage['text_subcategory_name_note'], 1);
 tr($lang_catmanage['col_lid'], "<input type=\"text\" name=\"lid_index\" value=\"".$lid_index."\" style=\"width: 100px\" /> " . $lang_catmanage['text_lid_note'], 1);
 tr($lang_catmanage['col_order'], "<input type=\"text\" name=\"sort_index\" value=\"".$sort_index."\" style=\"width: 100px\" /> " . $lang_catmanage['text_order_note'], 1);
 ?>
-</table>
+</div>
 <div style="text-align: center; margin-top: 10px;">
 <input type="submit" value="<?php echo $lang_catmanage['submit_submit']?>" />
 </div>
@@ -388,45 +388,45 @@ if ($action == 'view')
 		list($pagertop, $pagerbottom, $limit) = pager($perpage, $num, "?");
 		$res = sql_query("SELECT * FROM ".$dbtablename." ORDER BY id ASC ".$limit) or sqlerr(__FILE__, __LINE__);
 ?>
-<table border="1" cellspacing="0" cellpadding="5" width="940">
-<tr>
-<td class="colhead"><?php echo $lang_catmanage['col_id']?></td>
-<td class="colhead"><?php echo $lang_catmanage['col_name']?></td>
-<td class="colhead"><?php echo $lang_catmanage['col_sub_category']?></td>
-<td class="colhead"><?php echo $lang_catmanage['text_sources']?></td>
-<td class="colhead"><?php echo $lang_catmanage['text_media']?></td>
-<td class="colhead"><?php echo $lang_catmanage['text_codecs']?></td>
-<td class="colhead"><?php echo $lang_catmanage['text_standards']?></td>
-<td class="colhead"><?php echo $lang_catmanage['text_processings']?></td>
-<td class="colhead"><?php echo $lang_catmanage['text_teams']?></td>
-<td class="colhead"><?php echo $lang_catmanage['text_audio_codecs']?></td>
-<td class="colhead"><?php echo $lang_catmanage['text_per_row']?></td>
-<td class="colhead"><?php echo $lang_catmanage['text_padding']?></td>
-<td class="colhead"><?php echo $lang_catmanage['col_action']?></td>
-</tr>
+<div border="1" cellspacing="0" cellpadding="5" width="940">
+<div>
+<div class="colhead"><?php echo $lang_catmanage['col_id']?></div>
+<div class="colhead"><?php echo $lang_catmanage['col_name']?></div>
+<div class="colhead"><?php echo $lang_catmanage['col_sub_category']?></div>
+<div class="colhead"><?php echo $lang_catmanage['text_sources']?></div>
+<div class="colhead"><?php echo $lang_catmanage['text_media']?></div>
+<div class="colhead"><?php echo $lang_catmanage['text_codecs']?></div>
+<div class="colhead"><?php echo $lang_catmanage['text_standards']?></div>
+<div class="colhead"><?php echo $lang_catmanage['text_processings']?></div>
+<div class="colhead"><?php echo $lang_catmanage['text_teams']?></div>
+<div class="colhead"><?php echo $lang_catmanage['text_audio_codecs']?></div>
+<div class="colhead"><?php echo $lang_catmanage['text_per_row']?></div>
+<div class="colhead"><?php echo $lang_catmanage['text_padding']?></div>
+<div class="colhead"><?php echo $lang_catmanage['col_action']?></div>
+</div>
 <?php
 		while ($row = mysql_fetch_array($res))
 		{
 ?>
-<tr>
-<td class="colfollow"><?php echo $row['id']?></td>
-<td class="colfollow"><?php echo htmlspecialchars($row['name'])?></td>
-<td class="colfollow"><?php echo $row['showsubcat'] ? "<font color=\"green\">".$lang_catmanage['text_enabled']."</font>" : "<font color=\"red\">".$lang_catmanage['text_disabled']."</font>"?></td>
-<td class="colfollow"><?php echo $row['showsource'] ? "<font color=\"green\">".$lang_catmanage['text_enabled']."</font>" : "<font color=\"red\">".$lang_catmanage['text_disabled']."</font>"?></td>
-<td class="colfollow"><?php echo $row['showmedium'] ? "<font color=\"green\">".$lang_catmanage['text_enabled']."</font>" : "<font color=\"red\">".$lang_catmanage['text_disabled']."</font>"?></td>
-<td class="colfollow"><?php echo $row['showcodec'] ? "<font color=\"green\">".$lang_catmanage['text_enabled']."</font>" : "<font color=\"red\">".$lang_catmanage['text_disabled']."</font>"?></td>
-<td class="colfollow"><?php echo $row['showstandard'] ? "<font color=\"green\">".$lang_catmanage['text_enabled']."</font>" : "<font color=\"red\">".$lang_catmanage['text_disabled']."</font>"?></td>
-<td class="colfollow"><?php echo $row['showprocessing'] ? "<font color=\"green\">".$lang_catmanage['text_enabled']."</font>" : "<font color=\"red\">".$lang_catmanage['text_disabled']."</font>"?></td>
-<td class="colfollow"><?php echo $row['showteam'] ? "<font color=\"green\">".$lang_catmanage['text_enabled']."</font>" : "<font color=\"red\">".$lang_catmanage['text_disabled']."</font>"?></td>
-<td class="colfollow"><?php echo $row['showaudiocodec'] ? "<font color=\"green\">".$lang_catmanage['text_enabled']."</font>" : "<font color=\"red\">".$lang_catmanage['text_disabled']."</font>"?></td>
-<td class="colfollow"><?php echo $row['catsperrow']?></td>
-<td class="colfollow"><?php echo $row['catpadding']?></td>
-<td class="colfollow"><a href="javascript:confirm_delete('<?php echo $row['id']?>', '<?php echo $lang_catmanage['js_sure_to_delete_this']?>', 'type=<?php echo $type?>');"><?php echo $lang_catmanage['text_delete']?></a> | <a href="?action=edit&amp;type=<?php echo $type?>&amp;id=<?php echo $row['id']?>"><?php echo $lang_catmanage['text_edit']?></a></td>
-</tr>
+<div>
+<div class="colfollow"><?php echo $row['id']?></div>
+<div class="colfollow"><?php echo htmlspecialchars($row['name'])?></div>
+<div class="colfollow"><?php echo $row['showsubcat'] ? "<font color=\"green\">".$lang_catmanage['text_enabled']."</font>" : "<font color=\"red\">".$lang_catmanage['text_disabled']."</font>"?></div>
+<div class="colfollow"><?php echo $row['showsource'] ? "<font color=\"green\">".$lang_catmanage['text_enabled']."</font>" : "<font color=\"red\">".$lang_catmanage['text_disabled']."</font>"?></div>
+<div class="colfollow"><?php echo $row['showmedium'] ? "<font color=\"green\">".$lang_catmanage['text_enabled']."</font>" : "<font color=\"red\">".$lang_catmanage['text_disabled']."</font>"?></div>
+<div class="colfollow"><?php echo $row['showcodec'] ? "<font color=\"green\">".$lang_catmanage['text_enabled']."</font>" : "<font color=\"red\">".$lang_catmanage['text_disabled']."</font>"?></div>
+<div class="colfollow"><?php echo $row['showstandard'] ? "<font color=\"green\">".$lang_catmanage['text_enabled']."</font>" : "<font color=\"red\">".$lang_catmanage['text_disabled']."</font>"?></div>
+<div class="colfollow"><?php echo $row['showprocessing'] ? "<font color=\"green\">".$lang_catmanage['text_enabled']."</font>" : "<font color=\"red\">".$lang_catmanage['text_disabled']."</font>"?></div>
+<div class="colfollow"><?php echo $row['showteam'] ? "<font color=\"green\">".$lang_catmanage['text_enabled']."</font>" : "<font color=\"red\">".$lang_catmanage['text_disabled']."</font>"?></div>
+<div class="colfollow"><?php echo $row['showaudiocodec'] ? "<font color=\"green\">".$lang_catmanage['text_enabled']."</font>" : "<font color=\"red\">".$lang_catmanage['text_disabled']."</font>"?></div>
+<div class="colfollow"><?php echo $row['catsperrow']?></div>
+<div class="colfollow"><?php echo $row['catpadding']?></div>
+<div class="colfollow"><a href="javascript:confirm_delete('<?php echo $row['id']?>', '<?php echo $lang_catmanage['js_sure_to_delete_this']?>', 'type=<?php echo $type?>');"><?php echo $lang_catmanage['text_delete']?></a> | <a href="?action=edit&amp;type=<?php echo $type?>&amp;id=<?php echo $row['id']?>"><?php echo $lang_catmanage['text_edit']?></a></div>
+</div>
 <?php
 		}
 ?>
-</table>
+</div>
 <?php
 print($pagerbottom);
 	}
@@ -442,37 +442,37 @@ print($pagerbottom);
 		list($pagertop, $pagerbottom, $limit) = pager($perpage, $num, "?");
 		$res = sql_query("SELECT * FROM ".$dbtablename." ORDER BY id ASC ".$limit) or sqlerr(__FILE__, __LINE__);
 ?>
-<table border="1" cellspacing="0" cellpadding="5" width="940">
-<tr>
-<td class="colhead"><?php echo $lang_catmanage['col_id']?></td>
-<td class="colhead"><?php echo $lang_catmanage['col_name']?></td>
-<td class="colhead"><?php echo $lang_catmanage['col_folder']?></td>
-<td class="colhead"><?php echo $lang_catmanage['text_multi_language']?></td>
-<td class="colhead"><?php echo $lang_catmanage['text_second_icon']?></td>
-<td class="colhead"><?php echo $lang_catmanage['text_css_file']?></td>
-<td class="colhead"><?php echo $lang_catmanage['text_designer']?></td>
-<td class="colhead"><?php echo $lang_catmanage['text_comment']?></td>
-<td class="colhead"><?php echo $lang_catmanage['col_action']?></td>
-</tr>
+<div border="1" cellspacing="0" cellpadding="5" width="940">
+<div>
+<div class="colhead"><?php echo $lang_catmanage['col_id']?></div>
+<div class="colhead"><?php echo $lang_catmanage['col_name']?></div>
+<div class="colhead"><?php echo $lang_catmanage['col_folder']?></div>
+<div class="colhead"><?php echo $lang_catmanage['text_multi_language']?></div>
+<div class="colhead"><?php echo $lang_catmanage['text_second_icon']?></div>
+<div class="colhead"><?php echo $lang_catmanage['text_css_file']?></div>
+<div class="colhead"><?php echo $lang_catmanage['text_designer']?></div>
+<div class="colhead"><?php echo $lang_catmanage['text_comment']?></div>
+<div class="colhead"><?php echo $lang_catmanage['col_action']?></div>
+</div>
 <?php
 		while ($row = mysql_fetch_array($res))
 		{
 ?>
-<tr>
-<td class="colfollow"><?php echo $row['id']?></td>
-<td class="colfollow"><?php echo htmlspecialchars($row['name'])?></td>
-<td class="colfollow"><?php echo htmlspecialchars($row['folder'])?></td>
-<td class="colfollow"><?php echo $row['multilang']=='yes' ? "<font color=\"green\">".$lang_catmanage['text_yes']."</font>" : "<font color=\"red\">".$lang_catmanage['text_no']."</font>"?></td>
-<td class="colfollow"><?php echo $row['secondicon']=='yes' ? "<font color=\"green\">".$lang_catmanage['text_yes']."</font>" : "<font color=\"red\">".$lang_catmanage['text_no']."</font>"?></td>
-<td class="colfollow"><?php echo $row['cssfile'] ? htmlspecialchars($row['cssfile']) : $lang_catmanage['text_none']?></td>
-<td class="colfollow"><?php echo htmlspecialchars($row['designer'])?></td>
-<td class="colfollow"><?php echo htmlspecialchars($row['comment'])?></td>
-<td class="colfollow"><a href="javascript:confirm_delete('<?php echo $row['id']?>', '<?php echo $lang_catmanage['js_sure_to_delete_this']?>', 'type=<?php echo $type?>');"><?php echo $lang_catmanage['text_delete']?></a> | <a href="?action=edit&amp;type=<?php echo $type?>&amp;id=<?php echo $row['id']?>"><?php echo $lang_catmanage['text_edit']?></a></td>
-</tr>
+<div>
+<div class="colfollow"><?php echo $row['id']?></div>
+<div class="colfollow"><?php echo htmlspecialchars($row['name'])?></div>
+<div class="colfollow"><?php echo htmlspecialchars($row['folder'])?></div>
+<div class="colfollow"><?php echo $row['multilang']=='yes' ? "<font color=\"green\">".$lang_catmanage['text_yes']."</font>" : "<font color=\"red\">".$lang_catmanage['text_no']."</font>"?></div>
+<div class="colfollow"><?php echo $row['secondicon']=='yes' ? "<font color=\"green\">".$lang_catmanage['text_yes']."</font>" : "<font color=\"red\">".$lang_catmanage['text_no']."</font>"?></div>
+<div class="colfollow"><?php echo $row['cssfile'] ? htmlspecialchars($row['cssfile']) : $lang_catmanage['text_none']?></div>
+<div class="colfollow"><?php echo htmlspecialchars($row['designer'])?></div>
+<div class="colfollow"><?php echo htmlspecialchars($row['comment'])?></div>
+<div class="colfollow"><a href="javascript:confirm_delete('<?php echo $row['id']?>', '<?php echo $lang_catmanage['js_sure_to_delete_this']?>', 'type=<?php echo $type?>');"><?php echo $lang_catmanage['text_delete']?></a> | <a href="?action=edit&amp;type=<?php echo $type?>&amp;id=<?php echo $row['id']?>"><?php echo $lang_catmanage['text_edit']?></a></div>
+</div>
 <?php
 		}
 ?>
-</table>
+</div>
 <?php
 print($pagerbottom);
 	}
@@ -488,43 +488,43 @@ print($pagerbottom);
 		list($pagertop, $pagerbottom, $limit) = pager($perpage, $num, "?");
 		$res = sql_query("SELECT * FROM ".$dbtablename." ORDER BY id ASC ".$limit) or sqlerr(__FILE__, __LINE__);
 ?>
-<table border="1" cellspacing="0" cellpadding="5" width="940">
-<tr>
-<td class="colhead"><?php echo $lang_catmanage['col_id']?></td>
-<td class="colhead"><?php echo $lang_catmanage['col_name']?></td>
-<td class="colhead"><?php echo $lang_catmanage['col_image']?></td>
-<td class="colhead"><?php echo $lang_catmanage['text_class_name']?></td>
-<td class="colhead"><?php echo $lang_catmanage['text_sources']?></td>
-<td class="colhead"><?php echo $lang_catmanage['text_media']?></td>
-<td class="colhead"><?php echo $lang_catmanage['text_codecs']?></td>
-<td class="colhead"><?php echo $lang_catmanage['text_standards']?></td>
-<td class="colhead"><?php echo $lang_catmanage['text_processings']?></td>
-<td class="colhead"><?php echo $lang_catmanage['text_teams']?></td>
-<td class="colhead"><?php echo $lang_catmanage['text_audio_codecs']?></td>
-<td class="colhead"><?php echo $lang_catmanage['col_action']?></td>
-</tr>
+<div border="1" cellspacing="0" cellpadding="5" width="940">
+<div>
+<div class="colhead"><?php echo $lang_catmanage['col_id']?></div>
+<div class="colhead"><?php echo $lang_catmanage['col_name']?></div>
+<div class="colhead"><?php echo $lang_catmanage['col_image']?></div>
+<div class="colhead"><?php echo $lang_catmanage['text_class_name']?></div>
+<div class="colhead"><?php echo $lang_catmanage['text_sources']?></div>
+<div class="colhead"><?php echo $lang_catmanage['text_media']?></div>
+<div class="colhead"><?php echo $lang_catmanage['text_codecs']?></div>
+<div class="colhead"><?php echo $lang_catmanage['text_standards']?></div>
+<div class="colhead"><?php echo $lang_catmanage['text_processings']?></div>
+<div class="colhead"><?php echo $lang_catmanage['text_teams']?></div>
+<div class="colhead"><?php echo $lang_catmanage['text_audio_codecs']?></div>
+<div class="colhead"><?php echo $lang_catmanage['col_action']?></div>
+</div>
 <?php
 		while ($row = mysql_fetch_array($res))
 		{
 ?>
-<tr>
-<td class="colfollow"><?php echo $row['id']?></td>
-<td class="colfollow"><?php echo htmlspecialchars($row['name'])?></td>
-<td class="colfollow"><?php echo htmlspecialchars($row['image'])?></td>
-<td class="colfollow"><?php echo $row['class_name'] ? htmlspecialchars($row['class_name']) : $lang_catmanage['text_none']?></td>
-<td class="colfollow"><?php echo $row['source']?></td>
-<td class="colfollow"><?php echo $row['medium']?></td>
-<td class="colfollow"><?php echo $row['codec']?></td>
-<td class="colfollow"><?php echo $row['standard']?></td>
-<td class="colfollow"><?php echo $row['processing']?></td>
-<td class="colfollow"><?php echo $row['team']?></td>
-<td class="colfollow"><?php echo $row['audiocodec']?></td>
-<td class="colfollow"><a href="javascript:confirm_delete('<?php echo $row['id']?>', '<?php echo $lang_catmanage['js_sure_to_delete_this']?>', 'type=<?php echo $type?>');"><?php echo $lang_catmanage['text_delete']?></a> | <a href="?action=edit&amp;type=<?php echo $type?>&amp;id=<?php echo $row['id']?>"><?php echo $lang_catmanage['text_edit']?></a></td>
-</tr>
+<div>
+<div class="colfollow"><?php echo $row['id']?></div>
+<div class="colfollow"><?php echo htmlspecialchars($row['name'])?></div>
+<div class="colfollow"><?php echo htmlspecialchars($row['image'])?></div>
+<div class="colfollow"><?php echo $row['class_name'] ? htmlspecialchars($row['class_name']) : $lang_catmanage['text_none']?></div>
+<div class="colfollow"><?php echo $row['source']?></div>
+<div class="colfollow"><?php echo $row['medium']?></div>
+<div class="colfollow"><?php echo $row['codec']?></div>
+<div class="colfollow"><?php echo $row['standard']?></div>
+<div class="colfollow"><?php echo $row['processing']?></div>
+<div class="colfollow"><?php echo $row['team']?></div>
+<div class="colfollow"><?php echo $row['audiocodec']?></div>
+<div class="colfollow"><a href="javascript:confirm_delete('<?php echo $row['id']?>', '<?php echo $lang_catmanage['js_sure_to_delete_this']?>', 'type=<?php echo $type?>');"><?php echo $lang_catmanage['text_delete']?></a> | <a href="?action=edit&amp;type=<?php echo $type?>&amp;id=<?php echo $row['id']?>"><?php echo $lang_catmanage['text_edit']?></a></div>
+</div>
 <?php
 		}
 ?>
-</table>
+</div>
 <?php
 print($pagerbottom);
 	}
@@ -540,33 +540,33 @@ print($pagerbottom);
 		list($pagertop, $pagerbottom, $limit) = pager($perpage, $num, "?");
 		$res = sql_query("SELECT ".$dbtablename.".*, searchbox.name AS catmodename FROM ".$dbtablename." LEFT JOIN searchbox ON ".$dbtablename.".mode=searchbox.id ORDER BY ".$dbtablename.".mode ASC, ".$dbtablename.".id ASC ".$limit) or sqlerr(__FILE__, __LINE__);
 ?>
-<table border="1" cellspacing="0" cellpadding="5" width="940">
-<tr>
-<td class="colhead"><?php echo $lang_catmanage['col_id']?></td>
-<td class="colhead"><?php echo $lang_catmanage['col_mode']?></td>
-<td class="colhead"><?php echo $lang_catmanage['col_name']?></td>
-<td class="colhead"><?php echo $lang_catmanage['col_image']?></td>
-<td class="colhead"><?php echo $lang_catmanage['text_class_name']?></td>
-<td class="colhead"><?php echo $lang_catmanage['col_order']?></td>
-<td class="colhead"><?php echo $lang_catmanage['col_action']?></td>
-</tr>
+<div border="1" cellspacing="0" cellpadding="5" width="940">
+<div>
+<div class="colhead"><?php echo $lang_catmanage['col_id']?></div>
+<div class="colhead"><?php echo $lang_catmanage['col_mode']?></div>
+<div class="colhead"><?php echo $lang_catmanage['col_name']?></div>
+<div class="colhead"><?php echo $lang_catmanage['col_image']?></div>
+<div class="colhead"><?php echo $lang_catmanage['text_class_name']?></div>
+<div class="colhead"><?php echo $lang_catmanage['col_order']?></div>
+<div class="colhead"><?php echo $lang_catmanage['col_action']?></div>
+</div>
 <?php
 		while ($row = mysql_fetch_array($res))
 		{
 ?>
-<tr>
-<td class="colfollow"><?php echo $row['id']?></td>
-<td class="colfollow"><?php echo htmlspecialchars($row['catmodename'])?></td>
-<td class="colfollow"><?php echo htmlspecialchars($row['name'])?></td>
-<td class="colfollow"><?php echo htmlspecialchars($row['image'])?></td>
-<td class="colfollow"><?php echo $row['class_name'] ? htmlspecialchars($row['class_name']) : $lang_catmanage['text_none']?></td>
-<td class="colfollow"><?php echo $row['sort_index']?></td>
-<td class="colfollow"><a href="javascript:confirm_delete('<?php echo $row['id']?>', '<?php echo $lang_catmanage['js_sure_to_delete_this']?>', 'type=<?php echo $type?>');"><?php echo $lang_catmanage['text_delete']?></a> | <a href="?action=edit&amp;type=<?php echo $type?>&amp;id=<?php echo $row['id']?>"><?php echo $lang_catmanage['text_edit']?></a></td>
-</tr>
+<div>
+<div class="colfollow"><?php echo $row['id']?></div>
+<div class="colfollow"><?php echo htmlspecialchars($row['catmodename'])?></div>
+<div class="colfollow"><?php echo htmlspecialchars($row['name'])?></div>
+<div class="colfollow"><?php echo htmlspecialchars($row['image'])?></div>
+<div class="colfollow"><?php echo $row['class_name'] ? htmlspecialchars($row['class_name']) : $lang_catmanage['text_none']?></div>
+<div class="colfollow"><?php echo $row['sort_index']?></div>
+<div class="colfollow"><a href="javascript:confirm_delete('<?php echo $row['id']?>', '<?php echo $lang_catmanage['js_sure_to_delete_this']?>', 'type=<?php echo $type?>');"><?php echo $lang_catmanage['text_delete']?></a> | <a href="?action=edit&amp;type=<?php echo $type?>&amp;id=<?php echo $row['id']?>"><?php echo $lang_catmanage['text_edit']?></a></div>
+</div>
 <?php
 		}
 ?>
-</table>
+</div>
 <?php
 print($pagerbottom);
 	}

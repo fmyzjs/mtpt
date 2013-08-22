@@ -105,16 +105,16 @@ if ($action == 'delete')
 
 stdhead($lang_friends['head_personal_lists_for']. $user['username']);
 
-print("<p><table class=main border=0 cellspacing=0 cellpadding=0>".
-"<tr><td class=embedded><h1 style='margin:0px'> " . $lang_friends['text_personallist'] . " ".get_username($user[id])."</h1></td></tr></table></p>\n");
+print("<p><div class=main border=0 cellspacing=0 cellpadding=0>".
+"<div><div class=embedded><h1 style='margin:0px'> " . $lang_friends['text_personallist'] . " ".get_username($user[id])."</h1></div></div></div></p>\n");
 
 //Start: Friends
-print("<table class=main width=737 border=0 cellspacing=0 cellpadding=0><tr><td class=embedded>");
+print("<div class=main width=737 border=0 cellspacing=0 cellpadding=0><div><div class=embedded>");
 
 print("<br />");
 print("<h2 align=left><a name=\"friends\">" . $lang_friends['text_friendlist'] . "</a></h2>\n");
 
-print("<table width=737 border=1 cellspacing=0 cellpadding=5><tr class=tablea><td>");
+print("<div width=737 border=1 cellspacing=0 cellpadding=5><div class=tablea><div>");
 
 $i = 0;
 
@@ -138,38 +138,38 @@ while ($friend = mysql_fetch_array($res))
 	if (!$avatar)
 	$avatar = "pic/default_avatar.png";
 	if ($i % 2 == 0)
-	print("<table width=100% style='padding: 0px'><tr><td class=bottom style='padding: 5px' width=50% align=center>");
+	print("<div width=100% style='padding: 0px'><div><div class=bottom style='padding: 5px' width=50% align=center>");
 	else
-	print("<td class=bottom style='padding: 5px' width=50% align=center class=tablea>");
-	print("<table class=main width=100% height=75px class=tablea>");
-	print("<tr valign=top class=tableb><td width=75 align=center style='padding: 0px'>" .
-	($avatar ? "<div style='width:75px;height:75px;overflow: hidden'><img width=75px src=\"$avatar\"></div>" : ""). "</td><td>\n");
-	print("<table class=main>");
-	print("<tr><td class=embedded style='padding: 5px' width=80%>$body1</td>\n");
-	print("<td class=embedded style='padding: 5px' width=20%>$body2</td></tr>\n");
-	print("</table>");
-	print("</td></tr>");
-	print("</td></tr></table>\n");
+	print("<div class=bottom style='padding: 5px' width=50% align=center class=tablea>");
+	print("<div class=main width=100% height=75px class=tablea>");
+	print("<div valign=top class=tableb><div width=75 align=center style='padding: 0px'>" .
+	($avatar ? "<div style='width:75px;height:75px;overflow: hidden'><img width=75px src=\"$avatar\"></div>" : ""). "</div><div>\n");
+	print("<div class=main>");
+	print("<div><div class=embedded style='padding: 5px' width=80%>$body1</div>\n");
+	print("<div class=embedded style='padding: 5px' width=20%>$body2</div></div>\n");
+	print("</div>");
+	print("</div></div>");
+	print("</div></div></div>\n");
 	if ($i % 2 == 1)
-	print("</td></tr></table>\n");
+	print("</div></div></div>\n");
 	else
-	print("</td>\n");
+	print("</div>\n");
 	$i++;
 }
 if ($i % 2 == 1)
-print("<td class=bottom width=50%>&nbsp;</td></tr></table>\n");
+print("<div class=bottom width=50%>&nbsp;</div></div></div>\n");
 print($friends);
-print("</td></tr></table><br />\n");
+print("</div></div></div><br />\n");
 //End: Friends
 
 //Start: Neighbors
 /*
-print("<table class=main width=737 border=0 cellspacing=0 cellpadding=0><tr><td class=embedded>");
+print("<div class=main width=737 border=0 cellspacing=0 cellpadding=0><div><div class=embedded>");
 
 print("<br />");
 print("<h2 align=left><a name=\"friendsadded\">".$lang_friends['text_neighbors']."</a></h2>\n");
 
-print("<table width=737 border=1 cellspacing=0 cellpadding=5><tr class=tablea><td>");
+print("<div width=737 border=1 cellspacing=0 cellpadding=5><div class=tablea><div>");
 
 $i = 0;
 $cachefile = "cache/" . get_langfolder_cookie() . "/neighbors/" . $CURUSER['id'] . ".html";
@@ -234,22 +234,22 @@ else
 					if (!$avatar)
 					$avatar = "pic/default_avatar.png";
 					if ($i % 2 == 0)
-					print("<table width=100% style='padding: 0px'><tr><td class=bottom style='padding: 5px' width=50% align=center>");
+					print("<div width=100% style='padding: 0px'><div><div class=bottom style='padding: 5px' width=50% align=center>");
 					else
-					print("<td class=bottom style='padding: 5px' width=50% align=center>");
-					print("<table class=main width=100% height=75px>");
-					print("<tr valign=top><td width=75 align=center style='padding: 0px'>" .
-					($avatar ? "<div style='width:75px;height:75px;overflow: hidden'><img width=75px src=\"$avatar\"></div>" : ""). "</td><td>\n");
-					print("<table class=main>");
-					print("<tr><td class=embedded style='padding: 5px' width=80%>$body1</td>\n");
-					print("<td class=embedded style='padding: 5px' width=20%>$body2</td></tr>\n");
-					print("</table>");
-					print("</td></tr>");
-					print("</td></tr></table>\n");
+					print("<div class=bottom style='padding: 5px' width=50% align=center>");
+					print("<div class=main width=100% height=75px>");
+					print("<div valign=top><div width=75 align=center style='padding: 0px'>" .
+					($avatar ? "<div style='width:75px;height:75px;overflow: hidden'><img width=75px src=\"$avatar\"></div>" : ""). "</div><div>\n");
+					print("<div class=main>");
+					print("<div><div class=embedded style='padding: 5px' width=80%>$body1</div>\n");
+					print("<div class=embedded style='padding: 5px' width=20%>$body2</div></div>\n");
+					print("</div>");
+					print("</div></div>");
+					print("</div></div></div>\n");
 					if ($i % 2 == 1)
-					print("</td></tr></table>\n");
+					print("</div></div></div>\n");
 					else
-					print("</td>\n");
+					print("</div>\n");
 					$i++;
 					$counter++;
 				}
@@ -259,9 +259,9 @@ else
 		}
 	}
 	if ($i % 2 == 1)
-	print("<td class=bottom width=50%>&nbsp;</td></tr></table>\n");
+	print("<div class=bottom width=50%>&nbsp;</div></div></div>\n");
 	print($neighbors_info);
-	print("</td></tr></table></table><br />\n");
+	print("</div></div></div></div><br />\n");
 
 	// CACHE END //////////////////////////////////////////////////
 
@@ -295,28 +295,28 @@ $avatar = ($CURUSER["avatars"] == "yes" ? htmlspecialchars($friend["avatar"]) : 
 if (!$avatar)
 $avatar = "pic/default_avatar.png";
 if ($i % 2 == 0)
-print("<table width=100% style='padding: 0px'><tr><td class=bottom style='padding: 5px' width=50% align=center>");
+print("<div width=100% style='padding: 0px'><div><div class=bottom style='padding: 5px' width=50% align=center>");
 else
-print("<td class=bottom style='padding: 5px' width=50% align=center class=tablea>");
-print("<table class=main width=100% height=75px class=tablea>");
-print("<tr valign=top class=tableb><td width=75 align=center style='padding: 0px'>" .
-($avatar ? "<div style='width:75px;height:75px;overflow: hidden'><img width=75px src=\"$avatar\"></div>" : ""). "</td><td>\n");
-print("<table class=main>");
-print("<tr><td class=embedded style='padding: 5px' width=80%>$body1</td>\n");
-print("<td class=embedded style='padding: 5px' width=20%>$body2</td></tr>\n");
-print("</table>");
-print("</td></tr>");
-print("</td></tr></table>\n");
+print("<div class=bottom style='padding: 5px' width=50% align=center class=tablea>");
+print("<div class=main width=100% height=75px class=tablea>");
+print("<div valign=top class=tableb><div width=75 align=center style='padding: 0px'>" .
+($avatar ? "<div style='width:75px;height:75px;overflow: hidden'><img width=75px src=\"$avatar\"></div>" : ""). "</div><div>\n");
+print("<div class=main>");
+print("<div><div class=embedded style='padding: 5px' width=80%>$body1</div>\n");
+print("<div class=embedded style='padding: 5px' width=20%>$body2</div></div>\n");
+print("</div>");
+print("</div></div>");
+print("</div></div></div>\n");
 if ($i % 2 == 1)
-print("</td></tr></table>\n");
+print("</div></div></div>\n");
 else
-print("</td>\n");
+print("</div>\n");
 $i++;
 }
 if ($i % 2 == 1)
-print("<td class=bottom width=50%>&nbsp;</td></tr></table>\n");
+print("<div class=bottom width=50%>&nbsp;</div></div></div>\n");
 print($neighbors_info);
-print("</td></tr></table></table><br />\n");
+print("</div></div></div></div><br />\n");
 */
 //End: Neighbors
 
@@ -329,27 +329,27 @@ $blocks = $lang_friends['text_blocklist_empty'];
 else
 {
 	$i = 0;
-	$blocks = "<table width=100% cellspacing=0 cellpadding=0>";
+	$blocks = "<div width=100% cellspacing=0 cellpadding=0>";
 	while ($block = mysql_fetch_array($res))
 	{
 		if ($i % 6 == 0)
-		$blocks .= "<tr>";
-		$blocks .= "<td style='border: none; padding: 4px; spacing: 0px;'>[<font class=small><a href=friends.php?id=$userid&action=delete&type=block&targetid=" .
-		$block['id'] . ">D</a></font>] " . get_username($block["id"]) . "</td>";
+		$blocks .= "<div>";
+		$blocks .= "<div style='border: none; padding: 4px; spacing: 0px;'>[<font class=small><a href=friends.php?id=$userid&action=delete&type=block&targetid=" .
+		$block['id'] . ">D</a></font>] " . get_username($block["id"]) . "</div>";
 		if ($i % 6 == 5)
-		$blocks .= "</tr>";
+		$blocks .= "</div>";
 		$i++;
 	}
-	$blocks .= "</table>\n";
+	$blocks .= "</div>\n";
 }
 print("<br /><br />");
-print("<table class=main width=737 border=0 cellspacing=0 cellpadding=5><tr><td class=embedded>");
-print("<h2 align=left><a name=\"blocks\">".$lang_friends['text_blocked_users']."</a></h2></td></tr>");
-print("<tr class=tableb><td style='padding: 10px;'>");
+print("<div class=main width=737 border=0 cellspacing=0 cellpadding=5><div><div class=embedded>");
+print("<h2 align=left><a name=\"blocks\">".$lang_friends['text_blocked_users']."</a></h2></div></div>");
+print("<div class=tableb><div style='padding: 10px;'>");
 print($blocks);
-print("</td></tr></table>\n");
+print("</div></div></div>\n");
 
-print("</td></tr></table>\n");
+print("</div></div></div>\n");
 if (get_user_class() >= $viewuserlist_class)
 	print("<p><a href=users.php><b>".$lang_friends['text_find_user']."</b></a></p>");
 stdfoot();

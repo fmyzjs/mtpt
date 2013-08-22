@@ -307,10 +307,10 @@ elseif ($action == "vieworiginal")
 
 		stdhead($lang_comment['head_original_comment']);
 		print("<h1>".$lang_comment['text_original_content_of_comment']."#$commentid</h1>");
-		print("<table width=\"737\" border=\"1\" cellspacing=\"0\" cellpadding=\"5\">");
-		print("<tr><td class=\"text\">\n");
+		print("<div width=\"737\" border=\"1\" cellspacing=\"0\" cellpadding=\"5\">");
+		print("<div><div class=\"text\">\n");
 		echo format_comment($arr["ori_text"]);
-		print("</td></tr></table>\n");
+		print("</div></div></div>\n");
 
 		$returnto =  htmlspecialchars($_SERVER["HTTP_REFERER"]);
 

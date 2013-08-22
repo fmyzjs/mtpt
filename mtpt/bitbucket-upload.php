@@ -74,16 +74,16 @@ stdhead($lang_bitbucketupload['head_avatar_upload']);
 ?>
 <h1><?php echo $lang_bitbucketupload['text_avatar_upload'] ?></h1>
 <form method="post" action=bitbucket-upload.php enctype="multipart/form-data">
-<table border=1 cellspacing=0 cellpadding=5>
+<div border=1 cellspacing=0 cellpadding=5>
 <?php
 
 if(!is_writable("$bitbucket"))
-print("<tr><td align=left colspan=2>".$lang_bitbucketupload['text_upload_directory_unwritable']."</tr></td>");
-print("<tr><td align=left colspan=2>".$lang_bitbucketupload['text_disclaimer']."$scaleh".$lang_bitbucketupload['text_disclaimer_two']."$scalew".$lang_bitbucketupload['text_disclaimer_three'].number_format($maxfilesize).$lang_bitbucketupload['text_disclaimer_four']);
+print("<div><div align=left colspan=2>".$lang_bitbucketupload['text_upload_directory_unwritable']."</div></div>");
+print("<div><div align=left colspan=2>".$lang_bitbucketupload['text_disclaimer']."$scaleh".$lang_bitbucketupload['text_disclaimer_two']."$scalew".$lang_bitbucketupload['text_disclaimer_three'].number_format($maxfilesize).$lang_bitbucketupload['text_disclaimer_four']);
 ?>
-<tr><td class=rowhead><?php echo $lang_bitbucketupload['row_file'] ?></td><td class="rowfollow"><input type="file" name="file" size="60"></td></tr>
-<tr><td colspan=2 align=left class="toolbox"><input class="checkbox" type=checkbox name=public value=yes><?php echo $lang_bitbucketupload['checkbox_avatar_shared']?> <input type="submit" value=<?php echo $lang_bitbucketupload['submit_upload'] ?>></td></tr>
-</table>
+<div><div class=rowhead><?php echo $lang_bitbucketupload['row_file'] ?></div><div class="rowfollow"><input type="file" name="file" size="60"></div></div>
+<div><div colspan=2 align=left class="toolbox"><input class="checkbox" type=checkbox name=public value=yes><?php echo $lang_bitbucketupload['checkbox_avatar_shared']?> <input type="submit" value=<?php echo $lang_bitbucketupload['submit_upload'] ?>></div></div>
+</div>
 </form>
 <?php
 stdfoot();

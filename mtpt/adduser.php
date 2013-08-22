@@ -48,12 +48,12 @@ stdhead("Add user");
 ?>
 <h1><?php echo $lang_adduser['head_adduser']?></h1>
 <form method=post action=adduser.php>
-<table border=1 cellspacing=0 cellpadding=5>
-<tr><td class=rowhead><?php echo $lang_adduser['text_username']?></td><td><input type=text name=username size=40></td></tr>
-<tr><td class=rowhead><?php echo $lang_adduser['text_passwd']?></td><td><input type=password name=password size=40></td></tr>
-<tr><td class=rowhead><?php echo $lang_adduser['text_repasswd']?></td><td><input type=password name=password2 size=40></td></tr>
-<tr><td class=rowhead><?php echo $lang_adduser['text_email']?></td><td><input type=text name=email size=40></td></tr>
-<tr><td colspan=2 align=center><input type=submit value="<?php echo $lang_adduser['submit_add_user']?>" class=btn></td></tr>
-</table>
+<div border=1 cellspacing=0 cellpadding=5>
+<div><div class=rowhead><?php echo $lang_adduser['text_username']?></div><div><input type=text name=username size=40></div></div>
+<div><div class=rowhead><?php echo $lang_adduser['text_passwd']?></div><div><input type=password name=password size=40></div></div>
+<div><div class=rowhead><?php echo $lang_adduser['text_repasswd']?></div><div><input type=password name=password2 size=40></div></div>
+<div><div class=rowhead><?php echo $lang_adduser['text_email']?></div><div><input type=text name=email size=40></div></div>
+<div><div colspan=2 align=center><input type=submit value="<?php echo $lang_adduser['submit_add_user']?>" class=btn></div></div>
+</div>
 </form>
 <?php stdfoot();

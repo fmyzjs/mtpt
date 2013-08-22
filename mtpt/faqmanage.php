@@ -53,23 +53,23 @@ if (isset($faq_categ))
 	{
 		foreach ($temp2 as $id => $temp)
 		{
-			print("<br />\n<table border=\"1\" cellspacing=\"0\" cellpadding=\"5\" align=\"center\" width=\"95%\">\n");
-			print("<tr><td class=\"colhead\" align=\"center\" colspan=\"2\">Position</td><td class=\"colhead\" align=\"left\">Section/Item Title</td><td class=\"colhead\" align=\"center\">Language</td><td class=\"colhead\" align=\"center\">Status</td><td class=\"colhead\" align=\"center\">Actions</td></tr>\n");
+			print("<br />\n<div border=\"1\" cellspacing=\"0\" cellpadding=\"5\" align=\"center\" width=\"95%\">\n");
+			print("<div><div class=\"colhead\" align=\"center\" colspan=\"2\">Position</div><div class=\"colhead\" align=\"left\">Section/Item Title</div><div class=\"colhead\" align=\"center\">Language</div><div class=\"colhead\" align=\"center\">Status</div><div class=\"colhead\" align=\"center\">Actions</div></div>\n");
 
-			print("<tr><td align=\"center\" width=\"40px\"><select name=\"order[". $id ."]\">");
+			print("<div><div align=\"center\" width=\"40px\"><select name=\"order[". $id ."]\">");
 			for ($n=1; $n <= count($temp2); $n++)
 			{
    				$sel = ($n == $temp2[$id][order]) ? " selected=\"selected\"" : "";
    				print("<option value=\"$n\"". $sel .">". $n ."</option>");
 			}
 			$status = ($temp2[$id][flag] == "0") ? "<font color=\"red\">Hidden</font>" : "Normal";
-			print("</select></td><td align=\"center\" width=\"40px\">&nbsp;</td><td><b>". $temp2[$id][title] ."</b></td><td align=\"center\" width=\"60px\">". $temp2[$id][lang_name] ."</td><td align=\"center\" width=\"60px\">". $status ."</td><td align=\"center\" width=\"60px\"><a href=\"faqactions.php?action=edit&id=". $temp2[$id][id] ."\">Edit</a> <a href=\"faqactions.php?action=delete&id=". $temp2[$id][id] ."\">Delete</a></td></tr>\n");
+			print("</select></div><div align=\"center\" width=\"40px\">&nbsp;</div><div><b>". $temp2[$id][title] ."</b></div><div align=\"center\" width=\"60px\">". $temp2[$id][lang_name] ."</div><div align=\"center\" width=\"60px\">". $status ."</div><div align=\"center\" width=\"60px\"><a href=\"faqactions.php?action=edit&id=". $temp2[$id][id] ."\">Edit</a> <a href=\"faqactions.php?action=delete&id=". $temp2[$id][id] ."\">Delete</a></div></div>\n");
 
 			if (array_key_exists("items", $temp2[$id]))
 			{
 				foreach ($temp2[$id][items] as $id2 => $temp)
 				{
-					print("<tr><td align=\"center\" width=\"40px\">&nbsp;</td><td align=\"center\" width=\"40px\"><select name=\"order[". $id2 ."]\">");
+					print("<div><div align=\"center\" width=\"40px\">&nbsp;</div><div align=\"center\" width=\"40px\"><select name=\"order[". $id2 ."]\">");
 					for ($n=1; $n <= count($temp2[$id][items]); $n++)
 					{
 						$sel = ($n == $temp2[$id][items][$id2][order]) ? " selected=\"selected\"" : "";
@@ -79,21 +79,21 @@ if (isset($faq_categ))
     					elseif ($temp2[$id][items][$id2][flag] == "2") $status = "<font color=\"#0000FF\"><img src=\"pic/updated.png\" alt=\"Updated\" width=\"46\" height=\"11\" align=\"absbottom\"></font>";
 					elseif ($temp2[$id][items][$id2][flag] == "3") $status = "<font color=\"#008000\"><img src=\"pic/new.png\" alt=\"New\" width=\"27\" height=\"11\" align=\"absbottom\"></font>";
 					else $status = "Normal";
-					print("</select></td><td>". $temp2[$id][items][$id2][question] ."</td><td align=\"center\"></td><td align=\"center\" width=\"60px\">". $status ."</td><td align=\"center\" width=\"60px\"><a href=\"faqactions.php?action=edit&id=". $id2 ."\">Edit</a> <a href=\"faqactions.php?action=delete&id=". $id2 ."\">Delete</a></td></tr>\n");
+					print("</select></div><div>". $temp2[$id][items][$id2][question] ."</div><div align=\"center\"></div><div align=\"center\" width=\"60px\">". $status ."</div><div align=\"center\" width=\"60px\"><a href=\"faqactions.php?action=edit&id=". $id2 ."\">Edit</a> <a href=\"faqactions.php?action=delete&id=". $id2 ."\">Delete</a></div></div>\n");
 				}
 			}
 
-			print("<tr><td colspan=\"6\" align=\"center\"><a href=\"faqactions.php?action=additem&inid=". $id ."&langid=".$lang."\">Add new item</a></td></tr>\n");
-			print("</table>\n");
+			print("<div><div colspan=\"6\" align=\"center\"><a href=\"faqactions.php?action=additem&inid=". $id ."&langid=".$lang."\">Add new item</a></div></div>\n");
+			print("</div>\n");
 		}
 	}
 }
 
 // print the orphaned items table
 if (isset($faq_orphaned)) {
-	print("<br />\n<table border=\"1\" cellspacing=\"0\" cellpadding=\"5\" align=\"center\" width=\"95%\">\n");
-	print("<tr><td align=\"center\" colspan=\"3\"><b style=\"color: #FF0000\">Orphaned Items</b></td>\n");
-	print("<tr><td class=\"colhead\" align=\"left\">Item Title</td><td class=\"colhead\" align=\"center\">Status</td><td class=\"colhead\" align=\"center\">Actions</td></tr>\n");
+	print("<br />\n<div border=\"1\" cellspacing=\"0\" cellpadding=\"5\" align=\"center\" width=\"95%\">\n");
+	print("<div><div align=\"center\" colspan=\"3\"><b style=\"color: #FF0000\">Orphaned Items</b></div>\n");
+	print("<div><div class=\"colhead\" align=\"left\">Item Title</div><div class=\"colhead\" align=\"center\">Status</div><div class=\"colhead\" align=\"center\">Actions</div></div>\n");
 	foreach ($faq_orphaned as $lang => $temp2){
 		foreach ($temp2 as $id => $temp)
 		{
@@ -101,13 +101,13 @@ if (isset($faq_orphaned)) {
 			elseif ($temp2[$id][flag] == "2") $status = "<font color=\"#0000FF\">Updated</font>";
 			elseif ($temp2[$id][flag] == "3") $status = "<font color=\"#008000\">New</font>";
 			else $status = "Normal";
-			print("<tr><td>". $temp2[$id][question] ."</td><td align=\"center\" width=\"60px\">". $status ."</td><td align=\"center\" width=\"60px\"><a href=\"faqactions.php?action=edit&id=". $id ."\">edit</a> <a href=\"faqactions.php?action=delete&id=". $id ."\">delete</a></td></tr>\n");
+			print("<div><div>". $temp2[$id][question] ."</div><div align=\"center\" width=\"60px\">". $status ."</div><div align=\"center\" width=\"60px\"><a href=\"faqactions.php?action=edit&id=". $id ."\">edit</a> <a href=\"faqactions.php?action=delete&id=". $id ."\">delete</a></div></div>\n");
 		}
 	}
-	print("</table>\n");
+	print("</div>\n");
 }
 
-print("<br />\n<table border=\"1\" cellspacing=\"0\" cellpadding=\"5\" align=\"center\" width=\"95%\">\n<tr><td align=\"center\"><a href=\"faqactions.php?action=addsection\">Add new section</a></td></tr>\n</table>\n");
+print("<br />\n<div border=\"1\" cellspacing=\"0\" cellpadding=\"5\" align=\"center\" width=\"95%\">\n<div><div align=\"center\"><a href=\"faqactions.php?action=addsection\">Add new section</a></div></div>\n</div>\n");
 print("<p align=\"center\"><input type=\"submit\" name=\"reorder\" value=\"Reorder\"></p>\n");
 print("</form>\n");
 print("<p>When the position numbers don't reflect the position in the table, it means the order id is bigger than the total number of sections/items and you should check all the order id's in the table and click \"reorder\"</p>");
