@@ -95,7 +95,7 @@ begin_main_frame();
 if ($CURUSER[id] == $user[id] || get_user_class() >= $cruprfmanage_class)
 	print("<h2>".$lang_userdetails['text_flush_ghost_torrents']."<a class=\"altlink\" href=\"takeflush.php?id=".$id."\">".$lang_userdetails['text_here']."</a></h2>\n");
 ?>
-<div width="100%" border="1" cellspacing="0" cellpadding="5">
+<table width="100%" border="1" cellspacing="0" cellpadding="5">
 <?php
 if (($user["privacy"] != "strong") OR (get_user_class() >= $prfmanage_class) || $CURUSER[id] == $user[id]){
 //Xia Zuojie: Taste compatibility is extremely slow. It can takes thounsands of datebase queries. It is disabled until someone makes it fast.
@@ -158,11 +158,11 @@ if (($user["privacy"] != "strong") OR (get_user_class() >= $prfmanage_class) || 
 				$bar_url = "pic/loadbarred.gif";
 			}
 			$width = $val * 400;
-			$compatibility_info = "<div align=left border=0 width=400><div><div style='padding: 0px; background-image: url(pic/loadbarbg.gif); background-repeat: repeat-x; width: 400px' title='" . number_format($val * 100, 2) . "%'><img align=left height=15 width=" . $width . " src=\"" . $bar_url ."\" alt='" . number_format($val * 100, 2) . "%'></div><div align=right class=embedded><strong>&nbsp;&nbsp;&nbsp;<nobr>" . $compatibility_info . "</nobr> </strong></div></div></div>";
+			$compatibility_info = "<table align=left border=0 width=400><tr><td style='padding: 0px; background-image: url(pic/loadbarbg.gif); background-repeat: repeat-x; width: 400px' title='" . number_format($val * 100, 2) . "%'><img align=left height=15 width=" . $width . " src=\"" . $bar_url ."\" alt='" . number_format($val * 100, 2) . "%'></td><td align=right class=embedded><strong>&nbsp;&nbsp;&nbsp;<nobr>" . $compatibility_info . "</nobr> </strong></td></tr></table>";
 			
 			//die("ss" . htmlspecialchars($compatibility_info));
 		}
-		print("<div><div class=rowhead width=13%>".$lang_userdetails['row_compatibility']."</div><div class=rowfollow align=left width=87%>". $compatibility_info ."</div></div>\n");
+		print("<tr><td class=rowhead width=13%>".$lang_userdetails['row_compatibility']."</td><td class=rowfollow align=left width=87%>". $compatibility_info ."</td></tr>\n");
 	}
 */
 
@@ -229,23 +229,23 @@ if ($clientselect)
 if ($user["downloaded"] > 0)
 {
 	$sr = floor($user["uploaded"] / $user["downloaded"] * 1000) / 1000;
-	$sr = "<div><div class=\"embedded\"><strong>" . $lang_userdetails['row_share_ratio'] . "</strong>:  <font color=\"" . get_ratio_color($sr) . "\">" . number_format($sr, 3) . "</font></div><div class=\"embedded\">&nbsp;&nbsp;" . get_ratio_img($sr) . "</div></div>";
+	$sr = "<tr><td class=\"embedded\"><strong>" . $lang_userdetails['row_share_ratio'] . "</strong>:  <font color=\"" . get_ratio_color($sr) . "\">" . number_format($sr, 3) . "</font></td><td class=\"embedded\">&nbsp;&nbsp;" . get_ratio_img($sr) . "</td></tr>";
 }
 
-$xfer = "<div><div class=\"embedded\"><strong>" . $lang_userdetails['row_uploaded'] . "</strong>:  ". mksize($user["uploaded"]) . "</div><div class=\"embedded\">&nbsp;&nbsp;<strong>" . $lang_userdetails['row_downloaded'] . "</strong>:  " . mksize($user["downloaded"]) . "</div></div>";
+$xfer = "<tr><td class=\"embedded\"><strong>" . $lang_userdetails['row_uploaded'] . "</strong>:  ". mksize($user["uploaded"]) . "</td><td class=\"embedded\">&nbsp;&nbsp;<strong>" . $lang_userdetails['row_downloaded'] . "</strong>:  " . mksize($user["downloaded"]) . "</td></tr>";
 
-tr_small($lang_userdetails['row_transfer'], "<div border=\"0\" cellspacing=\"0\" cellpadding=\"0\">" . $sr . $xfer . "</div>", 1);
+tr_small($lang_userdetails['row_transfer'], "<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">" . $sr . $xfer . "</table>", 1);
 
 
 if ($user["leechtime"] > 0)
 {
 	$slr = floor($user["seedtime"] / $user["leechtime"] * 1000) / 1000;
-	$slr = "<div><div class=\"embedded\"><strong>" . $lang_userdetails['text_seeding_leeching_time_ratio'] . "</strong>:  <font color=\"" . get_ratio_color($slr) . "\">" . number_format($slr, 3) . "</font></div><div class=\"embedded\">&nbsp;&nbsp;" . get_ratio_img($slr) . "</div></div>";
+	$slr = "<tr><td class=\"embedded\"><strong>" . $lang_userdetails['text_seeding_leeching_time_ratio'] . "</strong>:  <font color=\"" . get_ratio_color($slr) . "\">" . number_format($slr, 3) . "</font></td><td class=\"embedded\">&nbsp;&nbsp;" . get_ratio_img($slr) . "</td></tr>";
 }
 
-$slt = "<div><div class=\"embedded\"><strong>" . $lang_userdetails['text_seeding_time'] . "</strong>:  ". mkprettytime($user["seedtime"]) . "</div><div class=\"embedded\">&nbsp;&nbsp;<strong>" . $lang_userdetails['text_leeching_time'] . "</strong>:  " . mkprettytime($user["leechtime"]) . "</div></div>";
+$slt = "<tr><td class=\"embedded\"><strong>" . $lang_userdetails['text_seeding_time'] . "</strong>:  ". mkprettytime($user["seedtime"]) . "</td><td class=\"embedded\">&nbsp;&nbsp;<strong>" . $lang_userdetails['text_leeching_time'] . "</strong>:  " . mkprettytime($user["leechtime"]) . "</td></tr>";
 
-	tr_small($lang_userdetails['row_sltime'], "<div border=\"0\" cellspacing=\"0\" cellpadding=\"0\">" . $slr . $slt . "</div>", 1);
+	tr_small($lang_userdetails['row_sltime'], "<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">" . $slr . $slt . "</table>", 1);
 
 if ($user["download"] && $user["upload"])
 tr_small($lang_userdetails['row_internet_speed'], $download."&nbsp;&nbsp;&nbsp;&nbsp;".$upload."&nbsp;&nbsp;&nbsp;&nbsp;".$isp, 1);
@@ -283,11 +283,11 @@ tr_small($lang_userdetails['row_completed_torrents'], "<a href=\"javascript: get
 tr_small($lang_userdetails['row_incomplete_torrents'], "<a href=\"javascript: getusertorrentlistajax('".$user['id']."', 'incomplete', 'ka4'); klappe_news('a4')\"><img class=\"plus\" src=\"pic/trans.gif\" id=\"pica4\" alt=\"Show/Hide\" title=\"".$lang_userdetails['title_show_or_hide']."\" />   <u>".$lang_userdetails['text_show_or_hide']."</u></a><div id=\"ka4\" style=\"display: none;\"></div>", 1);
 }
 if ($user["info"])
-	print("<div><div align=\"left\" colspan=\"2\" class=\"text\">" . format_comment($user["info"],false) . "</div></div>\n");
+	print("<tr><td align=\"left\" colspan=\"2\" class=\"text\">" . format_comment($user["info"],false) . "</td></tr>\n");
 }
 else
 {
-	print("<div><div align=\"left\" colspan=\"2\" class=\"text\"><font color=\"blue\">".$lang_userdetails['text_public_access_denied'].$user[username].$lang_userdetails['text_user_wants_privacy']."</font></div></div>\n");
+	print("<tr><td align=\"left\" colspan=\"2\" class=\"text\"><font color=\"blue\">".$lang_userdetails['text_public_access_denied'].$user[username].$lang_userdetails['text_user_wants_privacy']."</font></td></tr>\n");
 }
 if ($CURUSER["id"] != $user["id"])
 if (get_user_class() >= $staffmem_class)
@@ -311,7 +311,7 @@ $res5 = sql_query("SELECT*FROM users WHERE users.status='confirmed' ORDER BY use
 $arr5 = mysql_fetch_assoc($res5);
 //$arr2 = get_user_row($CURUSER["id"]);
 if ($CURUSER["id"] != $user["id"]){
-print("<div><div colspan=\"2\" align=\"center\" valign=\"middle\">".("'".$arr5['last_access']."'">$dt?"<img class=\"f_online\" src=\"pic/trans.gif\" alt=\"Online\" title=\"".$lang_userdetails['title_online']."\"/>":"<img class=\"f_offline\" src=\"pic/trans.gif\" alt=\"Offline\" title=\"".$lang_userdetails['title_offline']."\"/>")."");
+print("<tr><td colspan=\"2\" align=\"center\" valign=\"middle\">".("'".$arr5['last_access']."'">$dt?"<img class=\"f_online\" src=\"pic/trans.gif\" alt=\"Online\" title=\"".$lang_userdetails['title_online']."\"/>":"<img class=\"f_offline\" src=\"pic/trans.gif\" alt=\"Offline\" title=\"".$lang_userdetails['title_offline']."\"/>")."");
 
 //--end--//
 
@@ -319,9 +319,9 @@ if ($showpmbutton)
 print("<a href=\"sendmessage.php?receiver=".htmlspecialchars($user[id])."\"><img class=\"f_pm\" src=\"pic/trans.gif\" alt=\"PM\" title=\"".$lang_userdetails['title_send_pm']."\" /></a>");
 
 print("<a href=\"report.php?user=".htmlspecialchars($user[id])."\"><img class=\"f_report\" src=\"pic/trans.gif\" alt=\"Report\" title=\"".$lang_userdetails['title_report_user']."\" /></a>");
-print("</div></div>");
+print("</td></tr>");
 }
-print("</div>\n");
+print("</table>\n");
 
 if (get_user_class() >= $prfmanage_class && $user["class"] < get_user_class())
 {
@@ -330,7 +330,7 @@ if (get_user_class() >= $prfmanage_class && $user["class"] < get_user_class())
 	print("<input type=\"hidden\" name=\"action\" value=\"edituser\" />");
 	print("<input type=\"hidden\" name=\"userid\" value=\"".$id."\" />");
 	print("<input type=\"hidden\" name=\"returnto\" value=\"".htmlspecialchars("userdetails.php?id=$id")."\" />");
-	print("<div width=\"100%\" class=\"main\" border=\"1\" cellspacing=\"0\" cellpadding=\"5\">\n");
+	print("<table width=\"100%\" class=\"main\" border=\"1\" cellspacing=\"0\" cellpadding=\"5\">\n");
 	tr($lang_userdetails['row_title'], "<input type=\"text\" size=\"60\" name=\"title\" value=\"" . htmlspecialchars(trim($user[title])) . "\" />", 1);
 	$avatar = htmlspecialchars(trim($user["avatar"]));
 
@@ -374,40 +374,40 @@ if (get_user_class() >= $prfmanage_class && $user["class"] < get_user_class())
 	}
 	$warned = $user["warned"] == "yes";
 
-	print("<div><div class=\"rowhead\">".$lang_userdetails['row_warning_system']."</div><div class=\"rowfollow\" align=\"left\" ><div class=\"main\" cellspacing=\"0\" cellpadding=\"5\"><div><div class=\"rowfollow\">" . ($warned ? "<input name=\"warned\" value=\"yes\" type=\"radio\" checked=\"checked\" />".$lang_userdetails['radio_yes']."<input name=\"warned\" value=\"no\" type=\"radio\" />".$lang_userdetails['radio_no'] : $lang_userdetails['text_not_warned'] ) ."</div>");
+	print("<tr><td class=\"rowhead\">".$lang_userdetails['row_warning_system']."</td><td class=\"rowfollow\" align=\"left\" ><table class=\"main\" cellspacing=\"0\" cellpadding=\"5\"><tr><td class=\"rowfollow\">" . ($warned ? "<input name=\"warned\" value=\"yes\" type=\"radio\" checked=\"checked\" />".$lang_userdetails['radio_yes']."<input name=\"warned\" value=\"no\" type=\"radio\" />".$lang_userdetails['radio_no'] : $lang_userdetails['text_not_warned'] ) ."</td>");
 
 	if ($warned)
 	{
 		$warneduntil = $user['warneduntil'];
 		if ($warneduntil == '0000-00-00 00:00:00')
-		print("<div align=\"center\" class=\"rowfollow\">".$lang_userdetails['text_arbitrary_duration']."</div>\n");
+		print("<td align=\"center\" class=\"rowfollow\">".$lang_userdetails['text_arbitrary_duration']."</td>\n");
 		else
 		{
-			print("<div align=\"left\" class=\"rowfollow\">".$lang_userdetails['text_until'].$warneduntil);
-			print("<br />(" . mkprettytime(strtotime($warneduntil) - strtotime(date("Y-m-d H:i:s"))) .$lang_userdetails['text_to_go'] .")</div>\n");
+			print("<td align=\"left\" class=\"rowfollow\">".$lang_userdetails['text_until'].$warneduntil);
+			print("<br />(" . mkprettytime(strtotime($warneduntil) - strtotime(date("Y-m-d H:i:s"))) .$lang_userdetails['text_to_go'] .")</td>\n");
 		}
-		print("</div>");
+		print("</tr>");
 
 	}else{
 
-		print("<div align=\"left\" class=\"rowfollow\">".$lang_userdetails['text_warn_for']."<select name=\"warnlength\">\n");
+		print("<td align=\"left\" class=\"rowfollow\">".$lang_userdetails['text_warn_for']."<select name=\"warnlength\">\n");
 		print("<option value=\"0\">------</option>\n");
 		print("<option value=\"1\">1 ".$lang_userdetails['text_week']."</option>\n");
 		print("<option value=\"2\">2 ".$lang_userdetails['text_weeks']."</option>\n");
 		print("<option value=\"4\">4 ".$lang_userdetails['text_weeks']."</option>\n");
 		print("<option value=\"8\">8 ".$lang_userdetails['text_weeks']."</option>\n");
 		print("<option value=\"255\">".$lang_userdetails['text_unlimited']."</option>\n");
-		print("</select></div></div>\n");
-		print("<div><div align=\"left\" class=\"rowfollow\">".$lang_userdetails['text_reason_of_warning']."</div><div align=\"left\" class=\"rowfollow\"><input type=\"text\" size=\"60\" name=\"warnpm\" /></div></div>");
+		print("</select></td></tr>\n");
+		print("<tr><td align=\"left\" class=\"rowfollow\">".$lang_userdetails['text_reason_of_warning']."</td><td align=\"left\" class=\"rowfollow\"><input type=\"text\" size=\"60\" name=\"warnpm\" /></td></tr>");
 	}
 
 
 	$elapsedlw = get_elapsed_time(strtotime($user["lastwarned"]));
-	print("<div><div align=\"left\" class=\"rowfollow\">".$lang_userdetails['text_times_warned']."</div><div align=\"left\" class=\"rowfollow\">".$user[timeswarned]."</div></div>\n");
+	print("<tr><td align=\"left\" class=\"rowfollow\">".$lang_userdetails['text_times_warned']."</td><td align=\"left\" class=\"rowfollow\">".$user[timeswarned]."</td></tr>\n");
 
 	if ($user["timeswarned"] == 0)
 	{
-		print("<div><div align=\"left\" class=\"rowfollow\">".$lang_userdetails['text_last_warning']."</div><div align=\"left\" class=\"rowfollow\">".$lang_userdetails['text_not_warned_note']."</div></div>\n");
+		print("<tr><td align=\"left\" class=\"rowfollow\">".$lang_userdetails['text_last_warning']."</td><td align=\"left\" class=\"rowfollow\">".$lang_userdetails['text_not_warned_note']."</td></tr>\n");
 	}else{
 		if ($user["warnedby"] != "System")
 		{
@@ -416,17 +416,17 @@ if (get_user_class() >= $prfmanage_class && $user["class"] < get_user_class())
 			$warnedby = "<br />[".$lang_userdetails['text_by']."<u>" . get_username($arr['id']) . "</u></a>]";
 		}else{
 			$warnedby = "<br />[".$lang_userdetails['text_by_system']."]";
-			print("<div><div class=\"rowfollow\">".$lang_userdetails['text_last_warning']."</div><div align=\"left\" class=\"rowfollow\"> $user[lastwarned] .(".$lang_userdetails['text_until'] ."$elapsedlw)   $warnedby</div></div>\n");
+			print("<tr><td class=\"rowfollow\">".$lang_userdetails['text_last_warning']."</td><td align=\"left\" class=\"rowfollow\"> $user[lastwarned] .(".$lang_userdetails['text_until'] ."$elapsedlw)   $warnedby</td></tr>\n");
 		}
-		print("<div><div class=\"rowfollow\">".$lang_userdetails['text_last_warning']."</div><div align=\"left\" class=\"rowfollow\"> $user[lastwarned] ($elapsedlw".$lang_userdetails['text_ago'].")   ".$warnedby."</div></div>\n");
+		print("<tr><td class=\"rowfollow\">".$lang_userdetails['text_last_warning']."</td><td align=\"left\" class=\"rowfollow\"> $user[lastwarned] ($elapsedlw".$lang_userdetails['text_ago'].")   ".$warnedby."</td></tr>\n");
 	}
 
 	$leechwarn = $user["leechwarn"] == "yes";
-	print("<div><div class=\"rowfollow\">".$lang_userdetails['row_auto_warning']."<br /><i>(".$lang_userdetails['text_low_ratio'].")</i></div>");
+	print("<tr><td class=\"rowfollow\">".$lang_userdetails['row_auto_warning']."<br /><i>(".$lang_userdetails['text_low_ratio'].")</i></td>");
 
 	if ($leechwarn)
 	{
-		print("<div align=\"left\" class=\"rowfollow\"><font color=\"red\">".$lang_userdetails['text_leech_warned']."</font> ");
+		print("<td align=\"left\" class=\"rowfollow\"><font color=\"red\">".$lang_userdetails['text_leech_warned']."</font> ");
 		$leechwarnuntil = $user['leechwarnuntil'];
 		if ($leechwarnuntil != '0000-00-00 00:00:00')
 		{
@@ -435,11 +435,11 @@ if (get_user_class() >= $prfmanage_class && $user["class"] < get_user_class())
 		}else{
 			print("<i>".$lang_userdetails['text_for_unlimited_time']."</i>");
 		}
-		print("</div></div>");
+		print("</td></tr>");
 	}else{
-		print("<div class=\"rowfollow\">".$lang_userdetails['text_no_warned']."</div></div>\n");
+		print("<td class=\"rowfollow\">".$lang_userdetails['text_no_warned']."</td></tr>\n");
 	}
-	print("</div></div></div>");
+	print("</table></td></tr>");
 	tr($lang_userdetails['row_enabled'], "<input name=\"enabled\" value=\"yes\" type=\"radio\"" . ($enabled ? " checked=\"checked\"" : "") . " />".$lang_userdetails['radio_yes']."<input name=\"enabled\" value=\"no\" type=\"radio\"" . (!$enabled ? " checked=\"checked\"" : "") . " />".$lang_userdetails['radio_no'], 1);
 	tr($lang_userdetails['row_forum_post_possible'], "<input type=\"radio\" name=\"forumpost\" value=\"yes\"" .($user["forumpost"]=="yes" ? " checked=\"checked\"" : "") . " />".$lang_userdetails['radio_yes']."<input type=\"radio\" name=\"forumpost\" value=\"no\"" .($user["forumpost"]=="no" ? " checked=\"checked\"" : "") . " />".$lang_userdetails['radio_no'], 1);
 	tr($lang_userdetails['row_upload_possible'], "<input type=\"radio\" name=\"uploadpos\" value=\"yes\"" .($user["uploadpos"]=="yes" ? " checked=\"checked\"" : "") . " />".$lang_userdetails['radio_yes']."<input type=\"radio\" name=\"uploadpos\" value=\"no\"" .($user["uploadpos"]=="no" ? " checked=\"checked\"" : "") . " />".$lang_userdetails['radio_no'], 1);
@@ -465,8 +465,8 @@ if (get_user_class() >= $prfmanage_class && $user["class"] < get_user_class())
 	}
 	tr($lang_userdetails['row_passkey'], "<input name=\"resetkey\" value=\"yes\" type=\"checkbox\" />".$lang_userdetails['checkbox_reset_passkey'], 1);
 
-	print("<div><div class=\"toolbox\" colspan=\"2\" align=\"center\"><input type=\"submit\" class=\"btn\" value=\"".$lang_userdetails['submit_okay']."\" /></div></div>\n");
-	print("</div>\n");
+	print("<tr><td class=\"toolbox\" colspan=\"2\" align=\"center\"><input type=\"submit\" class=\"btn\" value=\"".$lang_userdetails['submit_okay']."\" /></td></tr>\n");
+	print("</table>\n");
 	print("</form>\n");
 	end_frame();
 	if (get_user_class() >= $cruprfmanage_class)

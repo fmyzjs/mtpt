@@ -36,27 +36,27 @@ $res = sql_query("SELECT name,flagpic FROM countries WHERE id=$user[country] LIM
 if (mysql_num_rows($res) == 1)
 {
   $arr = mysql_fetch_assoc($res);
-  $country = "<div class=embedded><img src=pic/flag/$arr[flagpic] alt=\"$arr[name]\" style='margin-left: 8pt'></div>";
+  $country = "<td class=embedded><img src=pic/flag/$arr[flagpic] alt=\"$arr[name]\" style='margin-left: 8pt'></td>";
 }
 
 stdhead($lang_checkuser['head_detail_for'] . $user["username"]);
 
 $enabled = $user["enabled"] == 'yes';
-print("<p><div class=main border=0 cellspacing=0 cellpadding=0>".
-"<div><div class=embedded><h1 style='margin:0px'>" . get_username($user['id'], true, false) . "</h1></div>$country</div></div></p><br />\n");
+print("<p><table class=main border=0 cellspacing=0 cellpadding=0>".
+"<tr><td class=embedded><h1 style='margin:0px'>" . get_username($user['id'], true, false) . "</h1></td>$country</tr></table></p><br />\n");
 
 if (!$enabled)
   print($lang_checkuser['text_account_disabled']);
 ?>
-<div width=737 border=1 cellspacing=0 cellpadding=5>
-<div><div class=rowhead width=1%><?php echo $lang_checkuser['row_join_date'] ?></div><div align=left width=99%><?php echo $joindate;?></div></div>
-<div><div class=rowhead width=1%><?php echo $lang_checkuser['row_gender'] ?></div><div align=left width=99%><?php echo $gender;?></div></div>
-<div><div class=rowhead width=1%><?php echo $lang_checkuser['row_email'] ?></div><div align=left width=99%><a href=mailto:<?php echo $user[email];?>><?php echo $user[email];?></a></div></div>
+<table width=737 border=1 cellspacing=0 cellpadding=5>
+<tr><td class=rowhead width=1%><?php echo $lang_checkuser['row_join_date'] ?></td><td align=left width=99%><?php echo $joindate;?></td></tr>
+<tr><td class=rowhead width=1%><?php echo $lang_checkuser['row_gender'] ?></td><td align=left width=99%><?php echo $gender;?></td></tr>
+<tr><td class=rowhead width=1%><?php echo $lang_checkuser['row_email'] ?></td><td align=left width=99%><a href=mailto:<?php echo $user[email];?>><?php echo $user[email];?></a></td></tr>
 <?php
 if (get_user_class() >= UC_MODERATOR AND $user[ip] != '')
-	print ("<div><div class=rowhead width=1%>".$lang_checkuser['row_ip']."</div><div align=left width=99%>$user[ip]</div></div>");
+	print ("<tr><td class=rowhead width=1%>".$lang_checkuser['row_ip']."</td><td align=left width=99%>$user[ip]</td></tr>");
 print("<form method=post action=takeconfirm.php?id=".htmlspecialchars($id).">");
 print("<input type=hidden name=email value=$user[email]>");
-print("<div><div class=rowhead width=1%><input type=\"checkbox\" name=\"conusr[]\" value=\"" . $id . "\" checked/></div>");
-print("<div align=left width=99%><input type=submit style='height: 20px' value=\"".$lang_checkuser['submit_confirm_this_user'] ."\"></form></div></div></div>");
+print("<tr><td class=rowhead width=1%><input type=\"checkbox\" name=\"conusr[]\" value=\"" . $id . "\" checked/></td>");
+print("<td align=left width=99%><input type=submit style='height: 20px' value=\"".$lang_checkuser['submit_confirm_this_user'] ."\"></form></tr></td></table>");
 stdfoot();

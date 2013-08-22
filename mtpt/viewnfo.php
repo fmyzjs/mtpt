@@ -39,26 +39,26 @@ stdhead($lang_viewnfo['head_view_nfo']);
 print($lang_viewnfo['text_nfo_for']."<a href=details.php?id=$id>".htmlspecialchars($a["name"])."</a>\n");
 
 ?>
-<div border="1" cellspacing="0" cellpadding="10" align="center">
-<div>
-<?php /*<div align="center" width="25%">
+<table border="1" cellspacing="0" cellpadding="10" align="center">
+<tr>
+<?php /*<td align="center" width="25%">
 <a href="viewnfo.php?id=<?php echo $id?>&view=fonthack"
-title="Teckensnittshack: Anv�nder nagon av teckensnitten MS LineDraw eller Terminal"><b>Teckensnittshack</b></a></div>*/?>
-<div align="center" width="50%">
+title="Teckensnittshack: Anv�nder nagon av teckensnitten MS LineDraw eller Terminal"><b>Teckensnittshack</b></a></td>*/?>
+<td align="center" width="50%">
 <a href="viewnfo.php?id=<?php echo $id?>&view=magic"
 title=<?php echo $lang_viewnfo['title_dos_vy'] ?>>
-<b><?php echo $lang_viewnfo['text_dos_vy'] ?></b></a></div>
-<div align="center" width="50%">
+<b><?php echo $lang_viewnfo['text_dos_vy'] ?></b></a></td>
+<td align="center" width="50%">
 <a href="viewnfo.php?id=<?php echo $id?>&view=latin-1"
-title='<?php echo $lang_viewnfo['title_windows_vy']?>'><b><?php echo $lang_viewnfo['text_windows_vy'] ?></b></a></div>
-<?php /*<div align="center" width="25%">
+title='<?php echo $lang_viewnfo['title_windows_vy']?>'><b><?php echo $lang_viewnfo['text_windows_vy'] ?></b></a></td>
+<?php /*<td align="center" width="25%">
 <a href="viewnfo.php?id=<?php echo $id?>&view=strict"
 title="Strikt: Visar nfo-filen som den ser ut i teckentabellen IBM-437">
-<b>Strikt DOS-vy</b></a></div>*/?>
-</div>
-<div>
-<div colspan="3">
-<div border=1 cellspacing=0 cellpadding=5><div><div class=text>
+<b>Strikt DOS-vy</b></a></td>*/?>
+</tr>
+<tr>
+<td colspan="3">
+<table border=1 cellspacing=0 cellpadding=5><tr><td class=text>
 <?php
 // -- About to output NFO data
 if ($view == "fonthack") {
@@ -78,9 +78,9 @@ print("<pre style=\"font-size:10pt; font-family: 'Courier New', monospace;\">");
 print(format_urls($nfo));
 print("</pre>\n");
 ?>
-</div></div></div>
-</div>
-</div>
-</div>
+</td></tr></table>
+</td>
+</tr>
+</table>
 <?php
 stdfoot();

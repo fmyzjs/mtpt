@@ -124,7 +124,7 @@ $res = sql_query("SELECT * FROM news ORDER BY added DESC LIMIT ".(int)$maxnewsnu
 if (mysql_num_rows($res) > 0)
 {
 	$Cache->add_whole_row();
-	print("<div width=\"100%\"><div><div class=\"text\"><div style=\"margin-left: 16pt;\">\n");
+	print("<table width=\"100%\"><tr><td class=\"text\"><div style=\"margin-left: 16pt;\">\n");
 	$Cache->end_whole_row();
 	$news_flag = 0;
 	while($array = mysql_fetch_array($res))
@@ -150,7 +150,7 @@ if (mysql_num_rows($res) > 0)
 	}
 	$Cache->break_loop();
 	$Cache->add_whole_row();
-	print("</div></div></div></div>\n");
+	print("</div></td></tr></table>\n");
 	$Cache->end_whole_row();
 }
 	$Cache->cache_page();
@@ -186,7 +186,7 @@ if (!$Cache->get_page())
 	$countnum = 0;
 	$Cache->add_whole_row();
 	print ("<h2>".$lang_index['text_hotmovies'].$lang_index['text_classicmovies']."</h2>");
-	print ("<div width=\"100%\" border=\"1\" cellspacing=\"0\" cellpadding=\"5\"><div><div>");
+	print ("<table width=\"100%\" border=\"1\" cellspacing=\"0\" cellpadding=\"5\"><tr><td>");
 	print("<div class=\"demo\">");
 	print("<div style=\"width: 100%\" id=\"sliderBloc\">");
 	print("<a id=\"previous\">Previous</a>");
@@ -219,7 +219,7 @@ if (!$Cache->get_page())
 	print("<a id=\"next\">Next</a>");
 	print("</div>");
 	print("</div>");
-	print ("</div></div></div>");
+	print ("</td></tr></table>");
 	$Cache->end_whole_row();
 	$Cache->cache_page();
 }
@@ -268,8 +268,8 @@ if ($showextinfo['imdb'] == 'yes' && ($showmovies['hot'] == "yes" || $showmovies
 					}
 ?>
 <h2><?php echo $lang_index['text_' . $type_each . 'movies'] ?></h2>
-<div width="100%" border="1" cellspacing="0" cellpadding="5"><div><div class="text nowrap" align="center">
-<?php echo $movies_list ?></div></div></div>
+<table width="100%" border="1" cellspacing="0" cellpadding="5"><tr><td class="text nowrap" align="center">
+<?php echo $movies_list ?></td></tr></table>
 <?php
 				}
 				$Cache->end_whole_row();
@@ -302,7 +302,7 @@ if ($showshoutbox_main == "yes") {
 </script>
 <h2><?php echo $lang_index['text_shoutbox'] ?></h2>
 <?php
-	print("<div width=\"100%\"><div><div class=\"text\">\n");
+	print("<table width=\"100%\"><tr><td class=\"text\">\n");
 	if ($Advertisement->enable_ad()){
 		$shout_ad = $Advertisement->get_ad('shoutindex');
 		print("<div id=\"ad_shoutindex\">".$shout_ad[0]."</div>");
@@ -314,7 +314,7 @@ if ($showshoutbox_main == "yes") {
 		print("<input type='submit' id='toguest' class='btn' name='toguest' value=\"".$lang_index['sumbit_to_guest']."\" />");
 	print("<input type='reset' class='btn' value=\"".$lang_index['submit_clear']."\" /> <input type='hidden' name='sent' value='yes' /><input type='hidden' name='type' value='shoutbox' /><br />\n");
 	print(smile_row("shbox","shbox_text"));
-	print("</form></div></div></div>");
+	print("</form></td></tr></table>");
 }
 // ------------- end: shoutbox ------------------//
 // ------------- start: funbox ------------------//
@@ -351,7 +351,7 @@ if ($showfunbox_main == "yes" && (!isset($CURUSER) || $CURUSER['showfb'] == "yes
 	}
 	print("</h2>");
 
-	print("<div width=\"100%\"><div><div class=\"text\">");
+	print("<table width=\"100%\"><tr><td class=\"text\">");
 	print("<iframe src=\"fun.php?action=view\" width='900' height='300' frameborder='0' name='funbox' marginwidth='0' marginheight='0'></iframe><br /><br />\n");
 
 	if ($CURUSER)
@@ -360,7 +360,7 @@ if ($showfunbox_main == "yes" && (!isset($CURUSER) || $CURUSER['showfb'] == "yes
 		$dullonclick = " onclick=\"funvote(".$row['id'].",'dull'".")\"";
 		print("<span id=\"funvote\"><b>".$funvote."</b>".$lang_index['text_out_of'].$totalvote.$lang_index['text_people_found_it'].($funvoted ? "" : "<font class=\"striking\">".$lang_index['text_your_opinion']."</font>&nbsp;&nbsp;<input type=\"button\" class='btn' name='fun' id='fun' ".$funonclick." value=\"".$lang_index['submit_fun']."\" />&nbsp;<input type=\"button\" class='btn' name='dull' id='dull' ".$dullonclick." value=\"".$lang_index['submit_dull']."\" />")."</span><span id=\"voteaccept\" style=\"display: none;\">".$lang_index['text_vote_accepted']."</span>");
 	}
-	print("</div></div></div>");
+	print("</td></tr></table>");
 	}
 }
 // ------------- end: funbox ------------------//
@@ -372,13 +372,13 @@ if ($showlastxforumposts_main == "yes" && $CURUSER)
 	if(mysql_num_rows($res) != 0)
 	{
 		print("<h2>".$lang_index['text_last_five_posts']."</h2>");
-		print("<div width=\"100%\" border=\"1\" cellspacing=\"0\" cellpadding=\"5\"><div><div class=\"colhead\" width=\"100%\" align=\"left\">".$lang_index['col_topic_title']."</div><div class=\"colhead\" align=\"center\">".$lang_index['col_view']."</div><div class=\"colhead\" align=\"center\">".$lang_index['col_author']."</div><div class=\"colhead\" align=\"left\">".$lang_index['col_posted_at']."</div></div>");
+		print("<table width=\"100%\" border=\"1\" cellspacing=\"0\" cellpadding=\"5\"><tr><td class=\"colhead\" width=\"100%\" align=\"left\">".$lang_index['col_topic_title']."</td><td class=\"colhead\" align=\"center\">".$lang_index['col_view']."</td><td class=\"colhead\" align=\"center\">".$lang_index['col_author']."</td><td class=\"colhead\" align=\"left\">".$lang_index['col_posted_at']."</td></tr>");
 
 		while ($postsx = mysql_fetch_assoc($res))
 		{
-			print("<div><div><a href=\"forums.php?action=viewtopic&amp;topicid=".$postsx["tid"]."&amp;page=p".$postsx["pid"]."#pid".$postsx["pid"]."\"><b>".htmlspecialchars($postsx["subject"])."</b></a><br />".$lang_index['text_in']."<a href=\"forums.php?action=viewforum&amp;forumid=".$postsx["forumid"]."\">".htmlspecialchars($postsx["name"])."</a></div><div align=\"center\">".$postsx["views"]."</div><div align=\"center\">" . get_username($postsx["userpost"]) ."</div><div>".gettime($postsx["added"])."</div></div>");
+			print("<tr><td><a href=\"forums.php?action=viewtopic&amp;topicid=".$postsx["tid"]."&amp;page=p".$postsx["pid"]."#pid".$postsx["pid"]."\"><b>".htmlspecialchars($postsx["subject"])."</b></a><br />".$lang_index['text_in']."<a href=\"forums.php?action=viewforum&amp;forumid=".$postsx["forumid"]."\">".htmlspecialchars($postsx["name"])."</a></td><td align=\"center\">".$postsx["views"]."</td><td align=\"center\">" . get_username($postsx["userpost"]) ."</td><td>".gettime($postsx["added"])."</td></tr>");
 		}
-		print("</div>");
+		print("</table>");
 	}
 }
 */
@@ -421,8 +421,8 @@ if ($CURUSER && $showpolls_main == "yes")
 			$arr["option10"], $arr["option11"], $arr["option12"], $arr["option13"], $arr["option14"],
 			$arr["option15"], $arr["option16"], $arr["option17"], $arr["option18"], $arr["option19"]);
 
-			print("<div width=\"100%\"><div><div class=\"text\" align=\"center\">\n");
-			print("<div width=\"59%\" class=\"main\" border=\"1\" cellspacing=\"0\" cellpadding=\"5\"><div><div class=\"text\" align=\"left\">");
+			print("<table width=\"100%\"><tr><td class=\"text\" align=\"center\">\n");
+			print("<table width=\"59%\" class=\"main\" border=\"1\" cellspacing=\"0\" cellpadding=\"5\"><tr><td class=\"text\" align=\"left\">");
 			print("<p align=\"center\"><b>".$question."</b></p>\n");
 
 			// Check if user has already voted
@@ -461,7 +461,7 @@ if ($CURUSER && $showpolls_main == "yes")
 
 				// now os is an array like this: array(array(123, "Option 1", 1), array(45, "Option 2", 2))
 				$Cache->add_whole_row();
-				print("<div class=\"main\" width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n");
+				print("<table class=\"main\" width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n");
 				$Cache->end_whole_row();
 				$i = 0;
 				while ($a = $os[$i])
@@ -472,17 +472,17 @@ if ($CURUSER && $showpolls_main == "yes")
 						$p = round($a[0] / $tvotes * 100);
 					$Cache->add_row();
 					$Cache->add_part();
-					print("<div><div width=\"1%\" class=\"embedded nowrap\">" . $a[1] . "&nbsp;&nbsp;</div><div width=\"99%\" class=\"embedded nowrap\"><img class=\"bar_end\" src=\"pic/trans.gif\" alt=\"\" /><img ");
+					print("<tr><td width=\"1%\" class=\"embedded nowrap\">" . $a[1] . "&nbsp;&nbsp;</td><td width=\"99%\" class=\"embedded nowrap\"><img class=\"bar_end\" src=\"pic/trans.gif\" alt=\"\" /><img ");
 					$Cache->end_part();
 					$Cache->add_part();
-					print(" src=\"pic/trans.gif\" style=\"width: " . ($p * 3) ."px;\" alt=\"\" /><img class=\"bar_end\" src=\"pic/trans.gif\" alt=\"\" /> $p%</div></div>\n");
+					print(" src=\"pic/trans.gif\" style=\"width: " . ($p * 3) ."px;\" alt=\"\" /><img class=\"bar_end\" src=\"pic/trans.gif\" alt=\"\" /> $p%</td></tr>\n");
 					$Cache->end_part();
 					$Cache->end_row();
 					++$i;
 				}
 				$Cache->break_loop();
 				$Cache->add_whole_row();
-				print("</div>\n");
+				print("</table>\n");
 				$tvotes = number_format($tvotes);
 				print("<p align=\"center\">".$lang_index['text_votes']." ".$tvotes."</p>\n");
 				$Cache->end_whole_row();
@@ -514,11 +514,11 @@ if ($CURUSER && $showpolls_main == "yes")
 				print("<input type=\"radio\" name=\"choice\" value=\"255\">".$lang_index['radio_blank_vote']."<br />\n");
 				print("<p align=\"center\"><input type=\"submit\" class=\"btn\" value=\"".$lang_index['submit_vote']."\" /></p>");
 			}
-			print("</div></div></div>");
+			print("</td></tr></table>");
 
 			if ($voted && get_user_class() >= $log_class)
 				print("<p align=\"center\"><a href=\"log.php?action=poll\">".$lang_index['text_previous_polls']."</a></p>\n");
-			print("</div></div></div>");
+			print("</td></tr></table>");
 		}
 }
 // ------------- end: polls ------------------//
@@ -530,13 +530,13 @@ if ($showlastxtorrents_main == "yes") {
 		if(mysql_num_rows($result) != 0 )
 		{
 			print ("<h2>".$lang_index['text_last_five_torrent']."</h2>");
-			print ("<div width=\"100%\" border=\"1\" cellspacing=\"0\" cellpadding=\"5\"><div><div class=\"colhead\" width=\"100%\">".$lang_index['col_name']."</div><div class=\"colhead\" align=\"center\">".$lang_index['col_seeder']."</div><div class=\"colhead\" align=\"center\">".$lang_index['col_leecher']."</div></div>");
+			print ("<table width=\"100%\" border=\"1\" cellspacing=\"0\" cellpadding=\"5\"><tr><td class=\"colhead\" width=\"100%\">".$lang_index['col_name']."</td><td class=\"colhead\" align=\"center\">".$lang_index['col_seeder']."</td><td class=\"colhead\" align=\"center\">".$lang_index['col_leecher']."</td></tr>");
 
 			while( $row = mysql_fetch_assoc($result) )
 			{
-				print ("<div><a href=\"details.php?id=". $row['id'] ."&amp;hit=1\"><div><a href=\"details.php?id=". $row['id'] ."&amp;hit=1\"><b>" . htmlspecialchars($row['name']) . "</b></div></a><div align=\"center\">" . $row['seeders'] . "</div><div align=\"center\">" . $row['leechers'] . "</div></div>");
+				print ("<tr><a href=\"details.php?id=". $row['id'] ."&amp;hit=1\"><td><a href=\"details.php?id=". $row['id'] ."&amp;hit=1\"><b>" . htmlspecialchars($row['name']) . "</b></td></a><td align=\"center\">" . $row['seeders'] . "</td><td align=\"center\">" . $row['leechers'] . "</td></tr>");
 			}
-			print ("</div>");
+			print ("</table>");
 		}
 }
 // ------------- end: latest torrents ------------------//
@@ -546,8 +546,8 @@ if ($showstats_main == "yes")
 {
 ?>
 <h2><?php echo $lang_index['text_tracker_statistics'] ?></h2>
-<div width="100%"><div><div class="text" align="center">
-<div width="60%" class="main" border="1" cellspacing="0" cellpadding="10">
+<table width="100%"><tr><td class="text" align="center">
+<table width="60%" class="main" border="1" cellspacing="0" cellpadding="10">
 <?php
 	$Cache->new_page('stats_users', 3000, true);
 	if (!$Cache->get_page()){
@@ -563,43 +563,43 @@ if ($showstats_main == "yes")
 	$registered_male = number_format(get_row_count("users", "WHERE gender='Male'"));
 	$registered_female = number_format(get_row_count("users", "WHERE gender='Female'"));
 ?>
-<div>
+<tr>
 <?php
 	twotd($lang_index['row_users_active_today'],$totalonlinetoday);
 	twotd($lang_index['row_users_active_this_week'],$totalonlineweek);
 ?>
-</div>
-<div>
+</tr>
+<tr>
 <?php
 	twotd($lang_index['row_registered_users'],$registered." / ".number_format($maxusers));
 	twotd($lang_index['row_unconfirmed_users'],$unverified);
 ?>
-</div>
-<div>
+</tr>
+<tr>
 <?php
 	twotd(get_user_class_name(UC_VIP,false,false,true),$VIP);
 	twotd($lang_index['row_donors']." <img class=\"star\" src=\"pic/trans.gif\" alt=\"Donor\" />",$donated);
 ?>
-</div>
-<div>
+</tr>
+<tr>
 <?php
 	twotd($lang_index['row_warned_users']." <img class=\"warned\" src=\"pic/trans.gif\" alt=\"warned\" />",$warned);
 	twotd($lang_index['row_banned_users']." <img class=\"disabled\" src=\"pic/trans.gif\" alt=\"disabled\" />",$disabled);
 ?>
-</div>
-<div>
+</tr>
+<tr>
 <?php
 	twotd($lang_index['row_male_users'],$registered_male);
 	twotd($lang_index['row_female_users'],$registered_female);
 ?>
-</div>
+</tr>
 <?php
 	$Cache->end_whole_row();
 	$Cache->cache_page();
 	}
 	echo $Cache->next_row();
 ?>
-<div><div colspan="4" class="rowhead">&nbsp;</div></div>
+<tr><td colspan="4" class="rowhead">&nbsp;</td></tr>
 <?php
 	$Cache->new_page('stats_torrents', 1800, true);
 	if (!$Cache->get_page()){
@@ -623,49 +623,49 @@ if ($showstats_main == "yes")
 	$totaldownloaded = get_row_sum("users","downloaded");
 	$totaldata = $totaldownloaded+$totaluploaded;
 ?>
-<div>
+<tr>
 <?php
 	twotd($lang_index['row_torrents'],$torrents);
 	twotd($lang_index['row_dead_torrents'],$dead);
 ?>
-</div>
-<div>
+</tr>
+<tr>
 <?php
 	twotd($lang_index['row_seeders'],$seeders);
 	twotd($lang_index['row_leechers'],$leechers);
 ?>
-</div>
-<div>
+</tr>
+<tr>
 <?php
 /*	twotd($lang_index['row_peers'],$peers);
 	twotd($lang_index['row_seeder_leecher_ratio'],$ratio."%");*/
 ?>
-</div>
-<div>
+</tr>
+<tr>
 <?php
 	twotd($lang_index['row_active_browsing_users'], $activewebusernow);
 	twotd($lang_index['row_tracker_active_users'], $activetrackerusernow);
 ?>
-</div>
-<div>
+</tr>
+<tr>
 <?php
 	twotd($lang_index['row_total_size_of_torrents'],$totaltorrentssize);
 	twotd($lang_index['row_total_uploaded'],mksize($totaluploaded));
 ?>
-</div>
-<div>
+</tr>
+<tr>
 <?php
 	twotd($lang_index['row_total_downloaded'],mksize($totaldownloaded));
 	twotd($lang_index['row_total_data'],mksize($totaldata));
 ?>
-</div>
+</tr>
 <?php
 	$Cache->end_whole_row();
 	$Cache->cache_page();
 	}
 	echo $Cache->next_row();
 ?>
-<div><div colspan="4" class="rowhead">&nbsp;</div></div>
+<tr><td colspan="4" class="rowhead">&nbsp;</td></tr>
 <?php
 	$Cache->new_page('stats_classes', 4535, true);
 	if (!$Cache->get_page()){
@@ -681,44 +681,44 @@ if ($showstats_main == "yes")
 	$ultimateusers = number_format(get_row_count("users", "WHERE class=".UC_ULTIMATE_USER));
 	$nexusmasters = number_format(get_row_count("users", "WHERE class=".UC_NEXUS_MASTER));
 ?>
-<div>
+<tr>
 <?php
 	twotd(get_user_class_name(UC_PEASANT,false,false,true)." <img class=\"leechwarned\" src=\"pic/trans.gif\" alt=\"leechwarned\" />",$peasants);
 	twotd(get_user_class_name(UC_USER,false,false,true),$users);
 ?>
-</div>
-<div>
+</tr>
+<tr>
 <?php
 	twotd(get_user_class_name(UC_POWER_USER,false,false,true),$powerusers);
 	twotd(get_user_class_name(UC_ELITE_USER,false,false,true),$eliteusers);
 ?>
-</div>
-<div>
+</tr>
+<tr>
 <?php
 	twotd(get_user_class_name(UC_CRAZY_USER,false,false,true),$crazyusers);
 	twotd(get_user_class_name(UC_INSANE_USER,false,false,true),$insaneusers);
 ?>
-</div>
-<div>
+</tr>
+<tr>
 <?php
 	twotd(get_user_class_name(UC_VETERAN_USER,false,false,true),$veteranusers);
 	twotd(get_user_class_name(UC_EXTREME_USER,false,false,true),$extremeusers);
 ?>
-</div>
-<div>
+</tr>
+<tr>
 <?php
 	twotd(get_user_class_name(UC_ULTIMATE_USER,false,false,true),$ultimateusers);
 	twotd(get_user_class_name(UC_NEXUS_MASTER,false,false,true),$nexusmasters);
 ?>
-</div>
+</tr>
 <?php
 	$Cache->end_whole_row();
 	$Cache->cache_page();
 	}
 	echo $Cache->next_row();
 ?>
-</div>
-</div></div></div>
+</table>
+</td></tr></table>
 <?php
 }
 // ------------- end: stats ------------------//
@@ -728,11 +728,11 @@ if ($showtrackerload == "yes") {
 	if ($uptimeresult){
 ?>
 <h2><?php echo $lang_index['text_tracker_load'] ?></h2>
-<div width="100%" border="1" cellspacing="0" cellpadding="10"><div><div class="text" align="center">
+<table width="100%" border="1" cellspacing="0" cellpadding="10"><tr><td class="text" align="center">
 <?php
 	//uptime, work in *nix system
 	print ("<div align=\"center\">" . trim($uptimeresult) . "</div>");
-	print("</div></div></div>");
+	print("</td></tr></table>");
 	}
 }
 // ------------- end: tracker load ------------------//
@@ -740,9 +740,9 @@ if ($showtrackerload == "yes") {
 // ------------- start: disclaimer ------------------//
 ?>
 <h2><?php echo $lang_index['text_disclaimer'] ?></h2>
-<div width="100%"><div><div class="text">
+<table width="100%"><tr><td class="text">
 <?php echo $lang_index['text_disclaimer_content'] ?>
-</div></div></div>
+</td></tr></table>
 <?php
 // ------------- end: disclaimer ------------------//
 // ------------- start: links ------------------//
@@ -767,7 +767,7 @@ if ($showtrackerload == "yes") {
 		{
 			$links .= "<a href=\"" . $array['url'] . "\" title=\"" . $array['title'] . "\" target=\"_blank\">" . $array['name'] . "</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 		}
-		print("<div width=\"100%\"><div><div class=\"text\">".trim($links)."</div></div></div>");
+		print("<table width=\"100%\"><tr><td class=\"text\">".trim($links)."</td></tr></table>");
 	}
 	$Cache->end_whole_row();
 	$Cache->cache_page();
@@ -776,12 +776,12 @@ if ($showtrackerload == "yes") {
 // ------------- end: links ------------------//
 // ------------- start: browser, client and code note ------------------//
 ?>
-<!--<div width="100%" class="main" border="0" cellspacing="0" cellpadding="0"><div><div class="embedded">
+<!--<table width="100%" class="main" border="0" cellspacing="0" cellpadding="0"><tr><td class="embedded">
 <div align="center"><br /><font class="medium"><?php echo $lang_index['text_browser_note'] ?></font></div>
-</div></div></div>-->
+</td></tr></table>-->
 
 <!--- ipv6
-<div width="100%" class="main" border="0" cellspacing="0" cellpadding="0"<div><div class="embedded">
+<table width="100%" class="main" border="0" cellspacing="0" cellpadding="0"<tr><td class="embedded">
 
 <div id="ipv6_enabled_www_test_logo" align="center"></div>
 <script language="JavaScript" type="text/javascript">
@@ -791,7 +791,7 @@ if ($showtrackerload == "yes") {
 "www.ipv6forum.com/ipv6_enabled/sa/SA.php?id=2162'
 type='text/javascript'%3E%3C/script%3E"))
 </script>
-</div></div></div>
+</td></tr></table>
  -->
 
 <?php

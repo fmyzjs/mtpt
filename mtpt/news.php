@@ -103,7 +103,7 @@ if ($action == 'edit')
 		print("<form id=\"compose\" name=\"compose\" method=\"post\" action=\"".htmlspecialchars("?action=edit&newsid=".$newsid)."\">");
 		print("<input type=\"hidden\" name=\"returnto\" value=\"".$returnto."\" />");
 		begin_compose($title, "edit", $body, true, $subject);
-		print("<div><div class=\"toolbox\" align=\"center\" colspan=\"2\"><input type=\"checkbox\" name=\"notify\" value=\"yes\" ".($arr['notify'] == 'yes' ? " checked=\"checked\"" : "")." />".$lang_news['text_notify_users_of_this']."</div></div>\n");
+		print("<tr><td class=\"toolbox\" align=\"center\" colspan=\"2\"><input type=\"checkbox\" name=\"notify\" value=\"yes\" ".($arr['notify'] == 'yes' ? " checked=\"checked\"" : "")." />".$lang_news['text_notify_users_of_this']."</td></tr>\n");
 		end_compose();
 		end_main_frame();
 		stdfoot();
@@ -119,7 +119,7 @@ begin_main_frame();
 $title = $lang_news['text_submit_news_item'];
 print("<form id=\"compose\" method=\"post\" name=\"compose\" action=\"?action=add\">\n");
 begin_compose($title, 'new');
-print("<div><div class=\"toolbox\" align=\"center\" colspan=\"2\"><input type=\"checkbox\" name=\"notify\" value=\"yes\" />".$lang_news['text_notify_users_of_this']."</div></div>\n");
+print("<tr><td class=\"toolbox\" align=\"center\" colspan=\"2\"><input type=\"checkbox\" name=\"notify\" value=\"yes\" />".$lang_news['text_notify_users_of_this']."</td></tr>\n");
 end_compose();
 print("</form>");
 end_main_frame();

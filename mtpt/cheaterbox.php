@@ -39,8 +39,8 @@ table.cheaterbox td
 <?php
 begin_main_frame();
 print("<h1 align=center>".$lang_cheaterbox['text_cheaterbox']."</h1>");
-print("<div class=cheaterbox border=1 cellspacing=0 cellpadding=5 align=center>\n");
-print("<div><div class=colhead><nobr>".$lang_cheaterbox['col_added']."</nobr></div><div class=colhead>".$lang_cheaterbox['col_suspect']."</div><div class=colhead><nobr>".$lang_cheaterbox['col_hit']."</nobr></div><div class=colhead>".$lang_cheaterbox['col_torrent']."</div><div class=colhead>".$lang_cheaterbox['col_ul']."</div><div class=colhead>".$lang_cheaterbox['col_dl']."</div><div class=colhead><nobr>".$lang_cheaterbox['col_ann_time']."</nobr></div><div class=colhead><nobr>".$lang_cheaterbox['col_seeders']."</nobr></div><div class=colhead><nobr>".$lang_cheaterbox['col_leechers']."</nobr></div><div class=colhead>".$lang_cheaterbox['col_comment']."</div><div class=colhead><nobr>".$lang_cheaterbox['col_dealt_with']."</nobr></div><div class=colhead><nobr>".$lang_cheaterbox['col_action']."</nobr></div></div>");
+print("<table class=cheaterbox border=1 cellspacing=0 cellpadding=5 align=center>\n");
+print("<tr><td class=colhead><nobr>".$lang_cheaterbox['col_added']."</nobr></td><td class=colhead>".$lang_cheaterbox['col_suspect']."</td><td class=colhead><nobr>".$lang_cheaterbox['col_hit']."</nobr></td><td class=colhead>".$lang_cheaterbox['col_torrent']."</td><td class=colhead>".$lang_cheaterbox['col_ul']."</td><td class=colhead>".$lang_cheaterbox['col_dl']."</td><td class=colhead><nobr>".$lang_cheaterbox['col_ann_time']."</nobr></td><td class=colhead><nobr>".$lang_cheaterbox['col_seeders']."</nobr></td><td class=colhead><nobr>".$lang_cheaterbox['col_leechers']."</nobr></td><td class=colhead>".$lang_cheaterbox['col_comment']."</td><td class=colhead><nobr>".$lang_cheaterbox['col_dealt_with']."</nobr></td><td class=colhead><nobr>".$lang_cheaterbox['col_action']."</nobr></td></tr>");
 
 print("<form method=post action=cheaterbox.php>");
 $cheatersres = sql_query("SELECT * FROM cheaters ORDER BY dealtwith ASC, id DESC $limit");
@@ -59,13 +59,13 @@ while ($row = mysql_fetch_array($cheatersres))
 	else
 		$dealtwith = "<font color=red>".$lang_cheaterbox['text_no']."</font>";
 
-	print("<div><div class=rowfollow>".gettime($row['added'])."</div><div class=rowfollow>" . get_username($row['userid']) . "</div><div class=rowfollow>" . $row['hit'] . "</div><div class=rowfollow>" . $torrent . "</div><div class=rowfollow>".mksize($row['uploaded']).($upspeed ? " @ ".mksize($upspeed)."/s" : "")."</div><div class=rowfollow>".mksize($row['downloaded']).($lespeed ? " @ ".mksize($lespeed)."/s" : "")."</div><div class=rowfollow>".$row['anctime']." sec"."</div><div class=rowfollow>".$row['seeders']."</div><div class=rowfollow>".$row['leechers']."</div><div class=rowfollow>".htmlspecialchars($row['comment'])."</div><div class=rowfollow>".$dealtwith."</div><div class=rowfollow><input type=\"checkbox\" name=\"delcheater[]\" value=\"" . $row[id] . "\" /></div></div>\n");
+	print("<tr><td class=rowfollow>".gettime($row['added'])."</td><td class=rowfollow>" . get_username($row['userid']) . "</td><td class=rowfollow>" . $row['hit'] . "</td><td class=rowfollow>" . $torrent . "</td><td class=rowfollow>".mksize($row['uploaded']).($upspeed ? " @ ".mksize($upspeed)."/s" : "")."</td><td class=rowfollow>".mksize($row['downloaded']).($lespeed ? " @ ".mksize($lespeed)."/s" : "")."</td><td class=rowfollow>".$row['anctime']." sec"."</td><td class=rowfollow>".$row['seeders']."</td><td class=rowfollow>".$row['leechers']."</td><td class=rowfollow>".htmlspecialchars($row['comment'])."</td><td class=rowfollow>".$dealtwith."</td><td class=rowfollow><input type=\"checkbox\" name=\"delcheater[]\" value=\"" . $row[id] . "\" /></td></tr>\n");
 }
 ?>
-<div><div class="colhead" colspan="12" style="text-align: right"><input type="submit" name="setdealt" value="<?php echo $lang_cheaterbox['submit_set_dealt']?>" /><input type="submit" name="delete" value="<?php echo $lang_cheaterbox['submit_delete']?>" /></div></div> 
+<tr><td class="colhead" colspan="12" style="text-align: right"><input type="submit" name="setdealt" value="<?php echo $lang_cheaterbox['submit_set_dealt']?>" /><input type="submit" name="delete" value="<?php echo $lang_cheaterbox['submit_delete']?>" /></td></tr> 
 </form>
 <?php
-print("</div>");
+print("</table>");
 print($pagerbottom);
 end_main_frame();
 stdfoot();

@@ -46,8 +46,8 @@ else {
 	print("<input type=\"hidden\" name=\"id\" value=\"$id\" />");
 	if (isset($_GET["returnto"]))
 	print("<input type=\"hidden\" name=\"returnto\" value=\"" . htmlspecialchars($_GET["returnto"]) . "\" />");
-	print("<div border=\"1\" cellspacing=\"0\" cellpadding=\"5\" width=\"940\">\n");
-	print("<div><div class='colhead' colspan='2' align='center'>".htmlspecialchars($row["name"])."</div></div>");
+	print("<table border=\"1\" cellspacing=\"0\" cellpadding=\"5\" width=\"940\">\n");
+	print("<tr><td class='colhead' colspan='2' align='center'>".htmlspecialchars($row["name"])."</td></tr>");
 	tr($lang_edit['row_torrent_name']."<font color=\"red\">*</font>", "<input type=\"text\" style=\"width: 650px;\" name=\"name\" value=\"" . htmlspecialchars($row["name"]) . "\" />", 1);
 	if ($smalldescription_main == 'yes')
 		tr($lang_edit['row_small_description'], "<input type=\"text\" style=\"width: 650px;\" name=\"small_descr\" value=\"" . htmlspecialchars($row["small_descr"]) . "\" />", 1);
@@ -59,9 +59,9 @@ else {
 		tr($lang_edit['row_nfo_file'], "<font class=\"medium\"><input type=\"radio\" name=\"nfoaction\" value=\"keep\" checked=\"checked\" />".$lang_edit['radio_keep_current'].
 	"<input type=\"radio\" name=\"nfoaction\" value=\"remove\" />".$lang_edit['radio_remove'].
 	"<input id=\"nfoupdate\" type=\"radio\" name=\"nfoaction\" value=\"update\" />".$lang_edit['radio_update']."</font><br /><input type=\"file\" name=\"nfo\" onchange=\"document.getElementById('nfoupdate').checked=true\" />", 1);
-	print("<div><div class=\"rowhead\">".$lang_edit['row_description']."<font color=\"red\">*</font></div><div class=\"rowfollow\">");
+	print("<tr><td class=\"rowhead\">".$lang_edit['row_description']."<font color=\"red\">*</font></td><td class=\"rowfollow\">");
 	textbbcode("edittorrent","descr",($row["descr"]), false);
-	print("</div></div>");
+	print("</td></tr>");
 ?>
 <?php
 	$s = "<select name=\"type\" id=\"oricat\" onchange=\"secondtype(this);\">";
@@ -154,23 +154,23 @@ else {
 		tr($lang_edit['row_pick'], $pickcontent, 1);
 	}
 
-	print("<div><div class=\"toolbox\" colspan=\"2\" align=\"center\"><input id=\"qr\" type=\"submit\" value=\"".$lang_edit['submit_edit_it']."\" /> <input type=\"reset\" value=\"".$lang_edit['submit_revert_changes']."\" /></div></div>\n");
-	print("</div>\n");
+	print("<tr><td class=\"toolbox\" colspan=\"2\" align=\"center\"><input id=\"qr\" type=\"submit\" value=\"".$lang_edit['submit_edit_it']."\" /> <input type=\"reset\" value=\"".$lang_edit['submit_revert_changes']."\" /></td></tr>\n");
+	print("</table>\n");
 	print("</form>\n");
 	print("<br /><br />");
 	print("<form method=\"post\" action=\"delete.php\">\n");
 	print("<input type=\"hidden\" name=\"id\" value=\"$id\" />\n");
 	if (isset($_GET["returnto"]))
 	print("<input type=\"hidden\" name=\"returnto\" value=\"" . htmlspecialchars($_GET["returnto"]) . "\" />\n");
-	print("<div border=\"1\" cellspacing=\"0\" cellpadding=\"5\">\n");
-	print("<div><div class=\"colhead\" align=\"left\" style='padding-bottom: 3px' colspan=\"2\">".$lang_edit['text_delete_torrent']."</div></div>");
+	print("<table border=\"1\" cellspacing=\"0\" cellpadding=\"5\">\n");
+	print("<tr><td class=\"colhead\" align=\"left\" style='padding-bottom: 3px' colspan=\"2\">".$lang_edit['text_delete_torrent']."</td></tr>");
 	tr("<input name=\"reasontype\" type=\"radio\" value=\"1\" />&nbsp;".$lang_edit['radio_dead'], $lang_edit['text_dead_note'], 1);
 	tr("<input name=\"reasontype\" type=\"radio\" value=\"2\" />&nbsp;".$lang_edit['radio_dupe'], "<input type=\"text\" style=\"width: 200px\" name=\"reason[]\" />", 1);
 	tr("<input name=\"reasontype\" type=\"radio\" value=\"3\" />&nbsp;".$lang_edit['radio_nuked'], "<input type=\"text\" style=\"width: 200px\" name=\"reason[]\" />", 1);
 	tr("<input name=\"reasontype\" type=\"radio\" value=\"4\" />&nbsp;".$lang_edit['radio_rules'], "<input type=\"text\" style=\"width: 200px\" name=\"reason[]\" />".$lang_edit['text_req'], 1);
 	tr("<input name=\"reasontype\" type=\"radio\" value=\"5\" checked=\"checked\" />&nbsp;".$lang_edit['radio_other'], "<input type=\"text\" style=\"width: 200px\" name=\"reason[]\" />".$lang_edit['text_req'], 1);
-	print("<div><div class=\"toolbox\" colspan=\"2\" align=\"center\"><input type=\"submit\" style='height: 25px' value=\"".$lang_edit['submit_delete_it']."\" /></div></div>\n");
-	print("</div>");
+	print("<tr><td class=\"toolbox\" colspan=\"2\" align=\"center\"><input type=\"submit\" style='height: 25px' value=\"".$lang_edit['submit_delete_it']."\" /></td></tr>\n");
+	print("</table>");
 ?>
 
 <script type="text/javascript">

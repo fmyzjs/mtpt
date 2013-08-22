@@ -127,7 +127,7 @@ else
 	}
 </script>
 <?
-	print("<div border='0' cellspacing='0' cellpadding='2' width='100%' align='left'>\n");
+	print("<table border='0' cellspacing='0' cellpadding='2' width='100%' align='left'>\n");
 	$i = 1;
 	while ($arr = mysql_fetch_assoc($res))
 	{
@@ -152,12 +152,12 @@ else
 		else $time = get_elapsed_time($arr["date"]).$lang_shoutbox['text_ago'];
 		$messtext = $arr["text"];
 		$messtext = str_replace($CURUSER['username'],"[color=Red]".$CURUSER['username']."[/color]",$messtext);  //将回复给自己的名字染红
-		print("<div><div class=\"shoutrow\"><span class='date'>[".$time."]</span> ".
+		print("<tr><td class=\"shoutrow\"><span class='date'>[".$time."]</span> ".
 $del ." <span onclick=\"retuser('".$arr2["username"]."');\" style=\"cursor:pointer;\">[@]</span> ". $username." " . format_comment($messtext,true,false,true,true,600,true,false)."
-</div></div>\n");
+</td></tr>\n");
 		$i++;
 	}
-	print("</div>");
+	print("</table>");
 }
 ?>
 </body>

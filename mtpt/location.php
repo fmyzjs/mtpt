@@ -85,20 +85,20 @@ if($editid > 0) {
 	$practical_downspeed = $row['practical_downspeed'];
 
 	echo("<form name='form1' method='get' action='" . $_SERVER['PHP_SELF'] . "'>");
-	echo("<input type='hidden' name='id' value='$editid'><div class=main cellspacing=0 cellpadding=5 width=50%>");
-	echo("<div><div class=colhead align=center colspan=2>Editing Locations</div><input type='hidden' name='edited' value='1'></div>");
-	echo("<div><div class=rowhead>Name:</div><div class=rowfollow align=left><input type='text' size=10 name='name' value='$name'></div></div>");
-	echo("<div><div class=rowhead><nobr>Main Location:</nobr></div><div class=rowfollow align=left><input type='text' size=50 name='location_main' value='$location_main'></div></div>");
-	echo("<div><div class=rowhead><nobr>Sub Location:</nobr></div><div class=rowfollow align=left><input type='text' size=50 name='location_sub' value='$location_sub'></div></div>");
-	echo("<div><div class=rowhead><nobr>Start IP:</nobr></div><div class=rowfollow align=left><input type='text' size=30 name='start_ip' value='" . $start_ip . "'></div></div>");
-	echo("<div><div class=rowhead><nobr>End IP:</nobr></div><div class=rowfollow align=left><input type='text' size=30 name='end_ip' value='" . $end_ip. "'></div></div>");
-	echo("<div><div class=rowhead><nobr>Theory Up:</nobr></div><div class=rowfollow align=left><input type='text' size=10 name='theory_upspeed' value='$theory_upspeed'></div></div>");
-	echo("<div><div class=rowhead><nobr>Theory Down:</nobr></div><div class=rowfollow align=left><input type='text' size=10 name='theory_downspeed' value='$theory_downspeed'></div></div>");
-	echo("<div><div class=rowhead><nobr>Practical Up:</nobr></div><div class=rowfollow align=left><input type='text' size=10 name='practical_upspeed' value='$practical_upspeed'></div></div>");
-	echo("<div><div class=rowhead><nobr>Practical Down:</nobr></div><div class=rowfollow align=left><input type='text' size=10 name='practical_downspeed' value='$practical_downspeed'></div></div>");
-	echo("<div><div class=rowhead>Picture:</div><div class=rowfollow align=left><input type='text' size=50 name='flagpic' value='$flagpic'></div></div>");
-	echo("<div><div class=toolbox align=center colspan=2><input class=btn type='Submit'></div></div>");
-	echo("</div></form>");
+	echo("<input type='hidden' name='id' value='$editid'><table class=main cellspacing=0 cellpadding=5 width=50%>");
+	echo("<tr><td class=colhead align=center colspan=2>Editing Locations</td><input type='hidden' name='edited' value='1'></tr>");
+	echo("<tr><td class=rowhead>Name:</td><td class=rowfollow align=left><input type='text' size=10 name='name' value='$name'></td></tr>");
+	echo("<tr><td class=rowhead><nobr>Main Location:</nobr></td><td class=rowfollow align=left><input type='text' size=50 name='location_main' value='$location_main'></td></tr>");
+	echo("<tr><td class=rowhead><nobr>Sub Location:</nobr></td><td class=rowfollow align=left><input type='text' size=50 name='location_sub' value='$location_sub'></td></tr>");
+	echo("<tr><td class=rowhead><nobr>Start IP:</nobr></td><td class=rowfollow align=left><input type='text' size=30 name='start_ip' value='" . $start_ip . "'></td></tr>");
+	echo("<tr><td class=rowhead><nobr>End IP:</nobr></td><td class=rowfollow align=left><input type='text' size=30 name='end_ip' value='" . $end_ip. "'></td></tr>");
+	echo("<tr><td class=rowhead><nobr>Theory Up:</nobr></td><td class=rowfollow align=left><input type='text' size=10 name='theory_upspeed' value='$theory_upspeed'></td></tr>");
+	echo("<tr><td class=rowhead><nobr>Theory Down:</nobr></td><td class=rowfollow align=left><input type='text' size=10 name='theory_downspeed' value='$theory_downspeed'></td></tr>");
+	echo("<tr><td class=rowhead><nobr>Practical Up:</nobr></td><td class=rowfollow align=left><input type='text' size=10 name='practical_upspeed' value='$practical_upspeed'></td></tr>");
+	echo("<tr><td class=rowhead><nobr>Practical Down:</nobr></td><td class=rowfollow align=left><input type='text' size=10 name='practical_downspeed' value='$practical_downspeed'></td></tr>");
+	echo("<tr><td class=rowhead>Picture:</td><td class=rowfollow align=left><input type='text' size=50 name='flagpic' value='$flagpic'></td></tr>");
+	echo("<tr><td class=toolbox align=center colspan=2><input class=btn type='Submit'></td></tr>");
+	echo("</table></form>");
 	end_frame();
 	stdfoot();
 	die();
@@ -139,32 +139,32 @@ if($add == 'true') {
 }
 
 echo("<form name='form1' method='get' action='" . $_SERVER['PHP_SELF'] . "'>");
-echo("<div class=main cellspacing=0 cellpadding=5 width=48% align= left>");
-echo("<div><div class=colhead align=center colspan=2>".$lang_location['text_addnew']."</div></div>");
-echo("<div><div class=rowhead>".$lang_location['text_name']."</div><div class=rowfollow align=left><input type='text' size=10 name='name'></div></div>");
-echo("<div><div class=rowhead><nobr>".$lang_location['text_main_location']."</nobr></div><div class=rowfollow align=left><input type='text' size=50 name='location_main'></div></div>");
-echo("<div><div class=rowhead><nobr>".$lang_location['text_sub_location']."</nobr></div><div class=rowfollow align=left><input type='text' size=50 name='location_sub'></div></div>");
-echo("<div><div class=rowhead><nobr>".$lang_location['text_firstip']."</nobr></div><div class=rowfollow align=left><input type='text' size=30 name='start_ip'></div></div>");
-echo("<div><div class=rowhead><nobr>".$lang_location['text_lastip']."</nobr></div><div class=rowfollow align=left><input type='text' size=30 name='end_ip'></div></div>");
-echo("<div><div class=rowhead><nobr>".$lang_location['text_theory_up']."</nobr></div><div class=rowfollow align=left><input type='text' size=10 name='theory_upspeed'></div></div>");
-echo("<div><div class=rowhead><nobr>".$lang_location['text_theory_down']."</nobr></div><div class=rowfollow align=left><input type='text' size=10 name='theory_downspeed'></div></div>");
-echo("<div><div class=rowhead><nobr>".$lang_location['text_practical_up']."</nobr></div><div class=rowfollow align=left><input type='text' size=10 name='practical_upspeed'></div></div>");
-echo("<div><div class=rowhead><nobr>".$lang_location['text_practical_down']."</nobr></div><div class=rowfollow align=left><input type='text' size=10 name='practical_downspeed'></div></div>");
-echo("<div><div class=rowhead>".$lang_location['text_picture']."</div><div class=rowfollow align=left><input type='text' size=50 name='flagpic'><input type='hidden' name='add' value='true'></div></div>");
-echo("<div><div class=toolbox align=center colspan=2><input class=btn type='Submit'></div></div>");
-echo("</div>");
+echo("<table class=main cellspacing=0 cellpadding=5 width=48% align= left>");
+echo("<tr><td class=colhead align=center colspan=2>".$lang_location['text_addnew']."</td></tr>");
+echo("<tr><td class=rowhead>".$lang_location['text_name']."</td><td class=rowfollow align=left><input type='text' size=10 name='name'></td></tr>");
+echo("<tr><td class=rowhead><nobr>".$lang_location['text_main_location']."</nobr></td><td class=rowfollow align=left><input type='text' size=50 name='location_main'></td></tr>");
+echo("<tr><td class=rowhead><nobr>".$lang_location['text_sub_location']."</nobr></td><td class=rowfollow align=left><input type='text' size=50 name='location_sub'></td></tr>");
+echo("<tr><td class=rowhead><nobr>".$lang_location['text_firstip']."</nobr></td><td class=rowfollow align=left><input type='text' size=30 name='start_ip'></td></tr>");
+echo("<tr><td class=rowhead><nobr>".$lang_location['text_lastip']."</nobr></td><td class=rowfollow align=left><input type='text' size=30 name='end_ip'></td></tr>");
+echo("<tr><td class=rowhead><nobr>".$lang_location['text_theory_up']."</nobr></td><td class=rowfollow align=left><input type='text' size=10 name='theory_upspeed'></td></tr>");
+echo("<tr><td class=rowhead><nobr>".$lang_location['text_theory_down']."</nobr></td><td class=rowfollow align=left><input type='text' size=10 name='theory_downspeed'></td></tr>");
+echo("<tr><td class=rowhead><nobr>".$lang_location['text_practical_up']."</nobr></td><td class=rowfollow align=left><input type='text' size=10 name='practical_upspeed'></td></tr>");
+echo("<tr><td class=rowhead><nobr>".$lang_location['text_practical_down']."</nobr></td><td class=rowfollow align=left><input type='text' size=10 name='practical_downspeed'></td></tr>");
+echo("<tr><td class=rowhead>".$lang_location['text_picture']."</td><td class=rowfollow align=left><input type='text' size=50 name='flagpic'><input type='hidden' name='add' value='true'></td></tr>");
+echo("<tr><td class=toolbox align=center colspan=2><input class=btn type='Submit'></td></tr>");
+echo("</table>");
 echo("</form>");
 
 $range_start_ip = $_GET['range_start_ip'];
 $range_end_ip = $_GET['range_end_ip'];
 
 echo("<form name='form2' method='get' action='" . $_SERVER['PHP_SELF'] . "'>");
-echo("<div class=main cellspacing=0 cellpadding=5 width=48% align=right>");
-echo("<div><div class=colhead align=center colspan=2>".$lang_location['text_check_ip']."</div></div>");
-echo("<div><div class=rowhead><nobr>".$lang_location['text_firstip']."</nobr></div><div class=rowfollow align=left><input type='text' size=30 name='range_start_ip' value='" . $range_start_ip . "'></div></div>");
-echo("<div><div class=rowhead><nobr>".$lang_location['text_lastip']."</nobr></div><div class=rowfollow align=left><input type='text' size=30 name='range_end_ip' value='" . $range_end_ip . "'><input type='hidden' name='check_range' value='true'></div></div>");
-echo("<div><div class=toolbox align=center colspan=2><input class=btn type='Submit'></div></div>");
-echo("</div>");
+echo("<table class=main cellspacing=0 cellpadding=5 width=48% align=right>");
+echo("<tr><td class=colhead align=center colspan=2>".$lang_location['text_check_ip']."</td></tr>");
+echo("<tr><td class=rowhead><nobr>".$lang_location['text_firstip']."</nobr></td><td class=rowfollow align=left><input type='text' size=30 name='range_start_ip' value='" . $range_start_ip . "'></td></tr>");
+echo("<tr><td class=rowhead><nobr>".$lang_location['text_lastip']."</nobr></td><td class=rowfollow align=left><input type='text' size=30 name='range_end_ip' value='" . $range_end_ip . "'><input type='hidden' name='check_range' value='true'></td></tr>");
+echo("<tr><td class=toolbox align=center colspan=2><input class=btn type='Submit'></td></tr>");
+echo("</table>");
 echo("</form>");
 ///////////////////// E X I S T I N G C A T E G O R I E S \\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -194,8 +194,8 @@ else
 {
 	echo("<p><strong>" .  ($success == true ? "(Updated!)" : "") . $lang_location['text_existing']."</strong></p>");
 }
-echo("<div class=main cellspacing=0 cellpadding=5>");
-echo("<div class=colhead align=center><b>".$lang_location['text_id']."</b></div> <div class=colhead align=left><b>".$lang_location['text_name']."</b></div> <div class=colhead align=center><b>".$lang_location['text_picture']."</b></div> <div class=colhead align=center><b><nobr>".$lang_location['text_main_location']."</nobr></b></div> <div class=colhead align=center><b><nobr>".$lang_location['text_sub_location']."</nobr></b></div> <div class=colhead align=center><b>".$lang_location['text_firstip']."</b></div> <div class=colhead align=center><b>".$lang_location['text_lastip']."</b></div> <div class=colhead align=center><b>".$lang_location['text_theory_up']."</b></div> <div class=colhead align=center><b>".$lang_location['text_practical_up']."</b></div>  <div class=colhead align=center><b>".$lang_location['text_theory_down']."</b></div> <div class=colhead align=center><b>".$lang_location['text_practical_down']."</b></div> <div class=colhead align=center><b>".$lang_location['text_edit']."</b></div><div class=colhead align=center><b>".$lang_location['text_delete']."</b></div>");
+echo("<table class=main cellspacing=0 cellpadding=5>");
+echo("<td class=colhead align=center><b>".$lang_location['text_id']."</b></td> <td class=colhead align=left><b>".$lang_location['text_name']."</b></td> <td class=colhead align=center><b>".$lang_location['text_picture']."</b></td> <td class=colhead align=center><b><nobr>".$lang_location['text_main_location']."</nobr></b></td> <td class=colhead align=center><b><nobr>".$lang_location['text_sub_location']."</nobr></b></td> <td class=colhead align=center><b>".$lang_location['text_firstip']."</b></td> <td class=colhead align=center><b>".$lang_location['text_lastip']."</b></td> <td class=colhead align=center><b>".$lang_location['text_theory_up']."</b></td> <td class=colhead align=center><b>".$lang_location['text_practical_up']."</b></td>  <td class=colhead align=center><b>".$lang_location['text_theory_down']."</b></td> <td class=colhead align=center><b>".$lang_location['text_practical_down']."</b></td> <td class=colhead align=center><b>".$lang_location['text_edit']."</b></td><td class=colhead align=center><b>".$lang_location['text_delete']."</b></td>");
 
 $res = sql_query("SELECT COUNT(*) FROM locations ".$wherea);
 $row = mysql_fetch_array($res);
@@ -223,22 +223,22 @@ while ($row = mysql_fetch_array($sql)) {
 	if($count_location_sub > $maxlen_sub_location)
 		$location_sub=substr($location_sub, 0, $maxlen_sub_location) . "..";
 	
-	echo("<div><div class=rowfollow align=center><strong>$id</strong></div>" .
-	"<div class=rowfollow align=left><strong>$name</strong></div>" .
-	"<div class=rowfollow align=center>" . ($flagpic != "" ? "<img src='" . get_protocol_prefix() . "$BASEURL/pic/location/$flagpic' border='0' />" : "-") . "</div>" .
-	"<div class=rowfollow align=left>$location_main</div>" .
-	"<div class=rowfollow align=left>$location_sub</div>" .
-	"<div class=rowfollow align=left>" . $start_ip . "</div>" .
-	"<div class=rowfollow align=left>" . $end_ip . "</div>" .
-	"<div class=rowfollow align=left>$theory_upspeed</div>" .
-	"<div class=rowfollow align=left>$practical_upspeed</div>" .
-	"<div class=rowfollow align=left>$theory_downspeed</div>" .
-	"<div class=rowfollow align=left>$practical_downspeed</div>" .
-	"<div class=rowfollow align=center><a href='" . $_SERVER['PHP_SELF'] . "?editid=$id'>".$lang_location['text_edit']."</a></div>".
-	"<div class=rowfollow align=center><a href='" . $_SERVER['PHP_SELF'] . "?delid=$id'>".$lang_location['text_delete']."</a></div>" .
-	"</div>");
+	echo("<tr><td class=rowfollow align=center><strong>$id</strong></td>" .
+	"<td class=rowfollow align=left><strong>$name</strong></td>" .
+	"<td class=rowfollow align=center>" . ($flagpic != "" ? "<img src='" . get_protocol_prefix() . "$BASEURL/pic/location/$flagpic' border='0' />" : "-") . "</td>" .
+	"<td class=rowfollow align=left>$location_main</td>" .
+	"<td class=rowfollow align=left>$location_sub</td>" .
+	"<td class=rowfollow align=left>" . $start_ip . "</td>" .
+	"<td class=rowfollow align=left>" . $end_ip . "</td>" .
+	"<td class=rowfollow align=left>$theory_upspeed</td>" .
+	"<td class=rowfollow align=left>$practical_upspeed</td>" .
+	"<td class=rowfollow align=left>$theory_downspeed</td>" .
+	"<td class=rowfollow align=left>$practical_downspeed</td>" .
+	"<td class=rowfollow align=center><a href='" . $_SERVER['PHP_SELF'] . "?editid=$id'>".$lang_location['text_edit']."</a></td>".
+	"<td class=rowfollow align=center><a href='" . $_SERVER['PHP_SELF'] . "?delid=$id'>".$lang_location['text_delete']."</a></td>" .
+	"</tr>");
 }
-print("</div>");
+print("</table>");
 echo $pagerbottom;
 
 end_frame();

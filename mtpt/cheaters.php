@@ -24,32 +24,32 @@ if (!is_valid_id($ratio) && $ratio>=1 && $ratio<=7) $ratio = '';
 echo '<center><form method="get" action="'.$_SERVER["PHP_SELF"].'">';
 begin_table();
 
-echo '<div><th colspan="4">'.$lang_cheaters['text_important'].'</th></div><div><div colspan="4" class="left">';
+echo '<tr><th colspan="4">'.$lang_cheaters['text_important'].'</th></tr><tr><td colspan="4" class="left">';
 echo $lang_cheaters[text_note1].'<br />';
 echo $lang_cheaters[text_note2].'<br />';
 echo $lang_cheaters[text_note3].'<br />';
 echo $lang_cheaters[text_note4].'<br />';
 echo $lang_cheaters[text_note5];
-echo '</div></div>';
-echo '<div><th>'.$lang_cheaters[text_class].'</th>';
-echo '<div><select name="c"><option value="1">(any)</option>';
+echo '</td></tr>';
+echo '<tr><th>'.$lang_cheaters[text_class].'</th>';
+echo '<td><select name="c"><option value="1">(any)</option>';
 for ($i = 2; ;++$i)
 {
   if ($c = get_user_class_name($i-2)) echo '<option value="'.$i.'"'.($class == $i? ' selected' : '').">&lt;= $c</option>\n";
   else break;
 }
-echo '</select></div>';
+echo '</select></td>';
 
 echo '<th>'.$lang_cheaters[text_ratio].'</th>';
-echo '<div><select name="r"><option value="1"'.($ratio == 1?' selected' : '').'>(any)</option>';
+echo '<td><select name="r"><option value="1"'.($ratio == 1?' selected' : '').'>(any)</option>';
 echo '<option value="2"'.($ratio == 2?' selected' : '').'>&gt;= 1.000</option>';
 echo '<option value="3"'.($ratio == 3?' selected' : '').'>&gt;= 2.000</option>';
 echo '<option value="4"'.($ratio == 4?' selected' : '').'>&gt;= 3.000</option>';
 echo '<option value="5"'.($ratio == 5?' selected' : '').'>&gt;= 4.000</option>';
 echo '<option value="6"'.($ratio == 6?' selected' : '').'>&gt;= 5.000</option>';
-echo '</select></div>';
+echo '</select></td>';
 
-echo '</div><div><div colspan="4"><input name="submit" type="submit"></div></div>';
+echo '</tr><tr><td colspan="4"><input name="submit" type="submit"></td></tr>';
 end_table();
 echo '</form>';
 
@@ -72,7 +72,7 @@ list($pagertop, $pagerbottom, $limit) = pager(20, $top, "cheaters.php?");
 
 echo $pagertop;
 begin_table();
-print("<div><th class=\"left\">".$lang_cheaters[text_username]."</th><th>".$lang_cheaters[text_registered]."</th><th>".$lang_cheaters[text_uploaded]."</th><th>".$lang_cheaters[text_downloaded]."</th><th>".$lang_cheaters[text_ratio]."</th><th>".$lang_cheaters[text_cheat_value]."</th><th>".$lang_cheaters[text_cheat_spread]."</th></div>\n");
+print("<tr><th class=\"left\">".$lang_cheaters[text_username]."</th><th>".$lang_cheaters[text_registered]."</th><th>".$lang_cheaters[text_uploaded]."</th><th>".$lang_cheaters[text_downloaded]."</th><th>".$lang_cheaters[text_ratio]."</th><th>".$lang_cheaters[text_cheat_value]."</th><th>".$lang_cheaters[text_cheat_spread]."</th></tr>\n");
 
 $res = sql_query("SELECT * FROM users $query ORDER BY cheat DESC $limit") or sqlerr();
 while ($arr = mysql_fetch_assoc($res))
@@ -89,13 +89,13 @@ while ($arr = mysql_fetch_assoc($res))
     else $ratio = "---";
   }
   if ($arr['added'] == '0000-00-00 00:00:00') $arr['added'] = '-';
-  echo '<div><th class="left"><a href="userdetails.php?id='.$arr['id'].'"><b>'.$arr['username'].'</b></a></th>';
-  echo '<div>'.$joindate.'</div>';
-  echo '<div class="right">'.mksize($arr['uploaded']).' @ '.mksize($arr['uploaded'] / $age).'ps</div>';
-  echo '<div class="right">'.mksize($arr['downloaded']).' @ '.mksize($arr['downloaded'] / $age).'ps</div>';
-  echo '<div>'.$ratio.'</div>';
-  echo '<div>'.$arr['cheat'].'</div>';
-  echo '<div class="right">'.ceil(($arr['cheat'] - $min) / max(1, ($max - $min)) * 100).'%</div></div>'."\n";
+  echo '<tr><th class="left"><a href="userdetails.php?id='.$arr['id'].'"><b>'.$arr['username'].'</b></a></th>';
+  echo '<td>'.$joindate.'</td>';
+  echo '<td class="right">'.mksize($arr['uploaded']).' @ '.mksize($arr['uploaded'] / $age).'ps</td>';
+  echo '<td class="right">'.mksize($arr['downloaded']).' @ '.mksize($arr['downloaded'] / $age).'ps</td>';
+  echo '<td>'.$ratio.'</td>';
+  echo '<td>'.$arr['cheat'].'</td>';
+  echo '<td class="right">'.ceil(($arr['cheat'] - $min) / max(1, ($max - $min)) * 100).'%</td></tr>'."\n";
 }
 end_table();
 echo $pagerbottom;

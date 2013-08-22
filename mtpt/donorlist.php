@@ -19,13 +19,13 @@ if (get_user_class() > UC_MODERATOR) {
 	echo $pagerbottom;
 ?>
 <form method="post">
-<div><div class="colhead">ID</div><div class="colhead" align="left">Username</div><div class="colhead" align="left">e-mail</div><div class="colhead" align="left">Joined</div><div class="colhead" align="left">How much?</div></div>
+<tr><td class="colhead">ID</td><td class="colhead" align="left">Username</td><td class="colhead" align="left">e-mail</td><td class="colhead" align="left">Joined</td><td class="colhead" align="left">How much?</td></tr>
 <?php
 
 $res=sql_query("SELECT id,username,email,added,donated FROM users WHERE donor='yes' ORDER BY id DESC $limit") or print(mysql_error());
 // ------------------
 while ($arr = @mysql_fetch_assoc($res)) {
-	echo "<div><div>" . $arr[id] . "</div><div align=\"left\">" . get_username($arr[id]) . "</div><div align=\"left\"><a href=mailto:" . $arr[email] . ">" . $arr[email] . "</a></div><div align=\"left\">" . $arr[added] . "</a></div><div align=\"left\">$" . $arr[donated] . "</div></div>";
+	echo "<tr><td>" . $arr[id] . "</td><td align=\"left\">" . get_username($arr[id]) . "</td><td align=\"left\"><a href=mailto:" . $arr[email] . ">" . $arr[email] . "</a></td><td align=\"left\">" . $arr[added] . "</a></td><td align=\"left\">$" . $arr[donated] . "</td></tr>";
 }
 ?>
 

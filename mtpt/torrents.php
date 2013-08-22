@@ -864,66 +864,66 @@ if (isset($searchstr))
 elseif ($sectiontype == $browsecatmode)
 	stdhead($lang_torrents['head_torrents']);
 else stdhead($lang_torrents['head_music']);
-print("<div width=\"940\" class=\"main\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"><div><div class=\"embedded\">");
+print("<table width=\"940\" class=\"main\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"><tr><td class=\"embedded\">");
 if ($allsec != 1 || $enablespecial != 'yes'){ //do not print searchbox if showing bookmarked torrents from all sections;
 ?>
 <form method="get" name="searchbox" action="?">
-	<div border="1" class="searchbox" cellspacing="0" cellpadding="5" width="100%">
+	<table border="1" class="searchbox" cellspacing="0" cellpadding="5" width="100%">
 		<tbody>
-		<div>
-		<div class="colhead" align="center" colspan="2"><a href="javascript: klappe_news('searchboxmain')"><img class="minus" src="pic/trans.gif" id="picsearchboxmain" alt="Show/Hide" /><?php echo $lang_torrents['text_search_box'] ?></a></div>
-		</div></tbody>
+		<tr>
+		<td class="colhead" align="center" colspan="2"><a href="javascript: klappe_news('searchboxmain')"><img class="minus" src="pic/trans.gif" id="picsearchboxmain" alt="Show/Hide" /><?php echo $lang_torrents['text_search_box'] ?></a></td>
+		</tr></tbody>
 		<tbody id="ksearchboxmain">
-		<div>
-			<div class="rowfollow" align="left">
-				<div>
+		<tr>
+			<td class="rowfollow" align="left">
+				<table>
 					<?php
 						function printcat($name, $listarray, $cbname, $wherelistina, $btname, $showimg = false)
 						{
 							global $catpadding,$catsperrow,$lang_torrents,$CURUSER,$CURLANGDIR,$catimgurl;
 
-							print("<div><div class=\"embedded\" colspan=\"".$catsperrow."\" align=\"left\"><b>".$name."</b></div></div><div>");
+							print("<tr><td class=\"embedded\" colspan=\"".$catsperrow."\" align=\"left\"><b>".$name."</b></td></tr><tr>");
 							$i = 0;
 							foreach($listarray as $list){
 								if ($i && $i % $catsperrow == 0){
-									print("</div><div>");
+									print("</tr><tr>");
 								}
-								print("<div align=\"left\" class=\"bottom\" style=\"padding-bottom: 4px; padding-left: ".$catpadding."px;\">".($showimg ? return_category_image($list[id], "?") : "<a title=\"" .$list[name] . "\" href=\"?".$cbname."=".$list[id]."\">".$list[name]."</a>")."</div>\n");
-								//print("<div align=\"left\" class=\"bottom\" style=\"padding-bottom: 4px; padding-left: ".$catpadding."px;\"><input type=\"checkbox\" id=\"".$cbname.$list[id]."\" name=\"".$cbname.$list[id]."\"" . (in_array($list[id],$wherelistina) ? " checked=\"checked\"" : "") . " value=\"1\" />".($showimg ? return_category_image($list[id], "?") : "<a title=\"" .$list[name] . "\" href=\"?".$cbname."=".$list[id]."\">".$list[name]."</a>")."</div>\n");
+								print("<td align=\"left\" class=\"bottom\" style=\"padding-bottom: 4px; padding-left: ".$catpadding."px;\">".($showimg ? return_category_image($list[id], "?") : "<a title=\"" .$list[name] . "\" href=\"?".$cbname."=".$list[id]."\">".$list[name]."</a>")."</td>\n");
+								//print("<td align=\"left\" class=\"bottom\" style=\"padding-bottom: 4px; padding-left: ".$catpadding."px;\"><input type=\"checkbox\" id=\"".$cbname.$list[id]."\" name=\"".$cbname.$list[id]."\"" . (in_array($list[id],$wherelistina) ? " checked=\"checked\"" : "") . " value=\"1\" />".($showimg ? return_category_image($list[id], "?") : "<a title=\"" .$list[name] . "\" href=\"?".$cbname."=".$list[id]."\">".$list[name]."</a>")."</td>\n");
 								$i++;
 							}
 							//$checker = "<input name=\"".$btname."\" value='" .  $lang_torrents['input_check_all'] . "' class=\"btn medium\" type=\"button\" onclick=\"javascript:SetChecked('".$cbname."','".$btname."','". $lang_torrents['input_check_all'] ."','" . $lang_torrents['input_uncheck_all'] . "',-1,10)\" />";
-							//print("<div colspan=\"2\" class=\"bottom\" align=\"left\" style=\"padding-left: 15px\">".$checker."</div>\n");
-							print("</div>");
+							//print("<td colspan=\"2\" class=\"bottom\" align=\"left\" style=\"padding-left: 15px\">".$checker."</td>\n");
+							print("</tr>");
 						}
 						function printcatone($name, $listarray, $cbname, $wherelistina, $btname, $showimg = false)
                                                 {
                                                         global $catpadding,$catsperrow,$lang_torrents,$CURUSER,$CURLANGDIR,$catimgurl;
 
-                                                        //print("<div><div class=\"embedded\" colspan=\"".$catsperrow."\" align=\"left\"><b>".$name."</b></div></div><div bgcolor=#00AA55>");
-                                                        print("<div bgcolor=#009955>");
+                                                        //print("<tr><td class=\"embedded\" colspan=\"".$catsperrow."\" align=\"left\"><b>".$name."</b></td></tr><tr bgcolor=#00AA55>");
+                                                        print("<tr bgcolor=#009955>");
 							$i = 0;
                                                         foreach($listarray as $list){
                                                                 if ($i && $i % $catsperrow == 0){
-                                                                        print("</div><div>");
+                                                                        print("</tr><tr>");
                                                                 }
-                                                                print("<div align=\"left\" class=\"bottom\" style=\"padding-bottom: 4px; padding-left: ".$catpadding."px;\">".($showimg ? return_category_image($list[id], "?") : "&nbsp<a title=\"" .$list[name] . "\" href=\"?".$cbname."=".$list[id]."\"><b>".$list[name]."</b></a>&nbsp")."</div>\n");
+                                                                print("<td align=\"left\" class=\"bottom\" style=\"padding-bottom: 4px; padding-left: ".$catpadding."px;\">".($showimg ? return_category_image($list[id], "?") : "&nbsp<a title=\"" .$list[name] . "\" href=\"?".$cbname."=".$list[id]."\"><b>".$list[name]."</b></a>&nbsp")."</td>\n");
                                                                 $i++;
                                                         }
-                                                        print("</div>");
+                                                        print("</tr>");
                                                 }
 					printcat($lang_torrents['text_category'],$cats,"cat",$wherecatina,"cat_check",true);
 
 					if ($showsubcat){
 						if ($showsource && $sourcelid != 0){
 ?>
-</tbody></div>
-<div border="1" class="searchbox" cellspacing="0" cellpadding="5" align="center"><tbody>
+</tbody></table>
+<table border="1" class="searchbox" cellspacing="0" cellpadding="5" align="center"><tbody>
 <?php
 							printcatone($lang_torrents['text_source'], $sources, "cat=".$sourcelid."&source", $wheresourceina, "source_check");
 ?>
-</tbody></div>
-<div border="1" class="searchbox" cellspacing="0" cellpadding="5" width="100%"><tbody>
+</tbody></table>
+<table border="1" class="searchbox" cellspacing="0" cellpadding="5" width="100%"><tbody>
 <?php
 }
 						if ($showmedium)
@@ -940,88 +940,88 @@ if ($allsec != 1 || $enablespecial != 'yes'){ //do not print searchbox if showin
 							printcat($lang_torrents['text_team'], $teams, "team", $whereteamina, "team_check");
 					}
 					?>
-				</div>
-			</div>
+				</table>
+			</td>
 			
-			<div class="rowfollow" valign="middle">
-				<div>
-					<div>
-						<div class="bottom" style="padding: 1px;padding-left: 10px">
+			<td class="rowfollow" valign="middle">
+				<table>
+					<tr>
+						<td class="bottom" style="padding: 1px;padding-left: 10px">
 							<font class="medium"><?php echo $lang_torrents['text_show_dead_active'] ?></font>
-						</div>
-				 	</div>				
-					<div>
-						<div class="bottom" style="padding: 1px;padding-left: 10px">
+						</td>
+				 	</tr>				
+					<tr>
+						<td class="bottom" style="padding: 1px;padding-left: 10px">
 							<select class="med" name="incldead" style="width: 100px;">
 								<option value="0"><?php echo $lang_torrents['select_including_dead'] ?></option>
 								<option value="1"<?php print($include_dead == 1 ? " selected=\"selected\"" : ""); ?>><?php echo $lang_torrents['select_active'] ?> </option>
 								<option value="2"<?php print($include_dead == 2 ? " selected=\"selected\"" : ""); ?>><?php echo $lang_torrents['select_dead'] ?></option>
 							</select>
-						</div>
-				 	</div>
-				 	<div>
-						<div class="bottom" style="padding: 1px;padding-left: 10px">
+						</td>
+				 	</tr>
+				 	<tr>
+						<td class="bottom" style="padding: 1px;padding-left: 10px">
 							<br />
-						</div>
-				 	</div>
-					<div>
-						<div class="bottom" style="padding: 1px;padding-left: 10px">
+						</td>
+				 	</tr>
+					<tr>
+						<td class="bottom" style="padding: 1px;padding-left: 10px">
 							<font class="medium"><?php echo $lang_torrents['text_show_special_torrents'] ?></font>
-						</div>
-				 	</div>
-				 	<div>
-						<div class="bottom" style="padding: 1px;padding-left: 10px">
+						</td>
+				 	</tr>
+				 	<tr>
+						<td class="bottom" style="padding: 1px;padding-left: 10px">
 							<select class="med" name="spstate" style="width: 100px;">
 								<option value="0"><?php echo $lang_torrents['select_all'] ?></option>
 <?php echo promotion_selection($special_state, 0)?>
 							</select>
-						</div>
-					</div>
-				 	<div>
-						<div class="bottom" style="padding: 1px;padding-left: 10px">
+						</td>
+					</tr>
+				 	<tr>
+						<td class="bottom" style="padding: 1px;padding-left: 10px">
 							<br />
-						</div>
-					</div>
-					<div>
-						<div class="bottom" style="padding: 1px;padding-left: 10px">
+						</td>
+					</tr>
+					<tr>
+						<td class="bottom" style="padding: 1px;padding-left: 10px">
 							<font class="medium"><?php echo $lang_torrents['text_show_bookmarked'] ?></font>
-						</div>
-				 	</div>
-				 	<div>
-						<div class="bottom" style="padding: 1px;padding-left: 10px">
+						</td>
+				 	</tr>
+				 	<tr>
+						<td class="bottom" style="padding: 1px;padding-left: 10px">
 							<select class="med" name="inclbookmarked" style="width: 100px;">
 								<option value="0"><?php echo $lang_torrents['select_all'] ?></option>
 								<option value="1"<?php print($inclbookmarked == 1 ? " selected=\"selected\"" : ""); ?>><?php echo $lang_torrents['select_bookmarked'] ?></option>
 								<option value="2"<?php print($inclbookmarked == 2 ? " selected=\"selected\"" : ""); ?>><?php echo $lang_torrents['select_bookmarked_exclude'] ?></option>
 							</select>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
 		</tbody>
 		<tbody>
-		<div>
-			<div class="rowfollow" align="center">
-				<div>
-					<div>
-						<div class="embedded">
+		<tr>
+			<td class="rowfollow" align="center">
+				<table>
+					<tr>
+						<td class="embedded">
 							<?php echo $lang_torrents['text_search'] ?>&nbsp;&nbsp;
-						</div>
-						<div class="embedded">
-							<div>
-								<div>
-									<div class="embedded">
+						</td>
+						<td class="embedded">
+							<table>
+								<tr>
+									<td class="embedded">
 										<input id="searchinput" name="search" type="text" value="<?php echo  $searchstr_ori ?>" autocomplete="off" style="width: 200px" ondblclick="suggest(event.keyCode,this.value);" onkeyup="suggest(event.keyCode,this.value);" onkeypress="return noenter(event.keyCode);"/>
 										<script src="suggest.js" type="text/javascript"></script>
 										<div id="suggcontainer" style="text-align: left; width:100px;  display: none;">
 											<div id="suggestions" style="width:204px; border: 1px solid rgb(119, 119, 119); cursor: default; position: absolute; color: rgb(0,0,0); background-color: rgb(255, 255, 255);"></div>
 										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="embedded">
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td class="embedded">
 							<?php echo "&nbsp;" . $lang_torrents['text_in'] ?>
 
 							<select name="search_area">
@@ -1047,8 +1047,8 @@ if ($allsec != 1 || $enablespecial != 'yes'){ //do not print searchbox if showin
 							</select>
 							
 							<?php echo $lang_torrents['text_mode'] ?>
-						</div>
-					</div>
+						</td>
+					</tr>
 <?php
 $Cache->new_page('hot_search', 3670, true);
 if (!$Cache->get_page()){
@@ -1068,20 +1068,20 @@ if (!$Cache->get_page()){
 	}
 	$Cache->add_whole_row();
 	if ($hotsearch)
-	print("<div><div class=\"embedded\" colspan=\"3\">&nbsp;&nbsp;".$hotsearch."</div></div>");
+	print("<tr><td class=\"embedded\" colspan=\"3\">&nbsp;&nbsp;".$hotsearch."</td></tr>");
 	$Cache->end_whole_row();
 	$Cache->cache_page();
 }
 echo $Cache->next_row();
 ?>
-				</div>
-			</div>
-			<div class="rowfollow" align="center">
+				</table>
+			</td>
+			<td class="rowfollow" align="center">
 				<input type="submit" class="btn" value="<?php echo $lang_torrents['submit_go'] ?>" />
-			</div>
-		</div>
+			</td>
+		</tr>
 		</tbody>
-	</div>
+	</table>
 	</form>
 <?php
 }
@@ -1121,5 +1121,5 @@ if ($CURUSER){
 		$USERUPDATESET[] = "last_browse = ".TIMENOW;
 	else	$USERUPDATESET[] = "last_music = ".TIMENOW;
 }
-print("</div></div></div>");
+print("</td></tr></table>");
 stdfoot();

@@ -8,14 +8,14 @@ function insert_tag($name, $description, $syntax, $example, $remarks)
 	global $lang_tags;
 	$result = format_comment($example);
 	print("<p class=sub><b>$name</b></p>\n");
-	print("<div class=main width=100% border=1 cellspacing=0 cellpadding=5>\n");
-	print("<div valign=top><div width=25%>".$lang_tags['text_description']."</div><div>$description\n");
-	print("<div valign=top><div>".$lang_tags['text_syntax']."</div><div><tt>$syntax</tt>\n");
-	print("<div valign=top><div>".$lang_tags['text_example']."</div><div><tt>$example</tt>\n");
-	print("<div valign=top><div>".$lang_tags['text_result']."</div><div>$result\n");
+	print("<table class=main width=100% border=1 cellspacing=0 cellpadding=5>\n");
+	print("<tr valign=top><td width=25%>".$lang_tags['text_description']."</td><td>$description\n");
+	print("<tr valign=top><td>".$lang_tags['text_syntax']."</td><td><tt>$syntax</tt>\n");
+	print("<tr valign=top><td>".$lang_tags['text_example']."</td><td><tt>$example</tt>\n");
+	print("<tr valign=top><td>".$lang_tags['text_result']."</td><td>$result\n");
 	if ($remarks != "")
-		print("<div><div>".$lang_tags['text_remarks']."</div><div>$remarks\n");
-	print("</div>\n");
+		print("<tr><td>".$lang_tags['text_remarks']."</td><td>$remarks\n");
+	print("</table>\n");
 }
 
 stdhead($lang_tags['head_tags']);

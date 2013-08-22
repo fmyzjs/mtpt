@@ -696,10 +696,10 @@ switch ($_GET['op']) {
 
 	    echo <<< EOB
 		<div class="info div1"><h2>常规缓存信息</h2>
-		<div cellspacing=0><tbody>
-		<div class=tr-1><div class=td-0>PHP版本</div><div>$phpversion</div></div>
+		<table cellspacing=0><tbody>
+		<tr class=tr-1><td class=td-0>PHP版本</td><td>$phpversion</td></tr>
 EOB;
-		echo "<div class=tr-0><div class=td-0>主机". ((count($MEMCACHE_SERVERS)>1) ? 's':'')."</div><div>";
+		echo "<tr class=tr-0><td class=td-0>主机". ((count($MEMCACHE_SERVERS)>1) ? 's':'')."</td><td>";
 		$i=0;
 		if (!isset($_GET['singleout']) && count($MEMCACHE_SERVERS)>1){
     		foreach($MEMCACHE_SERVERS as $server){
@@ -712,67 +712,67 @@ EOB;
 		if (isset($_GET['singleout'])){
 		      echo '<a href="'.$PHP_SELF.'">(all servers)</a><br/>';
 		}
-		echo "</div></div>\n";
-		echo "<div class=tr-1><div class=td-0>缓存大小</div><div>".bsize($memcacheStats['limit_maxbytes'])."</div></div>\n";
+		echo "</td></tr>\n";
+		echo "<tr class=tr-1><td class=td-0>缓存大小</td><td>".bsize($memcacheStats['limit_maxbytes'])."</td></tr>\n";
 
 	echo <<<EOB
-		</tbody></div>
+		</tbody></table>
 		</div>
 
 		<div class="info div1"><h2>服务器信息</h2>
 EOB;
         foreach($MEMCACHE_SERVERS as $server){
-            echo '<div cellspacing=0><tbody>';
-            echo '<div class=tr-1><div class=td-1>'.$server.'</div><div><a href="'.$PHP_SELF.'&server='.array_search($server,$MEMCACHE_SERVERS).'&op=6">[<b>刷新本服务器</b>]</a></div></div>';
-    		echo '<div class=tr-0><div class=td-0>启动时间</div><div>',date(DATE_FORMAT,$memcacheStatsSingle[$server]['STAT']['time']-$memcacheStatsSingle[$server]['STAT']['uptime']),'</div></div>';
-    		echo '<div class=tr-1><div class=td-0>正常运行时间</div><div>',duration($memcacheStatsSingle[$server]['STAT']['time']-$memcacheStatsSingle[$server]['STAT']['uptime']),'</div></div>';
-    		echo '<div class=tr-0><div class=td-0>Memcached版本</div><div>'.$memcacheStatsSingle[$server]['STAT']['version'].'</div></div>';
-    		echo '<div class=tr-1><div class=td-0>已使用缓存</div><div>',bsize($memcacheStatsSingle[$server]['STAT']['bytes']),'</div></div>';
-    		echo '<div class=tr-0><div class=td-0>总缓存量大小</div><div>',bsize($memcacheStatsSingle[$server]['STAT']['limit_maxbytes']),'</div></div>';
-    		echo '</tbody></div>';
+            echo '<table cellspacing=0><tbody>';
+            echo '<tr class=tr-1><td class=td-1>'.$server.'</td><td><a href="'.$PHP_SELF.'&server='.array_search($server,$MEMCACHE_SERVERS).'&op=6">[<b>刷新本服务器</b>]</a></td></tr>';
+    		echo '<tr class=tr-0><td class=td-0>启动时间</td><td>',date(DATE_FORMAT,$memcacheStatsSingle[$server]['STAT']['time']-$memcacheStatsSingle[$server]['STAT']['uptime']),'</td></tr>';
+    		echo '<tr class=tr-1><td class=td-0>正常运行时间</td><td>',duration($memcacheStatsSingle[$server]['STAT']['time']-$memcacheStatsSingle[$server]['STAT']['uptime']),'</td></tr>';
+    		echo '<tr class=tr-0><td class=td-0>Memcached版本</td><td>'.$memcacheStatsSingle[$server]['STAT']['version'].'</td></tr>';
+    		echo '<tr class=tr-1><td class=td-0>已使用缓存</td><td>',bsize($memcacheStatsSingle[$server]['STAT']['bytes']),'</td></tr>';
+    		echo '<tr class=tr-0><td class=td-0>总缓存量大小</td><td>',bsize($memcacheStatsSingle[$server]['STAT']['limit_maxbytes']),'</td></tr>';
+    		echo '</tbody></table>';
 	   }
     echo <<<EOB
 
 		</div>
 		<div class="graph div3"><h2><center>主机状态统计图</center></h2>
-		<div cellspacing=0><tbody>
+		<table cellspacing=0><tbody>
 EOB;
 
 	$size='width='.(GRAPH_SIZE+50).' height='.(GRAPH_SIZE+10);
 	echo <<<EOB
-		<div>
-		<div class=td-0>缓存使用情况</div>
-		<div class=td-1>命中与失误情况</div>
-		</div>
+		<tr>
+		<td class=td-0>缓存使用情况</td>
+		<td class=td-1>命中与失误情况</td>
+		</tr>
 EOB;
 
 	echo
 		graphics_avail() ?
-			  '<div>'.
-			  "<div class=td-0><img alt=\"\" $size src=\"$PHP_SELF&IMG=1&".(isset($_GET['singleout'])? 'singleout='.$_GET['singleout'].'&':'')."$time\"></div>".
-			  "<div class=td-1><img alt=\"\" $size src=\"$PHP_SELF&IMG=2&".(isset($_GET['singleout'])? 'singleout='.$_GET['singleout'].'&':'')."$time\"></div></div>\n"
+			  '<tr>'.
+			  "<td class=td-0><img alt=\"\" $size src=\"$PHP_SELF&IMG=1&".(isset($_GET['singleout'])? 'singleout='.$_GET['singleout'].'&':'')."$time\"></td>".
+			  "<td class=td-1><img alt=\"\" $size src=\"$PHP_SELF&IMG=2&".(isset($_GET['singleout'])? 'singleout='.$_GET['singleout'].'&':'')."$time\"></td></tr>\n"
 			: "",
-		'<div>',
-		'<div class=td-0><span class="green box">&nbsp;</span>空闲: ',bsize($mem_avail).sprintf(" (%.1f%%)",$mem_avail*100/$mem_size),"</div>\n",
-		'<div class=td-1><span class="green box">&nbsp;</span>命中: ',$hits.sprintf(" (%.1f%%)",$hits*100/($hits+$misses)),"</div>\n",
-		'</div>',
-		'<div>',
-		'<div class=td-0><span class="red box">&nbsp;</span>占用: ',bsize($mem_used ).sprintf(" (%.1f%%)",$mem_used *100/$mem_size),"</div>\n",
-		'<div class=td-1><span class="red box">&nbsp;</span>失误: ',$misses.sprintf(" (%.1f%%)",$misses*100/($hits+$misses)),"</div>\n";
+		'<tr>',
+		'<td class=td-0><span class="green box">&nbsp;</span>空闲: ',bsize($mem_avail).sprintf(" (%.1f%%)",$mem_avail*100/$mem_size),"</td>\n",
+		'<td class=td-1><span class="green box">&nbsp;</span>命中: ',$hits.sprintf(" (%.1f%%)",$hits*100/($hits+$misses)),"</td>\n",
+		'</tr>',
+		'<tr>',
+		'<td class=td-0><span class="red box">&nbsp;</span>占用: ',bsize($mem_used ).sprintf(" (%.1f%%)",$mem_used *100/$mem_size),"</td>\n",
+		'<td class=td-1><span class="red box">&nbsp;</span>失误: ',$misses.sprintf(" (%.1f%%)",$misses*100/($hits+$misses)),"</td>\n";
 		echo <<< EOB
-	</div>
-	</tbody></div>
+	</tr>
+	</tbody></table>
 <br/>
 	<div class="info"><h2><center>缓存详细信息</center></h2>
-		<div cellspacing=0><tbody>
-		<div class=tr-0><div class=td-0>当前总项</div><div>$curr_items ($total_items)</div></div>
-		<div class=tr-1><div class=td-0>命中</div><div>{$hits}</div></div>
-		<div class=tr-0><div class=td-0>失误</div><div>{$misses}</div></div>
-		<div class=tr-1><div class=td-0>总请求速率</div><div>$req_rate cache requests/second</div></div>
-		<div class=tr-0><div class=td-0>命中速率</div><div>$hit_rate cache requests/second</div></div>
-		<div class=tr-1><div class=td-0>失误速率</div><div>$miss_rate cache requests/second</div></div>
-		<div class=tr-0><div class=td-0>理论速率</div><div>$set_rate cache requests/second</div></div>
-		</tbody></div>
+		<table cellspacing=0><tbody>
+		<tr class=tr-0><td class=td-0>当前总项</td><td>$curr_items ($total_items)</td></tr>
+		<tr class=tr-1><td class=td-0>命中</td><td>{$hits}</td></tr>
+		<tr class=tr-0><td class=td-0>失误</td><td>{$misses}</td></tr>
+		<tr class=tr-1><td class=td-0>总请求速率</td><td>$req_rate cache requests/second</td></tr>
+		<tr class=tr-0><td class=td-0>命中速率</td><td>$hit_rate cache requests/second</td></tr>
+		<tr class=tr-1><td class=td-0>失误速率</td><td>$miss_rate cache requests/second</td></tr>
+		<tr class=tr-0><td class=td-0>理论速率</td><td>$set_rate cache requests/second</td></tr>
+		</tbody></table>
 		</div>
 
 EOB;
@@ -790,17 +790,17 @@ EOB;
 
     	echo <<< EOB
 
-			<div class="info"><div cellspacing=0><tbody>
-			<div><th colspan="2">$server</th></div>
-			<div><th>Slab Id</th><th>Info</th></div>
+			<div class="info"><table cellspacing=0><tbody>
+			<tr><th colspan="2">$server</th></tr>
+			<tr><th>Slab Id</th><th>Info</th></tr>
 EOB;
 
 			foreach($entries as $slabId => $slab) {
 			    $dumpUrl = $PHP_SELF.'&op=2&server='.(array_search($server,$MEMCACHE_SERVERS)).'&dumpslab='.$slabId;
 				echo
-					"<div class=tr-$m>",
-					"<div class=td-0><center>",'<a href="',$dumpUrl,'">',$slabId,'</a>',"</center></div>",
-					"<div class=td-last><b>Item count:</b> ",$slab['number'],'<br/><b>Age:</b>',duration($time-$slab['age']),'<br/> <b>Evicted:</b>',((isset($slab['evicted']) && $slab['evicted']==1)? 'Yes':'No');
+					"<tr class=tr-$m>",
+					"<td class=td-0><center>",'<a href="',$dumpUrl,'">',$slabId,'</a>',"</center></td>",
+					"<td class=td-last><b>Item count:</b> ",$slab['number'],'<br/><b>Age:</b>',duration($time-$slab['age']),'<br/> <b>Evicted:</b>',((isset($slab['evicted']) && $slab['evicted']==1)? 'Yes':'No');
 					if ((isset($_GET['dumpslab']) && $_GET['dumpslab']==$slabId) &&  (isset($_GET['server']) && $_GET['server']==array_search($server,$MEMCACHE_SERVERS))){
 					    echo "<br/><b>Items: item</b><br/>";
 					    $items = dumpCacheSlab($server,$slabId,$slab['number']);
@@ -820,11 +820,11 @@ EOB;
                         }
 					}
 
-					echo "</div></div>";
+					echo "</td></tr>";
 				$m=1-$m;
 			}
 		echo <<<EOB
-			</tbody></div>
+			</tbody></table>
 			</div><hr/>
 EOB;
 }
@@ -846,16 +846,16 @@ EOB;
         list($h,$p) = explode(':',$theserver);
         $r = sendMemcacheCommand($h,$p,'get '.$theKey);
         echo <<<EOB
-        <div class="info"><div cellspacing=0><tbody>
-			<div><th>Server<th>Key</th><th>Value</th><th>Delete</th></div>
+        <div class="info"><table cellspacing=0><tbody>
+			<tr><th>Server<th>Key</th><th>Value</th><th>Delete</th></tr>
 EOB;
-        echo "<div><div class=td-0>",$theserver,"</div><div class=td-0>",$theKey,
+        echo "<tr><td class=td-0>",$theserver,"</td><td class=td-0>",$theKey,
              " <br/>flag:",$r['VALUE'][$theKey]['stat']['flag'],
              " <br/>Size:",bsize($r['VALUE'][$theKey]['stat']['size']),
-             "</div><div>",chunk_split($r['VALUE'][$theKey]['value'],40),"</div>",
-             '<div><a href="',$PHP_SELF,'&op=5&server=',(int)$_GET['server'],'&key=',base64_encode($theKey),"\">Delete</a></div>","</div>";
+             "</td><td>",chunk_split($r['VALUE'][$theKey]['value'],40),"</td>",
+             '<td><a href="',$PHP_SELF,'&op=5&server=',(int)$_GET['server'],'&key=',base64_encode($theKey),"\">Delete</a></td>","</tr>";
         echo <<<EOB
-			</tbody></div>
+			</tbody></table>
 			</div><hr/>
 EOB;
     break;

@@ -55,11 +55,11 @@ else
 
 	print("<h1 align=\"center\">".$lang_ipsearch['text_search_ip_history']."</h1>\n");
 	print("<form method=\"get\" action=\"".$_SERVER[PHP_SELF]."\">");
-	print("<div align=center border=1 cellspacing=0 width=115 cellpadding=5>\n");
+	print("<table align=center border=1 cellspacing=0 width=115 cellpadding=5>\n");
 	tr($lang_ipsearch['row_ip']."<font color=red>*</font>", "<input type=\"text\" name=\"ip\" size=\"40\" value=\"".htmlspecialchars($ip)."\" />", 1);
 	tr("<nobr>".$lang_ipsearch['row_subnet_mask']."</nobr>", "<input type=\"text\" name=\"mask\" size=\"40\" value=\"" . htmlspecialchars($mask) . "\" />", 1);
-	print("<div><div align=\"right\" colspan=\"2\"><input type=\"submit\" value=\"".$lang_ipsearch['submit_search']."\"/></div></div>");
-	print("</div></form>\n");
+	print("<tr><td align=\"right\" colspan=\"2\"><input type=\"submit\" value=\"".$lang_ipsearch['submit_search']."\"/></td></tr>");
+	print("</table></form>\n");
 	if ($ip)
 	{
 	$queryc = "SELECT COUNT(*) FROM
@@ -117,14 +117,14 @@ $limit";
 
 	print("<h1 align=\"center\">".$count.$lang_ipsearch['text_users_used_the_ip'].$ip."</h1>");
 
-	print("<div width=940 border=1 cellspacing=0 cellpadding=5 align=center>\n");
-	print("<div><div class=colhead align=center><a class=colhead href=\"?ip=$ip&mask=$mask&order=username\">".$lang_ipsearch['col_username']."</a></div>".
-"<div class=colhead align=center><a class=colhead href=\"?ip=$ip&mask=$mask&order=last_ip\">".$lang_ipsearch['col_last_ip']."</a></div>".
-"<div class=colhead align=center><a class=colhead href=\"?ip=$ip&mask=$mask&order=last_access\">".$lang_ipsearch['col_last_access']."</a></div>".
-"<div class=colhead align=center>".$lang_ipsearch['col_ip_num']."</div>".
-"<div class=colhead align=center><a class=colhead href=\"?ip=$ip&mask=$mask\">".$lang_ipsearch['col_last_access_on']."</a></div>".
-"<div class=colhead align=center><a class=colhead href=\"?ip=$ip&mask=$mask&order=added\">".$lang_ipsearch['col_added']."</a></div>".
-"<div class=colhead align=center>".$lang_ipsearch['col_invited_by']."</div>");
+	print("<table width=940 border=1 cellspacing=0 cellpadding=5 align=center>\n");
+	print("<tr><td class=colhead align=center><a class=colhead href=\"?ip=$ip&mask=$mask&order=username\">".$lang_ipsearch['col_username']."</a></td>".
+"<td class=colhead align=center><a class=colhead href=\"?ip=$ip&mask=$mask&order=last_ip\">".$lang_ipsearch['col_last_ip']."</a></td>".
+"<td class=colhead align=center><a class=colhead href=\"?ip=$ip&mask=$mask&order=last_access\">".$lang_ipsearch['col_last_access']."</a></td>".
+"<td class=colhead align=center>".$lang_ipsearch['col_ip_num']."</td>".
+"<td class=colhead align=center><a class=colhead href=\"?ip=$ip&mask=$mask\">".$lang_ipsearch['col_last_access_on']."</a></td>".
+"<td class=colhead align=center><a class=colhead href=\"?ip=$ip&mask=$mask&order=added\">".$lang_ipsearch['col_added']."</a></td>".
+"<td class=colhead align=center>".$lang_ipsearch['col_invited_by']."</td>");
 
 	while ($user = mysql_fetch_array($res))
 	{
@@ -150,17 +150,17 @@ $iphistory = mysql_num_rows($resip);
 		else
 			$invited_by = $lang_ipsearch['text_not_available'];
 
-		echo "<div><div align=\"center\">" .
-get_username($user['id'])."</div>".
-"<div align=\"center\">" . $ipstr . "</div>
-<div align=\"center\">" . $lastaccess . "</div>
-<div align=\"center\"><a href=\"iphistory.php?id=" . $user['id'] . "\">" . $iphistory. "</a></div>
-<div align=\"center\">" . gettime($user['access']) . "</div>
-<div align=\"center\">" . gettime($user['added']) . "</div>
-<div align=\"center\">" . $invited_by . "</div>
-</div>\n";
+		echo "<tr><td align=\"center\">" .
+get_username($user['id'])."</td>".
+"<td align=\"center\">" . $ipstr . "</td>
+<td align=\"center\">" . $lastaccess . "</td>
+<td align=\"center\"><a href=\"iphistory.php?id=" . $user['id'] . "\">" . $iphistory. "</a></td>
+<td align=\"center\">" . gettime($user['access']) . "</td>
+<td align=\"center\">" . gettime($user['added']) . "</td>
+<td align=\"center\">" . $invited_by . "</td>
+</tr>\n";
 	}
-	echo "</div>";
+	echo "</table>";
 
 	echo $pagerbottom;
 	}

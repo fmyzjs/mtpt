@@ -43,25 +43,25 @@ else
 	begin_frame($lang_promotionlink['text_promotion_link']);
 ?>
 <div><p align="left"><?php echo $lang_promotionlink['text_promotion_link_note_one']?></p><p align="left"><?php echo $lang_promotionlink['text_promotion_link_note_two']?></p><p align="left"><?php echo $lang_promotionlink['text_you_would_get'].$prolinkpoint_bonus.$lang_promotionlink['text_bonus_points'].$prolinktime_bonus.$lang_promotionlink['text_seconds']?></p><p align="left"><?php echo "<b>".$lang_promotionlink['text_your_promotion_link_is']."</b><a href=\"".$yourlink."\">".$yourlink."</a>"?></p><p align="left"><?php echo $lang_promotionlink['text_promotion_link_note_four']?></p></div>
-<div border="1" cellspacing="0" cellpadding="10" width="100%">
-<div>
-<div class="colhead"><?php echo $lang_promotionlink['col_type']?></div>
-<div class="colhead"><?php echo $lang_promotionlink['col_code']?></div>
-<div class="colhead"><?php echo $lang_promotionlink['col_result']?> / <?php echo $lang_promotionlink['col_note']?></div>
-</div>
-<div><div class="colfollow"><?php echo $lang_promotionlink['row_xhtml']?></div><div class="colfollow"><textarea cols="50" rows="4"><?php echo htmlspecialchars("<a href=\"".$yourlink."\" target=\"_blank\"><img src=\"".$imgurl."\" alt=\"".$SITENAME."\" title=\"".$SITENAME." - ".$SLOGAN."\" /></a>")?></textarea></div><div class="colfollow" align="left"><div><a href="<?php echo $yourlink?>" target="_blank"><img src="<?php echo $imgurl?>" alt="<?php echo htmlspecialchars($SITENAME)?>" title="<?php echo htmlspecialchars($SITENAME)?> - <?php echo htmlspecialchars($SLOGAN)?>" /></a></div><div style="padding-top: 10px"><?php echo $lang_promotionlink['text_xhtml_note']?></div></div></div>
-<div><div class="colfollow"><?php echo $lang_promotionlink['row_html']?></div><div class="colfollow"><textarea cols="50" rows="4"><?php echo htmlspecialchars("<a href=\"".$yourlink."\"><img src=\"". $imgurl . "\" alt=\"".$SITENAME."\" title=\"".$SITENAME." - ".$SLOGAN."\"></a>")?></textarea></div><div class="colfollow"><div><a href="<?php echo $yourlink?>" target="_blank"><img src="<?php echo $imgurl?>" alt="<?php echo htmlspecialchars($SITENAME)?>" title="<?php echo htmlspecialchars($SITENAME)?> - <?php echo htmlspecialchars($SLOGAN)?>" /></a></div><div style="padding-top: 10px"><?php echo $lang_promotionlink['text_html_note']?></div></div></div>
-<div><div class="colfollow"><?php echo $lang_promotionlink['row_bbcode']?></div><div class="colfollow"><textarea cols="50" rows="4"><?php echo htmlspecialchars("[url=".$yourlink."][img]".$imgurl."[/img][/url]")?></textarea></div><div class="colfollow"><div><a href="<?php echo $yourlink?>"><img src="<?php echo $imgurl?>" /></a></div><div style="padding-top: 10px"><?php echo $lang_promotionlink['text_bbcode_note']?></div></div></div>
+<table border="1" cellspacing="0" cellpadding="10" width="100%">
+<tr>
+<td class="colhead"><?php echo $lang_promotionlink['col_type']?></td>
+<td class="colhead"><?php echo $lang_promotionlink['col_code']?></td>
+<td class="colhead"><?php echo $lang_promotionlink['col_result']?> / <?php echo $lang_promotionlink['col_note']?></td>
+</tr>
+<tr><td class="colfollow"><?php echo $lang_promotionlink['row_xhtml']?></td><td class="colfollow"><textarea cols="50" rows="4"><?php echo htmlspecialchars("<a href=\"".$yourlink."\" target=\"_blank\"><img src=\"".$imgurl."\" alt=\"".$SITENAME."\" title=\"".$SITENAME." - ".$SLOGAN."\" /></a>")?></textarea></td><td class="colfollow" align="left"><div><a href="<?php echo $yourlink?>" target="_blank"><img src="<?php echo $imgurl?>" alt="<?php echo htmlspecialchars($SITENAME)?>" title="<?php echo htmlspecialchars($SITENAME)?> - <?php echo htmlspecialchars($SLOGAN)?>" /></a></div><div style="padding-top: 10px"><?php echo $lang_promotionlink['text_xhtml_note']?></div></td></tr>
+<tr><td class="colfollow"><?php echo $lang_promotionlink['row_html']?></td><td class="colfollow"><textarea cols="50" rows="4"><?php echo htmlspecialchars("<a href=\"".$yourlink."\"><img src=\"". $imgurl . "\" alt=\"".$SITENAME."\" title=\"".$SITENAME." - ".$SLOGAN."\"></a>")?></textarea></td><td class="colfollow"><div><a href="<?php echo $yourlink?>" target="_blank"><img src="<?php echo $imgurl?>" alt="<?php echo htmlspecialchars($SITENAME)?>" title="<?php echo htmlspecialchars($SITENAME)?> - <?php echo htmlspecialchars($SLOGAN)?>" /></a></div><div style="padding-top: 10px"><?php echo $lang_promotionlink['text_html_note']?></div></td></tr>
+<tr><td class="colfollow"><?php echo $lang_promotionlink['row_bbcode']?></td><td class="colfollow"><textarea cols="50" rows="4"><?php echo htmlspecialchars("[url=".$yourlink."][img]".$imgurl."[/img][/url]")?></textarea></td><td class="colfollow"><div><a href="<?php echo $yourlink?>"><img src="<?php echo $imgurl?>" /></a></div><div style="padding-top: 10px"><?php echo $lang_promotionlink['text_bbcode_note']?></div></td></tr>
 <?php
 if (get_user_class() > $userbar_class)
 {
 ?>
-<div><div class="colfollow"><?php echo $lang_promotionlink['row_bbcode_userbar']?></div><div class="colfollow"><textarea cols="50" rows="4"><?php echo htmlspecialchars("[url=".$yourlink."][img]".get_protocol_prefix() . $BASEURL."/mybar.php?userid=".$CURUSER['id'].".png[/img][/url]")?></textarea></div><div class="colfollow"><div><a href="<?php echo $yourlink?>"><img src="<?php echo get_protocol_prefix() . $BASEURL?>/mybar.php?userid=<?php echo $CURUSER['id']?>.png" /></a></div><div style="padding-top: 10px"><?php echo $lang_promotionlink['text_bbcode_userbar_note']?></div></div></div>
-<div><div class="colfollow"><?php echo $lang_promotionlink['row_bbcode_userbar_alt']?></div><div class="colfollow"><textarea cols="50" rows="4"><?php echo htmlspecialchars("[url=".$yourlink."][img]".get_protocol_prefix() . $BASEURL."/cc98bar.php/id".$CURUSER['id'].".png[/img][/url]")?></textarea></div><div class="colfollow"><div><a href="<?php echo $yourlink?>"><img src="<?php echo get_protocol_prefix() . $BASEURL?>/cc98bar.php/id<?php echo $CURUSER['id']?>.png" /></a></div><div style="padding-top: 10px"><?php echo $lang_promotionlink['text_bbcode_userbar_alt_note']?></div></div></div>
+<tr><td class="colfollow"><?php echo $lang_promotionlink['row_bbcode_userbar']?></td><td class="colfollow"><textarea cols="50" rows="4"><?php echo htmlspecialchars("[url=".$yourlink."][img]".get_protocol_prefix() . $BASEURL."/mybar.php?userid=".$CURUSER['id'].".png[/img][/url]")?></textarea></td><td class="colfollow"><div><a href="<?php echo $yourlink?>"><img src="<?php echo get_protocol_prefix() . $BASEURL?>/mybar.php?userid=<?php echo $CURUSER['id']?>.png" /></a></div><div style="padding-top: 10px"><?php echo $lang_promotionlink['text_bbcode_userbar_note']?></div></td></tr>
+<tr><td class="colfollow"><?php echo $lang_promotionlink['row_bbcode_userbar_alt']?></td><td class="colfollow"><textarea cols="50" rows="4"><?php echo htmlspecialchars("[url=".$yourlink."][img]".get_protocol_prefix() . $BASEURL."/cc98bar.php/id".$CURUSER['id'].".png[/img][/url]")?></textarea></td><td class="colfollow"><div><a href="<?php echo $yourlink?>"><img src="<?php echo get_protocol_prefix() . $BASEURL?>/cc98bar.php/id<?php echo $CURUSER['id']?>.png" /></a></div><div style="padding-top: 10px"><?php echo $lang_promotionlink['text_bbcode_userbar_alt_note']?></div></td></tr>
 <?php
 }
 ?>
-</div>
+</table>
 </div>
 <?php
 	end_frame();

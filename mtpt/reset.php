@@ -38,14 +38,14 @@ write_log("Password Reset For $username by $CURUSER[username]");
 }
 stdhead("Reset User's Lost Password");
 ?>
-<div border=1 cellspacing=0 cellpadding=5>
+<table border=1 cellspacing=0 cellpadding=5>
 <form method=post>
-<div><div class=colhead align="center" colspan=2><?php echo $lang_reset['head_reset']?></div></div>
-<div><div class=rowhead align="right"><?php echo $lang_reset['text_username']?></div><div class=rowfollow><input size=40 name=username></div></div>
-<div><div class=rowhead align="right"><?php echo $lang_reset['text_passwd']?></div><div class=rowfollow><input type="password" size=40 name=newpassword><br /><font class=small><?php echo $lang_reset['text_minimum']?></font></div></div>
-<div><div class=rowhead align="right"><?php echo $lang_reset['text_repasswd']?></div><div class=rowfollow><input type="password" size=40 name=newpasswordagain></div></div>
-<div><div class=toolbox colspan=2 align="center"><input type=submit class=btn value='<?php echo $lang_reset['submit_reset']?>'></div></div>
+<tr><td class=colhead align="center" colspan=2><?php echo $lang_reset['head_reset']?></td></tr>
+<tr><td class=rowhead align="right"><?php echo $lang_reset['text_username']?></td><td class=rowfollow><input size=40 name=username></td></tr>
+<tr><td class=rowhead align="right"><?php echo $lang_reset['text_passwd']?></td><td class=rowfollow><input type="password" size=40 name=newpassword><br /><font class=small><?php echo $lang_reset['text_minimum']?></font></td></tr>
+<tr><td class=rowhead align="right"><?php echo $lang_reset['text_repasswd']?></td><td class=rowfollow><input type="password" size=40 name=newpasswordagain></td></tr>
+<tr><td class=toolbox colspan=2 align="center"><input type=submit class=btn value='<?php echo $lang_reset['submit_reset']?>'></td></tr>
 </form>
-</div>
+</table>
 <?php
 stdfoot();

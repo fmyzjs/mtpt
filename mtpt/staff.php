@@ -19,30 +19,30 @@ unset($ppl);
 $res = sql_query("SELECT * FROM users WHERE users.support='yes' AND users.status='confirmed' ORDER BY users.username") or sqlerr();
 while ($arr = mysql_fetch_assoc($res))
 {
-	$ppl .= "<div><div class=embedded>". get_username($arr['id']) ."</div>
- <div class=embedded> ".(strtotime($arr['last_access']) > $dt ? $onlineimg : $offlineimg)."</div>".
- "<div class=embedded><a href=sendmessage.php?receiver=".$arr['id']." title=\"".$lang_staff['title_send_pm']."\">".$sendpmimg."</a></div>".
- "<div class=embedded>".$arr['supportfor']."</div></div>\n";
+	$ppl .= "<tr><td class=embedded>". get_username($arr['id']) ."</td>
+ <td class=embedded> ".(strtotime($arr['last_access']) > $dt ? $onlineimg : $offlineimg)."</td>".
+ "<td class=embedded><a href=sendmessage.php?receiver=".$arr['id']." title=\"".$lang_staff['title_send_pm']."\">".$sendpmimg."</a></td>".
+ "<td class=embedded>".$arr['supportfor']."</td></tr>\n";
 }
 
 begin_frame($lang_staff['text_firstline_support']."<font class=small> - [<a class=altlink href=contactstaff.php><b>".$lang_staff['text_apply_for_it']."</b></a>]</font>");
 ?>
 <?php echo $lang_staff['text_firstline_support_note'] ?>
 <br /><br />
-<div width=100% cellspacing=0 align=center>
-	<div>
-		<div class=embedded><b><?php echo $lang_staff['text_username'] ?></b></div>
-		<div class=embedded align=center><b><?php echo $lang_staff['text_online_or_offline'] ?></b></div>
-		<div class=embedded align=center><b><?php echo $lang_staff['text_contact'] ?></b></div>
-		<div class=embedded><b><?php echo $lang_staff['text_support_for'] ?></b></div>
-	</div>
-	<div>
-		<div class=embedded colspan=6>
+<table width=100% cellspacing=0 align=center>
+	<tr>
+		<td class=embedded><b><?php echo $lang_staff['text_username'] ?></b></td>
+		<td class=embedded align=center><b><?php echo $lang_staff['text_online_or_offline'] ?></b></td>
+		<td class=embedded align=center><b><?php echo $lang_staff['text_contact'] ?></b></td>
+		<td class=embedded><b><?php echo $lang_staff['text_support_for'] ?></b></td>
+	</tr>
+	<tr>
+		<td class=embedded colspan=6>
 			<hr color="#4040c0">
-		</div>
-	</div>
+		</td>
+	</tr>
 	<?php echo $ppl?>
-</div>
+</table>
 <?php
 end_frame();
 
@@ -53,30 +53,30 @@ unset($ppl);
 $res = sql_query("SELECT * FROM users WHERE users.picker='yes' AND users.status='confirmed' ORDER BY users.username") or sqlerr();
 while ($arr = mysql_fetch_assoc($res))
 {
-	$ppl .= "<div height=15><div class=embedded>". get_username($arr['id']) ."</div>
- <div class=embedded> ".(strtotime($arr['last_access']) > $dt ? $onlineimg : $offlineimg)."</div>".
- "<div class=embedded><a href=sendmessage.php?receiver=".$arr['id']." title=\"".$lang_staff['title_send_pm']."\">".$sendpmimg."</a></div>".
- "<div class=embedded>".$arr['pickfor']."</div></div>\n";
+	$ppl .= "<tr height=15><td class=embedded>". get_username($arr['id']) ."</td>
+ <td class=embedded> ".(strtotime($arr['last_access']) > $dt ? $onlineimg : $offlineimg)."</td>".
+ "<td class=embedded><a href=sendmessage.php?receiver=".$arr['id']." title=\"".$lang_staff['title_send_pm']."\">".$sendpmimg."</a></td>".
+ "<td class=embedded>".$arr['pickfor']."</td></tr>\n";
 }
 
 begin_frame($lang_staff['text_movie_critics']."<font class=small> - [<a class=altlink href=contactstaff.php><b>".$lang_staff['text_apply_for_it']."</b></a>]</font>");
 ?>
 <?php echo $lang_staff['text_movie_critics_note'] ?>
 <br /><br />
-<div width=100% cellspacing=0 align=center>
-	<div>
-		<div class=embedded><b><?php echo $lang_staff['text_username'] ?></b></div>
-		<div class=embedded align=center><b><?php echo $lang_staff['text_online_or_offline'] ?></b></div>
-		<div class=embedded align=center><b><?php echo $lang_staff['text_contact'] ?></b></div>
-		<div class=embedded><b><?php echo $lang_staff['text_responsible_for'] ?></b></div>
-	</div>
-	<div>
-		<div class=embedded colspan=5>
+<table width=100% cellspacing=0 align=center>
+	<tr>
+		<td class=embedded><b><?php echo $lang_staff['text_username'] ?></b></td>
+		<td class=embedded align=center><b><?php echo $lang_staff['text_online_or_offline'] ?></b></td>
+		<td class=embedded align=center><b><?php echo $lang_staff['text_contact'] ?></b></td>
+		<td class=embedded><b><?php echo $lang_staff['text_responsible_for'] ?></b></td>
+	</tr>
+	<tr>
+		<td class=embedded colspan=5>
 			<hr color="#4040c0">
-		</div>
-	</div>
+		</td>
+	</tr>
 	<?php echo $ppl?>
-</div>
+</table>
 <?php
 end_frame();
 
@@ -93,30 +93,30 @@ while ($arr = mysql_fetch_assoc($res))
 		$forums .= "<a href=forums.php?action=viewforum&forumid=".$forumrow['id'].">".$forumrow['name']."</a>, ";
 	}
 	$forums = rtrim(trim($forums),",");
-	$ppl .= "<div height=15><div class=embedded>". get_username($arr['userid']) ."</div>
- <div class=embedded> ".(strtotime($arr['last_access']) > $dt ? $onlineimg : $offlineimg)."</div>".
- "<div class=embedded><a href=sendmessage.php?receiver=".$arr['userid']." title=\"".$lang_staff['title_send_pm']."\">".$sendpmimg."</a></div>".
- "<div class=embedded>".$forums."</div></div>\n";
+	$ppl .= "<tr height=15><td class=embedded>". get_username($arr['userid']) ."</td>
+ <td class=embedded> ".(strtotime($arr['last_access']) > $dt ? $onlineimg : $offlineimg)."</td>".
+ "<td class=embedded><a href=sendmessage.php?receiver=".$arr['userid']." title=\"".$lang_staff['title_send_pm']."\">".$sendpmimg."</a></td>".
+ "<td class=embedded>".$forums."</td></tr>\n";
 }
 
 begin_frame($lang_staff['text_forum_moderators']."<font class=small> - [<a class=altlink href=contactstaff.php><b>".$lang_staff['text_apply_for_it']."</b></a>]</font>");
 ?>
 <?php echo $lang_staff['text_forum_moderators_note'] ?>
 <br /><br />
-<div width=100% cellspacing=0 align=center>
-	<div>
-		<div class=embedded><b><?php echo $lang_staff['text_username'] ?></b></div>
-		<div class=embedded align=center><b><?php echo $lang_staff['text_online_or_offline'] ?></b></div>
-		<div class=embedded align=center><b><?php echo $lang_staff['text_contact'] ?></b></div>
-		<div class=embedded><b><?php echo $lang_staff['text_forums'] ?></b></div>
-	</div>
-	<div>
-		<div class=embedded colspan=5>
+<table width=100% cellspacing=0 align=center>
+	<tr>
+		<td class=embedded><b><?php echo $lang_staff['text_username'] ?></b></td>
+		<td class=embedded align=center><b><?php echo $lang_staff['text_online_or_offline'] ?></b></td>
+		<td class=embedded align=center><b><?php echo $lang_staff['text_contact'] ?></b></td>
+		<td class=embedded><b><?php echo $lang_staff['text_forums'] ?></b></td>
+	</tr>
+	<tr>
+		<td class=embedded colspan=5>
 			<hr color="#4040c0">
-		</div>
-	</div>
+		</td>
+	</tr>
 	<?php echo $ppl?>
-</div>
+</table>
 <?php
 end_frame();
 
@@ -131,30 +131,30 @@ while ($arr = mysql_fetch_assoc($res))
 	{
 		$curr_class = $arr['class'];
 		if ($ppl != "")
-			$ppl .= "<div height=15><div class=embedded colspan=5 align=right>&nbsp;</div></div>";
-		$ppl .= "<div height=15><div class=embedded colspan=5 align=right>" . get_user_class_name($arr["class"],false,true,true) . "</div></div>";
-		$ppl .= "<div>" . 
-		"<div class=embedded><b>" . $lang_staff['text_username'] . "</b></div>".
-		"<div class=embedded align=center><b>" . $lang_staff['text_online_or_offline'] . "</b></div>".
-		"<div class=embedded align=center><b>" . $lang_staff['text_contact'] . "</b></div>".
-		"<div class=embedded><b>" . $lang_staff['text_duties'] . "</b></div>".
-		"</div>";
-		$ppl .= "<div height=15><div class=embedded colspan=5><hr color=\"#4040c0\"></div></div>";
+			$ppl .= "<tr height=15><td class=embedded colspan=5 align=right>&nbsp;</td></tr>";
+		$ppl .= "<tr height=15><td class=embedded colspan=5 align=right>" . get_user_class_name($arr["class"],false,true,true) . "</td></tr>";
+		$ppl .= "<tr>" . 
+		"<td class=embedded><b>" . $lang_staff['text_username'] . "</b></td>".
+		"<td class=embedded align=center><b>" . $lang_staff['text_online_or_offline'] . "</b></td>".
+		"<td class=embedded align=center><b>" . $lang_staff['text_contact'] . "</b></td>".
+		"<td class=embedded><b>" . $lang_staff['text_duties'] . "</b></td>".
+		"</tr>";
+		$ppl .= "<tr height=15><td class=embedded colspan=5><hr color=\"#4040c0\"></td></tr>";
 	}
 	$countryrow = get_country_row($arr['country']);
-	$ppl .= "<div><div class=embedded>". get_username($arr['id']) ."</div>
- <div class=embedded> ".(strtotime($arr['last_access']) > $dt ? $onlineimg : $offlineimg)."</div>".
- "<div class=embedded><a href=sendmessage.php?receiver=".$arr['id']." title=\"".$lang_staff['title_send_pm']."\">".$sendpmimg."</a></div>".
- "<div class=embedded>".$arr['stafffor']."</div></div>\n";
+	$ppl .= "<tr><td class=embedded>". get_username($arr['id']) ."</td>
+ <td class=embedded> ".(strtotime($arr['last_access']) > $dt ? $onlineimg : $offlineimg)."</td>".
+ "<td class=embedded><a href=sendmessage.php?receiver=".$arr['id']." title=\"".$lang_staff['title_send_pm']."\">".$sendpmimg."</a></td>".
+ "<td class=embedded>".$arr['stafffor']."</td></tr>\n";
 }
 
 begin_frame($lang_staff['text_general_staff']."<font class=small> - [<a class=altlink href=contactstaff.php><b>".$lang_staff['text_apply_for_it']."</b></a>]</font>");
 ?>
 <?php echo $lang_staff['text_general_staff_note'] ?>
 <br /><br />
-<div width=100% cellspacing=0 align=center>
+<table width=100% cellspacing=0 align=center>
 	<?php echo $ppl?>
-</div>
+</table>
 <?php
 end_frame();
 
@@ -167,30 +167,30 @@ end_frame();
 $res = sql_query("SELECT * FROM users WHERE class=".UC_VIP." AND status='confirmed' ORDER BY username") or sqlerr();
 while ($arr = mysql_fetch_assoc($res))
 {
-	$ppl .= "<div><div class=embedded>". get_username($arr['id']) ."</div>
- <div class=embedded> ".(strtotime($arr['last_access']) > $dt ? $onlineimg : $offlineimg)."</div>".
- "<div class=embedded><a href=sendmessage.php?receiver=".$arr['id']." title=\"".$lang_staff['title_send_pm']."\">".$sendpmimg."</a></div>".
- "<div class=embedded>".$arr['stafffor']."</div></div>\n";
+	$ppl .= "<tr><td class=embedded>". get_username($arr['id']) ."</td>
+ <td class=embedded> ".(strtotime($arr['last_access']) > $dt ? $onlineimg : $offlineimg)."</td>".
+ "<td class=embedded><a href=sendmessage.php?receiver=".$arr['id']." title=\"".$lang_staff['title_send_pm']."\">".$sendpmimg."</a></td>".
+ "<td class=embedded>".$arr['stafffor']."</td></tr>\n";
 }
 
 begin_frame($lang_staff['text_vip']);
 ?>
 <?php echo $lang_staff['text_vip_note'] ?>
 <br /><br />
-<div width=100% cellspacing=0 align=center>
-	<div>
-		<div class=embedded><b><?php echo $lang_staff['text_username'] ?></b></div>
-		<div class=embedded><b><?php echo $lang_staff['text_online_or_offline'] ?></b></div>
-		<div class=embedded><b><?php echo $lang_staff['text_contact'] ?></b></div>
-		<div class=embedded><b><?php echo $lang_staff['text_reason'] ?></b></div>
-	</div>
-	<div>
-		<div class=embedded colspan=5>
+<table width=100% cellspacing=0 align=center>
+	<tr>
+		<td class=embedded><b><?php echo $lang_staff['text_username'] ?></b></td>
+		<td class=embedded><b><?php echo $lang_staff['text_online_or_offline'] ?></b></td>
+		<td class=embedded><b><?php echo $lang_staff['text_contact'] ?></b></td>
+		<td class=embedded><b><?php echo $lang_staff['text_reason'] ?></b></td>
+	</tr>
+	<tr>
+		<td class=embedded colspan=5>
 			<hr color="#4040c0">
-		</div>
-	</div>
+		</td>
+	</tr>
 	<?php echo $ppl?>
-</div>
+</table>
 <?php
 end_frame();*/
 

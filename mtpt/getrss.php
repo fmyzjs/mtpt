@@ -179,149 +179,149 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 ?>
 <h1 align="center"><?php echo $lang_getrss['text_rss_feeds']?></h1>
 <form method="post" action="getrss.php">
-<div cellspacing="1" cellpadding="5" width="940">
-<div>
-<div class="rowhead"><?php echo $lang_getrss['row_categories_to_retrieve']?>
-</div>
-<div class="rowfollow" align="left">
+<table cellspacing="1" cellpadding="5" width="940">
+<tr>
+<td class="rowhead"><?php echo $lang_getrss['row_categories_to_retrieve']?>
+</td>
+<td class="rowfollow" align="left">
 <?php
-$categories = "<div><div><div class=\"embedded\" align=\"left\"><b>".$lang_getrss['text_category']."</b></div></div><div>";
+$categories = "<table><tr><td class=\"embedded\" align=\"left\"><b>".$lang_getrss['text_category']."</b></td></tr><tr>";
 $i = 0;
 foreach ($brcats as $cat)//print category list of Torrents section
 {
 	$numinrow = $i % $catsperrow;
 	$rownum = (int)($i / $catsperrow);
 	if ($i && $numinrow == 0){
-		$categories .= "</div>".($brenablecatrow ? "<div><div class=\"embedded\" align=\"left\"><b>".$brcatrow[$rownum]."</b></div></div>" : "")."<div>";
+		$categories .= "</tr>".($brenablecatrow ? "<tr><td class=\"embedded\" align=\"left\"><b>".$brcatrow[$rownum]."</b></td></tr>" : "")."<tr>";
 	}
-	$categories .= "<div align=\"left\" class=\"bottom\" style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input name=\"cat".$cat[id]."\" type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[cat".$cat[id]."]") !== false ? " checked=\"checked\"" : "")." value='yes' />".return_category_image($cat['id'], "torrents.php?allsec=1&amp;")."</div>\n";
+	$categories .= "<td align=\"left\" class=\"bottom\" style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input name=\"cat".$cat[id]."\" type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[cat".$cat[id]."]") !== false ? " checked=\"checked\"" : "")." value='yes' />".return_category_image($cat['id'], "torrents.php?allsec=1&amp;")."</td>\n";
 	$i++;
 }
-$categories .= "</div>";
+$categories .= "</tr>";
 if ($allowspecial) //print category list of Special section
 {
-	$categories .= "<div>";
+	$categories .= "<tr>";
 	$i = 0;
 	foreach ($spcats as $cat)
 	{
 		$numinrow = $i % $catsperrow;
 		$rownum = (int)($i / $catsperrow);
 		if ($i && $numinrow == 0){
-			$categories .= "</div>".($spenablecatrow ? "<div><div class=\"embedded\" align=\"left\"><b>".$spcatrow[$rownum]."</b></div></div>" : "")."<div>";
+			$categories .= "</tr>".($spenablecatrow ? "<tr><td class=\"embedded\" align=\"left\"><b>".$spcatrow[$rownum]."</b></td></tr>" : "")."<tr>";
 		}
-		$categories .= "<div align=\"left\" class=\"bottom\" style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input name=\"cat".$cat[id]."\" type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[cat".$cat[id]."]") !== false ? " checked=\"checked\"" : "")." value='yes' />".return_category_image($cat['id'], "torrents.php?allsec=1&amp;")."</div>\n";
+		$categories .= "<td align=\"left\" class=\"bottom\" style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input name=\"cat".$cat[id]."\" type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[cat".$cat[id]."]") !== false ? " checked=\"checked\"" : "")." value='yes' />".return_category_image($cat['id'], "torrents.php?allsec=1&amp;")."</td>\n";
 		$i++;
 	}
-	$categories .= "</div>";
+	$categories .= "</tr>";
 }
 			if ($showsubcat)//Show subcategory (i.e. source, codecs) selections
 			{
 				if ($showsource){
-				$categories .= "<div><div class=\"embedded\" align=\"left\"><b>".$lang_getrss['text_source']."</b></div></div><div>";
+				$categories .= "<tr><td class=\"embedded\" align=\"left\"><b>".$lang_getrss['text_source']."</b></td></tr><tr>";
 				$i = 0;
 				foreach ($sources as $source)
 				{
-					$categories .= ($i && $i % $catsperrow == 0) ? "</div><div>" : "";
-					$categories .= "<div align=\"left\" class=\"bottom\" style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input name=\"sou".$source[id]."\" type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[sou".$source[id]."]") !== false ? " checked=\"checked\"" : "") . " value='yes' />".$source[name]."</div>\n";
+					$categories .= ($i && $i % $catsperrow == 0) ? "</tr><tr>" : "";
+					$categories .= "<td align=\"left\" class=\"bottom\" style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input name=\"sou".$source[id]."\" type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[sou".$source[id]."]") !== false ? " checked=\"checked\"" : "") . " value='yes' />".$source[name]."</td>\n";
 					$i++;
 				}
-				$categories .= "</div>";
+				$categories .= "</tr>";
 				}
 				if ($showmedium){
-				$categories .= "<div><div class=\"embedded\" align=\"left\"><b>".$lang_getrss['text_medium']."</b></div></div><div>";
+				$categories .= "<tr><td class=\"embedded\" align=\"left\"><b>".$lang_getrss['text_medium']."</b></td></tr><tr>";
 				$i = 0;
 				foreach ($media as $medium)
 				{
-					$categories .= ($i && $i % $catsperrow == 0) ? "</div><div>" : "";
-					$categories .= "<div align=\"left\" class=\"bottom\" style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input name=\"med".$medium[id]."\" type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[med".$medium[id]."]") !== false ? " checked=\"checked\"" : "") . " value='yes' />".$medium[name]."</div>\n";
+					$categories .= ($i && $i % $catsperrow == 0) ? "</tr><tr>" : "";
+					$categories .= "<td align=\"left\" class=\"bottom\" style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input name=\"med".$medium[id]."\" type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[med".$medium[id]."]") !== false ? " checked=\"checked\"" : "") . " value='yes' />".$medium[name]."</td>\n";
 					$i++;
 				}
-				$categories .= "</div>";
+				$categories .= "</tr>";
 				}
 				if ($showcodec){
-				$categories .= "<div><div class=\"embedded\" align=\"left\"><b>".$lang_getrss['text_codec']."</b></div></div><div>";
+				$categories .= "<tr><td class=\"embedded\" align=\"left\"><b>".$lang_getrss['text_codec']."</b></td></tr><tr>";
 				$i = 0;
 				foreach ($codecs as $codec)
 				{
-					$categories .= ($i && $i % $catsperrow == 0) ? "</div><div>" : "";
-					$categories .= "<div align=\"left\" class=\"bottom\" style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input name=\"cod".$codec[id]."\" type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[cod".$codec[id]."]") !== false ? " checked=\"checked\"" : "") . " value='yes' />".$codec[name]."</div>\n";
+					$categories .= ($i && $i % $catsperrow == 0) ? "</tr><tr>" : "";
+					$categories .= "<td align=\"left\" class=\"bottom\" style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input name=\"cod".$codec[id]."\" type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[cod".$codec[id]."]") !== false ? " checked=\"checked\"" : "") . " value='yes' />".$codec[name]."</td>\n";
 					$i++;
 				}
-				$categories .= "</div>";
+				$categories .= "</tr>";
 				}
 				if ($showaudiocodec){
-				$categories .= "<div><div class=\"embedded\" align=\"left\"><b>".$lang_getrss['text_audio_codec']."</b></div></div><div>";
+				$categories .= "<tr><td class=\"embedded\" align=\"left\"><b>".$lang_getrss['text_audio_codec']."</b></td></tr><tr>";
 				$i = 0;
 				foreach ($audiocodecs as $audiocodec)
 				{
-					$categories .= ($i && $i % $catsperrow == 0) ? "</div><div>" : "";
-					$categories .= "<div align=\"left\" class=\"bottom\" style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input name=\"aud".$audiocodec[id]."\" type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[aud".$audiocodec[id]."]") !== false ? " checked=\"checked\"" : "") . " value='yes' />".$audiocodec[name]."</div>\n";
+					$categories .= ($i && $i % $catsperrow == 0) ? "</tr><tr>" : "";
+					$categories .= "<td align=\"left\" class=\"bottom\" style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input name=\"aud".$audiocodec[id]."\" type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[aud".$audiocodec[id]."]") !== false ? " checked=\"checked\"" : "") . " value='yes' />".$audiocodec[name]."</td>\n";
 					$i++;
 				}
-				$categories .= "</div>";
+				$categories .= "</tr>";
 				}
 				if ($showstandard){
-				$categories .= "<div><div class=\"embedded\" align=\"left\"><b>".$lang_getrss['text_standard']."</b></div></div><div>";
+				$categories .= "<tr><td class=\"embedded\" align=\"left\"><b>".$lang_getrss['text_standard']."</b></td></tr><tr>";
 				$i = 0;
 				foreach ($standards as $standard)
 				{
-					$categories .= ($i && $i % $catsperrow == 0) ? "</div><div>" : "";
-					$categories .= "<div align=\"left\" class=\"bottom\" style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input name=\"sta".$standard[id]."\" type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[sta".$standard[id]."]") !== false ? " checked=\"checked\"" : "") . " value='yes' />".$standard[name]."</div>\n";
+					$categories .= ($i && $i % $catsperrow == 0) ? "</tr><tr>" : "";
+					$categories .= "<td align=\"left\" class=\"bottom\" style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input name=\"sta".$standard[id]."\" type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[sta".$standard[id]."]") !== false ? " checked=\"checked\"" : "") . " value='yes' />".$standard[name]."</td>\n";
 					$i++;
 				}
-				$categories .= "</div>";
+				$categories .= "</tr>";
 				}
 				if ($showprocessing){
-				$categories .= "<div><div class=\"embedded\" align=\"left\"><b>".$lang_getrss['text_processing']."</b></div></div><div>";
+				$categories .= "<tr><td class=\"embedded\" align=\"left\"><b>".$lang_getrss['text_processing']."</b></td></tr><tr>";
 				$i = 0;
 				foreach ($processings as $processing)
 				{
-					$categories .= ($i && $i % $catsperrow == 0) ? "</div><div>" : "";
-					$categories .= "<div align=\"left\" class=\"bottom\" style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input name=\"pro".$processing[id]."\" type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[pro".$processing[id]."]") !== false ? " checked=\"checked\"" : "") . " value='yes' />".$processing[name]."</div>\n";
+					$categories .= ($i && $i % $catsperrow == 0) ? "</tr><tr>" : "";
+					$categories .= "<td align=\"left\" class=\"bottom\" style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input name=\"pro".$processing[id]."\" type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[pro".$processing[id]."]") !== false ? " checked=\"checked\"" : "") . " value='yes' />".$processing[name]."</td>\n";
 					$i++;
 				}
-				$categories .= "</div>";
+				$categories .= "</tr>";
 				}
 				if ($showteam){
-				$categories .= "<div><div class=\"embedded\" align=\"left\"><b>".$lang_getrss['text_team']."</b></div></div><div>";
+				$categories .= "<tr><td class=\"embedded\" align=\"left\"><b>".$lang_getrss['text_team']."</b></td></tr><tr>";
 				$i = 0;
 				foreach ($teams as $team)
 				{
-					$categories .= ($i && $i % $catsperrow == 0) ? "</div><div>" : "";
-					$categories .= "<div align=\"left\" class=\"bottom\" style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input name=\"tea".$team[id]."\" type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[tea".$team[id]."]") !== false ? " checked=\"checked\"" : "") . " value='yes' />".$team[name]."</div>\n";
+					$categories .= ($i && $i % $catsperrow == 0) ? "</tr><tr>" : "";
+					$categories .= "<td align=\"left\" class=\"bottom\" style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input name=\"tea".$team[id]."\" type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[tea".$team[id]."]") !== false ? " checked=\"checked\"" : "") . " value='yes' />".$team[name]."</td>\n";
 					$i++;
 				}
-				$categories .= "</div>";
+				$categories .= "</tr>";
 				}
 			}
-$categories .= "</div>";
+$categories .= "</table>";
 print($categories);
 ?>
-</div>
-</div>
-<div>
-<div class="rowhead"><?php echo $lang_getrss['row_show_bookmarked']?>
-</div>
-<div class="rowfollow" align="left">
+</td>
+</tr>
+<tr>
+<td class="rowhead"><?php echo $lang_getrss['row_show_bookmarked']?>
+</td>
+<td class="rowfollow" align="left">
 <input type="radio" name="inclbookmarked" id="inclbookmarked0" value="0" checked="checked" /><label for="inclbookmarked0"><?php echo $lang_getrss['text_all']?></label>&nbsp;<input type="radio" name="inclbookmarked" id="inclbookmarked1" value="1" /><label for="inclbookmarked1"><?php echo $lang_getrss['text_only_bookmarked']?></label><div><?php echo $lang_getrss['text_show_bookmarked_note']?></div>
-</div>
-</div>
-<div>
-<div class="rowhead"><?php echo $lang_getrss['row_item_title_type']?>
-</div>
-<div class="rowfollow" align="left">
+</td>
+</tr>
+<tr>
+<td class="rowhead"><?php echo $lang_getrss['row_item_title_type']?>
+</td>
+<td class="rowfollow" align="left">
 <input type="checkbox" name="itemcategory" value="1" /><?php echo $lang_getrss['text_item_category']?>&nbsp;<input type="checkbox" name="itemtitle" checked="checked" disabled="disabled" /><?php echo $lang_getrss['text_item_title']?>&nbsp;<input type="checkbox" name="itemsmalldescr" value="1" /><?php echo $lang_getrss['text_item_small_description']?>&nbsp;<input type="checkbox" name="itemsize" value="1" /><?php echo $lang_getrss['text_item_size']?>&nbsp;<input type="checkbox" name="itemuploader" value="1" /><?php echo $lang_getrss['text_item_uploader']?>
-</div>
-</div>
-<div><div class="rowhead"><?php echo $lang_getrss['row_rows_per_page']?></div><div class="rowfollow" align="left"><select name="showrows">
+</td>
+</tr>
+<tr><td class="rowhead"><?php echo $lang_getrss['row_rows_per_page']?></td><td class="rowfollow" align="left"><select name="showrows">
 <option value="10">10</option>
 <option value="20">20</option>
 <option value="30">30</option>
 <option value="40">40</option>
 <option value="50">50</option>
-</select></div></div>
-<div><div class="rowhead"><?php echo $lang_getrss['row_keyword']?></div>
-<div class="rowfollow" align="left">
+</select></td></tr>
+<tr><td class="rowhead"><?php echo $lang_getrss['row_keyword']?></td>
+<td class="rowfollow" align="left">
 <input type="text" name="search" style="width: 200px;" /> <?php echo $lang_getrss['text_with']?> 
 <select name="search_mode" style="width: 60px;">
 <option value="0"><?php echo $lang_getrss['select_and'] ?></option>
@@ -330,14 +330,14 @@ print($categories);
 </select>
 <?php echo $lang_getrss['text_mode']?>
 <div><?php echo $lang_getrss['text_keyword_note'] ?></div>
-</div>
-</div>
-<div>
-<div colspan="2" align="center">
+</td>
+</tr>
+<tr>
+<td colspan="2" align="center">
 <input type="submit" value="<?php echo $lang_getrss['submit_generatte_rss_link']?>" />
-</div>
-</div>
-</div>
+</td>
+</tr>
+</table>
 </form>
 <?php
 stdfoot();

@@ -25,10 +25,10 @@ if ($done)
 print ("<p align=center><font class=striking>Cache cleared</font></p>");
 ?>
 <form method=post action=clearcache.php>
-<div border=1 cellspacing=0 cellpadding=5>
-<div><div class=rowhead><?php echo $lang_clearcache['text_cachename']?></div><div><input type=text name=cachename size=40></div></div>
-<div><div class=rowhead><?php echo $lang_clearcache['text_multilang']?></div><div><input type=checkbox name=multilang><?php echo $lang_clearcache['text_yes']?></div></div>
-<div><div colspan=2 align=center><input type=submit value="<?php echo $lang_clearcache['submit_ok']?>" class=btn></div></div>
-</div>
+<table border=1 cellspacing=0 cellpadding=5>
+<tr><td class=rowhead><?php echo $lang_clearcache['text_cachename']?></td><td><input type=text name=cachename size=40></td></tr>
+<tr><td class=rowhead><?php echo $lang_clearcache['text_multilang']?></td><td><input type=checkbox name=multilang><?php echo $lang_clearcache['text_yes']?></td></tr>
+<tr><td colspan=2 align=center><input type=submit value="<?php echo $lang_clearcache['submit_ok']?>" class=btn></td></tr>
+</table>
 </form>
 <?php stdfoot();

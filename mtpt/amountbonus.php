@@ -106,23 +106,23 @@ stdhead("改变用户的麦粒");
 begin_main_frame("",false, 50);
 begin_main_frame("调整某个特定用户的麦粒",false,50);
 echo "<form method=\"post\" action=\"amountbonus.php\">";
-print("<div width=100% border=1 cellspacing=0 cellpadding=4>\n");
+print("<table width=100% border=1 cellspacing=0 cellpadding=4>\n");
 ?>
-<div><div class="rowhead" width="100px">用户名：</div><div class="rowfollow"><input type="text" name="username" size="20"/></div></div>
-<div><div class="rowhead">麦粒调整量：</div><div class="rowfollow"><input type="text" name="seedbonus" size="5"/></div></div>
-<div><div class="rowhead">原因：</div><div class="rowfollow"><textarea rows="10" name="reason" cols="60"></textarea></div></div>
-<div><div colspan="2" class="toolbox" align="center"><input type="submit" value="就这样！" class="btn"/></div></div>
+<tr><td class="rowhead" width="100px">用户名：</td><td class="rowfollow"><input type="text" name="username" size="20"/></td></tr>
+<tr><td class="rowhead">麦粒调整量：</td><td class="rowfollow"><input type="text" name="seedbonus" size="5"/></td></tr>
+<tr><td class="rowhead">原因：</td><td class="rowfollow"><textarea rows="10" name="reason" cols="60"></textarea></td></tr>
+<tr><td colspan="2" class="toolbox" align="center"><input type="submit" value="就这样！" class="btn"/></td></tr>
 <?php end_table();?>
 </form>
 <?php end_main_frame();?>
 <?php begin_main_frame("给每个人发放25个麦粒",false,50);?>
 <form action="amountbonus.php" method="post">
-<div width=100% border=1 cellspacing=0 cellpadding=5>
-<div><div class="rowfollow" width="100%">
-你确定要给每个人都增加25个麦粒？<br /><br /></div></div>
-<div><div class="toolbox" align="center"><input type = "hidden" name = "doit" value = "yes" />
+<table width=100% border=1 cellspacing=0 cellpadding=5>
+<tr><td class="rowfollow" width="100%">
+你确定要给每个人都增加25个麦粒？<br /><br /></td></tr>
+<tr><td class="toolbox" align="center"><input type = "hidden" name = "doit" value = "yes" />
 <input type="submit" class="btn" value="确定" />
-</div></div>
+</td></tr>
 <?php end_table();?>
 </form>
 <?php
@@ -133,13 +133,13 @@ if (get_user_class() >= 14)
 begin_main_frame("发工资",false,50);
 echo "
 <form action=\"amountbonus.php\" method=\"post\" >
-<div width=100% border=1 cellspacing=0 cellpadding=5>
-<div><div class=\"rowfollow\" width=\"100%\">
+<table width=100% border=1 cellspacing=0 cellpadding=5>
+<tr><td class=\"rowfollow\" width=\"100%\">
 给<select name=\"class\"><option value=\"all\">所有用户<option value=10>贵宾</option><option value=11>养老族</option><option value=12>保种员</option><option value=13 selected=\"selected\">发布员</option><option value=14>管理员</option><option value=15>站长</option><option value=16>主管</option><option value=\"forummods\">论坛版主</option><option value=\"picker\">美工/技术组</option><option value=\"support\">客服</option></select>等级用户增加<input name = \"amount\" value=\"5000\" size=\"8\"/>个麦粒
-<br /><br /></div></div>
-<div><div class=\"toolbox\" align=\"center\"><input type = \"hidden\" name = \"wage\" value = \"yes\" />
+<br /><br /></td></tr>
+<tr><td class=\"toolbox\" align=\"center\"><input type = \"hidden\" name = \"wage\" value = \"yes\" />
 <input type=\"submit\" class=\"btn\" value=\"确定\" />
-</div></div>";
+</td></tr>";
 end_table();
 echo "</form>";
 }

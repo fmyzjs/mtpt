@@ -146,7 +146,7 @@ $AUTHORITY=array(	'defaultclass' => '1',
 );
 $BASIC=array(	'SITENAME' => '麦田 PT',
 	'BASEURL' => '127.0.0.1/mtpt',
-	'announce_url' => '127.0.0.1//mtpt/announce.php',
+	'announce_url' => '127.0.0.1/mtpt/announce.php',
 	'mysql_host' => 'localhost',
 	'mysql_user' => 'root',
 	'mysql_pass' => '',

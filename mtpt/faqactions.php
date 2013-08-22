@@ -50,37 +50,37 @@ elseif ($_GET[action] == "edit" && isset($_GET[id])) {
 		if ($arr[type] == "item") {
 			$lang_id = $arr['lang_id'];
 			print("<form method=\"post\" action=\"faqactions.php?action=edititem\">");
-			print("<div border=\"1\" cellspacing=\"0\" cellpadding=\"10\" align=\"center\">\n");
-			print("<div><div>ID:</div><div>$arr[id] <input type=\"hidden\" name=\"id\" value=\"$arr[id]\" /></div></div>\n");
-			print("<div><div>Question:</div><div><input style=\"width: 600px;\" type=\"text\" name=\"question\" value=\"$arr[question]\" /></div></div>\n");
-			print("<div><div style=\"vertical-align: top;\">Answer:</div><div><textarea rows=20 style=\"width: 600px; height=600px;\" name=\"answer\">$arr[answer]</textarea></div></div>\n");
-			if ($arr[flag] == "0") print("<div><div>Status:</div><div><select name=\"flag\" style=\"width: 110px;\"><option value=\"0\" style=\"color: #FF0000;\" selected=\"selected\">Hidden</option><option value=\"1\" style=\"color: #000000;\">Normal</option><option value=\"2\" style=\"color: #0000FF;\">Updated</option><option value=\"3\" style=\"color: #008000;\">New</option></select></div></div>");
-			elseif ($arr[flag] == "2") print("<div><div>Status:</div><div><select name=\"flag\" style=\"width: 110px;\"><option value=\"0\" style=\"color: #FF0000;\">Hidden</option><option value=\"1\" style=\"color: #000000;\">Normal</option><option value=\"2\" style=\"color: #0000FF;\" selected=\"selected\">Updated</option><option value=\"3\" style=\"color: #008000;\">New</option></select></div></div>");
-			elseif ($arr[flag] == "3") print("<div><div>Status:</div><div><select name=\"flag\" style=\"width: 110px;\"><option value=\"0\" style=\"color: #FF0000;\">Hidden</option><option value=\"1\" style=\"color: #000000;\">Normal</option><option value=\"2\" style=\"color: #0000FF;\">Updated</option><option value=\"3\" style=\"color: #008000;\" selected=\"selected\">New</option></select></div></div>");
-			else print("<div><div>Status:</div><div><select name=\"flag\" style=\"width: 110px;\"><option value=\"0\" style=\"color: #FF0000;\">Hidden</option><option value=\"1\" style=\"color: #000000;\" selected=\"selected\">Normal</option><option value=\"2\" style=\"color: #0000FF;\">Updated</option><option value=\"3\" style=\"color: #008000;\">New</option></select></div></div>");
-			print("<div><div>Category:</div><div><select style=\"width: 400px;\" name=\"categ\" />");
+			print("<table border=\"1\" cellspacing=\"0\" cellpadding=\"10\" align=\"center\">\n");
+			print("<tr><td>ID:</td><td>$arr[id] <input type=\"hidden\" name=\"id\" value=\"$arr[id]\" /></td></tr>\n");
+			print("<tr><td>Question:</td><td><input style=\"width: 600px;\" type=\"text\" name=\"question\" value=\"$arr[question]\" /></td></tr>\n");
+			print("<tr><td style=\"vertical-align: top;\">Answer:</td><td><textarea rows=20 style=\"width: 600px; height=600px;\" name=\"answer\">$arr[answer]</textarea></td></tr>\n");
+			if ($arr[flag] == "0") print("<tr><td>Status:</td><td><select name=\"flag\" style=\"width: 110px;\"><option value=\"0\" style=\"color: #FF0000;\" selected=\"selected\">Hidden</option><option value=\"1\" style=\"color: #000000;\">Normal</option><option value=\"2\" style=\"color: #0000FF;\">Updated</option><option value=\"3\" style=\"color: #008000;\">New</option></select></td></tr>");
+			elseif ($arr[flag] == "2") print("<tr><td>Status:</td><td><select name=\"flag\" style=\"width: 110px;\"><option value=\"0\" style=\"color: #FF0000;\">Hidden</option><option value=\"1\" style=\"color: #000000;\">Normal</option><option value=\"2\" style=\"color: #0000FF;\" selected=\"selected\">Updated</option><option value=\"3\" style=\"color: #008000;\">New</option></select></td></tr>");
+			elseif ($arr[flag] == "3") print("<tr><td>Status:</td><td><select name=\"flag\" style=\"width: 110px;\"><option value=\"0\" style=\"color: #FF0000;\">Hidden</option><option value=\"1\" style=\"color: #000000;\">Normal</option><option value=\"2\" style=\"color: #0000FF;\">Updated</option><option value=\"3\" style=\"color: #008000;\" selected=\"selected\">New</option></select></td></tr>");
+			else print("<tr><td>Status:</td><td><select name=\"flag\" style=\"width: 110px;\"><option value=\"0\" style=\"color: #FF0000;\">Hidden</option><option value=\"1\" style=\"color: #000000;\" selected=\"selected\">Normal</option><option value=\"2\" style=\"color: #0000FF;\">Updated</option><option value=\"3\" style=\"color: #008000;\">New</option></select></td></tr>");
+			print("<tr><td>Category:</td><td><select style=\"width: 400px;\" name=\"categ\" />");
 			$res2 = sql_query("SELECT `id`, `question`, `link_id` FROM `faq` WHERE `type`='categ' AND `lang_id` = ".sqlesc($lang_id)." ORDER BY `order` ASC");
 			while ($arr2 = mysql_fetch_array($res2, MYSQL_BOTH)) {
 				$selected = ($arr2[link_id] == $arr[categ]) ? " selected=\"selected\"" : "";
 				print("<option value=\"$arr2[link_id]\"". $selected .">$arr2[question]</option>");
 			}
-			print("</div></div>\n");
-			print("<div><div colspan=\"2\" align=\"center\"><input type=\"submit\" name=\"edit\" value=\"Edit\" style=\"width: 60px;\"></div></div>\n");
-			print("</div>");
+			print("</td></tr>\n");
+			print("<tr><td colspan=\"2\" align=\"center\"><input type=\"submit\" name=\"edit\" value=\"Edit\" style=\"width: 60px;\"></td></tr>\n");
+			print("</table>");
 		}
 		elseif ($arr[type] == "categ") {
 			$lang_res = sql_query("SELECT lang_name FROM language WHERE id=".sqlesc($arr[lang_id])." LIMIT 1");
 			if ($lang_arr = mysql_fetch_array($lang_res))
 				$lang_name = $lang_arr['lang_name'];
 			print("<form method=\"post\" action=\"faqactions.php?action=editsect\">");
-			print("<div border=\"1\" cellspacing=\"0\" cellpadding=\"10\" align=\"center\">\n");
-			print("<div><div>ID:</div><div>$arr[id] <input type=\"hidden\" name=\"id\" value=\"$arr[id]\" /></div></div>\n");
-			print("<div><div>Language:</div><div>$lang_name</div></div>\n");
-			print("<div><div>Title:</div><div><input style=\"width: 300px;\" type=\"text\" name=\"title\" value=\"$arr[question]\" /></div></div>\n");
-			if ($arr[flag] == "0") print("<div><div>Status:</div><div><select name=\"flag\" style=\"width: 110px;\"><option value=\"0\" style=\"color: #FF0000;\" selected=\"selected\">Hidden</option><option value=\"1\" style=\"color: #000000;\">Normal</option></select></div></div>");
-			else print("<div><div>Status:</div><div><select name=\"flag\" style=\"width: 110px;\"><option value=\"0\" style=\"color: #FF0000;\">Hidden</option><option value=\"1\" style=\"color: #000000;\" selected=\"selected\">Normal</option></select></div></div>");
-			print("<div><div colspan=\"2\" align=\"center\"><input type=\"submit\" name=\"edit\" value=\"Edit\" style=\"width: 60px;\"></div></div>\n");
-			print("</div>");
+			print("<table border=\"1\" cellspacing=\"0\" cellpadding=\"10\" align=\"center\">\n");
+			print("<tr><td>ID:</td><td>$arr[id] <input type=\"hidden\" name=\"id\" value=\"$arr[id]\" /></td></tr>\n");
+			print("<tr><td>Language:</td><td>$lang_name</td></tr>\n");
+			print("<tr><td>Title:</td><td><input style=\"width: 300px;\" type=\"text\" name=\"title\" value=\"$arr[question]\" /></td></tr>\n");
+			if ($arr[flag] == "0") print("<tr><td>Status:</td><td><select name=\"flag\" style=\"width: 110px;\"><option value=\"0\" style=\"color: #FF0000;\" selected=\"selected\">Hidden</option><option value=\"1\" style=\"color: #000000;\">Normal</option></select></td></tr>");
+			else print("<tr><td>Status:</td><td><select name=\"flag\" style=\"width: 110px;\"><option value=\"0\" style=\"color: #FF0000;\">Hidden</option><option value=\"1\" style=\"color: #000000;\" selected=\"selected\">Normal</option></select></td></tr>");
+			print("<tr><td colspan=\"2\" align=\"center\"><input type=\"submit\" name=\"edit\" value=\"Edit\" style=\"width: 60px;\"></td></tr>\n");
+			print("</table>");
 		}
 	}
 
@@ -116,7 +116,7 @@ elseif ($_GET[action] == "delete" && isset($_GET[id])) {
 		stdhead("FAQ Management");
 		begin_main_frame();
 		print("<h1 align=\"center\">Confirmation required</h1>");
-		print("<div border=\"1\" cellspacing=\"0\" cellpadding=\"5\" align=\"center\" width=\"95%\">\n<div><div align=\"center\">Please click <a href=\"faqactions.php?action=delete&id=$_GET[id]&confirm=yes\">here</a> to confirm.</div></div>\n</div>\n");
+		print("<table border=\"1\" cellspacing=\"0\" cellpadding=\"5\" align=\"center\" width=\"95%\">\n<tr><td align=\"center\">Please click <a href=\"faqactions.php?action=delete&id=$_GET[id]&confirm=yes\">here</a> to confirm.</td></tr>\n</table>\n");
 		end_main_frame();
 		stdfoot();
 	}
@@ -128,14 +128,14 @@ elseif ($_GET[action] == "additem" && $_GET[inid] && $_GET[langid]) {
 	begin_main_frame();
 	print("<h1 align=\"center\">Add Item</h1>");
 	print("<form method=\"post\" action=\"faqactions.php?action=addnewitem\">");
-	print("<div border=\"1\" cellspacing=\"0\" cellpadding=\"10\" align=\"center\">\n");
-	print("<div><div>Question:</div><div><input style=\"width: 600px;\" type=\"text\" name=\"question\" value=\"\" /></div></div>\n");
-	print("<div><div style=\"vertical-align: top;\">Answer:</div><div><textarea rows=20 style=\"width: 600px; height=600px;\" name=\"answer\"></textarea></div></div>\n");
-	print("<div><div>Status:</div><div><select name=\"flag\" style=\"width: 110px;\"><option value=\"0\" style=\"color: #FF0000;\">Hidden</option><option value=\"1\" style=\"color: #000000;\">Normal</option><option value=\"2\" style=\"color: #0000FF;\">Updated</option><option value=\"3\" style=\"color: #008000;\" selected=\"selected\">New</option></select></div></div>");
+	print("<table border=\"1\" cellspacing=\"0\" cellpadding=\"10\" align=\"center\">\n");
+	print("<tr><td>Question:</td><td><input style=\"width: 600px;\" type=\"text\" name=\"question\" value=\"\" /></td></tr>\n");
+	print("<tr><td style=\"vertical-align: top;\">Answer:</td><td><textarea rows=20 style=\"width: 600px; height=600px;\" name=\"answer\"></textarea></td></tr>\n");
+	print("<tr><td>Status:</td><td><select name=\"flag\" style=\"width: 110px;\"><option value=\"0\" style=\"color: #FF0000;\">Hidden</option><option value=\"1\" style=\"color: #000000;\">Normal</option><option value=\"2\" style=\"color: #0000FF;\">Updated</option><option value=\"3\" style=\"color: #008000;\" selected=\"selected\">New</option></select></td></tr>");
 	print("<input type=hidden name=categ value=\"".(0+$_GET[inid])."\">");
 	print("<input type=hidden name=langid value=\"".(0+$_GET[langid])."\">");
-	print("<div><div colspan=\"2\" align=\"center\"><input type=\"submit\" value=\"Add\" style=\"width: 60px;\"></div></div>\n");
-	print("</div></form>");
+	print("<tr><td colspan=\"2\" align=\"center\"><input type=\"submit\" value=\"Add\" style=\"width: 60px;\"></td></tr>\n");
+	print("</table></form>");
 	end_main_frame();
 	stdfoot();
 }
@@ -146,8 +146,8 @@ elseif ($_GET[action] == "addsection") {
 	begin_main_frame();
 	print("<h1 align=\"center\">Add Section</h1>");
 	print("<form method=\"post\" action=\"faqactions.php?action=addnewsect\">");
-	print("<div border=\"1\" cellspacing=\"0\" cellpadding=\"10\" align=\"center\">\n");
-	print("<div><div>Title:</div><div><input style=\"width: 300px;\" type=\"text\" name=\"title\" value=\"\" /></div></div>\n");
+	print("<table border=\"1\" cellspacing=\"0\" cellpadding=\"10\" align=\"center\">\n");
+	print("<tr><td>Title:</td><td><input style=\"width: 300px;\" type=\"text\" name=\"title\" value=\"\" /></td></tr>\n");
 	$s = "<select name=language>";
 	$langs = langlist("rule_lang");
 	foreach ($langs as $row)
@@ -156,10 +156,10 @@ elseif ($_GET[action] == "addsection") {
 		$s .= "<option value=". $row["id"] . $se. ">" . htmlspecialchars($row["lang_name"]) . "</option>\n";
 	}
 	$s .= "</select>";
-	print("<div><div>Language:</div><div>".$s."</div></div>");
-	print("<div><div>Status:</div><div><select name=\"flag\" style=\"width: 110px;\"><option value=\"0\" style=\"color: #FF0000;\">Hidden</option><option value=\"1\" style=\"color: #000000;\" selected=\"selected\">Normal</option></select></div></div>");
-	print("<div><div colspan=\"2\" align=\"center\"><input type=\"submit\" name=\"edit\" value=\"Add\" style=\"width: 60px;\"></div></div>\n");
-	print("</div>");
+	print("<tr><td>Language:</td><td>".$s."</td></tr>");
+	print("<tr><td>Status:</td><td><select name=\"flag\" style=\"width: 110px;\"><option value=\"0\" style=\"color: #FF0000;\">Hidden</option><option value=\"1\" style=\"color: #000000;\" selected=\"selected\">Normal</option></select></td></tr>");
+	print("<tr><td colspan=\"2\" align=\"center\"><input type=\"submit\" name=\"edit\" value=\"Add\" style=\"width: 60px;\"></td></tr>\n");
+	print("</table>");
 	end_main_frame();
 	stdfoot();
 }

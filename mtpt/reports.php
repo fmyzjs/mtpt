@@ -17,8 +17,8 @@ $perpage = 10;
 list($pagertop, $pagerbottom, $limit) = pager($perpage, $count, "reports.php?");
 begin_main_frame();
 print("<h1 align=center>".$lang_reports['text_reports']."</h1>");
-print("<div border=1 cellspacing=0 cellpadding=5 align=center>\n");
-print("<div><div class=colhead><nobr>".$lang_reports['col_added']."</nobr></div><div class=colhead>".$lang_reports['col_reporter']."</div><div class=colhead>".$lang_reports['col_reporting']."</div><div class=colhead><nobr>".$lang_reports['col_type']."</nobr></div><div class=colhead>".$lang_reports['col_reason']."</div><div class=colhead><nobr>".$lang_reports['col_dealt_with']."</nobr></div><div class=colhead><nobr>".$lang_reports['col_action']."</nobr></div>");
+print("<table border=1 cellspacing=0 cellpadding=5 align=center>\n");
+print("<tr><td class=colhead><nobr>".$lang_reports['col_added']."</nobr></td><td class=colhead>".$lang_reports['col_reporter']."</td><td class=colhead>".$lang_reports['col_reporting']."</td><td class=colhead><nobr>".$lang_reports['col_type']."</nobr></td><td class=colhead>".$lang_reports['col_reason']."</td><td class=colhead><nobr>".$lang_reports['col_dealt_with']."</nobr></td><td class=colhead><nobr>".$lang_reports['col_action']."</nobr></td>");
 
 print("<form method=post action=takeupdate.php>");
 $reportres = sql_query("SELECT * FROM reports ORDER BY dealtwith ASC, id DESC $limit");
@@ -151,13 +151,13 @@ while ($row = mysql_fetch_array($reportres))
 		}
 	}
 
-	print("<div><div class=rowfollow><nobr>".gettime($row['added'])."</nobr></div><div class=rowfollow>" . get_username($row['addedby']) . "</div><div class=rowfollow>".$reporting."</div><div class=rowfollow><nobr>".$type."</nobr></div><div class=rowfollow>".htmlspecialchars($row['reason'])."</div><div class=rowfollow><nobr>".$dealtwith."</nobr></div><div class=rowfollow><input type=\"checkbox\" name=\"delreport[]\" value=\"" . $row[id] . "\" /></div></div>\n");
+	print("<tr><td class=rowfollow><nobr>".gettime($row['added'])."</nobr></td><td class=rowfollow>" . get_username($row['addedby']) . "</td><td class=rowfollow>".$reporting."</td><td class=rowfollow><nobr>".$type."</nobr></td><td class=rowfollow>".htmlspecialchars($row['reason'])."</td><td class=rowfollow><nobr>".$dealtwith."</nobr></td><td class=rowfollow><input type=\"checkbox\" name=\"delreport[]\" value=\"" . $row[id] . "\" /></td></tr>\n");
 }
 ?>
-<div><div class="colhead" colspan="7" align="right">设为已处理并改变举报者的魔力值<input type="text" name="bonus" value="0" /><input type="submit" name="setdealt" value="<?php echo $lang_reports['submit_set_dealt']?>" /><input type="submit" name="delete" value="<?php echo $lang_reports['submit_delete']?>" /></div></div> 
+<tr><td class="colhead" colspan="7" align="right">设为已处理并改变举报者的魔力值<input type="text" name="bonus" value="0" /><input type="submit" name="setdealt" value="<?php echo $lang_reports['submit_set_dealt']?>" /><input type="submit" name="delete" value="<?php echo $lang_reports['submit_delete']?>" /></td></tr> 
 </form>
 <?php
-print("</div>");
+print("</table>");
 print($pagerbottom);
 end_main_frame();
 stdfoot();

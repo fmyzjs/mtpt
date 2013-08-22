@@ -48,7 +48,7 @@ else {
 
 		$s=htmlspecialchars($row["name"]).($sp_torrent ? "&nbsp;&nbsp;&nbsp;".$sp_torrent : "");
 		print("<h1 align=\"center\" id=\"top\">".$s."</h1>\n");
-		print("<div width=\"940\" cellspacing=\"0\" cellpadding=\"5\">\n");
+		print("<table width=\"940\" cellspacing=\"0\" cellpadding=\"5\">\n");
 
 		$url = "edit.php?id=" . $row["id"];
 		if (isset($_GET["returnto"])) {
@@ -71,15 +71,15 @@ else {
 			$CURUSER["downloadpos"] = "yes";
 		if ($CURUSER["downloadpos"] != "no")
 		{
-			print("<div><div class=\"rowhead\" width=\"13%\">".$lang_details['row_download']."</div><div class=\"rowfollow\" width=\"87%\" align=\"left\">");
+			print("<tr><td class=\"rowhead\" width=\"13%\">".$lang_details['row_download']."</td><td class=\"rowfollow\" width=\"87%\" align=\"left\">");
 			if ($CURUSER['timetype'] != 'timealive')
 				$uploadtime = $lang_details['text_at'].$row['added'];
 			else $uploadtime = $lang_details['text_blank'].gettime($row['added'],true,false);
 			print("<a class=\"index\" href=\"download.php?id=$id\">" . htmlspecialchars($torrentnameprefix ."." .$row["save_as"]) . ".torrent</a>&nbsp;&nbsp;&nbsp;".$lang_details['row_upped_by']."&nbsp;".$uprow.$uploadtime);
-			print("</div></div>");
-			print("<div><div class=\"rowhead\" width=\"13%\">".$lang_details['row_download_method']."</div><div class=\"rowfollow\" width=\"87%\" align=\"left\">");
+			print("</td></tr>");
+			print("<tr><td class=\"rowhead\" width=\"13%\">".$lang_details['row_download_method']."</td><td class=\"rowfollow\" width=\"87%\" align=\"left\">");
 			print($lang_details['row_mouseclick']."<a class=\"index\" href=\"uTorrent221.zip\">"."μTorrent"."</a>".$lang_details['row_openfile']);
-			print("</div></div>");
+			print("</td></tr>");
 		}
 		else
 			tr($lang_details['row_download'], $lang_details['text_downloading_not_allowed']);
@@ -115,25 +115,25 @@ else {
 
 		// ---------------- start subtitle block -------------------//
 		$r = sql_query("SELECT subs.*, language.flagpic, language.lang_name FROM subs LEFT JOIN language ON subs.lang_id=language.id WHERE torrent_id = " . sqlesc($row["id"]). " ORDER BY subs.lang_id ASC") or sqlerr(__FILE__, __LINE__);
-		print("<div><div class=\"rowhead\" valign=\"top\">".$lang_details['row_subtitles']."</div>");
-		print("<div class=\"rowfollow\" align=\"left\" valign=\"top\">");
-		print("<div border=\"0\" cellspacing=\"0\">");
+		print("<tr><td class=\"rowhead\" valign=\"top\">".$lang_details['row_subtitles']."</td>");
+		print("<td class=\"rowfollow\" align=\"left\" valign=\"top\">");
+		print("<table border=\"0\" cellspacing=\"0\">");
 		if (mysql_num_rows($r) > 0)
 		{
 			while($a = mysql_fetch_assoc($r))
 			{
-				$lang = "<div><div class=\"embedded\"><img border=\"0\" src=\"pic/flag/". $a["flagpic"] . "\" alt=\"" . $a["lang_name"] . "\" title=\"" . $a["lang_name"] . "\" style=\"padding-bottom: 4px\" /></div>";
-				$lang .= "<div class=\"embedded\">&nbsp;&nbsp;<a href=\"downloadsubs.php?torrentid=".$a[torrent_id]."&subid=".$a[id]."\"><u>". $a["title"]. "</u></a>".(get_user_class() >= $submanage_class || (get_user_class() >= $delownsub_class && $a["uppedby"] == $CURUSER["id"]) ? " <font class=\"small\"><a href=\"subtitles.php?delete=".$a[id]."\">[".$lang_details['text_delete']."</a>]</font>" : "")."</div><div class=\"embedded\">&nbsp;&nbsp;".($a["anonymous"] == 'yes' ? $lang_details['text_anonymous'] . (get_user_class() >= $viewanonymous_class ? get_username($a['uppedby'],false,true,true,false,true) : "") : get_username($a['uppedby']))."</div></div>";
+				$lang = "<tr><td class=\"embedded\"><img border=\"0\" src=\"pic/flag/". $a["flagpic"] . "\" alt=\"" . $a["lang_name"] . "\" title=\"" . $a["lang_name"] . "\" style=\"padding-bottom: 4px\" /></td>";
+				$lang .= "<td class=\"embedded\">&nbsp;&nbsp;<a href=\"downloadsubs.php?torrentid=".$a[torrent_id]."&subid=".$a[id]."\"><u>". $a["title"]. "</u></a>".(get_user_class() >= $submanage_class || (get_user_class() >= $delownsub_class && $a["uppedby"] == $CURUSER["id"]) ? " <font class=\"small\"><a href=\"subtitles.php?delete=".$a[id]."\">[".$lang_details['text_delete']."</a>]</font>" : "")."</td><td class=\"embedded\">&nbsp;&nbsp;".($a["anonymous"] == 'yes' ? $lang_details['text_anonymous'] . (get_user_class() >= $viewanonymous_class ? get_username($a['uppedby'],false,true,true,false,true) : "") : get_username($a['uppedby']))."</td></tr>";
 				print($lang);
 			}
 		}
 		else
-			print("<div><div class=\"embedded\">".$lang_details['text_no_subtitles']."</div></div>");
-		print("</div>");
-		print("<div border=\"0\" cellspacing=\"0\"><div>");
+			print("<tr><td class=\"embedded\">".$lang_details['text_no_subtitles']."</td></tr>");
+		print("</table>");
+		print("<table border=\"0\" cellspacing=\"0\"><tr>");
 		if($CURUSER['id']==$row['owner']  ||  get_user_class() >= $uploadsub_class)
 		{
-			print("<div class=\"embedded\"><form method=\"post\" action=\"subtitles.php\"><input type=\"hidden\" name=\"torrent_name\" value=\"" . $row["name"]. "\" /><input type=\"hidden\" name=\"detail_torrent_id\" value=\"" . $row["id"]. "\" /><input type=\"hidden\" name=\"in_detail\" value=\"in_detail\" /><input type=\"submit\" value=\"".$lang_details['submit_upload_subtitles']."\" /></form></div>");
+			print("<td class=\"embedded\"><form method=\"post\" action=\"subtitles.php\"><input type=\"hidden\" name=\"torrent_name\" value=\"" . $row["name"]. "\" /><input type=\"hidden\" name=\"detail_torrent_id\" value=\"" . $row["id"]. "\" /><input type=\"hidden\" name=\"in_detail\" value=\"in_detail\" /><input type=\"submit\" value=\"".$lang_details['submit_upload_subtitles']."\" /></form></td>");
 		}
 		$moviename = "";
 		$imdb_id = parse_imdb_id($row["url"]);
@@ -152,9 +152,9 @@ else {
 				}
 			}
 		}
-		print("<div class=\"embedded\"><form method=\"get\" action=\"http://shooter.cn/sub/\" target=\"_blank\"><input type=\"text\" name=\"searchword\" id=\"keyword\" style=\"width: 250px\" value=\"".$moviename."\" /><input type=\"submit\" value=\"".$lang_details['submit_search_at_shooter']."\" /></form></div><div class=\"embedded\"><form method=\"get\" action=\"http://www.opensubtitles.org/zh/search/\" target=\"_blank\"><input type=\"hidden\" id=\"moviename\" name=\"MovieName\" /><input type=\"hidden\" name=\"action\" value=\"search\" /><input type=\"hidden\" name=\"SubLanguageID\" value=\"all\" /><input onclick=\"document.getElementById('moviename').value=document.getElementById('keyword').value;\" type=\"submit\" value=\"".$lang_details['submit_search_at_opensubtitles']."\" /></form></div>\n");
-		print("</div></div>");
-		print("</div></div>\n");
+		print("<td class=\"embedded\"><form method=\"get\" action=\"http://shooter.cn/sub/\" target=\"_blank\"><input type=\"text\" name=\"searchword\" id=\"keyword\" style=\"width: 250px\" value=\"".$moviename."\" /><input type=\"submit\" value=\"".$lang_details['submit_search_at_shooter']."\" /></form></td><td class=\"embedded\"><form method=\"get\" action=\"http://www.opensubtitles.org/zh/search/\" target=\"_blank\"><input type=\"hidden\" id=\"moviename\" name=\"MovieName\" /><input type=\"hidden\" name=\"action\" value=\"search\" /><input type=\"hidden\" name=\"SubLanguageID\" value=\"all\" /><input onclick=\"document.getElementById('moviename').value=document.getElementById('keyword').value;\" type=\"submit\" value=\"".$lang_details['submit_search_at_opensubtitles']."\" /></form></td>\n");
+		print("</tr></table>");
+		print("</td></tr>\n");
 		// ---------------- end subtitle block -------------------//
 
 		if ($CURUSER['showdescription'] != 'no' && !empty($row["descr"])){
@@ -319,7 +319,7 @@ else {
 						$autodata .= "<font color=\"darkred\" size=\"3\">".$lang_details['text_may_also_like']."</font><br />\n";
 						$autodata .= "<font color=\"navy\">------------------------------------------------------------------------------------------------------------------------------------</font></strong><br />\n";
 
-						$autodata .=  "<div cellpadding=\"10\"><div>";
+						$autodata .=  "<table cellpadding=\"10\"><tr>";
 						if($similiar_movies)
 						{
 							$counter = 0;
@@ -335,11 +335,11 @@ else {
 									}
 								}
 
-								$autodata .=  ($counter == 5 ? "</div><div>" : "" ) . "<div align=\"center\" style=\"border: 0px; padding-left: 20px; padding-right: 20px; padding-bottom: 10px\"><a href=\"" . $movie->protocol_prefix . $movie->imdbsite . $similiar_movies_each['Link'] . "\" title=\"\"><img style=\"border:0px;\" src=\"" . $similiar_movies_each['Local'] . "\" alt=\"" . $similiar_movies_each['Name'] . "\" /><br />" . $similiar_movies_each['Name'] . "</a><br />" . ($on_site != "" ? $on_site : "&nbsp;") .  "</div>";
+								$autodata .=  ($counter == 5 ? "</tr><tr>" : "" ) . "<td align=\"center\" style=\"border: 0px; padding-left: 20px; padding-right: 20px; padding-bottom: 10px\"><a href=\"" . $movie->protocol_prefix . $movie->imdbsite . $similiar_movies_each['Link'] . "\" title=\"\"><img style=\"border:0px;\" src=\"" . $similiar_movies_each['Local'] . "\" alt=\"" . $similiar_movies_each['Name'] . "\" /><br />" . $similiar_movies_each['Name'] . "</a><br />" . ($on_site != "" ? $on_site : "&nbsp;") .  "</td>";
 								$counter++;
 							}
 						}
-						$autodata .=  "</div></div>";*/
+						$autodata .=  "</tr></table>";*/
 
 						//$autodata .= "<br />\n\n<strong><font color=\"navy\">------------------------------------------------------------------------------------------------------------------------------------</font><br />\n";
 						//$autodata .= "<font color=\"darkred\" size=\"3\">".$lang_details['text_recommended_comment']."</font><br />\n";
@@ -349,19 +349,19 @@ else {
 						$cache_time = $movie->getcachetime();
 
 						$Cache->add_whole_row();
-						print("<div>");
-						print("<div class=\"rowhead\"><a href=\"javascript: klappe_ext('imdb')\"><span class=\"nowrap\"><img class=\"minus\" src=\"pic/trans.gif\" alt=\"Show/Hide\" id=\"picimdb\" title=\"".$lang_detail['title_show_or_hide']."\" /> ".$lang_details['text_imdb'] . $lang_details['row_info'] ."</span></a><div id=\"posterimdb\">".  $smallth."</div></div>");
+						print("<tr>");
+						print("<td class=\"rowhead\"><a href=\"javascript: klappe_ext('imdb')\"><span class=\"nowrap\"><img class=\"minus\" src=\"pic/trans.gif\" alt=\"Show/Hide\" id=\"picimdb\" title=\"".$lang_detail['title_show_or_hide']."\" /> ".$lang_details['text_imdb'] . $lang_details['row_info'] ."</span></a><div id=\"posterimdb\">".  $smallth."</div></td>");
 						$Cache->end_whole_row();
 						$Cache->add_row();
 						$Cache->add_part();
-						print("<div class=\"rowfollow\" align=\"left\"><div id='kimdb'>".$autodata);
+						print("<td class=\"rowfollow\" align=\"left\"><div id='kimdb'>".$autodata);
 						$Cache->end_part();
 						$Cache->add_part();
 						print($lang_details['text_information_updated_at'] . date("Y-m-d", $cache_time) . $lang_details['text_might_be_outdated']."<a href=\"".htmlspecialchars("retriver.php?id=". $id ."&type=2&siteid=1")."\">".$lang_details['text_here_to_update']);
 						$Cache->end_part();
 						$Cache->end_row();
 						$Cache->add_whole_row();
-						print("</div></div></div>");
+						print("</div></td></tr>");
 						$Cache->end_whole_row();
 						$Cache->cache_page();
 						echo $Cache->next_row();
@@ -402,8 +402,8 @@ else {
 			$copies_count = mysql_num_rows($copies_res);
 			if($copies_count > 0)
 			{
-				$s = "<div border=\"1\" cellspacing=\"0\" cellpadding=\"5\">\n";
-				$s.="<div><div class=\"colhead\" style=\"padding: 0px; text-align:center;\">".$lang_details['col_type']."</div><div class=\"colhead\" align=\"left\">".$lang_details['col_name']."</div><div class=\"colhead\" align=\"center\">".$lang_details['col_quality']."</div><div class=\"colhead\" align=\"center\"><img class=\"size\" src=\"pic/trans.gif\" alt=\"size\" title=\"".$lang_details['title_size']."\" /></div><div class=\"colhead\" align=\"center\"><img class=\"time\" src=\"pic/trans.gif\" alt=\"time added\" title=\"".$lang_details['title_time_added']."\" /></div><div class=\"colhead\" align=\"center\"><img class=\"seeders\" src=\"pic/trans.gif\" alt=\"seeders\" title=\"".$lang_details['title_seeders']."\" /></div><div class=\"colhead\" align=\"center\"><img class=\"leechers\" src=\"pic/trans.gif\" alt=\"leechers\" title=\"".$lang_details['title_leechers']."\" /></div></div>\n";
+				$s = "<table border=\"1\" cellspacing=\"0\" cellpadding=\"5\">\n";
+				$s.="<tr><td class=\"colhead\" style=\"padding: 0px; text-align:center;\">".$lang_details['col_type']."</td><td class=\"colhead\" align=\"left\">".$lang_details['col_name']."</td><td class=\"colhead\" align=\"center\">".$lang_details['col_quality']."</td><td class=\"colhead\" align=\"center\"><img class=\"size\" src=\"pic/trans.gif\" alt=\"size\" title=\"".$lang_details['title_size']."\" /></td><td class=\"colhead\" align=\"center\"><img class=\"time\" src=\"pic/trans.gif\" alt=\"time added\" title=\"".$lang_details['title_time_added']."\" /></td><td class=\"colhead\" align=\"center\"><img class=\"seeders\" src=\"pic/trans.gif\" alt=\"seeders\" title=\"".$lang_details['title_seeders']."\" /></td><td class=\"colhead\" align=\"center\"><img class=\"leechers\" src=\"pic/trans.gif\" alt=\"leechers\" title=\"".$lang_details['title_leechers']."\" /></td></tr>\n";
 				while ($copy_row = mysql_fetch_assoc($copies_res))
 				{
 					$dispname = htmlspecialchars(trim($copy_row["name"]));
@@ -428,15 +428,15 @@ else {
 					$sphighlight = get_torrent_bg_color($copy_row['sp_state']);
 					$sp_info = get_torrent_promotion_append($copy_row['sp_state']);
 
-					$s .= "<div". $sphighlight."><div class=\"rowfollow nowrap\" valign=\"middle\" style='padding: 0px'>".return_category_image($copy_row["catid"], "torrents.php?allsec=1&amp;")."</div><div class=\"rowfollow\" align=\"left\"><a href=\"" . htmlspecialchars(get_protocol_prefix() . $BASEURL . "/details.php?id=" . $copy_row["id"]. "&hit=1")."\">" . $dispname ."</a>". $sp_info."</div>" .
-					"<div class=\"rowfollow\" align=\"left\">" . rtrim(trim($other_source_info . $other_medium_info . $other_codec_info . $other_standard_info . $other_processing_info), ","). "</div>" .
-					"<div class=\"rowfollow\" align=\"center\">" . mksize($copy_row["size"]) . "</div>" .
-					"<div class=\"rowfollow nowrap\" align=\"center\">" . str_replace("&nbsp;", "<br />", gettime($copy_row["added"],false)). "</div>" .
-					"<div class=\"rowfollow\" align=\"center\">" . $copy_row["seeders"] . "</div>" .
-					"<div class=\"rowfollow\" align=\"center\">" . $copy_row["leechers"] . "</div>" .
-					"</div>\n";
+					$s .= "<tr". $sphighlight."><td class=\"rowfollow nowrap\" valign=\"middle\" style='padding: 0px'>".return_category_image($copy_row["catid"], "torrents.php?allsec=1&amp;")."</td><td class=\"rowfollow\" align=\"left\"><a href=\"" . htmlspecialchars(get_protocol_prefix() . $BASEURL . "/details.php?id=" . $copy_row["id"]. "&hit=1")."\">" . $dispname ."</a>". $sp_info."</td>" .
+					"<td class=\"rowfollow\" align=\"left\">" . rtrim(trim($other_source_info . $other_medium_info . $other_codec_info . $other_standard_info . $other_processing_info), ","). "</td>" .
+					"<td class=\"rowfollow\" align=\"center\">" . mksize($copy_row["size"]) . "</td>" .
+					"<td class=\"rowfollow nowrap\" align=\"center\">" . str_replace("&nbsp;", "<br />", gettime($copy_row["added"],false)). "</td>" .
+					"<td class=\"rowfollow\" align=\"center\">" . $copy_row["seeders"] . "</td>" .
+					"<td class=\"rowfollow\" align=\"center\">" . $copy_row["leechers"] . "</td>" .
+					"</tr>\n";
 				}
-				$s .= "</div>\n";
+				$s .= "</table>\n";
 				tr("<a href=\"javascript: klappe_news('othercopy')\"><span class=\"nowrap\"><img class=\"".($copies_count > 5 ? "plus" : "minus")."\" src=\"pic/trans.gif\" alt=\"Show/Hide\" id=\"picothercopy\" title=\"".$lang_detail['title_show_or_hide']."\" /> ".$lang_details['row_other_copies']."</span></a>", "<b>".$copies_count.$lang_details['text_other_copies']." </b><br /><div id='kothercopy' style=\"".($copies_count > 5 ? "display: none;" : "display: block;")."\">".$s."</div>",1);
 			}
 		}
@@ -460,8 +460,8 @@ else {
 			return sprintf("%02x", ord($matches[0]));
 		}
 		if ($enablenfo_main=='yes')
-			tr($lang_details['row_torrent_info'], "<div><div>" . ($files_info != "" ? "<div class=\"no_border_wide\">" . $files_info . "</div>" : "") . "<div class=\"no_border_wide\"><b>".$lang_details['row_info_hash'].":</b>&nbsp;".preg_replace_callback('/./s', "hex_esc", hash_pad($row["info_hash"]))."</div>". (get_user_class() >= $torrentstructure_class ? "<div class=\"no_border_wide\"><b>" . $lang_details['text_torrent_structure'] . "</b><a href=\"torrent_info.php?id=".$id."\">".$lang_details['text_torrent_info_note']."</a></div>" : "") . "</div></div><span id='filelist'></span>",1);
-		tr($lang_details['row_hot_meter'], "<div><div><div class=\"no_border_wide\"><b>" . $lang_details['text_views']."</b>". $row["views"] . "</div><div class=\"no_border_wide\"><b>" . $lang_details['text_hits']. "</b>" . $row["hits"] . "</div><div class=\"no_border_wide\"><b>" .$lang_details['text_snatched'] . "</b><a href=\"viewsnatches.php?id=".$id."\"><b>" . $row["times_completed"]. $lang_details['text_view_snatches'] . "</div><div class=\"no_border_wide\"><b>" . $lang_details['row_last_seeder']. "</b>" . gettime($row["last_action"]) . "</div></div></div>",1);
+			tr($lang_details['row_torrent_info'], "<table><tr>" . ($files_info != "" ? "<td class=\"no_border_wide\">" . $files_info . "</td>" : "") . "<td class=\"no_border_wide\"><b>".$lang_details['row_info_hash'].":</b>&nbsp;".preg_replace_callback('/./s', "hex_esc", hash_pad($row["info_hash"]))."</td>". (get_user_class() >= $torrentstructure_class ? "<td class=\"no_border_wide\"><b>" . $lang_details['text_torrent_structure'] . "</b><a href=\"torrent_info.php?id=".$id."\">".$lang_details['text_torrent_info_note']."</a></td>" : "") . "</tr></table><span id='filelist'></span>",1);
+		tr($lang_details['row_hot_meter'], "<table><tr><td class=\"no_border_wide\"><b>" . $lang_details['text_views']."</b>". $row["views"] . "</td><td class=\"no_border_wide\"><b>" . $lang_details['text_hits']. "</b>" . $row["hits"] . "</td><td class=\"no_border_wide\"><b>" .$lang_details['text_snatched'] . "</b><a href=\"viewsnatches.php?id=".$id."\"><b>" . $row["times_completed"]. $lang_details['text_view_snatches'] . "</td><td class=\"no_border_wide\"><b>" . $lang_details['row_last_seeder']. "</b>" . gettime($row["last_action"]) . "</td></tr></table>",1);
 		$bwres = sql_query("SELECT uploadspeed.name AS upname, downloadspeed.name AS downname, isp.name AS ispname FROM users LEFT JOIN uploadspeed ON users.upload = uploadspeed.id LEFT JOIN downloadspeed ON users.download = downloadspeed.id LEFT JOIN isp ON users.isp = isp.id WHERE users.id=".$row['owner']);
 		$bwrow = mysql_fetch_array($bwres);
 		if ($bwrow['upname'] && $bwrow['downname'])
@@ -563,7 +563,7 @@ echo "</script>";
 		tr($lang_details['row_thanks_by'],"<span id=\"thanksadded\" style=\"display: none;\"><input class=\"btn\" type=\"button\" value=\"".$lang_details['text_thanks_added']."\" disabled=\"disabled\" /></span><span id=\"curuser\" style=\"display: none;\">".get_username($CURUSER['id'])." </span><span id=\"thanksbutton\">".$thanksbutton."</span>&nbsp;&nbsp;<span id=\"nothanks\">".$nothanks."</span><span id=\"addcuruser\"></span>".$thanksby.($thanks_all < $thanksCount ? $lang_details['text_and_more'].$thanksCount.$lang_details['text_users_in_total'] : ""),1);
 		// ------------- end thanked-by block--------------//
 
-		print("</div>\n");
+		print("</table>\n");
 	}
 	else {
 		stdhead($lang_details['head_comments_for_torrent']."\"" . $row["name"] . "\"");
@@ -590,9 +590,9 @@ if ($CURUSER['showcomment'] != 'no'){
 	}
 }
 print("<br /><br />");
-print ("<div style='border:1px solid #000000;'><div><div class=\"text\" align=\"center\"><b>".$lang_details['text_quick_comment']."</b><br /><br /><form id=\"compose\" name=\"comment\" method=\"post\" action=\"".htmlspecialchars("comment.php?action=add&type=torrent")."\" onsubmit=\"return postvalid(this);\"><input type=\"hidden\" name=\"pid\" value=\"".$id."\" /><br />");
+print ("<table style='border:1px solid #000000;'><tr><td class=\"text\" align=\"center\"><b>".$lang_details['text_quick_comment']."</b><br /><br /><form id=\"compose\" name=\"comment\" method=\"post\" action=\"".htmlspecialchars("comment.php?action=add&type=torrent")."\" onsubmit=\"return postvalid(this);\"><input type=\"hidden\" name=\"pid\" value=\"".$id."\" /><br />");
 quickreply('comment', 'body', $lang_details['submit_add_comment']);
-print("</form></div></div></div>");
+print("</form></td></tr></table>");
 print("<p align=\"center\"><a class=\"index\" href=\"".htmlspecialchars("comment.php?action=add&pid=".$id."&type=torrent")."\">".$lang_details['text_add_a_comment']."</a></p>\n");
 }
 stdfoot();

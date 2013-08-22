@@ -7,7 +7,7 @@ if (get_user_class() < UC_SYSOP)
 stderr("Sorry", "Access denied.");
 stdhead("Add Upload", false);
 ?>
-<div class=main width=737 border=0 cellspacing=0 cellpadding=0><div><div class=embedded>
+<table class=main width=737 border=0 cellspacing=0 cellpadding=0><tr><td class=embedded>
 <div align=center>
 <h1><?php echo $lang_searchuser['head_search']?></a></h1>
 <form method=post action=searchuser.php>
@@ -20,7 +20,7 @@ if ($_GET["returnto"] || $_SERVER["HTTP_REFERER"])
 <?php
 }
 ?>
-<div cellspacing=0 cellpadding=5>
+<table cellspacing=0 cellpadding=5>
 <?php
 if (isset($_POST["sear"]) && !empty($_POST["sear"])) {
 $username = explode(";",$_POST["username"]);
@@ -30,110 +30,110 @@ $res = sql_query("SELECT * FROM users WHERE username like '%".mysql_real_escape_
 while($a = mysql_fetch_assoc($res)){
 $count++;
 ?>
-<div><div colspan=2 class="text" width="300" align="left"><b><a href=userdetails.php?id=<?=$a["id"]?>><?=$a["username"]?></a></b></div></div>
+<tr><td colspan=2 class="text" width="300" align="left"><b><a href=userdetails.php?id=<?=$a["id"]?>><?=$a["username"]?></a></b></td></tr>
 <? }}
 for($i=0;$clases[$i];$i++){
 $res = sql_query("SELECT * FROM users WHERE class = '".mysql_real_escape_string($clases[$i])."'");
 while($a = mysql_fetch_assoc($res)){
 $count++;
 ?>
-<div><div colspan=2 class="text" width="300" align="left"><b><a href=userdetails.php?id=<?=$a["id"]?>><?=$a["username"]?></a></b></div></div>
+<tr><td colspan=2 class="text" width="300" align="left"><b><a href=userdetails.php?id=<?=$a["id"]?>><?=$a["username"]?></a></b></td></tr>
 <? }}
 if($count<=0){ ?>
-<div><div colspan=2 class="text" width="300" align="left"><b><?php echo $lang_searchuser['text_noresult']?></b></div></div>
+<tr><td colspan=2 class="text" width="300" align="left"><b><?php echo $lang_searchuser['text_noresult']?></b></td></tr>
 <? } ?>
-<div><div><p align=center><a href=searchuser.php><?php echo $lang_searchuser['submit_return']?></a></p></div></div>
-<div><div>
-</div></div>
+<tr><td><p align=center><a href=searchuser.php><?php echo $lang_searchuser['submit_return']?></a></p></td></tr>
+<tr><td>
+</td></tr>
 <? }else{ ?>
-<div><div class="rowhead" valign="top"><?php echo $lang_searchuser['text_username']?></div><div class="rowfollow"><input type=text name=username size=20><?php echo $lang_searchuser['text_notice']?></div></div>
-<div>
-<div class="rowhead" valign="top"><?php echo $lang_searchuser['text_usergroup']?></div><div class="rowfollow">
-  <div style="border: 0" width="100%" cellpadding="0" cellspacing="0">
-    <div>
-             <div style="border: 0" width="20"><input type="checkbox" name="clases[]" value="1">
-             </div>
-             <div style="border: 0"><?php echo $lang_functions['text_peasant']?></div>
+<tr><td class="rowhead" valign="top"><?php echo $lang_searchuser['text_username']?></td><td class="rowfollow"><input type=text name=username size=20><?php echo $lang_searchuser['text_notice']?></td></tr>
+<tr>
+<td class="rowhead" valign="top"><?php echo $lang_searchuser['text_usergroup']?></td><td class="rowfollow">
+  <table style="border: 0" width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="1">
+             </td>
+             <td style="border: 0"><?php echo $lang_functions['text_peasant']?></td>
 
-             <div style="border: 0" width="20"><input type="checkbox" name="clases[]" value="2">
-             </div>
-             <div style="border: 0"><?php echo $lang_functions['text_user']?></div>
+             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="2">
+             </td>
+             <td style="border: 0"><?php echo $lang_functions['text_user']?></td>
 
-             <div style="border: 0" width="20"><input type="checkbox" name="clases[]" value="3">
-             </div>
-             <div style="border: 0"><?php echo $lang_functions['text_power_user']?></div>
+             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="3">
+             </td>
+             <td style="border: 0"><?php echo $lang_functions['text_power_user']?></td>
 
-             <div style="border: 0" width="20"><input type="checkbox" name="clases[]" value="4">
-             </div>
-             <div style="border: 0"><?php echo $lang_functions['text_elite_user']?></div>
-      </div>
-    <div>
-             <div style="border: 0" width="20"><input type="checkbox" name="clases[]" value="5">
-             </div>
-             <div style="border: 0"><?php echo $lang_functions['text_crazy_user']?></div>
+             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="4">
+             </td>
+             <td style="border: 0"><?php echo $lang_functions['text_elite_user']?></td>
+      </tr>
+    <tr>
+             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="5">
+             </td>
+             <td style="border: 0"><?php echo $lang_functions['text_crazy_user']?></td>
 
-             <div style="border: 0" width="20"><input type="checkbox" name="clases[]" value="6">
-             </div>
-             <div style="border: 0"><?php echo $lang_functions['text_insane_user']?></div>
+             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="6">
+             </td>
+             <td style="border: 0"><?php echo $lang_functions['text_insane_user']?></td>
 
-             <div style="border: 0" width="20"><input type="checkbox" name="clases[]" value="7">
-             </div>
-             <div style="border: 0"><?php echo $lang_functions['text_veteran_user']?></div>
+             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="7">
+             </td>
+             <td style="border: 0"><?php echo $lang_functions['text_veteran_user']?></td>
 
-             <div style="border: 0" width="20"><input type="checkbox" name="clases[]" value="8">
-             </div>
-             <div style="border: 0"><?php echo $lang_functions['text_extreme_user']?></div>
-      </div>
+             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="8">
+             </td>
+             <td style="border: 0"><?php echo $lang_functions['text_extreme_user']?></td>
+      </tr>
 
-    <div>
-             <div style="border: 0" width="20"><input type="checkbox" name="clases[]" value="9">
-             </div>
-             <div style="border: 0"><?php echo $lang_functions['text_ultimate_user']?></div>
+    <tr>
+             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="9">
+             </td>
+             <td style="border: 0"><?php echo $lang_functions['text_ultimate_user']?></td>
 
-             <div style="border: 0" width="20"><input type="checkbox" name="clases[]" value="10">
-             </div>
-             <div style="border: 0"><?php echo $lang_functions['text_nexus_master']?></div>
+             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="10">
+             </td>
+             <td style="border: 0"><?php echo $lang_functions['text_nexus_master']?></td>
 
-             <div style="border: 0" width="20"><input type="checkbox" name="clases[]" value="11">
-             </div>
-             <div style="border: 0"><?php echo $lang_functions['text_vip']?></div>
+             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="11">
+             </td>
+             <td style="border: 0"><?php echo $lang_functions['text_vip']?></td>
 
-             <div style="border: 0" width="20"><input type="checkbox" name="clases[]" value="12">
-             </div>
-             <div style="border: 0"><?php echo $lang_functions['text_uploader']?></div>
-      </div>
+             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="12">
+             </td>
+             <td style="border: 0"><?php echo $lang_functions['text_uploader']?></td>
+      </tr>
 
-    <div>
-             <div style="border: 0" width="20"><input type="checkbox" name="clases[]" value="13">
-             </div>
-             <div style="border: 0"><?php echo $lang_functions['text_moderators']?></div>
+    <tr>
+             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="13">
+             </td>
+             <td style="border: 0"><?php echo $lang_functions['text_moderators']?></td>
 
-             <div style="border: 0" width="20"><input type="checkbox" name="clases[]" value="14">
-             </div>
-             <div style="border: 0"><?php echo $lang_functions['text_administrators']?></div>
+             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="14">
+             </td>
+             <td style="border: 0"><?php echo $lang_functions['text_administrators']?></td>
 
-             <div style="border: 0" width="20"><input type="checkbox" name="clases[]" value="15">
-             </div>
-             <div style="border: 0"><?php echo $lang_functions['text_sysops']?></div>
+             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="15">
+             </td>
+             <td style="border: 0"><?php echo $lang_functions['text_sysops']?></td>
 
-             <div style="border: 0" width="20"><input type="checkbox" name="clases[]" value="16">
-             </div>
-             <div style="border: 0"><?php echo $lang_functions['text_staff_leader']?></div>
+             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="16">
+             </td>
+             <td style="border: 0"><?php echo $lang_functions['text_staff_leader']?></td>
 	
-       <div style="border: 0">&nbsp;</div>
-       <div style="border: 0">&nbsp;</div>
-      </div>
-    </div>
-  </div>
-</div>
-<div><div class="rowfollow" colspan=2 align=center>
+       <td style="border: 0">&nbsp;</td>
+       <td style="border: 0">&nbsp;</td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr><td class="rowfollow" colspan=2 align=center>
 <input name="sear" type="hidden" value="1" />
-<input type=submit value="<?php echo $lang_searchuser['submit_search']?>" class=btn></div></div>
-</div>
+<input type=submit value="<?php echo $lang_searchuser['submit_search']?>" class=btn></td></tr>
+</table>
 <? } ?>
 </form>
 
- </div></div></div></div>
+ </div></td></tr></table>
 <br />
 <?php
 stdfoot();

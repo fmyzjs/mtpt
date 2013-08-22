@@ -45,10 +45,10 @@ stderr("Error", "Try again.");
 stdhead("Mass E-mail Gateway");
 ?>
 
-<p><div border=0 class=main cellspacing=0 cellpadding=0><div>
-<div class=embedded style='padding-left: 10px'><font size=3><b><?php echo $lang_massmail['head_massmail']?></b></font></div>
-</div></div></p>
-<div border=1 cellspacing=0 cellpadding=5>
+<p><table border=0 class=main cellspacing=0 cellpadding=0><tr>
+<td class=embedded style='padding-left: 10px'><font size=3><b><?php echo $lang_massmail['head_massmail']?></b></font></td>
+</tr></table></p>
+<table border=1 cellspacing=0 cellpadding=5>
 <form method=post action=massmail.php>
 
 <?php
@@ -56,23 +56,23 @@ if (get_user_class() == UC_MODERATOR && $CURUSER["class"] > UC_POWER_USER)
 printf("<input type=hidden name=class value=$CURUSER[class]\n");
 else
 {
-print("<div><div class=rowhead>".$lang_massmail['text_classe']."</div><div colspan=2 align=left><select name=or><option value='<'><<option value='>'>><option value='='>=<option value='<='><=<option value='>='>>=</select><select name=class>\n");
+print("<tr><td class=rowhead>".$lang_massmail['text_classe']."</td><td colspan=2 align=left><select name=or><option value='<'><<option value='>'>><option value='='>=<option value='<='><=<option value='>='>>=</select><select name=class>\n");
 if (get_user_class() == UC_MODERATOR)
 $maxclass = UC_POWER_USER;
 else
 $maxclass = get_user_class() - 1;
 for ($i = 0; $i <= $maxclass; ++$i)
 print("<option value=$i" . ($CURUSER["class"] == $i ? " selected" : "") . ">$prefix" . get_user_class_name($i,false,true,true) . "\n");
-print("</select></div></div>\n");
+print("</select></td></tr>\n");
 }
 ?>
 
 
-<div><div class=rowhead><?php echo $lang_massmail['text_subject']?></div><div><input type=text name=subject size=80></div></div>
-<div><div class=rowhead><?php echo $lang_massmail['text_body']?></div><div><textarea name=message cols=80 rows=20></textarea></div></div>
-<div><div colspan=2 align=center><input type=submit value="<?php echo $lang_massmail['submit_send']?>" class=btn></div></div>
+<tr><td class=rowhead><?php echo $lang_massmail['text_subject']?></td><td><input type=text name=subject size=80></td></tr>
+<tr><td class=rowhead><?php echo $lang_massmail['text_body']?></td><td><textarea name=message cols=80 rows=20></textarea></td></tr>
+<tr><td colspan=2 align=center><input type=submit value="<?php echo $lang_massmail['submit_send']?>" class=btn></td></tr>
 </form>
-</div>
+</table>
 
 <?php
 stdfoot();

@@ -46,7 +46,7 @@ function form($name) {
 }
 function submit() {
 	global $lang_usercp;
-	print("<div><div class=\"rowhead\" valign=\"top\" align=\"right\">".$lang_usercp['row_save_settings']."</div><div class=\"rowfollow\" valign=\"top\" align=left><input type=submit value=\"".$lang_usercp['submit_save_settings']."\"></div></div>"."</form>");
+	print("<tr><td class=\"rowhead\" valign=\"top\" align=\"right\">".$lang_usercp['row_save_settings']."</td><td class=\"rowfollow\" valign=\"top\" align=left><input type=submit value=\"".$lang_usercp['submit_save_settings']."\"></td></tr>"."</form>");
 }
 function format_tz($a)
 {
@@ -160,9 +160,9 @@ if ($action){
 			}
 
 			usercpmenu ("personal");
-			print ("<div border=0 cellspacing=0 cellpadding=5 width=940>");
+			print ("<table border=0 cellspacing=0 cellpadding=5 width=940>");
 			if ($type == 'saved')
-				print("<div><div colspan=2 class=\"heading\" valign=\"top\" align=\"center\"><font color=red>".$lang_usercp['text_saved']."</font></div></div>\n");
+				print("<tr><td colspan=2 class=\"heading\" valign=\"top\" align=\"center\"><font color=red>".$lang_usercp['text_saved']."</font></td></tr>\n");
 
 			form ("personal");
 			tr_small($lang_usercp['row_account_parked'],
@@ -192,7 +192,7 @@ tr($lang_usercp['row_school'], "<select name=school>$schools</select>", 1);
   "\"><br />\n".$lang_usercp['text_avatar_note'].($enablebitbucket_main == 'yes' ? $lang_usercp['text_bitbucket_note'] : ""),1);
   tr($lang_usercp['row_info'], "<textarea name=\"info\" style=\"width:700px\" rows=\"10\" >" . htmlspecialchars($CURUSER["info"]) . "</textarea><br />".$lang_usercp['text_info_note'], 1);
   submit();
-  print("</div>");
+  print("</table>");
   stdfoot();
   die;
   break;
@@ -392,126 +392,126 @@ if ($showprocessing) $processings = searchbox_item_list("processings");
 if ($showteam) $teams = searchbox_item_list("teams");
 if ($showaudiocodec) $audiocodecs = searchbox_item_list("audiocodecs");
 }
-			print ("<div border=0 cellspacing=0 cellpadding=5 width=940>");
+			print ("<table border=0 cellspacing=0 cellpadding=5 width=940>");
 			form ("tracker");
 			if ($type == 'saved')
-				print("<div><div colspan=2 class=\"heading\" valign=\"top\" align=\"center\"><font color=red>".$lang_usercp['text_saved']."</font></div></div>\n");
+				print("<tr><td colspan=2 class=\"heading\" valign=\"top\" align=\"center\"><font color=red>".$lang_usercp['text_saved']."</font></td></tr>\n");
 			if ($emailnotify_smtp=='yes' && $smtptype != 'none')
 				tr_small($lang_usercp['row_email_notification'], "<input type=checkbox name=pmnotif" . (strpos($CURUSER['notifs'], "[pm]") !== false ? " checked" : "") . " value=yes> ".$lang_usercp['checkbox_notification_received_pm']."<br />\n<input type=checkbox name=emailnotif" . (strpos($CURUSER['notifs'], "[email]") !== false ? " checked" : "") . " value=\"yes\" /> ".$lang_usercp['checkbox_notification_default_categories'], 1);
 
-			$categories = "<div>".($allowspecial ? "<div><div class=embedded align=left><font class=big>".$lang_usercp['text_at_browse_page']."</font></div></div></div><div>" : "")."<div><div class=embedded align=left><b>".($brenablecatrow == true ? $brcatrow[0] : $lang_usercp['text_category'])."</b></div></div><div>";
+			$categories = "<table>".($allowspecial ? "<tr><td class=embedded align=left><font class=big>".$lang_usercp['text_at_browse_page']."</font></td></tr></table><table>" : "")."<tr><td class=embedded align=left><b>".($brenablecatrow == true ? $brcatrow[0] : $lang_usercp['text_category'])."</b></td></tr><tr>";
 			$i = 0;
 			foreach ($brcats as $cat)//print category list of Torrents section
 			{
 				$numinrow = $i % $catsperrow;
 				$rownum = (int)($i / $catsperrow);
 				if ($i && $numinrow == 0){
-					$categories .= "</div>".($brenablecatrow ? "<div><div class=embedded align=left><b>".$brcatrow[$rownum]."</b></div></div>" : "")."<div>";
+					$categories .= "</tr>".($brenablecatrow ? "<tr><td class=embedded align=left><b>".$brcatrow[$rownum]."</b></td></tr>" : "")."<tr>";
 				}
-				$categories .= "<div align=left class=bottom style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input class=checkbox name=cat".$cat[id]." type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[cat".$cat[id]."]") !== false ? " checked" : "")." value='yes'>".return_category_image($cat['id'], "torrents.php?allsec=1&amp;")."</div>\n";
+				$categories .= "<td align=left class=bottom style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input class=checkbox name=cat".$cat[id]." type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[cat".$cat[id]."]") !== false ? " checked" : "")." value='yes'>".return_category_image($cat['id'], "torrents.php?allsec=1&amp;")."</td>\n";
 				$i++;
 			}
-			$categories .= "</div>";
+			$categories .= "</tr>";
 			if ($allowspecial) //print category list of Special section
 			{
-				$categories .= "</div><div><div><div class=embedded align=left><font class=big>".$lang_usercp['text_at_special_page']."</font></div></div></div><div>";
-				$categories .= "<div><div class=embedded align=left><b>".($spenablecatrow == true ? $spcatrow[0] : $lang_usercp['text_category'])."</b></div></div><div>";
+				$categories .= "</table><table><tr><td class=embedded align=left><font class=big>".$lang_usercp['text_at_special_page']."</font></td></tr></table><table>";
+				$categories .= "<tr><td class=embedded align=left><b>".($spenablecatrow == true ? $spcatrow[0] : $lang_usercp['text_category'])."</b></td></tr><tr>";
 				$i = 0;
 				foreach ($spcats as $cat)
 				{
 					$numinrow = $i % $catsperrow;
 					$rownum = (int)($i / $catsperrow);
 					if ($i && $numinrow == 0){
-						$categories .= "</div>".($spenablecatrow ? "<div><div class=embedded align=left><b>".$spcatrow[$rownum]."</b></div></div>" : "")."<div>";
+						$categories .= "</tr>".($spenablecatrow ? "<tr><td class=embedded align=left><b>".$spcatrow[$rownum]."</b></td></tr>" : "")."<tr>";
 					}
-					$categories .= "<div align=left class=bottom style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input class=checkbox name=cat".$cat[id]." type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[cat".$cat[id]."]") !== false ? " checked" : "")." value='yes'><img src=pic/" .get_cat_folder($cat['id']). htmlspecialchars($cat[image]) . " border='0' alt=\"" .$cat[name]."\" title=\"" .$cat[name]."\"></div>\n";
+					$categories .= "<td align=left class=bottom style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input class=checkbox name=cat".$cat[id]." type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[cat".$cat[id]."]") !== false ? " checked" : "")." value='yes'><img src=pic/" .get_cat_folder($cat['id']). htmlspecialchars($cat[image]) . " border='0' alt=\"" .$cat[name]."\" title=\"" .$cat[name]."\"></td>\n";
 					$i++;
 				}
-			$categories .= "</div>";
+			$categories .= "</tr>";
 			}
 			if ($showsubcat)//Show subcategory (i.e. source, codecs) selections
 			{
-				$categories .= "</div><div><div><div class=embedded align=left><font class=big>".$lang_usercp['text_sub_category']."</font></div></div></div><div>";
+				$categories .= "</table><table><tr><td class=embedded align=left><font class=big>".$lang_usercp['text_sub_category']."</font></td></tr></table><table>";
 				if ($showsource){
-				$categories .= "<div><div class=embedded align=left><b>".$lang_usercp['text_source']."</b></div></div><div>";
+				$categories .= "<tr><td class=embedded align=left><b>".$lang_usercp['text_source']."</b></td></tr><tr>";
 				$i = 0;
 				foreach ($sources as $source)
 				{
-					$categories .= ($i && $i % $catsperrow == 0) ? "</div><div>" : "";
-					$categories .= "<div align=left class=bottom style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input class=checkbox name=sou$source[id] type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[sou".$source[id]."]") !== false ? " checked" : "") . " value='yes'>$source[name]</div>\n";
+					$categories .= ($i && $i % $catsperrow == 0) ? "</tr><tr>" : "";
+					$categories .= "<td align=left class=bottom style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input class=checkbox name=sou$source[id] type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[sou".$source[id]."]") !== false ? " checked" : "") . " value='yes'>$source[name]</td>\n";
 					$i++;
 				}
-				$categories .= "</div>";
+				$categories .= "</tr>";
 				}
 				if ($showmedium){
-				$categories .= "<div><div class=embedded align=left><b>".$lang_usercp['text_medium']."</b></div></div><div>";
+				$categories .= "<tr><td class=embedded align=left><b>".$lang_usercp['text_medium']."</b></td></tr><tr>";
 				$i = 0;
 				foreach ($media as $medium)
 				{
-					$categories .= ($i && $i % $catsperrow == 0) ? "</div><div>" : "";
-					$categories .= "<div align=left class=bottom style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input class=checkbox name=med$medium[id] type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[med".$medium[id]."]") !== false ? " checked" : "") . " value='yes'>$medium[name]</div>\n";
+					$categories .= ($i && $i % $catsperrow == 0) ? "</tr><tr>" : "";
+					$categories .= "<td align=left class=bottom style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input class=checkbox name=med$medium[id] type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[med".$medium[id]."]") !== false ? " checked" : "") . " value='yes'>$medium[name]</td>\n";
 					$i++;
 				}
-				$categories .= "</div>";
+				$categories .= "</tr>";
 				}
 				if ($showcodec){
-				$categories .= "<div><div class=embedded align=left><b>".$lang_usercp['text_codec']."</b></div></div><div>";
+				$categories .= "<tr><td class=embedded align=left><b>".$lang_usercp['text_codec']."</b></td></tr><tr>";
 				$i = 0;
 				foreach ($codecs as $codec)
 				{
-					$categories .= ($i && $i % $catsperrow == 0) ? "</div><div>" : "";
-					$categories .= "<div align=left class=bottom style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input class=checkbox name=cod$codec[id] type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[cod".$codec[id]."]") !== false ? " checked" : "") . " value='yes'>$codec[name]</div>\n";
+					$categories .= ($i && $i % $catsperrow == 0) ? "</tr><tr>" : "";
+					$categories .= "<td align=left class=bottom style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input class=checkbox name=cod$codec[id] type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[cod".$codec[id]."]") !== false ? " checked" : "") . " value='yes'>$codec[name]</td>\n";
 					$i++;
 				}
-				$categories .= "</div>";
+				$categories .= "</tr>";
 				}
 				if ($showaudiocodec){
-				$categories .= "<div><div class=embedded align=left><b>".$lang_usercp['text_audio_codec']."</b></div></div><div>";
+				$categories .= "<tr><td class=embedded align=left><b>".$lang_usercp['text_audio_codec']."</b></td></tr><tr>";
 				$i = 0;
 				foreach ($audiocodecs as $audiocodec)
 				{
-					$categories .= ($i && $i % $catsperrow == 0) ? "</div><div>" : "";
-					$categories .= "<div align=left class=bottom style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input class=checkbox name=aud$audiocodec[id] type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[aud".$audiocodec[id]."]") !== false ? " checked" : "") . " value='yes'>$audiocodec[name]</div>\n";
+					$categories .= ($i && $i % $catsperrow == 0) ? "</tr><tr>" : "";
+					$categories .= "<td align=left class=bottom style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input class=checkbox name=aud$audiocodec[id] type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[aud".$audiocodec[id]."]") !== false ? " checked" : "") . " value='yes'>$audiocodec[name]</td>\n";
 					$i++;
 				}
-				$categories .= "</div>";
+				$categories .= "</tr>";
 				}
 				if ($showstandard){
-				$categories .= "<div><div class=embedded align=left><b>".$lang_usercp['text_standard']."</b></div></div><div>";
+				$categories .= "<tr><td class=embedded align=left><b>".$lang_usercp['text_standard']."</b></td></tr><tr>";
 				$i = 0;
 				foreach ($standards as $standard)
 				{
-					$categories .= ($i && $i % $catsperrow == 0) ? "</div><div>" : "";
-					$categories .= "<div align=left class=bottom style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input class=checkbox name=sta$standard[id] type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[sta".$standard[id]."]") !== false ? " checked" : "") . " value='yes'>$standard[name]</div>\n";
+					$categories .= ($i && $i % $catsperrow == 0) ? "</tr><tr>" : "";
+					$categories .= "<td align=left class=bottom style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input class=checkbox name=sta$standard[id] type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[sta".$standard[id]."]") !== false ? " checked" : "") . " value='yes'>$standard[name]</td>\n";
 					$i++;
 				}
-				$categories .= "</div>";
+				$categories .= "</tr>";
 				}
 				if ($showprocessing){
-				$categories .= "<div><div class=embedded align=left><b>".$lang_usercp['text_processing']."</b></div></div><div>";
+				$categories .= "<tr><td class=embedded align=left><b>".$lang_usercp['text_processing']."</b></td></tr><tr>";
 				$i = 0;
 				foreach ($processings as $processing)
 				{
-					$categories .= ($i && $i % $catsperrow == 0) ? "</div><div>" : "";
-					$categories .= "<div align=left class=bottom style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input class=checkbox name=pro$processing[id] type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[pro".$processing[id]."]") !== false ? " checked" : "") . " value='yes'>$processing[name]</div>\n";
+					$categories .= ($i && $i % $catsperrow == 0) ? "</tr><tr>" : "";
+					$categories .= "<td align=left class=bottom style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input class=checkbox name=pro$processing[id] type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[pro".$processing[id]."]") !== false ? " checked" : "") . " value='yes'>$processing[name]</td>\n";
 					$i++;
 				}
-				$categories .= "</div>";
+				$categories .= "</tr>";
 				}
 				if ($showteam){
-				$categories .= "<div><div class=embedded align=left><b>".$lang_usercp['text_team']."</b></div></div><div>";
+				$categories .= "<tr><td class=embedded align=left><b>".$lang_usercp['text_team']."</b></td></tr><tr>";
 				$i = 0;
 				foreach ($teams as $team)
 				{
-					$categories .= ($i && $i % $catsperrow == 0) ? "</div><div>" : "";
-					$categories .= "<div align=left class=bottom style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input class=checkbox name=tea$team[id] type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[tea".$team[id]."]") !== false ? " checked" : "") . " value='yes'>$team[name]</div>\n";
+					$categories .= ($i && $i % $catsperrow == 0) ? "</tr><tr>" : "";
+					$categories .= "<td align=left class=bottom style=\"padding-bottom: 4px;padding-left: ".$catpadding."px\"><input class=checkbox name=tea$team[id] type=\"checkbox\" " . (strpos($CURUSER['notifs'], "[tea".$team[id]."]") !== false ? " checked" : "") . " value='yes'>$team[name]</td>\n";
 					$i++;
 				}
-				$categories .= "</div>";
+				$categories .= "</tr>";
 				}
 			}
-			$categories .= "</div><div>";
-			$categories .= "<div><div colspan=3 class=embedded align=left><font class=big>".$lang_usercp['text_additional_selection']."</font></div></div>";
+			$categories .= "</table><table>";
+			$categories .= "<tr><td colspan=3 class=embedded align=left><font class=big>".$lang_usercp['text_additional_selection']."</font></td></tr>";
 
 	if (strpos($CURUSER['notifs'], "[spstate=0]") !== false)
 		$special_state = 0;
@@ -529,8 +529,8 @@ if ($showaudiocodec) $audiocodecs = searchbox_item_list("audiocodecs");
 		$special_state = 6;
 	else $special_state = 0;
 
-			$categories .= "<div><div class=bottom><b>".$lang_usercp['text_show_dead_active']."</b><br /><select name=\"incldead\"><option value=\"0\" ".(strpos($CURUSER['notifs'], "[incldead=0]") !== false ? " selected" : "").">".$lang_usercp['select_including_dead']."</option><option value=\"1\" ".(strpos($CURUSER['notifs'], "[incldead=1]") !== false ||  strpos($CURUSER['notifs'], "incldead") == false ? " selected" : "").">".$lang_usercp['select_active']."</option><option value=\"2\" ".(strpos($CURUSER['notifs'], "[incldead=2]") !== false  ? " selected" : "").">".$lang_usercp['select_dead']."</option></select></div><div class=bottom align=left><b>".$lang_usercp['text_show_special_torrents']."</b><br /><select name=\"spstate\"><option value=\"0\" ".($special_state == 0 ? " selected" : "").">".$lang_usercp['select_all']."</option>".promotion_selection($special_state)."</select></div><div class=bottom><b>".$lang_usercp['text_show_bookmarked']."</b><br /><select name=\"inclbookmarked\"><option value=\"0\" ".(strpos($CURUSER['notifs'], "[inclbookmarked=0]") !== false ? " selected" : "").">".$lang_usercp['select_all']."</option><option value=\"1\" ".(strpos($CURUSER['notifs'], "[inclbookmarked=1]") !== false ? " selected" : "")." >".$lang_usercp['select_bookmarked']."</option><option value=\"2\" ".(strpos($CURUSER['notifs'], "[inclbookmarked=2]") !== false ? " selected" : "").">".$lang_usercp['select_bookmarked_exclude']."</option></select></div></div>";
-			$categories .= "</div>";
+			$categories .= "<tr><td class=bottom><b>".$lang_usercp['text_show_dead_active']."</b><br /><select name=\"incldead\"><option value=\"0\" ".(strpos($CURUSER['notifs'], "[incldead=0]") !== false ? " selected" : "").">".$lang_usercp['select_including_dead']."</option><option value=\"1\" ".(strpos($CURUSER['notifs'], "[incldead=1]") !== false ||  strpos($CURUSER['notifs'], "incldead") == false ? " selected" : "").">".$lang_usercp['select_active']."</option><option value=\"2\" ".(strpos($CURUSER['notifs'], "[incldead=2]") !== false  ? " selected" : "").">".$lang_usercp['select_dead']."</option></select></td><td class=bottom align=left><b>".$lang_usercp['text_show_special_torrents']."</b><br /><select name=\"spstate\"><option value=\"0\" ".($special_state == 0 ? " selected" : "").">".$lang_usercp['select_all']."</option>".promotion_selection($special_state)."</select></td><td class=bottom><b>".$lang_usercp['text_show_bookmarked']."</b><br /><select name=\"inclbookmarked\"><option value=\"0\" ".(strpos($CURUSER['notifs'], "[inclbookmarked=0]") !== false ? " selected" : "").">".$lang_usercp['select_all']."</option><option value=\"1\" ".(strpos($CURUSER['notifs'], "[inclbookmarked=1]") !== false ? " selected" : "")." >".$lang_usercp['select_bookmarked']."</option><option value=\"2\" ".(strpos($CURUSER['notifs'], "[inclbookmarked=2]") !== false ? " selected" : "").">".$lang_usercp['select_bookmarked_exclude']."</option></select></td></tr>";
+			$categories .= "</table>";
 			tr_small($lang_usercp['row_browse_default_categories'],$categories,1);
 			$ss_r = sql_query("SELECT * FROM stylesheets") or die;
 			$ss_sa = array();
@@ -566,7 +566,7 @@ if ($showaudiocodec) $audiocodecs = searchbox_item_list("audiocodecs");
 				if ($row["site_lang_folder"] == get_langfolder_cookie()) $se = " selected"; else $se = "";
 				$s .= "<option value=". $row["id"] . $se. ">" . htmlspecialchars($row["lang_name"]) . "</option>\n";
 			}
-			$s .= "\n</select>&nbsp;&nbsp;<font class=small>".$lang_usercp['text_translation_note']."<a href=\"aboutnexus.php#translation\"><b>".$lang_usercp['text_translation_link']."</b></a></font>.</div></div>";
+			$s .= "\n</select>&nbsp;&nbsp;<font class=small>".$lang_usercp['text_translation_note']."<a href=\"aboutnexus.php#translation\"><b>".$lang_usercp['text_translation_link']."</b></a></font>.</td></tr>";
 
 			tr_small($lang_usercp['row_site_language'], $s,1);
 
@@ -594,7 +594,7 @@ tr_small($lang_usercp['row_funbox'],"<input type=checkbox name=showfb".($CURUSER
 		<b>".$lang_usercp['text_comments_reviews'].": </b><br /><input type=checkbox name=showcomnum ".($CURUSER['showcomnum'] == 'yes' ? " checked" : "")." value=yes>".$lang_usercp['text_show_comment_number'].($showtooltipsetting ? "<select name=\"showlastcom\" style=\"width: 70px;\"><option value=\"yes\" ".($CURUSER['showlastcom'] != 'no' ? " selected" : "").">".$lang_usercp['select_with']."</option><option value=\"no\" ".($CURUSER['showlastcom'] == 'no' ? " selected" : "").">".$lang_usercp['select_without']."</option></select>".$lang_usercp['text_last_comment_on_tooltip'] : ""), 1);
 
 			submit();
-			print("</div>");
+			print("</table>");
 			stdfoot();
 			die;
 			break;
@@ -629,10 +629,10 @@ tr_small($lang_usercp['row_funbox'],"<input type=checkbox name=showfb".($CURUSER
 			}
 			stdhead($lang_usercp['head_control_panel'].$lang_usercp['head_forum_settings'],true);
 			usercpmenu ("forum");
-			print ("<div border=0 cellspacing=0 cellpadding=5 width=940>");
+			print ("<table border=0 cellspacing=0 cellpadding=5 width=940>");
 			form ("forum");
 			if ($type == 'saved')
-			print("<div><div colspan=2 class=\"heading\" valign=\"top\" align=\"center\"><font color=red>".$lang_usercp['text_saved']."</font></div></div>\n");
+			print("<tr><td colspan=2 class=\"heading\" valign=\"top\" align=\"center\"><font color=red>".$lang_usercp['text_saved']."</font></td></tr>\n");
 
 			tr_small($lang_usercp['row_topics_per_page'], "<input type=text size=10 name=topicsperpage value=$CURUSER[topicsperpage]>".$lang_usercp['text_zero_equals_default'],1);
 			tr_small($lang_usercp['row_posts_per_page'], "<input type=text size=10 name=postsperpage value=$CURUSER[postsperpage]> ".$lang_usercp['text_zero_equals_default'],1);
@@ -643,7 +643,7 @@ tr_small($lang_usercp['row_funbox'],"<input type=checkbox name=showfb".($CURUSER
 			tr_small($lang_usercp['row_click_on_topic'], "<input type=radio name=clicktopic" . ($CURUSER["clicktopic"] == "firstpage" ? " checked" : "") . " value=\"firstpage\">".$lang_usercp['text_go_to_first_page']."<input type=radio name=clicktopic" . ($CURUSER["clicktopic"] == "lastpage" ? " checked" : "") . " value=\"lastpage\">".$lang_usercp['text_go_to_last_page'],1);
 			tr_small($lang_usercp['row_forum_signature'], "<textarea name=signature style=\"width:700px\" rows=10>" . $CURUSER[signature] . "</textarea><br />".$lang_usercp['text_signature_note'],1);
 			submit();
-			print("</div>");
+			print("</table>");
 			stdfoot();
 			die;
 			break;
@@ -784,7 +784,7 @@ EOD;
 			}
 			stdhead($lang_usercp['head_control_panel'].$lang_usercp['head_security_settings']);
 			usercpmenu ("security");
-			print ("<div border=0 cellspacing=0 cellpadding=5 width=940>");
+			print ("<table border=0 cellspacing=0 cellpadding=5 width=940>");
 			if ($type == 'save') {
 				print("<form method=post action=usercp.php><input type=hidden name=action value=security><input type=hidden name=type value=confirm>");
 				$resetpasskey = $_POST["resetpasskey"];
@@ -798,14 +798,14 @@ EOD;
 				print("<input type=\"hidden\" name=\"chpassword\" value=\"$chpassword\">");
 				print("<input type=\"hidden\" name=\"passagain\" value=\"$passagain\">");
 				print("<input type=\"hidden\" name=\"privacy\" value=\"$privacy\">");
-				Print("<div><div class=\"heading\" valign=\"top\" align=\"right\" width=1%>".$lang_usercp['row_security_check']."</div><div valign=\"top\" align=left><input type=password name=oldpassword style=\"width: 200px\"><br /><font class=small>".$lang_usercp['text_security_check_note']."</font></div></div>\n");
+				Print("<tr><td class=\"heading\" valign=\"top\" align=\"right\" width=1%>".$lang_usercp['row_security_check']."</td><td valign=\"top\" align=left><input type=password name=oldpassword style=\"width: 200px\"><br /><font class=small>".$lang_usercp['text_security_check_note']."</font></td></tr>\n");
 				submit();
-				print("</div>");
+				print("</table>");
 				stdfoot();
 				die;
 			}
 			if ($type == 'saved')
-				print("<div><div colspan=2 class=\"heading\" valign=\"top\" align=\"center\"><font color=red>".$lang_usercp['text_saved'].($_GET["mail"] == "1" ? $lang_usercp['std_confirmation_email_sent'] : "")." ".($_GET["passkey"] == "1" ? $lang_usercp['std_passkey_reset'] : "")." ".($_GET["password"] == "1" ? $lang_usercp['std_password_changed'] : "")." ".($_GET["privacy"] == "1" ? $lang_usercp['std_privacy_level_updated'] : "")."</font></div></div>\n");
+				print("<tr><td colspan=2 class=\"heading\" valign=\"top\" align=\"center\"><font color=red>".$lang_usercp['text_saved'].($_GET["mail"] == "1" ? $lang_usercp['std_confirmation_email_sent'] : "")." ".($_GET["passkey"] == "1" ? $lang_usercp['std_passkey_reset'] : "")." ".($_GET["password"] == "1" ? $lang_usercp['std_password_changed'] : "")." ".($_GET["privacy"] == "1" ? $lang_usercp['std_privacy_level_updated'] : "")."</font></td></tr>\n");
 			form ("security");
 			tr_small($lang_usercp['row_reset_passkey'],"<input type=checkbox name=resetpasskey value=1 />".$lang_usercp['checkbox_reset_my_passkey']."<br /><font class=small>".$lang_usercp['text_reset_passkey_note']."</font>", 1);
 			if ($disableemailchange != 'no' && $smtptype != 'none') //system-wide setting
@@ -814,7 +814,7 @@ EOD;
 			tr_small($lang_usercp['row_type_password_again'], "<input type=\"password\" name=\"passagain\" style=\"width: 200px\" />", 1);
 			tr_small($lang_usercp['row_privacy_level'],  priv("normal", $lang_usercp['radio_normal']) . " " . priv("low", $lang_usercp['radio_low']) . " " . priv("strong", $lang_usercp['radio_strong']), 1);
 			submit();
-			print("</div>");
+			print("</table>");
 			stdfoot();
 			die;
 			break;
@@ -852,7 +852,7 @@ if ($forumposts)
 	$percentages = round($forumposts*100/$postcount, 3)."%";
 }
 ?>
-<div border="0" cellspacing="0" cellpadding="5" width=940>
+<table border="0" cellspacing="0" cellpadding="5" width=940>
 <?php
 tr_small($lang_usercp['row_join_date'], $joindate, 1);
 tr_small($lang_usercp['row_email_address'], $CURUSER['email'], 1);
@@ -879,19 +879,19 @@ tr_small($lang_usercp['row_written_comments'], $commentcount." [<a href=\"userhi
 if ($forumposts)
 	tr($lang_usercp['row_forum_posts'], $forumposts." [<a href=\"userhistory.php?action=viewposts&id=".$CURUSER[id]."\" title=\"".$lang_usercp['link_view_posts']."\">".$lang_usercp['text_view']."</a>] (".$dayposts.$lang_usercp['text_posts_per_day']."; ".$percentages.$lang_usercp['text_of_total_posts'].")", 1);
 ?>
-</div>
-<div border="0" cellspacing="0" cellpadding="5" width=940>
+</table>
+<table border="0" cellspacing="0" cellpadding="5" width=940>
 <?php
-print("<div align=center class=tabletitle><b>".$lang_usercp['text_recently_read_topics']."</b></div>");
+print("<td align=center class=tabletitle><b>".$lang_usercp['text_recently_read_topics']."</b></td>");
 ?>
-</div>
+</table>
 <?php
-print("<div border=0 cellspacing=0 cellpadding=3 width=940><div>".
-"<div class=colhead align=left width=80%>".$lang_usercp['col_topic_title']."</div>".
-"<div class=colhead align=center><nobr>".$lang_usercp['col_replies']."/".$lang_usercp['col_views']."</nobr></div>".
-"<div class=colhead align=center>".$lang_usercp['col_topic_starter']."</div>".
-"<div class=colhead align=center width=20%>".$lang_usercp['col_last_post']."</div>".
-"</div>");
+print("<table border=0 cellspacing=0 cellpadding=3 width=940><tr>".
+"<td class=colhead align=left width=80%>".$lang_usercp['col_topic_title']."</td>".
+"<td class=colhead align=center><nobr>".$lang_usercp['col_replies']."/".$lang_usercp['col_views']."</nobr></td>".
+"<td class=colhead align=center>".$lang_usercp['col_topic_starter']."</td>".
+"<td class=colhead align=center width=20%>".$lang_usercp['col_last_post']."</td>".
+"</tr>");
 $res_topics = sql_query("SELECT * FROM readposts INNER JOIN topics ON topics.id = readposts.topicid WHERE readposts.userid = ".$CURUSER[id]." ORDER BY readposts.id DESC LIMIT 5") or sqlerr();
 while ($topicarr = mysql_fetch_assoc($res_topics))
 {
@@ -921,14 +921,14 @@ while ($topicarr = mysql_fetch_assoc($res_topics))
 	$author = get_username($topic_userid);
 	$subject = "<a href=forums.php?action=viewtopic&topicid=$topicid><b>" . htmlspecialchars($topicarr["subject"]) . "</b></a>";
 
-	print("<div class=tableb><div style='padding-left: 10px' align=left class=rowfollow>$subject</div>".
-	"<div align=center class=rowfollow>".$replies."/".$views."</div>" .
-	"<div align=center class=rowfollow>".$author."</div>" .
-	"<div align=center class=rowfollow><nobr>".$added." | ".$username."</nobr></div></div>");
+	print("<tr class=tableb><td style='padding-left: 10px' align=left class=rowfollow>$subject</td>".
+	"<td align=center class=rowfollow>".$replies."/".$views."</td>" .
+	"<td align=center class=rowfollow>".$author."</td>" .
+	"<td align=center class=rowfollow><nobr>".$added." | ".$username."</nobr></td></tr>");
 }
 ?>
-  </div>
-</div>
-</div>
+  </table>
+</td>
+</tr>
 <?php
 stdfoot();

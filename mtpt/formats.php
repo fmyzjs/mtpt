@@ -4,21 +4,21 @@ dbconn();
 loggedinorreturn();
 stdhead("Downloaded Files");
 ?>
-<div class=main width=737 border=0 cellspacing=0 cellpadding=0><div><div class=embedded>
+<table class=main width=737 border=0 cellspacing=0 cellpadding=0><tr><td class=embedded>
 <h2>A Handy Guide to Using the Files You've Downloaded</h2>
-<div width=100% border=1 cellspacing=0 cellpadding=10><div><div class=text> 
+<table width=100% border=1 cellspacing=0 cellpadding=10><tr><td class=text> 
 
 Hey guys, here's some info about common files that you can download from the internet,
 and a little bit about using these files for their intended purposes. If you're stuck
 on what exactly a file is or how to open it maybe your answer lies ahead. If you dont'
 find your answer here, then please post in the "Forum". So without further adieu lets
 get the show on the road!<br />
-</div></div></div>
-</div></div></div>
+</td></tr></table>
+</td></tr></table>
 <br />
-<div class=main width=737 border=0 cellspacing=0 cellpadding=0><div><div class=embedded>
+<table class=main width=737 border=0 cellspacing=0 cellpadding=0><tr><td class=embedded>
 <h2>Compression Files</h2>
-<div width=100% border=1 cellspacing=0 cellpadding=10><div><div class=text> 
+<table width=100% border=1 cellspacing=0 cellpadding=10><tr><td class=text> 
 
 <b>.rar .zip .ace .r01 .001</b><br />
 <br />
@@ -42,12 +42,12 @@ opening them with WinRAR or WinZip it will disorder your pages. To display these
 archives properly it's often best to use <a href="http://www.geocities.com/davidayton/CDisplay">
 CDisplay</a>.<br />
 <br />
-</div></div></div>
-</div></div></div>
+</td></tr></table>
+</td></tr></table>
 <br />
-<div class=main width=737 border=0 cellspacing=0 cellpadding=0><div><div class=embedded>
+<table class=main width=737 border=0 cellspacing=0 cellpadding=0><tr><td class=embedded>
 <h2>Multimedia Files</h2>
-<div width=100% border=1 cellspacing=0 cellpadding=10><div><div class=text> 
+<table width=100% border=1 cellspacing=0 cellpadding=10><tr><td class=text> 
 
 <b>.avi .mpg. .mpeg .divx .xvid .wmv</b><br />
 <br />
@@ -116,12 +116,12 @@ probably want to download the <a href="http://tobias.everwicked.com/oggds.htm">
 DirectShow Ogg filter</a> to play back OGM files. Any new version of
 <a href="http://www.winamp.com">WinAmp</a> will also do.<br />
 <br />
-</div></div></div>
-</div></div></div>
+</td></tr></table>
+</td></tr></table>
 <br />
-<div class=main width=737 border=0 cellspacing=0 cellpadding=0><div><div class=embedded>
+<table class=main width=737 border=0 cellspacing=0 cellpadding=0><tr><td class=embedded>
 <h2>CD Image Files</h2>
-<div width=100% border=1 cellspacing=0 cellpadding=10><div><div class=text> 
+<table width=100% border=1 cellspacing=0 cellpadding=10><tr><td class=text> 
 
 <b>.bin and .cue</b><br />
 <br />
@@ -155,12 +155,12 @@ All these files go together and are in the <a href="http://www.elby.ch/english/p
 clone_cd/index.html"> CloneCD</a> format. CloneCD is like most other CD-Burning programs,
 see the .bin and .cue section if you're having problems with these files.<br />
 <br />
-</div></div></div>
-</div></div></div>
+</td></tr></table>
+</td></tr></table>
 <br />
-<div class=main width=737 border=0 cellspacing=0 cellpadding=0><div><div class=embedded>
+<table class=main width=737 border=0 cellspacing=0 cellpadding=0><tr><td class=embedded>
 <h2>Other Files</h2>
-<div width=100% border=1 cellspacing=0 cellpadding=10><div><div class=text> 
+<table width=100% border=1 cellspacing=0 cellpadding=10><tr><td class=text> 
 
 <b>.txt .doc</b><br />
 <br />
@@ -200,16 +200,16 @@ This is a parity file, and is often used when downloading from newsgroups. These
 fill in gaps when you're downloading a multi-volume archive and get corrupted or missing parts.
 Open them with <a href="http://www.pbclements.co.uk/QuickPar/">QuickPar</a>.
 <br />
-</div></div></div>
-</div></div></div>
+</td></tr></table>
+</td></tr></table>
 <br />
-<div class=main width=737 border=0 cellspacing=0 cellpadding=0><div><div class=embedded>
-<div width=100% border=1 cellspacing=0 cellpadding=10><div><div class=text> 
+<table class=main width=737 border=0 cellspacing=0 cellpadding=0><tr><td class=embedded>
+<table width=100% border=1 cellspacing=0 cellpadding=10><tr><td class=text> 
 
 If you have any suggestion/changes <a href=staff.php><b>PM</b></a> one of the Admins/SysOp!<br />
 <br />
 This file was originally written by hussdiesel at filesoup, then edited by Rhomboid and re-edited by us.<br />
-</div></div></div>
-</div></div></div>
+</td></tr></table>
+</td></tr></table>
 <br />
 <?php

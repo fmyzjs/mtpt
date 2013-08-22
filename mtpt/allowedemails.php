@@ -12,16 +12,16 @@ $action = isset($_POST['action']) ? htmlspecialchars($_POST['action']) : (isset(
 
 if ($action == 'showlist') {
 	stdhead ("Show List");
-	print("<div border=1 cellspacing=0 cellpadding=5 width=737>\n");
+	print("<table border=1 cellspacing=0 cellpadding=5 width=737>\n");
 	$sql = sql_query("SELECT * FROM allowedemails") or sqlerr(__FILE__, __LINE__);
 	$list = mysql_fetch_array($sql);
 ?>
 <form method=post action=allowedemails.php>
 <input type=hidden name=action value=savelist>
-<div><div><?php echo $lang_allowedemails['text_help1']?><br /><?php echo $lang_allowedemails['text_help2']?><br /><?php echo $lang_allowedemails['text_help3']?></div>
-<div><textarea name="value" rows="5" cols="40"><?php echo $list[value]?></textarea>
-<input type=submit value="<?php echo $lang_allowedemails['submit_save']?>"></form></div>
-</div></div>
+<tr><td><?php echo $lang_allowedemails['text_help1']?><br /><?php echo $lang_allowedemails['text_help2']?><br /><?php echo $lang_allowedemails['text_help3']?></td>
+<td><textarea name="value" rows="5" cols="40"><?php echo $list[value]?></textarea>
+<input type=submit value="<?php echo $lang_allowedemails['submit_save']?>"></form></td>
+</tr></table>
 <?php
 stdfoot () ;
 }elseif ($action == 'savelist') {

@@ -14,7 +14,7 @@ echo "<h1>Administrative User Search</h1>\n";
 
 if ($_GET['h'])
 {
-	echo "<div width=65% border=0 align=center><div><div class=embedded bgcolor='#F5F4EA'><div align=left>\n
+	echo "<table width=65% border=0 align=center><tr><td class=embedded bgcolor='#F5F4EA'><div align=left>\n
 	Fields left blank will be ignored;\n
 	Wildcards * and ? may be used in Name, Email and Comments, as well as multiple values\n
 	separated by spaces (e.g. 'wyz Max*' in Name will list both users named\n
@@ -33,7 +33,7 @@ if ($_GET['h'])
 	of the torrents in progress. <br /><br />\n
 	The History column lists the number of forum posts and torrent comments,\n
 	respectively, as well as linking to the history page.\n
-	</div></div></div></div><br /><br />\n";
+	</div></td></tr></table><br /><br />\n";
 }
 else
 {
@@ -46,14 +46,14 @@ $highlight = " bgcolor=#BBAF9B";
 ?>
 
 <form method=get action=<?php echo $_SERVER["PHP_SELF"]?>>
-<div border="1" cellspacing="0" cellpadding="5">
-<div>
+<table border="1" cellspacing="0" cellpadding="5">
+<tr>
 
-  <div valign="middle" class=rowhead>Name:</div>
-  <div<?php echo $_GET['n']?$highlight:""?>><input name="n" type="text" value="<?php echo $_GET['n']?>" size=35></div>
+  <td valign="middle" class=rowhead>Name:</td>
+  <td<?php echo $_GET['n']?$highlight:""?>><input name="n" type="text" value="<?php echo $_GET['n']?>" size=35></td>
 
-  <div valign="middle" class=rowhead>Ratio:</div>
-  <div<?php echo $_GET['r']?$highlight:""?>><select name="rt">
+  <td valign="middle" class=rowhead>Ratio:</td>
+  <td<?php echo $_GET['r']?$highlight:""?>><select name="rt">
 <?php
 	$options = array("equal","above","below","between");
 	for ($i = 0; $i < count($options); $i++){
@@ -62,38 +62,38 @@ $highlight = " bgcolor=#BBAF9B";
 	?>
     </select>
     <input name="r" type="text" value="<?php echo $_GET['r']?>" size="5" maxlength="4">
-    <input name="r2" type="text" value="<?php echo $_GET['r2']?>" size="5" maxlength="4"></div>
+    <input name="r2" type="text" value="<?php echo $_GET['r2']?>" size="5" maxlength="4"></td>
 
-  <div valign="middle" class=rowhead>Member status:</div>
-  <div<?php echo $_GET['st']?$highlight:""?>><select name="st">
+  <td valign="middle" class=rowhead>Member status:</td>
+  <td<?php echo $_GET['st']?$highlight:""?>><select name="st">
 <?php
 	$options = array("(any)","confirmed","pending");
 	for ($i = 0; $i < count($options); $i++){
 	    echo "<option value=$i ".(($_GET['st']=="$i")?"selected":"").">".$options[$i]."</option>\n";
 	}
     ?>
-    </select></div></div>
-<div><div valign="middle" class=rowhead>Email:</div>
-  <div<?php echo $_GET['em']?$highlight:""?>><input name="em" type="text" value="<?php echo $_GET['em']?>" size="35"></div>
-  <div valign="middle" class=rowhead>IP:</div>
-  <div<?php echo $_GET['ip']?$highlight:""?>><input name="ip" type="text" value="<?php echo $_GET['ip']?>" maxlength="17"></div>
+    </select></td></tr>
+<tr><td valign="middle" class=rowhead>Email:</td>
+  <td<?php echo $_GET['em']?$highlight:""?>><input name="em" type="text" value="<?php echo $_GET['em']?>" size="35"></td>
+  <td valign="middle" class=rowhead>IP:</td>
+  <td<?php echo $_GET['ip']?$highlight:""?>><input name="ip" type="text" value="<?php echo $_GET['ip']?>" maxlength="17"></td>
 
-  <div valign="middle" class=rowhead>Account status:</div>
-  <div<?php echo $_GET['as']?$highlight:""?>><select name="as">
+  <td valign="middle" class=rowhead>Account status:</td>
+  <td<?php echo $_GET['as']?$highlight:""?>><select name="as">
 <?php
     $options = array("(any)","enabled","disabled");
     for ($i = 0; $i < count($options); $i++){
       echo "<option value=$i ".(($_GET['as']=="$i")?"selected":"").">".$options[$i]."</option>\n";
     }
 ?>
-    </select></div></div>
-<div>
-  <div valign="middle" class=rowhead>Comment:</div>
-  <div<?php echo $_GET['co']?$highlight:""?>><input name="co" type="text" value="<?php echo $_GET['co']?>" size="35"></div>
-  <div valign="middle" class=rowhead>Mask:</div>
-  <div<?php echo $_GET['ma']?$highlight:""?>><input name="ma" type="text" value="<?php echo $_GET['ma']?>" maxlength="17"></div>
-  <div valign="middle" class=rowhead>Class:</div>
-  <div<?php echo ($_GET['c'] && $_GET['c'] != 1)?$highlight:""?>><select name="c"><option value='1'>(any)</option>
+    </select></td></tr>
+<tr>
+  <td valign="middle" class=rowhead>Comment:</td>
+  <td<?php echo $_GET['co']?$highlight:""?>><input name="co" type="text" value="<?php echo $_GET['co']?>" size="35"></td>
+  <td valign="middle" class=rowhead>Mask:</td>
+  <td<?php echo $_GET['ma']?$highlight:""?>><input name="ma" type="text" value="<?php echo $_GET['ma']?>" maxlength="17"></td>
+  <td valign="middle" class=rowhead>Class:</td>
+  <td<?php echo ($_GET['c'] && $_GET['c'] != 1)?$highlight:""?>><select name="c"><option value='1'>(any)</option>
 <?php
   $class = $_GET['c'];
   if (!is_valid_id($class))
@@ -105,12 +105,12 @@ $highlight = " bgcolor=#BBAF9B";
 	   	break;
 	}
 ?>
-    </select></div></div>
-<div>
+    </select></td></tr>
+<tr>
 
-    <div valign="middle" class=rowhead>Joined:</div>
+    <td valign="middle" class=rowhead>Joined:</td>
 
-  <div<?php echo $_GET['d']?$highlight:""?>><select name="dt">
+  <td<?php echo $_GET['d']?$highlight:""?>><select name="dt">
 <?php
 	$options = array("on","before","after","between");
 	for ($i = 0; $i < count($options); $i++){
@@ -121,12 +121,12 @@ $highlight = " bgcolor=#BBAF9B";
 
     <input name="d" type="text" value="<?php echo $_GET['d']?>" size="12" maxlength="10">
 
-    <input name="d2" type="text" value="<?php echo $_GET['d2']?>" size="12" maxlength="10"></div>
+    <input name="d2" type="text" value="<?php echo $_GET['d2']?>" size="12" maxlength="10"></td>
 
 
-  <div valign="middle" class=rowhead>Uploaded:</div>
+  <td valign="middle" class=rowhead>Uploaded:</td>
 
-  <div<?php echo $_GET['ul']?$highlight:""?>><select name="ult" id="ult">
+  <td<?php echo $_GET['ul']?$highlight:""?>><select name="ult" id="ult">
 <?php
     $options = array("equal","above","below","between");
     for ($i = 0; $i < count($options); $i++){
@@ -137,22 +137,22 @@ $highlight = " bgcolor=#BBAF9B";
 
     <input name="ul" type="text" id="ul" size="8" maxlength="7" value="<?php echo $_GET['ul']?>">
 
-    <input name="ul2" type="text" id="ul2" size="8" maxlength="7" value="<?php echo $_GET['ul2']?>"></div>
-  <div valign="middle" class="rowhead">Donor:</div>
+    <input name="ul2" type="text" id="ul2" size="8" maxlength="7" value="<?php echo $_GET['ul2']?>"></td>
+  <td valign="middle" class="rowhead">Donor:</td>
 
-  <div<?php echo $_GET['do']?$highlight:""?>><select name="do">
+  <td<?php echo $_GET['do']?$highlight:""?>><select name="do">
 <?php
     $options = array("(any)","Yes","No");
 	for ($i = 0; $i < count($options); $i++){
 	  echo "<option value=$i ".(($_GET['do']=="$i")?"selected":"").">".$options[$i]."</option>\n";
     }
 ?>
-	</select></div></div>
-<div>
+	</select></td></tr>
+<tr>
 
-<div valign="middle" class=rowhead>Last seen:</div>
+<td valign="middle" class=rowhead>Last seen:</td>
 
-  <div <?php echo $_GET['ls']?$highlight:""?>><select name="lst">
+  <td <?php echo $_GET['ls']?$highlight:""?>><select name="lst">
 <?php
   $options = array("on","before","after","between");
   for ($i = 0; $i < count($options); $i++){
@@ -163,10 +163,10 @@ $highlight = " bgcolor=#BBAF9B";
 
   <input name="ls" type="text" value="<?php echo $_GET['ls']?>" size="12" maxlength="10">
 
-  <input name="ls2" type="text" value="<?php echo $_GET['ls2']?>" size="12" maxlength="10"></div>
-	  <div valign="middle" class=rowhead>Downloaded:</div>
+  <input name="ls2" type="text" value="<?php echo $_GET['ls2']?>" size="12" maxlength="10"></td>
+	  <td valign="middle" class=rowhead>Downloaded:</td>
 
-  <div<?php echo $_GET['dl']?$highlight:""?>><select name="dlt" id="dlt">
+  <td<?php echo $_GET['dl']?$highlight:""?>><select name="dlt" id="dlt">
 <?php
 	$options = array("equal","above","below","between");
 	for ($i = 0; $i < count($options); $i++){
@@ -177,27 +177,27 @@ $highlight = " bgcolor=#BBAF9B";
 
     <input name="dl" type="text" id="dl" size="8" maxlength="7" value="<?php echo $_GET['dl']?>">
 
-    <input name="dl2" type="text" id="dl2" size="8" maxlength="7" value="<?php echo $_GET['dl2']?>"></div>
+    <input name="dl2" type="text" id="dl2" size="8" maxlength="7" value="<?php echo $_GET['dl2']?>"></td>
 
-	<div valign="middle" class=rowhead>Warned:</div>
+	<td valign="middle" class=rowhead>Warned:</td>
 
-	<div<?php echo $_GET['w']?$highlight:""?>><select name="w">
+	<td<?php echo $_GET['w']?$highlight:""?>><select name="w">
 <?php
   $options = array("(any)","Yes","No");
 	for ($i = 0; $i < count($options); $i++){
 		echo "<option value=$i ".(($_GET['w']=="$i")?"selected":"").">".$options[$i]."</option>\n";
   }
 ?>
-	</select></div></div>
+	</select></td></tr>
 
-<div><div class="rowhead"></div><div></div>
-  <div valign="middle" class=rowhead>Active only:</div>
-	<div<?php echo $_GET['ac']?$highlight:""?>><input name="ac" type="checkbox" value="1" <?php echo ($_GET['ac'])?"checked":"" ?>></div>
-  <div valign="middle" class=rowhead>Disabled IP: </div>
-  <div<?php echo $_GET['dip']?$highlight:""?>><input name="dip" type="checkbox" value="1" <?php echo ($_GET['dip'])?"checked":"" ?>></div>
-  </div>
-<div><div colspan="6" align=center><input name="submit" type=submit class=btn></div></div>
-</div>
+<tr><td class="rowhead"></td><td></td>
+  <td valign="middle" class=rowhead>Active only:</td>
+	<td<?php echo $_GET['ac']?$highlight:""?>><input name="ac" type="checkbox" value="1" <?php echo ($_GET['ac'])?"checked":"" ?>></td>
+  <td valign="middle" class=rowhead>Disabled IP: </td>
+  <td<?php echo $_GET['dip']?$highlight:""?>><input name="dip" type="checkbox" value="1" <?php echo ($_GET['dip'])?"checked":"" ?>></td>
+  </tr>
+<tr><td colspan="6" align=center><input name="submit" type=submit class=btn></td></tr>
+</table>
 <br /><br />
 </form>
 
@@ -762,19 +762,19 @@ if (count($_GET) > 0 && !$_GET['h'])
   {
   	if ($count > $perpage)
   		echo $pagertop;
-    echo "<div border=1 cellspacing=0 cellpadding=5>\n";
-    echo "<div><div class=colhead align=left>Name</div>
-    		<div class=colhead align=left>Ratio</div>
-        <div class=colhead align=left>IP</div>
-        <div class=colhead align=left>Email</div>".
-        "<div class=colhead align=left>Joined:</div>".
-        "<div class=colhead align=left>Last seen:</div>".
-        "<div class=colhead align=left>Status</div>".
-        "<div class=colhead align=left>Enabled</div>".
-        "<div class=colhead>pR</div>".
-        "<div class=colhead>pUL</div>".
-        "<div class=colhead>pDL</div>".
-        "<div class=colhead>History</div></div>";
+    echo "<table border=1 cellspacing=0 cellpadding=5>\n";
+    echo "<tr><td class=colhead align=left>Name</td>
+    		<td class=colhead align=left>Ratio</td>
+        <td class=colhead align=left>IP</td>
+        <td class=colhead align=left>Email</td>".
+        "<td class=colhead align=left>Joined:</td>".
+        "<td class=colhead align=left>Last seen:</td>".
+        "<td class=colhead align=left>Status</td>".
+        "<td class=colhead align=left>Enabled</td>".
+        "<td class=colhead>pR</td>".
+        "<td class=colhead>pUL</td>".
+        "<td class=colhead>pDL</td>".
+        "<td class=colhead>History</td></tr>";
     while ($user = mysql_fetch_array($res))
     {
     	if ($user['added'] == '0000-00-00 00:00:00')
@@ -814,38 +814,38 @@ if (count($_GET) > 0 && !$_GET['h'])
       $n = mysql_fetch_row($auxres);
       $n_comments = $n[0];
 
-    	echo "<div><div>" .
-      		get_username($user['id']) . "</div>" .
-          "<div>" . ratios($user['uploaded'], $user['downloaded']) . "</div>
-          <div>" . $ipstr . "</div><div>" . $user['email'] . "</div>
-          <div><div align=center>" . $user['added'] . "</div></div>
-          <div><div align=center>" . $user['last_access'] . "</div></div>
-          <div><div align=center>" . $user['status'] . "</div></div>
-          <div><div align=center>" . $user['enabled']."</div></div>
-          <div><div align=center>" . ratios($pul,$pdl) . "</div></div>" .
-          "<div><div align=right>" . mksize($pul) . "</div></div>
-          <div><div align=right>" . mksize($pdl) . "</div></div>
-          <div><div align=center>".($n_posts?"<a href=userhistory.php?action=viewposts&id=".$user['id'].">$n_posts</a>":$n_posts).
+    	echo "<tr><td>" .
+      		get_username($user['id']) . "</td>" .
+          "<td>" . ratios($user['uploaded'], $user['downloaded']) . "</td>
+          <td>" . $ipstr . "</td><td>" . $user['email'] . "</td>
+          <td><div align=center>" . $user['added'] . "</div></td>
+          <td><div align=center>" . $user['last_access'] . "</div></td>
+          <td><div align=center>" . $user['status'] . "</div></td>
+          <td><div align=center>" . $user['enabled']."</div></td>
+          <td><div align=center>" . ratios($pul,$pdl) . "</div></td>" .
+          "<td><div align=right>" . mksize($pul) . "</div></td>
+          <td><div align=right>" . mksize($pdl) . "</div></td>
+          <td><div align=center>".($n_posts?"<a href=userhistory.php?action=viewposts&id=".$user['id'].">$n_posts</a>":$n_posts).
           "|".($n_comments?"<a href=userhistory.php?action=viewcomments&id=".$user['id'].">$n_comments</a>":$n_comments).
-          "</div></div></div>\n";
+          "</div></td></tr>\n";
     }
-    echo "</div>";
+    echo "</table>";
     if ($count > $perpage)
     	echo "$pagerbottom";
 
 	/*
     <br /><br />
     <form method=post action=/sendmessage.php>
-      <div border="1" cellpadding="5" cellspacing="0">
-        <div>
-          <div>
+      <table border="1" cellpadding="5" cellspacing="0">
+        <tr>
+          <td>
             <div align="center">
               <input name="pmees" type="hidden" value="<?php echo $querypm?>" size=10>
               <input name="PM" type="submit" value="PM" class=btn>
               <input name="n_pms" type="hidden" value="<?php echo $count?>" size=10>
-            </div></div>
-        </div>
-      </div>
+            </div></td>
+        </tr>
+      </table>
     </form>
     */
 

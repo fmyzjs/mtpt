@@ -134,7 +134,7 @@ function print_ad_editor($position, $row = "")
 <h1 align="center"><a class="faqlink" href="admanage.php"><?php echo $lang_admanage['text_ad']?></a> - <?php echo get_position_name($position)?></h1>
 <div><p align="center"><?php echo $note?></p></div>
 <h2 align="left"><?php echo $lang_admanage['text_ad_detail']?></h2>
-<div border="1" cellspacing="0" cellpadding="10" width="100%">
+<table border="1" cellspacing="0" cellpadding="10" width="100%">
 <?php
 tr($lang_admanage['row_name']."<font color=\"red\">*</font>", "<input type=\"text\" name=\"ad[name]\" value=\"".htmlspecialchars($name)."\" style=\"width: 300px\" /> " . $lang_admanage['text_name_note'], 1);
 tr($lang_admanage['row_start_time'], "<input type=\"text\" name=\"ad[starttime]\" value=\"".$starttime."\" style=\"width: 300px\" /> " . $lang_admanage['text_start_time_note'], 1);
@@ -143,10 +143,10 @@ tr($lang_admanage['row_order'], "<input type=\"text\" name=\"ad[displayorder]\" 
 tr($lang_admanage['row_enabled']."<font color=\"red\">*</font>", "<input type=\"radio\" name=\"ad[enabled]\"".($enabled ? " checked=\"checked\"" : "")." value=\"1\" />".$lang_admanage['text_yes']."<input type=\"radio\" name=\"ad[enabled]\"".($enabled ? "" : " checked=\"checked\"")." value=\"0\" />".$lang_admanage['text_no']."<br />".$lang_admanage['text_enabled_note'], 1);
 tr($lang_admanage['row_type']."<font color=\"red\">*</font>", "<select name=\"ad[type]\" id=\"adtype\" onchange=\"var key, types; types=new Array('image','text','bbcodes','xhtml','flash'); for(key in types){ if($('#adtype').val()==types[key]){ $('#type_'+types[key]).show();} else{ $('#type_'+types[key]).hide();} }\"><option value=\"image\"".($type == 'image' ? " selected=\"selected\"" : "").">".$lang_admanage['text_image']."</option><option value=\"text\"".($type == 'text' ? " selected=\"selected\"" : "").">".$lang_admanage['text_text']."</option><option value=\"bbcodes\"".($type == 'bbcodes' ? " selected=\"selected\"" : "").">".$lang_admanage['text_bbcodes']."</option>".(get_user_class() >= $allowxhtmlclass ? "<option value=\"xhtml\"".($type == 'xhtml' ? " selected=\"selected\"" : "").">".$lang_admanage['text_xhtml']."</option>" : "")."<option value=\"flash\"".($type == 'flash' ? " selected=\"selected\"" : "").">".$lang_admanage['text_flash']."</option></select> ".$lang_admanage['text_type_note'], 1);
 ?>
-</div>
+</table>
 <div id="type_image"<?php echo $type == 'image' ? "" : " style=\"display: none;\""?>>
 <h2 align="left"><?php echo $lang_admanage['text_image']?></h2>
-<div border="1" cellspacing="0" cellpadding="10" width="100%">
+<table border="1" cellspacing="0" cellpadding="10" width="100%">
 <?php
 tr($lang_admanage['row_image_url']."<font color=\"red\">*</font>", "<input type=\"text\" name=\"ad[image][url]\"".($type == 'image' ? " value=\"".$pararow['url']."\"" : "")." style=\"width: 300px\" /> ".$lang_admanage['text_image_url_note'], 1);
 tr($lang_admanage['row_image_link']."<font color=\"red\">*</font>", "<input type=\"text\" name=\"ad[image][link]\"".($type == 'image' ? " value=\"".$pararow['link']."\"" : "")." style=\"width: 300px\" /> ".$lang_admanage['text_image_link_note'], 1);
@@ -154,43 +154,43 @@ tr($lang_admanage['row_image_width'], "<input type=\"text\" name=\"ad[image][wid
 tr($lang_admanage['row_image_height'], "<input type=\"text\" name=\"ad[image][height]\"".($type == 'image' ? " value=\"".$pararow['height']."\"" : "")." style=\"width: 100px\" /> ".$lang_admanage['text_image_height_note'], 1);
 tr($lang_admanage['row_image_tooltip'], "<input type=\"text\" name=\"ad[image][title]\"".($type == 'image' ? " value=\"".$pararow['title']."\"" : "")." style=\"width: 300px\" /> ".$lang_admanage['text_image_tooltip_note'], 1);
 ?>
-</div>
+</table>
 </div>
 <div id="type_text"<?php echo $type == 'text' ? "" : " style=\"display: none;\""?>>
 <h2 align="left"><?php echo $lang_admanage['text_text']?></h2>
-<div border="1" cellspacing="0" cellpadding="10" width="100%">
+<table border="1" cellspacing="0" cellpadding="10" width="100%">
 <?php
 tr($lang_admanage['row_text_content']."<font color=\"red\">*</font>", "<input type=\"text\" name=\"ad[text][content]\"".($type == 'text' ? " value=\"".$pararow['content']."\"" : "")." style=\"width: 300px\" /> ".$lang_admanage['text_text_content_note'], 1);
 tr($lang_admanage['row_text_link']."<font color=\"red\">*</font>", "<input type=\"text\" name=\"ad[text][link]\"".($type == 'text' ? " value=\"".$pararow['link']."\"" : "")." style=\"width: 300px\" /> ".$lang_admanage['text_text_link_note'], 1);
 tr($lang_admanage['row_text_size'], "<input type=\"text\" name=\"ad[text][size]\"".($type == 'text' ? " value=\"".$pararow['size']."\"" : "")." style=\"width: 100px\" /> ".$lang_admanage['text_text_size_note'], 1);
 ?>
-</div>
+</table>
 </div>
 <div id="type_bbcodes"<?php echo $type == 'bbcodes' ? "" : " style=\"display: none;\""?>>
 <h2 align="left"><?php echo $lang_admanage['text_bbcodes']?></h2>
-<div border="1" cellspacing="0" cellpadding="10" width="100%">
+<table border="1" cellspacing="0" cellpadding="10" width="100%">
 <?php
 tr($lang_admanage['row_bbcodes_code']."<font color=\"red\">*</font>", "<textarea name=\"ad[bbcodes][code]\" cols=\"50\" rows=\"6\" style=\"width: 300px\">".($type == 'bbcodes' ? $pararow['code'] : "")."</textarea><br />".$lang_admanage['text_bbcodes_code_note']."<a class=\"altlink\" href=\"tags.php\"><b>".$lang_admanage['text_here']."</b></a>", 1);
 ?>
-</div>
+</table>
 </div>
 <div id="type_xhtml"<?php echo $type == 'xhtml' ? "" : " style=\"display: none;\""?>>
 <h2 align="left"><?php echo $lang_admanage['text_xhtml']?></h2>
-<div border="1" cellspacing="0" cellpadding="10" width="100%">
+<table border="1" cellspacing="0" cellpadding="10" width="100%">
 <?php
 tr($lang_admanage['row_xhtml_code']."<font color=\"red\">*</font>", "<textarea name=\"ad[xhtml][code]\" cols=\"50\" rows=\"6\" style=\"width: 300px\">".($type == 'xhtml' ? $pararow['code'] : "")."</textarea><br />".$lang_admanage['text_xhmtl_code_note'], 1);
 ?>
-</div>
+</table>
 </div>
 <div id="type_flash"<?php echo $type == 'flash' ? "" : " style=\"display: none;\""?>>
 <h2 align="left"><?php echo $lang_admanage['text_flash']?></h2>
-<div border="1" cellspacing="0" cellpadding="10" width="100%">
+<table border="1" cellspacing="0" cellpadding="10" width="100%">
 <?php
 tr($lang_admanage['row_flash_url']."<font color=\"red\">*</font>", "<input type=\"text\" name=\"ad[flash][url]\"".($type == 'flash' ? " value=\"".$pararow['url']."\"" : "")." style=\"width: 300px\" /> ".$lang_admanage['text_flash_url_note'], 1);
 tr($lang_admanage['row_flash_width']."<font color=\"red\">*</font>", "<input type=\"text\" name=\"ad[flash][width]\"".($type == 'flash' ? " value=\"".$pararow['width']."\"" : "")." style=\"width: 100px\" /> ".$lang_admanage['text_flash_width_note'], 1);
 tr($lang_admanage['row_flash_height']."<font color=\"red\">*</font>", "<input type=\"text\" name=\"ad[flash][height]\"".($type == 'flash' ? " value=\"".$pararow['height']."\"" : "")." style=\"width: 100px\" /> ".$lang_admanage['text_flash_height_note'], 1);
 ?>
-</div>
+</table>
 </div>
 <div style="text-align: center; margin-top: 10px;">
 <input type="submit" value="<?php echo $lang_admanage['submit_submit']?>" />
@@ -397,38 +397,38 @@ begin_main_frame();
 		list($pagertop, $pagerbottom, $limit) = pager($perpage, $num, "?");
 		$res = sql_query("SELECT * FROM advertisements ORDER BY id DESC ".$limit) or sqlerr(__FILE__, __LINE__);
 ?>
-<div border="1" cellspacing="0" cellpadding="5" width="940">
-<div>
-<div class="colhead"><?php echo $lang_admanage['col_enabled']?></div>
-<div class="colhead"><?php echo $lang_admanage['col_name']?></div>
-<div class="colhead"><?php echo $lang_admanage['col_position']?></div>
-<div class="colhead"><?php echo $lang_admanage['col_order']?></div>
-<div class="colhead"><?php echo $lang_admanage['col_type']?></div>
-<div class="colhead"><?php echo $lang_admanage['col_start_time']?></div>
-<div class="colhead"><?php echo $lang_admanage['col_end_time']?></div>
-<div class="colhead"><?php echo $lang_admanage['col_clicks']?></div>
-<div class="colhead"><?php echo $lang_admanage['col_action']?></div>
-</div>
+<table border="1" cellspacing="0" cellpadding="5" width="940">
+<tr>
+<td class="colhead"><?php echo $lang_admanage['col_enabled']?></td>
+<td class="colhead"><?php echo $lang_admanage['col_name']?></td>
+<td class="colhead"><?php echo $lang_admanage['col_position']?></td>
+<td class="colhead"><?php echo $lang_admanage['col_order']?></td>
+<td class="colhead"><?php echo $lang_admanage['col_type']?></td>
+<td class="colhead"><?php echo $lang_admanage['col_start_time']?></td>
+<td class="colhead"><?php echo $lang_admanage['col_end_time']?></td>
+<td class="colhead"><?php echo $lang_admanage['col_clicks']?></td>
+<td class="colhead"><?php echo $lang_admanage['col_action']?></td>
+</tr>
 <?php
 while ($row = mysql_fetch_array($res))
 {
 	$clickcount=get_row_count("adclicks", "WHERE adid=".sqlesc($row['id']));
 ?>
-<div>
-<div class="colfollow"><?php echo $row['enabled'] ? "<font color=\"green\">".$lang_admanage['text_yes']."</font>" : "<font color=\"red\">".$lang_admanage['text_no']."</font>" ?></div>
-<div class="colfollow"><?php echo htmlspecialchars($row['name'])?></div>
-<div class="colfollow"><?php echo get_position_name($row['position'])?></div>
-<div class="colfollow"><?php echo $row['displayorder']?></div>
-<div class="colfollow"><?php echo get_type_name($row['type'])?></div>
-<div class="colfollow"><?php echo $row['starttime'] ? $row['starttime'] : $lang_admanage['text_unlimited']?></div>
-<div class="colfollow"><?php echo $row['endtime'] ? $row['endtime'] : $lang_admanage['text_unlimited']?></div>
-<div class="colfollow"><?php echo $clickcount?></div>
-<div class="colfollow"><a href="javascript:confirm_delete('<?php echo $row['id']?>', '<?php echo $lang_admanage['js_sure_to_delete_ad']?>', '');"><?php echo $lang_admanage['text_delete']?></a> | <a href="?action=edit&amp;id=<?php echo $row['id']?>"><?php echo $lang_admanage['text_edit']?></a></div>
-</div>
+<tr>
+<td class="colfollow"><?php echo $row['enabled'] ? "<font color=\"green\">".$lang_admanage['text_yes']."</font>" : "<font color=\"red\">".$lang_admanage['text_no']."</font>" ?></td>
+<td class="colfollow"><?php echo htmlspecialchars($row['name'])?></td>
+<td class="colfollow"><?php echo get_position_name($row['position'])?></td>
+<td class="colfollow"><?php echo $row['displayorder']?></td>
+<td class="colfollow"><?php echo get_type_name($row['type'])?></td>
+<td class="colfollow"><?php echo $row['starttime'] ? $row['starttime'] : $lang_admanage['text_unlimited']?></td>
+<td class="colfollow"><?php echo $row['endtime'] ? $row['endtime'] : $lang_admanage['text_unlimited']?></td>
+<td class="colfollow"><?php echo $clickcount?></td>
+<td class="colfollow"><a href="javascript:confirm_delete('<?php echo $row['id']?>', '<?php echo $lang_admanage['js_sure_to_delete_ad']?>', '');"><?php echo $lang_admanage['text_delete']?></a> | <a href="?action=edit&amp;id=<?php echo $row['id']?>"><?php echo $lang_admanage['text_edit']?></a></td>
+</tr>
 <?php
 }
 ?>
-</div>
+</table>
 <?php
 print($pagerbottom);
 	}

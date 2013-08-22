@@ -35,18 +35,18 @@ stdhead($lang_upload['head_upload']);
 //加入做种版权类问题公告信息
 
 /*?>
-<div align="center">
-<div><div><?=$lang_upload['text_zhuyi']?></div></div>
-<div><div></div></div>
-</div>*/
+<table align="center">
+<tr><td><?=$lang_upload['text_zhuyi']?></td></tr>
+<tr><td></td></tr>
+</table>*/
 print("<div align=\"center\"><form method=\"get\" action=\"torrents.php?\" target=\"_blank\">".$lang_upload['text_search_offer_note']."&nbsp;&nbsp;<input type=\"text\" name=\"search\">&nbsp;&nbsp;<input type=\"hidden\" name=\"incldead\" value=0>");
 print("<input type=\"submit\" class=\"btn\" value=\"".$lang_upload['submit_search']."\" /></form></div>");
 
 ?>
 	<form id="compose" enctype="multipart/form-data" action="takeupload.php" method="post" name="upload">
-			<div border="1" cellspacing="0" cellpadding="5" width="940">
-				<div>
-					<div class='colhead' colspan='2' align='center'>
+			<table border="1" cellspacing="0" cellpadding="5" width="940">
+				<tr>
+					<td class='colhead' colspan='2' align='center'>
 						<?php echo $lang_upload['text_tracker_url'] ?>: &nbsp;&nbsp;&nbsp;&nbsp;<b><?php echo  get_protocol_prefix() . $announce_urls[0]?></b>
 						<?php
 						if(!is_writable($torrent_dir))
@@ -54,13 +54,13 @@ print("<input type=\"submit\" class=\"btn\" value=\"".$lang_upload['submit_searc
 						if(!$max_torrent_size)
 						print("<br /><br /><b>ATTENTION</b>: Max. Torrent Size not set. Please contact the administrator about this problem!");
 						?>
-					</div>
-				</div>
-				<div>
-					<div class='colhead' colspan='2' align='center'>
+					</td>
+				</tr>
+				<tr>
+					<td class='colhead' colspan='2' align='center'>
 						<?php print($lang_upload['text_notice']);?>
-					</div>
-				</div>
+					</td>
+				</tr>
 <script type="text/javascript">
 $(document).ready(function(){
 	uplist("source_sel",new Array(['0','请先选择一级类型']));
@@ -196,9 +196,9 @@ if ($allowtorrents){
 				get_dbexternal_tr();
 				if ($enablenfo_main=='yes')
 					tr($lang_upload['row_nfo_file'], "<input type=\"file\" class=\"file\" name=\"nfo\" /><br /><font class=\"center\">".$lang_upload['text_only_viewed_by'].get_user_class_name($viewnfo_class,false,true,true).$lang_upload['text_or_above']."</font>", 1);
-				print("<div><div class=\"rowhead\" style='padding: 3px' valign=\"top\">".$lang_upload['row_description']."<font color=\"red\">*</font></div><div class=\"rowfollow\">");
+				print("<tr><td class=\"rowhead\" style='padding: 3px' valign=\"top\">".$lang_upload['row_description']."<font color=\"red\">*</font></td><td class=\"rowfollow\">");
 				textbbcode("upload","descr","",false);
-				print("</div></div>\n");
+				print("</td></tr>\n");
 
 
 				if ($showteam){
@@ -227,7 +227,7 @@ if ($allowtorrents){
 					tr($lang_upload['row_show_uploader'], "<input type=\"checkbox\" name=\"uplver\" value=\"yes\" />".$lang_upload['checkbox_hide_uploader_note'], 1);
 				}
 				?>
-				<div><div class="toolbox" align="center" colspan="2"><input id="qr" type="submit" class="btn" value="<?php echo $lang_upload['submit_upload']?>" /></div></div>	</div>
+				<tr><td class="toolbox" align="center" colspan="2"><input id="qr" type="submit" class="btn" value="<?php echo $lang_upload['submit_upload']?>" /></td></tr>	</table>
 	</form>
 <?php
 stdfoot();
