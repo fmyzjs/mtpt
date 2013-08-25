@@ -44,7 +44,7 @@ class imdb_config {
     // choices are us.imdb.com uk.imdb.com german.imdb.com and italian.imdb.com
     // the localized ones (i.e. italian and german) are only qualified to find
     // the movies IMDB ID -- but parsing for the details will fail at the moment.
-    $this->imdbsite = "www.imdb.com";
+    $this->imdbsite = "207.171.166.140";
     // cachedir should be writable by the webserver. This doesn't need to be
     // under documentroot.
     $this->cachedir = './imdb/cache';

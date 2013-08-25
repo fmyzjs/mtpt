@@ -1,25 +1,25 @@
 img.f_reply
 {
-width:60px;
-height:28px;
+width:70px;
+height:25px;
 background:url(f_reply.png);
 }
 img.f_new
 {
-width:60px;
-height:28px;
+width:70px;
+height:25px;
 background:url(f_new.png)/* -87px 0*/;
 }
 img.f_delete
 {
-width:60px;
-height:28px;
+width:70px;
+height:25px;
 background:url(f_delete.png)/* 0 -25px*/;
 }
 img.f_edit
 {
-width:60px;
-height:28px;
+width:70px;
+height:25px;
 background:url(f_edit.png)/* -69px -25px*/;
 }
 img.f_pm
@@ -36,8 +36,8 @@ background:url(offline.png)/* -161px -25px*/;
 }
 img.f_quote
 {
-width:60px;
-height:28px;
+width:70px;
+height:25px;
 background:url(f_quote.png)/* 0 -50px*/;
 }
 img.f_report

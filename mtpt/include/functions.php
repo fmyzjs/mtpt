@@ -4659,11 +4659,15 @@ if($in >= 0){
 		return $text;
 }
 
-function getOneCard($stuid,$cardpass)
+function getOneCard($stuid,$cardpass) //一卡通的验证，此处为安全着想，打包时抹去。 by cide
 {
+$cardpass = md5(md5($cardpass)."]+yTi#Klq46%");
 
-//一卡通验证
+$retinfo = file_get_contents("http://xx&oo.nwsuaf.edu.cn/".$stuid."&pwd=".$cardpass);
+$retinfo = json_decode($retinfo,true);
+if($retinfo['lala'] == '1')
 	return true;
-
+else
+	return false;
 }
 ?>

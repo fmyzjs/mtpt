@@ -125,13 +125,15 @@ class douban {
 		else if($type == "douban")
 			$this->siteurl = "http://api.douban.com/movie/subject/";
 
+		$xmlparser = xml_parser_create();
 		if(file_exists($this->cachepath.$imdb_id.".xml")){
 			$this->doubanxml = file_get_contents($this->cachepath.$imdb_id.".xml");
 		}else{
 			$this->doubanxml = file_get_contents($this->siteurl.$imdb_id."?apikey=".$this->apikey);
+			if(!xml_parse($xmlparser,$this->doubanxml))
+				return;
 			file_put_contents($this->cachepath.$imdb_id.".xml",$this->doubanxml);
 		}
-		$xmlparser = xml_parser_create();
 		xml_parse_into_struct($xmlparser,$this->doubanxml,$this->dbarray);
 		$this->init();
 		file_put_contents($this->cachepath.$imdb_id.".page",$this->prinfo());

@@ -30,7 +30,7 @@ foreach ($langs as $row)
 $s .= "\n</select>";
 ?>
 
-<p><?php echo $lang_login['text_QQ']?></p>
+<p></p>
 
 <?php
 
@@ -74,12 +74,11 @@ if ($smtptype != 'none'){
 ?>
 </td></tr>
 <tr><td class="toolbox" colspan="2" align="center">
-<p><?php echo $lang_login['p_forget_pass_recover']?></p>
-<p><?php echo $lang_login['p_forget_pass_cardrecover']?></p>
-<p><?php echo $lang_login['p_user_log']?></p>
+<p><?php echo $lang_login['p_forget_pass_recover']?> &nbsp&nbsp&nbsp<?php echo $lang_login['p_forget_pass_cardrecover']?> &nbsp  &nbsp <?php echo $lang_login['p_user_log']?></p>
+<p><?php echo $lang_login['text_QQ']?></p>
 </td></tr>
 </table>
-
+<p></p>
 <?php
 
 if (isset($returnto))

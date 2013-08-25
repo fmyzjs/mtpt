@@ -31,7 +31,6 @@ $lang_log = array
 	'row_total_uploaded' => "总上传量",
 	'row_total_downloaded' => "总下载量",
 	'row_total_data' => "总数据量",
-
 	'text_search_log' => "搜素常规日志",
 	'submit_search' => "给我搜",
 	'text_log_empty' => "<br /><b>没有日志</b><br /><br />",
@@ -45,6 +44,7 @@ $lang_log = array
 	'text_funbox' => "&nbsp;趣&nbsp;味&nbsp;盒&nbsp;",
 	'text_news' => "&nbsp;首&nbsp;页&nbsp;公&nbsp;告&nbsp;",
 	'text_poll' => "&nbsp;投&nbsp;&nbsp;票&nbsp;",
+	'text_userlog' => "封删禁日志",
 	'std_error' => "错误",
 	'std_invalid_action' => "无效的行为",
 	'head_chronicle' => "史册",

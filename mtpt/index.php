@@ -282,6 +282,41 @@ if ($showextinfo['imdb'] == 'yes' && ($showmovies['hot'] == "yes" || $showmovies
 */
 
 // ------------- end: hot and classic movies ------------------//
+
+// ------------- start: shoutbox ------------------//
+if ($showshoutbox_main == "yes") {
+?>
+<script type="text/javascript">
+	var shoutbox_value = 0;
+	setInterval(check_shoutbox_new,2000);
+        function check_shoutbox_new()
+        {
+                $.get("shoutbox_new.html",function(result){
+			var value = parseInt(result);
+			if((shoutbox_value < value && shoutbox_value > 0) || value == 0){
+					$("[name=sbox]").attr("src",$("[name=sbox]").attr("src"));
+			}
+			shoutbox_value = value;
+		});
+        }
+</script>
+<h2><?php echo $lang_index['text_shoutbox'] ?></h2>
+<?php
+	print("<table width=\"100%\"><tr><td class=\"text\">\n");
+	if ($Advertisement->enable_ad()){
+		$shout_ad = $Advertisement->get_ad('shoutindex');
+		print("<div id=\"ad_shoutindex\">".$shout_ad[0]."</div>");
+	}
+	print("<iframe src='shoutbox.php?type=shoutbox' width='900' height='320' frameborder='0' name='sbox' marginwidth='0' marginheight='0'></iframe><br /><br />\n");
+	print("<form action='shoutbox.php' method='get' target='sbox' name='shbox'>\n");
+	print("<label for='shbox_text'>".$lang_index['text_message']."</label><input type='text' name='shbox_text' id='shbox_text' size='100' style='width: 650px; border: 1px solid gray;' />  <input type='submit' id='hbsubmit' class='btn' name='shout' value=\"".$lang_index['sumbit_shout']."\" />");
+	if ($CURUSER['hidehb'] != 'yes' && $showhelpbox_main =='yes')
+		print("<input type='submit' id='toguest' class='btn' name='toguest' value=\"".$lang_index['sumbit_to_guest']."\" />");
+	print("<input type='reset' class='btn' value=\"".$lang_index['submit_clear']."\" /> <input type='hidden' name='sent' value='yes' /><input type='hidden' name='type' value='shoutbox' /><br />\n");
+	print(smile_row("shbox","shbox_text"));
+	print("</form></td></tr></table>");
+}
+// ------------- end: shoutbox ------------------//
 // ------------- start: funbox ------------------//
 if ($showfunbox_main == "yes" && (!isset($CURUSER) || $CURUSER['showfb'] == "yes")){
 	// Get the newest fun stuff
@@ -329,40 +364,6 @@ if ($showfunbox_main == "yes" && (!isset($CURUSER) || $CURUSER['showfb'] == "yes
 	}
 }
 // ------------- end: funbox ------------------//
-// ------------- start: shoutbox ------------------//
-if ($showshoutbox_main == "yes") {
-?>
-<script type="text/javascript">
-	var shoutbox_value = 0;
-	setInterval(check_shoutbox_new,2000);
-        function check_shoutbox_new()
-        {
-                $.get("shoutbox_new.html",function(result){
-			var value = parseInt(result);
-			if((shoutbox_value < value && shoutbox_value > 0) || value == 0){
-					$("[name=sbox]").attr("src",$("[name=sbox]").attr("src"));
-			}
-			shoutbox_value = value;
-		});
-        }
-</script>
-<h2><?php echo $lang_index['text_shoutbox'] ?></h2>
-<?php
-	print("<table width=\"100%\"><tr><td class=\"text\">\n");
-	if ($Advertisement->enable_ad()){
-		$shout_ad = $Advertisement->get_ad('shoutindex');
-		print("<div id=\"ad_shoutindex\">".$shout_ad[0]."</div>");
-	}
-	print("<iframe src='shoutbox.php?type=shoutbox' width='900' height='320' frameborder='0' name='sbox' marginwidth='0' marginheight='0'></iframe><br /><br />\n");
-	print("<form action='shoutbox.php' method='get' target='sbox' name='shbox'>\n");
-	print("<label for='shbox_text'>".$lang_index['text_message']."</label><input type='text' name='shbox_text' id='shbox_text' size='100' style='width: 650px; border: 1px solid gray;' />  <input type='submit' id='hbsubmit' class='btn' name='shout' value=\"".$lang_index['sumbit_shout']."\" />");
-	if ($CURUSER['hidehb'] != 'yes' && $showhelpbox_main =='yes')
-		print("<input type='submit' id='toguest' class='btn' name='toguest' value=\"".$lang_index['sumbit_to_guest']."\" />");
-	print("<input type='reset' class='btn' value=\"".$lang_index['submit_clear']."\" /> <input type='hidden' name='sent' value='yes' /><input type='hidden' name='type' value='shoutbox' /><br />\n");
-	print(smile_row("shbox","shbox_text"));
-	print("</form></td></tr></table>");
-}
-// ------------- end: shoutbox ------------------//
 // ------------- start: latest forum posts ------------------//
 /*
 if ($showlastxforumposts_main == "yes" && $CURUSER)

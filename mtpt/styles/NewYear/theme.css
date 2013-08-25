@@ -1,5 +1,5 @@
 body
-{ margin-top: 0px; margin-bottom: 0px; background: url(./bg.jpg) no-repeat center top; background-color: #9B0300; color: #000000; font-family: tahoma, arial, helvetica, sans-serif; }
+{ margin-top: 0px; margin-bottom: 0px; background: url(./bg.jpg) no-repeat center top; background-color: #FFFFFF; color: #e92411; font-family: tahoma, arial, helvetica, sans-serif; }
 body.inframe
 {
 	background-image: none;
@@ -21,9 +21,9 @@ table.head
 	width: 920px;
 }
 table.main
-{ border-right: none; border-top: none; border-left: none; border-bottom: none; background-color: #9B0300 }
+{ border-right: none; border-top: none; border-left: none; border-bottom: none; background-color: #f6a798 }
 table.mainouter
-{ border-right: lime; border-top: lime; border-left: lime; border-bottom: lime; background-color: #9B0300 }
+{ border-right: lime; border-top: lime; border-left: lime; border-bottom: lime;/* background-color: #9B0300 */}
 table.message
 {
 	border-right: lime 1px solid;
@@ -69,7 +69,7 @@ table.bottom
 	background: none transparent scroll repeat 0% 0%
 }
 h2
-{ background-position: left top; padding-right: 4px; padding-left: 4px; margin-bottom: 0px; padding-bottom: 3px; padding-top: 3px; background-color: #9B0300; background-repeat: repeat; }
+{ background-position: left top; padding-right: 4px; padding-left: 4px; margin-bottom: 0px; padding-bottom: 3px; padding-top: 3px; background-color: #9B0300;background-repeat: repeat; }
 h2.transparentbg
 {
 	background-color: transparent;
@@ -267,9 +267,9 @@ a.biglink
 	text-decoration: none
 }
 a.altlink:link
-{ font-weight: bold; color: #9B0300; text-decoration: none }
+{ font-weight: bold; color: #0000CC; text-decoration: none }
 a.altlink:visited
-{ font-weight: bold; color: #9B0300; text-decoration: none }
+{ font-weight: bold; color: #0000CC; text-decoration: none }
 a.altlink:hover
 {
 	color: #f1ab41;
@@ -463,13 +463,13 @@ A.StaffLeader_Name:visited{ color: #309 }
 A.SysOp_Name:link{color: #a0522d}
 A.SysOp_Name:visited{color: #a0522d}
 
-.Administrator_Name{color: #4b0082}
-A.Administrator_Name:link{color: #4b0082}
-A.Administrator_Name:visited{color: #4b0082}
+.Administrator_Name{color: #a0522d}
+A.Administrator_Name:link{color: #a0522d}
+A.Administrator_Name:visited{color: #a0522d}
 
-.Moderator_Name{color: #6495ED}
-A.Moderator_Name:link{color: #6495ED}
-A.Moderator_Name:visited{color: #6495ED}
+.Moderator_Name{color: #004B97}
+A.Moderator_Name:link{color: #004B97}
+A.Moderator_Name:visited{color: #004B97}
 
 .ForumModerator_Name{COLOR: #1cc6d5}
 A.ForumModerator_Name:link{COLOR: #1cc6d5}
@@ -478,6 +478,10 @@ A.ForumModerator_Name:visited{COLOR: #1cc6d5}
 .Retiree_Name{COLOR: #1cc6d5}
 A.Retiree_Name:link{COLOR: #1cc6d5}
 A.Retiree_Name:visited{COLOR: #1cc6d5}
+
+.Downloader_Name{color: #FF359A}
+A.Downloader_Name:link{color: #FF359A}
+A.Downloader_Name:visited{color: #FF359A}
 
 .Uploader_Name{color: #DC143C}
 A.Uploader_Name:link{color: #DC143C}
