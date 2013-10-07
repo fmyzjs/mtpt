@@ -1,7 +1,7 @@
 About MTPT
 --------------------
 MTPT is based on the NexusPHP project, with many improvements.
-You can get it from http://github.com/itxx00/mtpt/
+You can get it from http://github.com/MTPT/mtpt/
 
 LICENSE
 --------------------
@@ -17,5 +17,4 @@ You can contact us at http://www.xnlinux.cn/  or mail us:
 
 - JinyaChen#gmail.com
 - qutengjiao#gmail.com
-- itxx00#gmail.coom
 * (replace # with @)
