@@ -73,40 +73,7 @@ function findip() {
         return $ip;
 }
 
-if($loginadd == 'yes'){
-if($memcache){
-	if($memcache->get('continuelogin_'.$CURUSER['id'])!='1'){
-	$res = sql_query("SELECT salary,salarynum FROM users WHERE id=".$CURUSER['id']) or sqlerr();
-    $arr = mysql_fetch_assoc($res);
-    $showtime=date("Y-m-d",time());
-	$d1=strtotime($showtime);
-	$d2=strtotime($arr['salary']);
-	$Days=round(($d1-$d2)/3600/24);
-    if($CURUSER['class']>=10)
-		$addbonus = 4;
-	else
-		$addbonus = 2;
-if($Days == 1){
-	$salarynum = $arr['salarynum'];
-	if($salarynum > 7) $salarynum = 7;
-	$addbonus= $addbonus + $salarynum * 1;
-	mysql_query("UPDATE users SET seedbonus=seedbonus+$addbonus , salary=now(), salarynum=salarynum + 1 WHERE id=".$CURUSER['id']);
-?>
-<script type="text/javascript">
-	jAlert('<font color=red>连续登录<?=$salarynum?>天奖励，恭喜你获取了<?=$addbonus?>点麦粒，继续保持哦</font>', '每日登录奖励');
-</script>
-<?
-}else if($Days > 0){
-	mysql_query("UPDATE users SET seedbonus=seedbonus+$addbonus , salary=now(), salarynum=1 WHERE id=".$CURUSER['id']);
-?>
-<script type="text/javascript">
-	jAlert('<font color=red>每日登录奖励，恭喜你获取了<?=$addbonus?>点麦粒，连续多天登录会有更多奖励哦</font>', '每日登录奖励');
-</script>
-<?
-		}
-	}
-	$memcache->set('continuelogin_'.$CURUSER['id'],'1',false,3600) or die ("");
-}}
+
 
 
 //------if(!ipv6ip(findip()))-------------//判断IP地址。
@@ -287,18 +254,35 @@ if ($showextinfo['imdb'] == 'yes' && ($showmovies['hot'] == "yes" || $showmovies
 if ($showshoutbox_main == "yes") {
 ?>
 <script type="text/javascript">
+$(document).ready(function(){
+userAutoTips({id:"shbox_text"});
+})
 	var shoutbox_value = 0;
 	setInterval(check_shoutbox_new,2000);
-        function check_shoutbox_new()
-        {
-                $.get("shoutbox_new.html",function(result){
+	function check_shoutbox_new()
+	{
+	  $.get("shoutbox_new.html",function(result){
 			var value = parseInt(result);
 			if((shoutbox_value < value && shoutbox_value > 0) || value == 0){
-					$("[name=sbox]").attr("src",$("[name=sbox]").attr("src"));
+				$("[name=sbox]").attr("src",$("[name=sbox]").attr("src"));
 			}
 			shoutbox_value = value;
 		});
-        }
+	}
+
+	var time = 0;
+	function checkTime() {
+		var nowTime = new Date();
+		var interval = nowTime - time;
+		if (interval > 5000) {
+			time = nowTime;
+			return true;
+		} else {
+			jAlert("最小喊话间隙是5秒,莫急莫急");
+			return false;
+		}
+	}
+	
 </script>
 <h2><?php echo $lang_index['text_shoutbox'] ?></h2>
 <?php
@@ -308,7 +292,7 @@ if ($showshoutbox_main == "yes") {
 		print("<div id=\"ad_shoutindex\">".$shout_ad[0]."</div>");
 	}
 	print("<iframe src='shoutbox.php?type=shoutbox' width='900' height='320' frameborder='0' name='sbox' marginwidth='0' marginheight='0'></iframe><br /><br />\n");
-	print("<form action='shoutbox.php' method='get' target='sbox' name='shbox'>\n");
+	print("<form action='shoutbox.php' method='get' target='sbox' name='shbox' onsubmit=\"return checkTime();\">\n");
 	print("<label for='shbox_text'>".$lang_index['text_message']."</label><input type='text' name='shbox_text' id='shbox_text' size='100' style='width: 650px; border: 1px solid gray;' />  <input type='submit' id='hbsubmit' class='btn' name='shout' value=\"".$lang_index['sumbit_shout']."\" />");
 	if ($CURUSER['hidehb'] != 'yes' && $showhelpbox_main =='yes')
 		print("<input type='submit' id='toguest' class='btn' name='toguest' value=\"".$lang_index['sumbit_to_guest']."\" />");

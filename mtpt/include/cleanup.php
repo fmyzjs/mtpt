@@ -1,5 +1,6 @@
 <?php
 # IMPORTANT: Do not edit below unless you know what you are doing!
+header("Content-type:text/html;charset=utf-8");
 if(!defined('IN_TRACKER'))
 die('Hacking attempt!');
 require_once("include/bittorrent.php");
@@ -30,7 +31,7 @@ function docleanup($forceAll = 0, $printProgress = false) {
 	$deadtime = date("Y-m-d H:i:s",$deadtime);
 	sql_query("DELETE FROM peers WHERE last_action < ".sqlesc($deadtime)) or sqlerr(__FILE__, __LINE__);
 	if ($printProgress) {
-		printProgress('update peer status');
+		printProgress('更新种子状态last_action');
 	}
 //11.calculate seeding bonus
 	$res = sql_query("SELECT DISTINCT userid FROM peers WHERE seeder = 'yes'") or sqlerr(__FILE__, __LINE__);
@@ -68,7 +69,7 @@ function docleanup($forceAll = 0, $printProgress = false) {
 		}
 	}
 	if ($printProgress) {
-		printProgress('calculate seeding bonus');
+		printProgress('为做种用户发放奖励');
 	}
 
 //Priority Class 2: cleanup every 30 mins
@@ -89,15 +90,48 @@ function docleanup($forceAll = 0, $printProgress = false) {
 	$deadtime = deadtime() - $max_dead_torrent_time;
 	sql_query("UPDATE torrents SET visible='no' WHERE visible='yes' AND last_action < FROM_UNIXTIME($deadtime) AND seeders=0") or sqlerr(__FILE__, __LINE__);
 	if ($printProgress) {
-		printProgress("update torrents' visibility");
+		printProgress("更新种子的可见状态");
 	}
+	
 //Priority Class 3: cleanup every 60 mins
+
 //自动清理过期短信
 if(time() > 1323069888 + 604800){
 		$deltime = date("Y-m-d H:i:s", time() - 2592000);//一个月前时间
 		sql_query("DELETE FROM messages WHERE location='1' AND added < '".$deltime."'") or sqlerr(__FILE__,__LINE__);
 }
+if ($printProgress) {
+	printProgress("清理过期短信");
+}
 //自动清理过期短信结束
+//将超过三天未登录用户重置salarynum
+$deltime = date("Y-m-d", time()- 86400 * 3)  ;
+$res = sql_query("SELECT id FROM users WHERE  salarynum > 1 AND salary < '".$deltime."'") or sqlerr(__FILE__,__LINE__);
+while ($row = mysql_fetch_assoc($res)) 
+{
+	sql_query("UPDATE users SET salarynum = 1 WHERE id = $row[id]") or sqlerr(__FILE__,__LINE__);
+	//write_log("系统qinglile yonghu salrty--- $row[id]",'normal');
+}
+
+if ($printProgress) {
+	printProgress("将超过三天未登录用户重置salarynum");
+}
+//自动清理过期的回收站、候选区种子
+$deltime = date("Y-m-d H:i:s", time() - 86400 * 15);//这里默认15天
+$res = sql_query("SELECT id, name, status, owner FROM torrents WHERE status != 'normal' AND last_status < '".$deltime."'") or sqlerr(__FILE__,__LINE__);
+while ($row = mysql_fetch_array($res)) {
+	deletetorrent($row['id']);
+	$beforeStatus = getTorrentStatus($row['status']);
+	sendMessage(0,$row['owner'],"你在回收站里的种子被删除了","系统自动清理：$beforeStatus 种子 $row[id] ($row[name]) 被系统自动删除了 。原因是： (长时间未处理)");
+	write_log("系统自动清理：$beforeStatus 种子 $row[id] ($row[name]) 被系统自动删除了 。原因是： (长时间未处理)",'normal');
+	//sendDelMsg($row['id'], "系统自动清理：$beforeStatus 种子 $row[id] ($row[name]) 被系统自动删除了 。原因是： (长时间未处理)", 'delete');
+}
+if ($printProgress) {
+	printProgress("回收站过期种子清理");
+}
+//自动清理回收站，候选区结束
+
+
 //Priority Class 3: cleanup every 60 mins
 	$res = sql_query("SELECT value_u FROM avps WHERE arg = 'lastcleantime3'");
 	$row = mysql_fetch_array($res);
@@ -146,13 +180,13 @@ if(time() > 1323069888 + 604800){
 		sql_query("UPDATE torrents SET " . implode(",", $update) . " WHERE id = $id") or sqlerr(__FILE__, __LINE__);
 	}
 	if ($printProgress) {
-		printProgress("update count of seeders, leechers, comments for torrents");
+		printProgress("更新做种、下载、评论数量");
 	}
 
 	//set no-advertisement-by-bonus time out
 	sql_query("UPDATE users SET noad='no' WHERE noaduntil < ".sqlesc(date("Y-m-d H:i:s")).($enablenoad_advertisement == 'yes' ? " AND class < ".sqlesc($noad_advertisement) : ""));
 	if ($printProgress) {
-		printProgress("set no-advertisement-by-bonus time out");
+		printProgress("判断麦粒购买不显示广告截止set no-advertisement-by-bonus time out");
 	}
 	//12. update forum post/topic count
 	$forums = sql_query("select id from forums") or sqlerr(__FILE__, __LINE__);
@@ -172,7 +206,7 @@ if(time() > 1323069888 + 604800){
 	}
 	$Cache->delete_value('forums_list');
 	if ($printProgress) {
-		printProgress("update forum post/topic count");
+		printProgress("更新论坛主题/帖子数量update forum post/topic count");
 	}
 	//14.cleanup offers
 	//Delete offers if not voted on after some time
@@ -184,11 +218,11 @@ if(time() > 1323069888 + 604800){
 		sql_query("DELETE FROM offers WHERE id=$arr[id]") or sqlerr(__FILE__, __LINE__);
 		sql_query("DELETE FROM offervotes WHERE offerid=$arr[id]") or sqlerr(__FILE__, __LINE__);
 		sql_query("DELETE FROM comments WHERE offer=$arr[id]") or sqlerr(__FILE__, __LINE__);
-		write_log("Offer $arr[id] ($arr[name]) was deleted by system (vote timeout)",'normal');
+		write_log("系统自动清理：Offer $arr[id] ($arr[name]) was deleted by system (vote timeout)",'normal');
 		}
 	}
 	if ($printProgress) {
-		printProgress("delete offers if not voted on after some time");
+		printProgress("删除候选（无用）delete offers if not voted on after some time");
 	}
 
 	//Delete offers if not uploaded after being voted on for some time.
@@ -200,11 +234,11 @@ if(time() > 1323069888 + 604800){
 		sql_query("DELETE FROM offers WHERE id=$arr[id]") or sqlerr(__FILE__, __LINE__);
 		sql_query("DELETE FROM offervotes WHERE offerid=$arr[id]") or sqlerr(__FILE__, __LINE__);
 		sql_query("DELETE FROM comments WHERE offer=$arr[id]") or sqlerr(__FILE__, __LINE__);
-		write_log("Offer $arr[id] ($arr[name]) was deleted by system (upload timeout)",'normal');
+		write_log("系统自动清理：Offer $arr[id] ($arr[name]) was deleted by system (upload timeout)",'normal');
 		}
 	}
 	if ($printProgress) {
-		printProgress("delete offers if not uploaded after being voted on for some time.");
+		printProgress("删除候选（无用）delete offers if not uploaded after being voted on for some time.");
 	}
 
 	//15.cleanup torrents
@@ -261,8 +295,8 @@ function torrent_promotion_expire($days, $type = 2, $targettype = 1){
 	while($arr = mysql_fetch_assoc($res)){
 		sql_query("UPDATE torrents SET sp_state = ".sqlesc($sp_state)." WHERE id=$arr[id]") or sqlerr(__FILE__, __LINE__);
 		if ($sp_state == 1)
-			write_log("Torrent $arr[id] ($arr[name]) is no longer on promotion (time expired)",'normal');
-		else write_log("Promotion type for torrent $arr[id] ($arr[name]) is changed to ".$become." (time expired)",'normal');
+			write_log("系统自动清理：Torrent $arr[id] ($arr[name]) is no longer on promotion (time expired)",'normal');
+		else write_log("系统自动清理：Promotion type for torrent $arr[id] ($arr[name]) is changed to ".$become." (time expired)",'normal');
 	}
 }
 	if ($expirehalfleech_torrent)
@@ -285,7 +319,7 @@ function torrent_promotion_expire($days, $type = 2, $targettype = 1){
 
 	//End: expire torrent promotion
 	if ($printProgress) {
-		printProgress("expire torrent promotion");
+		printProgress("判断种子促销截止expire torrent promotion");
 	}
 	//automatically pick hot
 	if ($hotdays_torrent)
@@ -295,7 +329,7 @@ function torrent_promotion_expire($days, $type = 2, $targettype = 1){
 		sql_query("UPDATE torrents SET picktype = 'hot' WHERE added > $dt AND picktype = 'normal' AND seeders > ".sqlesc($hotseeder_torrent)) or sqlerr(__FILE__, __LINE__);
 	}
 	if ($printProgress) {
-		printProgress("automatically pick hot");
+		printProgress("判断种子是否热门automatically pick hot");
 	}
 
 //Priority Class 4: cleanup every 24 hours
@@ -311,7 +345,97 @@ function torrent_promotion_expire($days, $type = 2, $targettype = 1){
 	} else {
 		sql_query("UPDATE avps SET value_u = ".sqlesc($now)." WHERE arg='lastcleantime4'") or sqlerr(__FILE__, __LINE__);
 	}
+//彩票开奖，每3天一次
+	function drawlotteryfun(){
+	require_once "./memcache.php";
+	
+	$hapcharge=100;//预设单注价格
+	$cash=array();
+	$cash[1]=5000000;
+	$cash[2]=500000;
+	$cash[3]=10000;
+	$cash[4]=1000;
+	$cash[5]=0;
+	$cash[6]=0;
 
+
+	$lasttime=$memcache->get('drawnumtime');
+
+		if((((int)date('w'))==5||((int)date('w')==2))&&(((int)date('H'))>=21)&& ((((int)time())-$lasttime)>= 24*3600))
+		{
+			$memcache->set('drawnumtime',(int)time());
+			//echo time();
+			$date=date('Y-m-d',time());
+			$num1=rand(1,12);
+			$num2=rand(1,12);
+			$num3=rand(1,12);
+			$num4=rand(1,12);
+			$num5=rand(1,12);
+			sql_query("INSERT INTO drawlottery (num1, num2, num3, num4, num5,drawtime) VALUES ('$num1', '$num2', '$num3', '$num4', '$num5','$date')")or sqlerr(__FILE__, __LINE__);
+			
+			$sql="SELECT MAX(id) from drawlottery";
+			$res=sql_query($sql);
+			$row = mysql_fetch_array( $res );
+			$drawid=(int)$row['0'];			
+			$memcache->set('drawid',$drawid+1);
+			sendshoutbox("开奖啦开奖啦，彩票第$drawid  期选出了[color=red][b]$num1 -- $num2 -- $num3 -- $num4 -- $num5 [/b][/color]五个数字~记名彩票已经发奖了，不记名的快来兑奖吧~分给我一半吧（口水 ");
+			
+			$sql="SELECT * from lottery where drawid='".$drawid."' and ownerid!= '0'";
+			$res = sql_query($sql)or sqlerr(__FILE__, __LINE__);
+			while($row=mysql_fetch_array($res)){
+				//sendshoutbox("口水 ");
+				$userid=$row['ownerid'];
+				$lotteryid=$row['id'];
+				$lnum1=$row['num1'];
+				$lnum2=$row['num2'];
+				$lnum3=$row['num3'];
+				$lnum4=$row['num4'];
+				$lnum5=$row['num5'];
+				$multiple = $row['multiple'];
+				$level=6;
+				if($lnum1==$num1)
+				{
+					$level=$level-1;
+				}
+				if($lnum2==$num2)
+				{
+					$level=$level-1;
+				}
+				if($lnum3==$num3)
+				{
+					$level=$level-1;
+				}
+				if($lnum4==$num4)
+				{
+					$level=$level-1;
+				}
+				if($lnum5==$num5)
+				{
+					$level=$level-1;
+				}
+				//sendshoutbox("$level ");
+				if($level<5){
+					$bonus=$cash[$level]*$multiple;
+					$sql="UPDATE users SET seedbonus =seedbonus +".$bonus." WHERE id = ".$userid;
+					sql_query($sql) or sqlerr(__FILE__, __LINE__);
+					
+						sql_query("UPDATE lottery SET isencase ='0'  WHERE 	id = ".$lotteryid) or sqlerr(__FILE__, __LINE__);
+						$date=date('Y-m-d',time());
+						sql_query("UPDATE lottery SET encasetime ='".$date."'  WHERE id = ".$lotteryid) or sqlerr(__FILE__, __LINE__);
+						sendMessage(0, $userid, "恭喜你中奖了","恭喜你在彩票第$drawid 期中获得$level 等奖，获得麦粒$bonus");
+						writeBonusComment($userid,"彩票第$drawid 期中获得$level 等奖，获得麦粒$bonus");
+						//sendshoutbox("彩票第$drawid 期中获得$level 等奖，获得麦粒$bonus");
+						if ($level <=4) sendshoutbox("有人在彩票第$drawid 期中了$level 等奖，获得麦粒$bonus ！！！！土豪~~求包养~~我知道你是谁，我不会告诉别人滴，土豪来做朋友吧");
+					
+				}
+			}	
+		}		
+	
+	}
+	drawlotteryfun();
+		if ($printProgress) {
+		printProgress("彩票开奖");
+	}	
 	//3.delete unconfirmed accounts
 	$deadtime = time() - $signup_timeout;
 	$delres = sql_query("SELECT id, username FROM users WHERE status = 'pending' AND added < FROM_UNIXTIME($deadtime) AND last_login < FROM_UNIXTIME($deadtime) AND last_access < FROM_UNIXTIME($deadtime)");
@@ -320,7 +444,7 @@ function torrent_promotion_expire($days, $type = 2, $targettype = 1){
 		sql_query("DELETE FROM users WHERE id='".$userinfo['id']."'") or sqlerr(__FILE__, __LINE__);
 	}
 	if ($printProgress) {
-		printProgress("delete unconfirmed accounts");
+		printProgress("删除未通过审核的账户delete unconfirmed accounts");
 	}
 
 	//5.delete old login attempts
@@ -328,7 +452,7 @@ function torrent_promotion_expire($days, $type = 2, $targettype = 1){
 	$dt = sqlesc(date("Y-m-d H:i:s",(TIMENOW - $secs))); // calculate date.
 	sql_query("DELETE FROM loginattempts WHERE banned='no' AND added < $dt") or sqlerr(__FILE__, __LINE__);
 	if ($printProgress) {
-		printProgress("delete old login attempts");
+		printProgress("删除长时间未活动的附件delete old login attempts");
 	}
 
 	//6.delete old invite codes
@@ -336,7 +460,7 @@ function torrent_promotion_expire($days, $type = 2, $targettype = 1){
 	$dt = sqlesc(date("Y-m-d H:i:s",(TIMENOW - $secs))); // calculate date.
 	sql_query("DELETE FROM invites WHERE time_invited < $dt") or sqlerr(__FILE__, __LINE__);
 	if ($printProgress) {
-		printProgress("delete old invite codes");
+		printProgress("删除未发布的邀请码delete old invite codes");
 	}
 
 	//7.delete regimage codes
@@ -345,14 +469,38 @@ function torrent_promotion_expire($days, $type = 2, $targettype = 1){
 		printProgress("delete regimage codes");
 	}
 	//10.clean up user accounts
+	$deletetitle = '你在麦田pt的账号将要被删除';
+	$body = "你好，你在麦田pt注册的账号 {$userinfo['username']}  已经连续 ".$deletenotransfer_account*0.8 ."天未登录，由于你的账号没有产生流量，如果连续$deletenotransfer_account 天未登录，你的账号将会被删除。\n 麦田pt期待您的回归，我们的地址是 pt.nwsuaf6.edu.cn  如果没有ipv6环境可以使用pt.nwsuaf6.edu.cn.ipv4.sixxs.org 登陆账号";
+
 	// make sure VIP or above never get deleted
+	
 	$neverdelete_account = ($neverdelete_account <= UC_VIP ? $neverdelete_account : UC_VIP);
 
 	//delete inactive user accounts, no transfer. Alt. 1: last access time
 	if ($deletenotransfer_account){
 		$secs = $deletenotransfer_account*24*60*60;
 		$dt = sqlesc(date("Y-m-d H:i:s",(TIMENOW - $secs)));
+		$secs2 = $secs*0.8;
+		$dt2 = sqlesc(date("Y-m-d H:i:s",(TIMENOW - $secs2)));
 		$maxclass = $neverdelete_account;
+		//发邮件
+		$delres = sql_query("SELECT id, username, email FROM users WHERE parked='no' AND status='confirmed' AND class < $maxclass AND last_access < $dt2 AND (uploaded = 0 || uploaded = ".sqlesc($iniupload_main).") AND downloaded = 0");
+		$notransfererr=0;$notransferdone=0;
+		$notransferemail = array();
+		while ($userinfo = mysql_fetch_assoc($delres)){
+                    //if(	sent_mail($userinfo['email'], $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $deletetitle), change_email_encode(get_langfolder_cookie(),$body), '', false, false, '', get_email_encode(get_langfolder_cookie()),'noerror'))
+						//{$emailflag =1;$notransferdone++;}
+					//else
+				//	{$emailflag =0;
+				//	$notransfererr++;continue;}
+				$notransferemail[] = $userinfo['email'];$notransfererr++;
+                }
+		//	if(sent_mail($notransferemail[0], $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $deletetitle), change_email_encode(get_langfolder_cookie(),$body), '', false, true, $notransferemail, get_email_encode(get_langfolder_cookie()),'noerror'))	
+		//	write_log("系统自动发送邮件：给$notransfererr 位注册后连续".$deletenotransfer_account*0.8 ." 天未登录且无流量用户发送邮件提醒",'normal');
+		//	else write_log("系统自动发送邮件：有$notransfererr 位无流量用户发送邮件失败！！！！！！！$notransferdone 位成功".__LINE__,'normal');
+			if ($printProgress) {
+		printProgress("给注册后连续".$deletenotransfer_account*0.8 ." 天未登录且无流量用户发送邮件提醒");
+	}
 		$delres = sql_query("SELECT id, username FROM users WHERE parked='no' AND status='confirmed' AND class < $maxclass AND last_access < $dt AND (uploaded = 0 || uploaded = ".sqlesc($iniupload_main).") AND downloaded = 0");
 	        while ($userinfo = mysql_fetch_assoc($delres)){
 	                record_op_log(0,$userinfo['id'],$userinfo['username'],'del','无流量账号连续'.$deletenotransfer_account.'天未登录');
@@ -360,29 +508,70 @@ function torrent_promotion_expire($days, $type = 2, $targettype = 1){
 	        }
 	}
 	if ($printProgress) {
-		printProgress("delete inactive user accounts, no transfer. Alt. 1: last access time");
+		printProgress("删除无流量未登录用户delete inactive user accounts, no transfer. Alt. 1: last access time");
 	}
 
 	//delete inactive user accounts, no transfer. Alt. 2: registering time
 	if ($deletenotransfertwo_account){
 		$secs = $deletenotransfertwo_account*24*60*60;
+		$secs2 = $secs *1.8;
 		$dt = sqlesc(date("Y-m-d H:i:s",(TIMENOW - $secs)));
+		$dt2 = sqlesc(date("Y-m-d H:i:s",(TIMENOW - $secs2)));
 		$maxclass = $neverdelete_account;
+		$notransfererr1=0;$notransferdone1=0;
+		$notransferemail1 = array();
+		//发送站内信
+		$delres = sql_query("SELECT id, username, email FROM users WHERE  parked='no' AND status='confirmed' AND class < $maxclass AND added < $dt2 AND (uploaded = 0 || uploaded = ".sqlesc($iniupload_main).") AND downloaded = 0");
+               while ($userinfo = mysql_fetch_assoc($delres)){
+                   // if(	sent_mail($userinfo['email'], $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $deletetitle), change_email_encode(get_langfolder_cookie(),$body), '', false, false, '', get_email_encode(get_langfolder_cookie()),'noerror'))
+				//		$emailflag =1;
+				//	else
+				//	{$notransfererr1++;$emailflag =0;continue;}
+				$notransferemail1[] = $userinfo['email'];$notransfererr1++;
+                }
+			//if(sent_mail($notransferemail1[0], $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $deletetitle), change_email_encode(get_langfolder_cookie(),$body), '', false, true, $notransferemail1, get_email_encode(get_langfolder_cookie()),'noerror'))
+		//	write_log("系统自动发送邮件：给$notransfererr1 位注册后连续".$deletenotransfertwo_account*0.8 ." 天未登录且无流量用户发送邮件提醒",'normal');
+		//	else write_log("系统自动发送邮件：有$notransfererr1 位长时间未登录用户发送邮件失败！！！！$notransferdone1 位成功！！！".__LINE__,'normal');
+			if ($printProgress) {
+		printProgress("给注册后连续".$deletenotransfertwo_account*0.8 ." 天未登录用户发送邮件提醒");
+	}
+				//delete
 		$delres = sql_query("SELECT id, username FROM users WHERE  parked='no' AND status='confirmed' AND class < $maxclass AND added < $dt AND (uploaded = 0 || uploaded = ".sqlesc($iniupload_main).") AND downloaded = 0");
                 while ($userinfo = mysql_fetch_assoc($delres)){
                         record_op_log(0,$userinfo['id'],$userinfo['username'],'del','注册'.$deletenotransfertwo_account.'天后仍未产生任何流量');
 			sql_query("DELETE FROM users WHERE id='".$userinfo['id']."'") or sqlerr(__FILE__, __LINE__);
                 }
+				if ($printProgress) {
+		printProgress("删除无流量未登录用户delete inactive user accounts, no transfer. Alt. 2: registering time");
 	}
-	if ($printProgress) {
-		printProgress("delete inactive user accounts, no transfer. Alt. 2: registering time");
 	}
+	
 
 	//delete inactive user accounts, not parked
 	if ($deleteunpacked_account){
 		$secs = $deleteunpacked_account*24*60*60;
 		$dt = sqlesc(date("Y-m-d H:i:s",(TIMENOW - $secs)));
+		$secs2 = $secs*0.8;
+		$dt2 = sqlesc(date("Y-m-d H:i:s",(TIMENOW - $secs2)));
 		$maxclass = $neverdelete_account;
+		$uppackederrnum =0;$uppackeddonenum =0;
+		$uppackedemail = array();
+			$body = "你好，你在麦田pt注册的账号 {$userinfo['username']}  已经连续 ".$deleteunpacked_account*0.8 ."天未登录，由于你的账号没有封存，如果连续$deleteunpacked_account 天未登录，你的账号将会被删除。\n 麦田pt期待您的回归，我们的地址是 pt.nwsuaf6.edu.cn  如果没有ipv6环境可以使用pt.nwsuaf6.edu.cn.ipv4.sixxs.org 登陆账号";
+                $delres = sql_query("SELECT id, username,email FROM users WHERE parked='no' AND status='confirmed' AND class < $maxclass AND last_access < $dt2");
+                while ($userinfo = mysql_fetch_assoc($delres)){
+                  //  if(	sent_mail($userinfo['email'], $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $deletetitle), change_email_encode(get_langfolder_cookie(),$body), '', false, false, '', get_email_encode(get_langfolder_cookie()),'noerror'))
+				//		{$emailflag =1;$uppackeddonenum++;}
+				//	else
+				//	{$uppackederrnum++;$emailflag =0;continue;}
+				$uppackedemail[] = $userinfo['email'];$uppackederrnum++;
+                }
+			//if(sent_mail($uppackedemail[0], $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $deletetitle), change_email_encode(get_langfolder_cookie(),$body), '', false, true, $uppackedemail, get_email_encode(get_langfolder_cookie()),'noerror'))	
+		//	write_log("系统自动发送邮件：给$uppackederrnum 位未封存账号连续".$deleteunpacked_account*0.8 ." 天未登录用户发送邮件提醒",'normal');
+		//	else write_log("系统自动发送邮件：有$uppackederrnum 位封存长时间未登录用户发送邮件失败！！！$uppackeddonenum 位成功！！！！".__LINE__,'normal');
+			if ($printProgress) {
+		printProgress("给未封存账号连续".$deleteunpacked_account*0.8 ." 天未登录用户发送邮件提醒");
+	}
+			//delete
                 $delres = sql_query("SELECT id, username FROM users WHERE parked='no' AND status='confirmed' AND class < $maxclass AND last_access < $dt");
                 while ($userinfo = mysql_fetch_assoc($delres)){
                         record_op_log(0,$userinfo['id'],$userinfo['username'],'del','未封存账号连续'.$deleteunpacked_account.'天未登录');
@@ -390,14 +579,37 @@ function torrent_promotion_expire($days, $type = 2, $targettype = 1){
                 }
 	}
 	if ($printProgress) {
-		printProgress("delete inactive user accounts, not parked");
+		printProgress("删除未封存长时间未登录用户delete inactive user accounts, not parked");
 	}
 
 	//delete parked user accounts, parked
+
 	if ($deletepacked_account){
 		$secs = $deletepacked_account*24*60*60;
 		$dt = sqlesc(date("Y-m-d H:i:s",(TIMENOW - $secs)));
+		$secs2 = $secs * 0.8;
+		$dt2 = sqlesc(date("Y-m-d H:i:s",(TIMENOW - $secs2)));
 		$maxclass = $neverdeletepacked_account;
+		$packednum=0;$packeddonenum=0;
+		 $packedemail[] = array();
+			$body ="你好，你在麦田pt注册的账号 {$userinfo['username']}  已经连续 ".$deletepacked_account*0.8 ."天未登录，虽然你的账号已经封存，但是如果连续$deletepacked_account 天未登录，你的账号仍然会被删除。\n 麦田pt期待您的回归，我们的地址是 pt.nwsuaf6.edu.cn  如果没有ipv6环境可以使用pt.nwsuaf6.edu.cn.ipv4.sixxs.org 登陆账号";
+                $delres = sql_query("SELECT id, username, email FROM users WHERE parked='yes' AND status='confirmed' AND class < $maxclass AND last_access < $dt2");
+				
+                while ($userinfo = mysql_fetch_assoc($delres)){
+                   // if(	sent_mail($userinfo['email'], $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $deletetitle), change_email_encode(get_langfolder_cookie(),$body), '', false, false, '', get_email_encode(get_langfolder_cookie()),'noerror'))
+						//{$emailflag =1;$packeddonenum++;}
+					//else
+					//{$emailflag =0;continue;}
+					$packednum++;
+					$packedemail[] = $userinfo['email'];
+                }
+			//	if (sent_mail($packedemail[0], $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $deletetitle), change_email_encode(get_langfolder_cookie(),$body), '', false, true, $packedemail, get_email_encode(get_langfolder_cookie()),'noerror'))
+		//	write_log("系统自动发送邮件：给$packednum 位封存账号连续".$deletepacked_account*0.8 ." 天未登录用户发送邮件提醒",'normal');
+		//	else write_log("系统自动发送邮件：有$packednum 位封存账号发送邮件失败！！！！！！！".__LINE__,'normal');
+			if ($printProgress) {
+		printProgress("给封存账号连续".$deletepacked_account*0.8 ." 天未登录用户发送邮件提醒");
+	}
+			//delete
                 $delres = sql_query("SELECT id, username FROM users WHERE parked='yes' AND status='confirmed' AND class < $maxclass AND last_access < $dt");
                 while ($userinfo = mysql_fetch_assoc($delres)){
                         record_op_log(0,$userinfo['id'],$userinfo['username'],'del','封存账号连续'.$deletepacked_account.'天未登录');
@@ -405,7 +617,7 @@ function torrent_promotion_expire($days, $type = 2, $targettype = 1){
                 }
 	}
 	if ($printProgress) {
-		printProgress("delete parked user accounts, parked");
+		printProgress("删除长时间未登录的封存用户delete parked user accounts, parked");
 	}
 
 	//remove VIP status if time's up
@@ -427,7 +639,7 @@ function torrent_promotion_expire($days, $type = 2, $targettype = 1){
 		}
 	}
 	if ($printProgress) {
-		printProgress("remove VIP status if time's up");
+		printProgress("判断购买vip到期remove VIP status if time's up");
 	}
 
 	// promote peasant back to user
@@ -459,7 +671,7 @@ function peasant_to_user($down_floor_gb, $down_roof_gb, $minratio){
 	peasant_to_user($psdltwo_account,$psdlthree_account, $psratiotwo_account);
 	peasant_to_user($psdlone_account,$psdltwo_account, $psratioone_account);
 	if ($printProgress) {
-		printProgress("promote peasant back to user");
+		printProgress("土豆判断升级promote peasant back to user");
 	}
 	//end promote peasant back to user
 
@@ -500,7 +712,7 @@ function promotion($class, $down_floor_gb, $minratio, $time_week, $addinvite = 0
 	promotion(UC_NEXUS_MASTER, $nmdl_account, $nmprratio_account, $nmtime_account, $getInvitesByPromotion_class[UC_NEXUS_MASTER]);
 	// end promotion
 	if ($printProgress) {
-		printProgress("promote users to other classes");
+		printProgress("升级判定promote users to other classes");
 	}
 
 	// start demotion
@@ -531,7 +743,7 @@ function demotion($class,$deratio){
 	demotion(UC_ELITE_USER,$euderatio_account);
 	demotion(UC_POWER_USER,$puderatio_account);
 	if ($printProgress) {
-		printProgress("demote users to other classes");
+		printProgress("降级判定demote users to other classes");
 	}
 	// end demotion
 
@@ -564,11 +776,26 @@ function user_to_peasant($down_floor_gb, $minratio){
 	user_to_peasant($psdlfour_account, $psratiofour_account);
 	user_to_peasant($psdlfive_account, $psratiofive_account);
 	if ($printProgress) {
-		printProgress("demote Users to peasant");
+		printProgress("降级到土豆demote Users to peasant");
 	}
 	// end Users to Peasant
 
 	//ban users with leechwarning expired
+	$length = 1*86400; // warn users until xxx days
+	$dt = date("Y-m-d H:i:s",(TIMENOW - $length));
+	$res = sql_query("SELECT id, seedbonus FROM users WHERE enabled = 'yes' AND leechwarn = 'yes' AND leechwarnuntil < '$dt'") or sqlerr(__FILE__, __LINE__);
+	if (mysql_num_rows($res) > 0)
+	{
+		while ($arr = mysql_fetch_assoc($res))
+		{
+			$addup = $arr['seedbonus']*2222222;
+			writeBonusComment($arr[id],"即将被封号，系统自动将所有麦粒换成上传量.");
+			sql_query("UPDATE users SET uploaded = uploaded + $addup,seedbonus = 0 WHERE id =".$arr['id']) or sqlerr(__FILE__, __LINE__);
+		}
+	}
+	if ($printProgress) {
+		printProgress("系统自动将一天后即将被封号的土豆的所有麦粒换成上传量");
+	}
 	$dt = sqlesc(date("Y-m-d H:i:s")); // take date time
 	$res = sql_query("SELECT id, username FROM users WHERE enabled = 'yes' AND leechwarn = 'yes' AND leechwarnuntil < $dt") or sqlerr(__FILE__, __LINE__);
 
@@ -582,12 +809,12 @@ function user_to_peasant($down_floor_gb, $minratio){
 		}
 	}
 	if ($printProgress) {
-		printProgress("ban users with leechwarning expired");
+		printProgress("ban掉持续未改善分享率的土豆ban users with leechwarning expired");
 	}
 
-	//Remove warning of users
+	//Remove warning of users//同时如果被禁言、禁止上传下载的话，一同恢复
 	$dt = sqlesc(date("Y-m-d H:i:s")); // take date time
-	$res = sql_query("SELECT id FROM users WHERE enabled = 'yes' AND warned = 'yes' AND warneduntil < $dt") or sqlerr(__FILE__, __LINE__);
+	$res = sql_query("SELECT id,forumpost,uploadpos,downloadpos FROM users WHERE enabled = 'yes' AND warned = 'yes' AND warneduntil < $dt") or sqlerr(__FILE__, __LINE__);
 
 	if (mysql_num_rows($res) > 0)
 	{
@@ -595,13 +822,25 @@ function user_to_peasant($down_floor_gb, $minratio){
 		{
 			$subject = $lang_cleanup_target[get_user_lang($arr[id])]['msg_warning_removed'];
 			$msg = $lang_cleanup_target[get_user_lang($arr[id])]['msg_your_warning_removed'];
+			if ($arr['forumpost'] == 'no') {
+			sql_query("UPDATE users SET forumpost = 'yes' WHERE id = $arr[id]") or sqlerr(__FILE__, __LINE__);
+			$msg .= "。你的禁言同时被解除。";
+			}
+			if ($arr['uploadpos'] == 'no') {
+			sql_query("UPDATE users SET uploadpos = 'yes' WHERE id = $arr[id]") or sqlerr(__FILE__, __LINE__);
+			$msg .= "。你的禁止上传处罚同时被解除。";
+			}
+			if ($arr['downloadpos'] == 'no') {
+			sql_query("UPDATE users SET downloadpos = 'yes' WHERE id = $arr[id]") or sqlerr(__FILE__, __LINE__);
+			$msg .= "。你的禁止下载处罚同时被解除。";
+			}
 			writecomment($arr[id],"Warning removed by System.");
 			sql_query("UPDATE users SET warned = 'no', warneduntil = '0000-00-00 00:00:00' WHERE id = $arr[id]") or sqlerr(__FILE__, __LINE__);
 			sql_query("INSERT INTO messages (sender, receiver, added, subject, msg) VALUES(0, $arr[id], $dt, ".sqlesc($subject).", ".sqlesc($msg).")") or sqlerr(__FILE__, __LINE__);
 		}
 	}
 	if ($printProgress) {
-		printProgress("remove warning of users");
+		printProgress("移除警告，同时移除处罚remove warning of users");
 	}
 
 	//17.update total seeding and leeching time of users
@@ -633,11 +872,11 @@ function user_to_peasant($down_floor_gb, $minratio){
 			$subject = $lang_cleanup_target[get_user_lang($arr[owner])]['msg_your_torrent_deleted'];
 			$msg = $lang_cleanup_target[get_user_lang($arr[owner])]['msg_your_torrent']."[i]".$arr['name']."[/i]".$lang_cleanup_target[get_user_lang($arr[owner])]['msg_was_deleted_because_dead'];
 			sql_query("INSERT INTO messages (sender, receiver, added, subject, msg) VALUES(0, $arr[owner], $dt, ".sqlesc($subject).", ".sqlesc($msg).")") or sqlerr(__FILE__, __LINE__);
-			write_log("Torrent $arr[id] ($arr[name]) is deleted by system because of being dead for a long time.",'normal');
+			write_log("系统自动清理：系统删除了断种 $arr[id] ($arr[name])",'normal');
 		}
 	}
 	if ($printProgress) {
-		printProgress("delete torrents that have been dead for a long time");
+		printProgress("清理断种delete torrents that have been dead for a long time");
 	}
 
 //Priority Class 5: cleanup every 15 days
@@ -669,7 +908,7 @@ function user_to_peasant($down_floor_gb, $minratio){
 	$until = date("Y-m-d H:i:s",(TIMENOW - $length));
 	sql_query("DELETE FROM messages WHERE sender = 0 AND added < ".sqlesc($until));
 	if ($printProgress) {
-		printProgress("delete old messages sent by system");
+		printProgress("清理系统发的旧信息delete old messages sent by system");
 	}
 
 	//delete old readpost records
@@ -689,7 +928,7 @@ function user_to_peasant($down_floor_gb, $minratio){
 	$until = date("Y-m-d H:i:s",(TIMENOW - $length));
 	sql_query("DELETE FROM iplog WHERE access < ".sqlesc($until));
 	if ($printProgress) {
-		printProgress("delete old ip log");
+		printProgress("删除旧的ip记录delete old ip log");
 	}
 
 	//delete old general log
@@ -773,7 +1012,7 @@ function user_to_peasant($down_floor_gb, $minratio){
 	sql_query("UPDATE topics, posts SET topics.locked='yes' WHERE topics.lastpost = posts.id AND topics.sticky = 'no' AND UNIX_TIMESTAMP(posts.added) < ".TIMENOW." - $secs") or sqlerr(__FILE__, __LINE__);
 
 	if ($printProgress) {
-		printProgress("lock topics where last post was made more than x days ago");
+		printProgress("锁定长时间无活动帖子lock topics where last post was made more than x days ago");
 	}
 
 	//9.delete report items older than four week
@@ -783,6 +1022,6 @@ function user_to_peasant($down_floor_gb, $minratio){
 	if ($printProgress) {
 		printProgress("delete report items older than four week");
 	}
-	return 'Full cleanup is done';
+	return '所有清理结束Full cleanup is done';
 }
 ?>

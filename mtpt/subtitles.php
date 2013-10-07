@@ -191,7 +191,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"] == "upload" && ($in
 	
 	KPS("+",$uploadsubtitle_bonus,$uppedby); //subtitle uploader gets bonus
 	
-	write_log("$arr[lang_name] Subtitle $id ($title) was uploaded by $anon");
+	write_log("字幕：$anon 上传了字幕 $arr[lang_name] Subtitle $id ($title) ");
 	$msg_bt = "$arr[lang_name] Subtitle $id ($title) was uploaded by $anon, Download: " . get_protocol_prefix() . "$BASEURL/downloadsubs.php/".$file["name"]."";
 }
 
@@ -228,7 +228,7 @@ if (get_user_class() >= $delownsub_class)
 					}
 					$res = sql_query("SELECT lang_name from language WHERE sub_lang=1 AND id = " . sqlesc($a["lang_id"])) or sqlerr(__FILE__, __LINE__);
 					$arr = mysql_fetch_assoc($res);
-					write_log("$arr[lang_name] Subtitle $delete ($a[title]) was deleted by ". (($a["anonymous"] == 'yes' && $a["uppedby"] == $CURUSER["id"]) ? "Anonymous" : $CURUSER['username']). ($a["uppedby"] != $CURUSER["id"] ? ", Mod Delete":"").($reason != "" ? " (".$reason.")" : ""));
+					write_log("字幕：".(($a["anonymous"] == 'yes' && $a["uppedby"] == $CURUSER["id"]) ? "匿名发布者" :"管理员 ".$CURUSER['username'])." 删除了字幕 $arr[lang_name] Subtitle $delete ($a[title])". ($a["uppedby"] != $CURUSER["id"] ? ", Mod Delete":"").($reason != "" ? " (".$reason.")" : ""));
 				}
 				else
 				{

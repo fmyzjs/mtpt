@@ -1,3 +1,9 @@
+.rowfollow
+{
+table-layout: fixed;
+/*word-break: break-all;*/
+}
+
 img.female
 {
 width:32px;
@@ -177,6 +183,30 @@ img.arrowdown
 width:16px;
 height:16px;
 background:url(img/arrowdown.png)/* -7px -160px*/;
+}
+img.uploading
+{
+width:16px;
+height:16px;
+background:url(img/uploading.png)/* -7px -160px*/;
+}
+img.downloading
+{
+width:16px;
+height:16px;
+background:url(img/downloading.png)/* -7px -160px*/;
+}
+img.completed
+{
+width:16px;
+height:16px;
+background:url(img/completed.png)/* -7px -160px*/;
+}
+img.uploaded
+{
+width:16px;
+height:16px;
+background:url(img/uploaded.png)/* -7px -160px*/;
 }
 img.buddylist
 {

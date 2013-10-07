@@ -7,18 +7,18 @@ require_once(get_langfile_path());
 loggedinorreturn();
 parked();
 
-if ($CURUSER["uploadpos"] == 'no')
-	stderr($lang_upload['std_sorry'], $lang_upload['std_unauthorized_to_upload'],false);
+//if ($CURUSER["uploadpos"] == 'no')
+	//stderr($lang_upload['std_sorry'], $lang_upload['std_unauthorized_to_upload'],false);
 
 if ($enableoffer == 'yes')
 	$has_allowed_offer = get_row_count("offers","WHERE allowed='allowed' AND userid = ". sqlesc($CURUSER["id"]));
 else $has_allowed_offer = 0;
 $uploadfreely = user_can_upload("torrents");
-$allowtorrents = ($has_allowed_offer || $uploadfreely);
+$allowtorrents = ($has_allowed_offer || $uploadfreely)||true;
 $allowspecial = user_can_upload("music");
 
-if (!$allowtorrents && !$allowspecial)
-	stderr($lang_upload['std_sorry'],$lang_upload['std_please_offer'],false);
+//if (!$allowtorrents && !$allowspecial)
+//	stderr($lang_upload['std_sorry'],$lang_upload['std_please_offer'],false);
 $allowtwosec = ($allowtorrents && $allowspecial);
 
 $brsectiontype = $browsecatmode;
@@ -65,11 +65,209 @@ print("<input type=\"submit\" class=\"btn\" value=\"".$lang_upload['submit_searc
 $(document).ready(function(){
 	uplist("source_sel",new Array(['0','请先选择一级类型']));
 	$("#browsecat").change(function(){
-		secondtype($(this).val());
-		$.get("guize.php?id="+$(this).val()+"&t="+new Date(), function(result){
-			$("#gstishi").html(result);
+		secondtype($("#browsecat").val());
+		removeSubcat();
+	});
+
+	function catChange()
+	{
+		secondtype($("#browsecat").val());
+		removeSubcat();
+	}
+
+	$("#source_sel").change(function(){
+		//start modified by SamuraiMe,2013.05.17 
+		//用于自动生成种子标题
+		removeSubcat();
+
+		$.getJSON("guize.php?id="+$("#browsecat").val()+"&source_sel="+$(this).val()+"&t="+new Date(), function(result){
+			$("#gstishi").html(result[0]);
+			$("td td:has('#name')").prepend(result[1]);
+			$("#subcat").slideDown();
 		});
 	});
+
+	$("#subcat input:checkbox, #subcat input:radio").live("click", function() {
+		var name = $(this).attr("name");
+		var index = $(this).index("#subcat input[name="+name+"]");
+		var length = $("#subcat input[name="+name+"]").length;
+		if ($(this).next().next().is("[id=temp_input]")) {
+			$(this).next().toggle().next().toggle();
+		} else {
+			if (index == length-1) {
+				var input = $(this).next().text();
+				$(this).next().hide().after('<input type="text" id="temp_input" value="'+input+'"/>').focus();
+				$(this).val($(this).next().next().val());
+				$(this).next().text($(this).next().next().val());
+			} else {
+				removeTempInput();
+			}
+		}
+	});
+
+	$("#temp_input").live("blur", function() {
+		$(this).prev().text($(this).val()).show();;
+		$(this).prev().prev().val($(this).val());
+		$(this).remove();
+		generateName();
+	});
+
+
+	$("#subcat input").live("change", function() {
+		generateName();
+	});
+
+	function removeSubcat()
+	{
+		if ($("#subcat").length>0) {
+			$("#subcat").slideUp(function() {
+				$(this).remove();
+			})
+		};
+	}
+
+	function removeTempInput() {
+		$("#temp_input").prev().text($("#temp_input").val())
+			.prev().val($("#temp_input").val());
+		$("#temp_input").prev().show().end().remove();
+		//$("#temp_input").remove();
+	}
+
+	function generateName () {
+		var names = new Array();
+		var tempName = '';
+		var name = '';
+		$("#subcat input:checked, #subcat input[value!=''][id!=temp_input]:text, #subcat input[type=hidden]").each(function() {
+			if ($(this).attr("name") == tempName) {
+				names[names.length-1] += "/" + $(this).val();
+			} else {
+				names[names.length] = $(this).val();
+			}
+			tempName = $(this).attr("name");
+		});
+
+		for (var i = 0; i < names.length; i++) {
+			name += "[" + names[i] + "]";
+		};
+		$("#name").val(name);
+	}
+	//end modified by SamuraiMe,2013.05.17
+
+	//modified by SamuraiMe,2013.05.19 获取豆瓣与IMDB的URL
+	//获取豆瓣url
+	$("#browsecat").change(function() {
+		var cat = $(this).val();
+		if (401!=cat && 402!=cat && 405!=cat && 414 !=cat && 404!=cat) {
+			$("#select_douban").remove();
+			$("#reselect_douban").remove();
+		}
+	});
+	//中文名改变时刷新显示可能的豆瓣链接
+	$("[name=chinese_name]").live("blur", function (){
+		$("#reselect_douban").remove();
+		displayDoubanItem();
+	});
+	$("#reselect_douban").live("click", function() {
+		$(this).remove();
+		displayDoubanItem();
+	});
+	//豆瓣链接被选中时
+	$(".douban_item").live("click", function () {
+		$a = $(this).find("a");
+		var url = $a.first().attr("href");
+		$("[name=dburl]").val(url);
+		$("#select_douban").remove();
+		$("[name=dburl]").after("<input type=\"button\" id=\"reselect_douban\"value=\"重新选择\"/>");
+	});
+
+	function displayDoubanItem() 
+	{
+		var q = $("[name=chinese_name]").val();
+		var cat = $("#browsecat").val();
+		if (q && (401==cat || 402==cat || 405==cat || 414 ==cat || 404==cat) ) {
+			var requestUrl = "imdb/imdb_url.php?res=douban&title=" + q + "&type=" + $("#browsecat").val();
+			$.get(requestUrl, function (data) {
+				if ($("#select_douban").length>0) {
+					$("#select_douban").remove();
+				}
+				if (data.length>0) {
+					$("[name=dburl]").after(data);
+				};
+			});
+		}
+	}
+
+
+	//英文名改变时刷新显示可能的imdb链接
+	$("[name=english_name]").live("blur", function (){
+		$("#reselect_imdb").remove();
+		displayImdbItem();
+	});
+	$("#reselect_imdb").live("click", function() {
+		$(this).remove();
+		displayImdbItem();
+	});
+	//imdb链接被选中时
+	$(".imdb_item").live("click", function () {
+		$a = $(this).find("a");
+		var url = $a.first().attr("href");
+		$("[name=imdburl]").val(url);
+		$("#select_imdb").remove();
+		$("[name=imdburl]").after("<input type=\"button\" id=\"reselect_imdb\"value=\"重新选择\"/>");
+	});
+
+	function displayImdbItem() 
+	{
+		var q = $("[name=english_name]").val();
+		var cat = $("#browsecat").val();
+		if (q && (401==cat || 402==cat || 405==cat || 414 ==cat || 404==cat) ) {
+			var requestUrl = "imdb/imdb_url.php?res=imdb&title=" + q + "&type=" + $("#browsecat").val();
+			$.get(requestUrl, function (data) {
+				if ($("#select_imdb").length>0) {
+					$("#select_imdb").remove();
+				}
+				if (data.length>0) {
+					$("[name=imdburl]").after(data);
+				};
+			});
+		}
+	}
+	//获取豆瓣与IMDB的URL结束
+
+	//引用发布功能开始
+	if ($("#cite_torrent").val() != "") {
+		citeTorrent();
+	};
+	$("#cite_torrent_btn").click(function(){
+		citeTorrent();
+	});
+
+	function citeTorrent()
+	{
+		var id = $("#cite_torrent").val();
+		//需要判断id是否合法
+		if (id != '') {
+			if ($("#cite_hint").length > 0) {
+				$("#cite_hint").remove();
+			};
+			$.getJSON("./citetorrent.php?torrent_id="+id, function(data){
+				if (data["exist"] == "yes") {
+					$("#browsecat").val(data["category"]);
+					catChange();
+					$("#source_sel").val(data["source"]);
+					$("#name").val(data["name"]);
+					$("input[name=small_descr]").val(data["small_descr"]);
+					$("input[name=url]").val(data["url"]);
+					$("input[name=dburl]").val(data["dburl"]);
+					$("#descr").text(data["descr"]);
+				} else {
+					$("#cite_torrent_btn").after("<span id=\"cite_hint\">所引用的种子不存在..<span>");
+				}
+			});
+		};
+	}
+	//引用发布功能结束
+
 	$("#qr").click(function(){
 		var err = "";
 		if($("#browsecat").val() == 0)  err += "请选择[类型]\n\n";
@@ -77,11 +275,13 @@ $(document).ready(function(){
 		if($("#torrent").val() == "") err += "请选择[种子文件]\n\n";
 		if($("#name").val().length < 10) err += "[标题]内容不得少于10个字符\n\n";
 		if($("#descr").val().length < 50) err += "[简介]内容不得少于50个字符\n\n";
+		if($("#descr").val().search(/attach|img/) == -1) err += "[简介]内容必须包含图片\n\n";
 		if(err == "") return true;
 		jAlert(err);
 		return false;
 	});
 });
+
 function uplist(name,list) {
 	var childRet = document.getElementById(name);
 	for (var i = childRet.childNodes.length-1; i >= 0; i--) { 
@@ -125,6 +325,9 @@ function secondtype(value) {
 }
 </script>
 <?php
+$torrent_id = isset($_GET["cite_torrent_id"]) ? 0+$_GET["cite_torrent_id"] : "";
+tr("引用发布", "<input type=\"text\" id=\"cite_torrent\" name=\"cite_torrent\" value=\"$torrent_id\" /><input type=\"button\" id=\"cite_torrent_btn\" value=\"引用\"/>", 1);
+tr($lang_upload['row_torrent_file']."<font color=\"red\">*</font>", "<input type=\"file\" class=\"file\" id=\"torrent\" name=\"file\" />\n", 1);
 if ($allowtorrents){
 		$disablespecial = " onchange=\"disableother('browsecat','specialcat')\"";
 		$s = "<select name=\"type\" id=\"browsecat\" ".($allowtwosec ? $disablespecial : "").">\n<option value=\"0\">".$lang_upload['select_choose_one']."</option>\n";
@@ -181,7 +384,7 @@ if ($allowtorrents){
                                 }
 
 				//tr($lang_upload['row_torrent_file']."<font color=\"red\">*</font>", "<input type=\"file\" class=\"file\" id=\"torrent\" name=\"file\" onchange=\"getname()\" />\n", 1);
-				tr($lang_upload['row_torrent_file']."<font color=\"red\">*</font>", "<input type=\"file\" class=\"file\" id=\"torrent\" name=\"file\" />\n", 1);
+				//tr($lang_upload['row_torrent_file']."<font color=\"red\">*</font>", "<input type=\"file\" class=\"file\" id=\"torrent\" name=\"file\" />\n", 1);
 				if ($altname_main == 'yes'){
 					tr($lang_upload['row_torrent_name'], "<b>".$lang_upload['text_english_title']."</b>&nbsp;<input type=\"text\" style=\"width: 250px;\" name=\"name\" />&nbsp;&nbsp;&nbsp;
 <b>".$lang_upload['text_chinese_title']."</b>&nbsp;<input type=\"text\" style=\"width: 250px\" name=\"cnname\"><br /><font class=\"medium\">".$lang_upload['text_titles_note']."</font>", 1);
@@ -227,7 +430,12 @@ if ($allowtorrents){
 					tr($lang_upload['row_show_uploader'], "<input type=\"checkbox\" name=\"uplver\" value=\"yes\" />".$lang_upload['checkbox_hide_uploader_note'], 1);
 				}
 				?>
-				<tr><td class="toolbox" align="center" colspan="2"><input id="qr" type="submit" class="btn" value="<?php echo $lang_upload['submit_upload']?>" /></td></tr>	</table>
+				<tr><td class="toolbox" align="center" colspan="2"><input id="qr" type="submit" class="btn" value="<?php echo $lang_upload['submit_upload']?>" />
+				<input id="preDIv" type="button" class="btn" onClick="javascript:preview_torrent();return false;" value="预览" />
+					<input id="EditDIv" type="button" style="display:none;" onClick="javascript:edit_torrent();return false;" class="btn" value="继续编辑" />
+					</td>
+
+				</td></tr>	</table>
 	</form>
 <?php
 stdfoot();

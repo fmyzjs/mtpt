@@ -168,7 +168,8 @@ echo("<td class=rowfollow><input class=checkbox type=\"checkbox\" name=\"message
 <?php if($mailbox != PM_SENTBOX) print("<input class=btn type=\"submit\" name=\"markread\" value=\"".$lang_messages['submit_mark_as_read']."\">") ?>
 <input class=btn type="submit" name="delete" value=<?php echo $lang_messages['submit_delete']?>>
 <?php if($mailbox != PM_SENTBOX){ ?>
-<input class=btn type="submit" name="clearsysmessage" value="<?php echo $lang_messages['input_clear_all'] ?>" onclick="return confirm('确定删除？');"/>
+<input class=btn type="submit" name="clearsysmessage" value="<?php echo $lang_messages['input_clear_all'] ?>" onclick="return confirm('确定删除？会将收件箱中所有由系统发出的信息全部删除！不包括自定义文件夹！');"/>
+<input class=btn type="submit" name="deletebonus" value="删除礼物信息" onclick="return confirm('确定删除？会将收件箱中所有标题为“收到礼物”的信息全部删除！不包括自定义文件夹！');"/>
 <?php } ?>
 <?php
 if($mailbox != PM_SENTBOX){
@@ -206,9 +207,7 @@ stderr($lang_messages['std_error'],$lang_messages['std_no_permission']);
 }
 
 // Get the message
-$res = sql_query('SELECT * FROM messages WHERE id=' . sqlesc($pm_id) . ' AND (receiver=' . sqlesc($CURUSER['id']) . ' OR (sender=' . sqlesc($CURUSER['id'])
-
-. ' AND saved=\'yes\')) LIMIT 1') or sqlerr(__FILE__,__LINE__);
+$res = sql_query('SELECT * FROM messages WHERE id=' . sqlesc($pm_id) . ' AND (receiver=' . sqlesc($CURUSER['id']) . ' OR (sender=' . sqlesc($CURUSER['id']). ' AND saved=\'yes\')) LIMIT 1') or sqlerr(__FILE__,__LINE__);
 if (!$res)
 {
 	stderr($lang_messages['std_error'],$lang_messages['std_no_permission']);
@@ -257,6 +256,12 @@ $subject = $lang_messages['text_no_subject'];
 sql_query("UPDATE messages SET unread='no' WHERE id=" . sqlesc($pm_id) . " AND receiver=" . sqlesc($CURUSER['id']) . " LIMIT 1");
 $Cache->delete_value('user_'.$CURUSER['id'].'_unread_message_count');
 // Display message
+if ($message['goto'] == '1')
+{
+	preg_match("/url=([^\[\s]+?)\]/",$message['msg'],$matches);
+	sql_query("UPDATE messages SET goto=0 WHERE id =". sqlesc($pm_id)) or sqlerr(__FILE__,__LINE__);
+	header("Location: ".$matches[1]);
+}
 stdhead("PM ($subject)"); ?>
 <h1><?php echo $subject?></h1>
 <?php
@@ -302,7 +307,12 @@ $pm_id = (int) $_POST['id'];
 $pm_box = (int) $_POST['box'];
 $pm_messages = $_POST['messages'];
 if($_POST['clearsysmessage']){
-	sql_query("DELETE FROM messages WHERE sender='0' AND receiver=" . sqlesc($CURUSER['id'])) or sqlerr(__FILE__,__LINE__);
+	sql_query("DELETE FROM messages WHERE sender='0' AND location='1' AND receiver=" . sqlesc($CURUSER['id'])) or sqlerr(__FILE__,__LINE__);
+	header("Location: messages.php?action=viewmailbox&box=" . $pm_box);
+	exit();
+}
+if($_POST['deletebonus']){
+	sql_query("DELETE FROM messages WHERE subject='收到礼物' AND location='1'  AND receiver=" . sqlesc($CURUSER['id'])) or sqlerr(__FILE__,__LINE__);
 	header("Location: messages.php?action=viewmailbox&box=" . $pm_box);
 	exit();
 }

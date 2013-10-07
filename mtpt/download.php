@@ -74,14 +74,15 @@ else{
 
 
 
-$res = sql_query("SELECT name, filename, save_as,  size, owner,banned FROM torrents WHERE id = ".sqlesc($id)) or sqlerr(__FILE__, __LINE__);
+$res = sql_query("SELECT name, filename, save_as,  size, owner, banned, status FROM torrents WHERE id = ".sqlesc($id)) or sqlerr(__FILE__, __LINE__);
 $row = mysql_fetch_assoc($res);
 $fn = "$torrent_dir/$id.torrent";
 if ($CURUSER['downloadpos']=="no")
 	permissiondenied();
 if (!$row || !is_file($fn) || !is_readable($fn))
 	httperr();
-if ($row['banned'] == 'yes' && get_user_class() < $seebanned_class)
+//非发布者普通用户不能下载被禁止(即回收站)和候选的种子
+if (($row['banned'] == 'yes' || $row['status'] == 'candidate') && get_user_class() < $seebanned_class && $CURUSER["id"] != $row['owner'])
 	permissiondenied();
 sql_query("UPDATE torrents SET hits = hits + 1 WHERE id = ".sqlesc($id)) or sqlerr(__FILE__, __LINE__);
 

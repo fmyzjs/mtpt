@@ -19,13 +19,13 @@ if(!is_valid_user_class($class))
 
 if (($search != '' || $class != '-') && $letter == '')
 {
-	$query = "username LIKE " . sqlesc("%$search%") . " AND status='confirmed'";
+	$query = "username LIKE " . sqlesc("%$search%") ;
 	if ($search)
 		$q = "search=" . rawurlencode($search);
 }
 elseif ($letter != '' && strpos("0abcdefghijklmnopqrstuvwxyz", $letter) == true)
 {
-  $query = "username LIKE '$letter%' AND status='confirmed'";
+  $query = "username LIKE '$letter%' ";
   $q = "letter=$letter";
 }
 else

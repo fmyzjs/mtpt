@@ -80,10 +80,14 @@ else {
 				$color = "";
 				if ($arr['op'] == 'del') $color = "red";
 				if ($arr['op'] == 'ban') $color = "blue";
+				if ($arr['op'] == 'unban') $color = "green";
+				if ($arr['op'] == 'change') $color = "green";
 				$log = "";
-				$log .= $arr['op_id'] == 0?'系统':'管理员';
+				$log .= $arr['op_id'] == 0?'系统':'管理员'.get_username($arr['op_id'],0,0,0,0,0,0,0,0,1);
 				$log .= $arr['op'] == 'del'?'删除了':'';
 				$log .= $arr['op'] == 'ban'?'封禁了':'';
+				$log .= $arr['op'] == 'unban'?'复活了':'';
+				$log .= $arr['op'] == 'change'?'更改了他的用户名。':'';
 				$log .= '账号：';
 				$log .= $arr['user_name']."($arr[user_id])";
 

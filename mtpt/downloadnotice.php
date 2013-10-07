@@ -111,6 +111,8 @@ if ($showrationotice)
 <p><?php echo $lang_downloadnotice['text_private_tracker_note_three']?></p>
 <img src="pic/ratio.png" alt="ratio" />
 <p><?php echo $lang_downloadnotice['text_private_tracker_note_four']?></p>
+<p><?php echo $lang_downloadnotice['text_private_tracker_note_five']?></p>
+&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a target="_blank" href="http://wp.qq.com/wpa/qunwpa?idkey=e4a93409574f25aa6e1a29a917ff4b3c97b5db948915d09fbcc073aeb8233bad"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="麦田PT新人注册指导" title="麦田PT新人注册指导"></a>
 </td>
 <?php
 }
@@ -124,7 +126,7 @@ if ($showclientnotice)
 <table width="100%">
 <tr>
 <td class="embedded" style="text-align: center; padding: 5px;" width="50%">
-<a href="http://www.utorrent.com/download.php" target="_blank" title="<?php echo $lang_downloadnotice['title_download']?>uTorrent"><img src="pic/utorrentbig.png" alt="uTorrent" /></a>
+<a href="http://pt.nwsuaf6.edu.cn/forums.php?action=viewtopic&forumid=13&topicid=4740" target="_blank" title="<?php echo $lang_downloadnotice['title_download']?>uTorrent"><img src="pic/utorrentbig.png" alt="uTorrent" /></a>
 </td>
 <td class="embedded" style="text-align: center; padding: 5px;" width="50%">
 <a href="http://azureus.sourceforge.net/download.php" target="_blank" title="<?php echo $lang_downloadnotice['title_download']?>Vuze"><img src="pic/vuzebig.png" alt="Vuze" /></a>
@@ -132,12 +134,12 @@ if ($showclientnotice)
 </tr>
 <tr>
 <td class="embedded" style="text-align: center; padding: 5px;">
-<div class="big"><a href="http://www.utorrent.com/download.php" target="_blank" title="<?php echo $lang_downloadnotice['title_download']?>uTorrent"><b>uTorrent</b></a></div>
+<div class="big"><a href="http://pt.nwsuaf6.edu.cn/forums.php?action=viewtopic&forumid=13&topicid=4740" target="_blank" title="<?php echo $lang_downloadnotice['title_download']?>uTorrent"><b>uTorrent</b></a></div>
 <div><?php echo $lang_downloadnotice['text_for']?>Windows</div>
 </td>
 <td class="embedded" style="text-align: center; padding: 5px;">
 <div class="big"><a href="http://azureus.sourceforge.net/download.php" target="_blank" title="<?php echo $lang_downloadnotice['title_download']?>Vuze"><b>Vuze</b></a></div>
-<div><?php echo $lang_downloadnotice['text_for']?>Windows, Linux, Mac OS X</div>
+<div><?php echo $lang_downloadnotice['text_for_one']?> Linux, Mac OS X</div>
 </td>
 </tr>
 </table>

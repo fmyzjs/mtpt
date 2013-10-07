@@ -60,7 +60,7 @@ if (!$az) err("Invalid passkey! Re-download the .torrent from $BASEURL");
 $userid = 0+$az['id'];
 
 //3. CHECK IF CLIENT IS ALLOWED
-$clicheck_res = check_client($peer_id,$agent,$client_familyid);
+$clicheck_res = check_client($peer_id,$agent,&$client_familyid);
 if($clicheck_res){
 	if ($az['showclienterror'] == 'no')
 	{
@@ -244,7 +244,7 @@ else // continue an existing session
 	if ($az["class"] == UC_VIP)
 		$downseedbonus = 0;
 	else
-		$downseedbonus = $truedownthis/1024 * 0.000001;	//下载影响积分，单位每K
+		$downseedbonus = -$truedownthis/1024 * 0.0000005;	//下载影响积分，单位每K
 	$upseedbonus = $trueupthis/1024 * 0.0000012;		//上传影响积分，单位每K
 
 	if (!$is_cheater && ($trueupthis > 0 || $truedownthis > 0))

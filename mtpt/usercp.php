@@ -809,7 +809,7 @@ EOD;
 			form ("security");
 			tr_small($lang_usercp['row_reset_passkey'],"<input type=checkbox name=resetpasskey value=1 />".$lang_usercp['checkbox_reset_my_passkey']."<br /><font class=small>".$lang_usercp['text_reset_passkey_note']."</font>", 1);
 			if ($disableemailchange != 'no' && $smtptype != 'none') //system-wide setting
-				tr_small($lang_usercp['row_email_address'], "<input type=\"text\" name=\"email\" style=\"width: 200px\" value=\"" . htmlspecialchars($CURUSER["email"]) . "\" /> <br /><font class=small>".$lang_usercp['text_email_address_note']."</font>", 1);
+				tr_small($lang_usercp['row_email_address'], "<input type=\"text\" name=\"email\" style=\"width: 200px\" value=\"" . htmlspecialchars($CURUSER["email"]) . " \" /> <br /><font class=small>".$lang_usercp['text_email_address_note']."</font>", 1);
 			tr_small($lang_usercp['row_change_password'], "<input type=\"password\" name=\"chpassword\" style=\"width: 200px\" />", 1);
 			tr_small($lang_usercp['row_type_password_again'], "<input type=\"password\" name=\"passagain\" style=\"width: 200px\" />", 1);
 			tr_small($lang_usercp['row_privacy_level'],  priv("normal", $lang_usercp['radio_normal']) . " " . priv("low", $lang_usercp['radio_low']) . " " . priv("strong", $lang_usercp['radio_strong']), 1);
@@ -855,7 +855,13 @@ if ($forumposts)
 <table border="0" cellspacing="0" cellpadding="5" width=940>
 <?php
 tr_small($lang_usercp['row_join_date'], $joindate, 1);
-tr_small($lang_usercp['row_email_address'], $CURUSER['email'], 1);
+tr_small($lang_usercp['row_email_address'], $CURUSER['email']."&nbsp;&nbsp;&nbsp;&nbsp;<a href='changeemailforyahoo.php' class='faqlink'>雅虎邮箱用户请修改邮箱</a>", 1);
+//显示学号
+$cardnum = $CURUSER['cardnum'];
+if ($cardnum == null) $cardnumtext = "您没有登记学号，如果您不是西农学生请忽略。<a href='getcardnum.php' class='faqlink'>点击登记学号送麦粒</a>";
+else $cardnumtext = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果学号登记有误请联系管理组';
+$cardnumtext .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学号仅本人可见，管理组也不能随意查看。学号可用于密码找回。"; 
+tr_small('用户学号', $cardnum . $cardnumtext, 1);
 $school = school_ip_location($CURUSER["ip"]);
 if ($enablelocation_tweak == 'yes'){
 	list($loc_pub, $loc_mod) = get_ip_location($CURUSER["ip"]);

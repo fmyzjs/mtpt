@@ -73,7 +73,7 @@ if ($action == "edituser")
 	$updateset[] = "stafffor = " . sqlesc($stafffor);
 	$updateset[] = "pickfor = " . sqlesc($pickfor);
 	$updateset[] = "picker = " . sqlesc($moviepicker);
-	$updateset[] = "enabled = " . sqlesc($enabled);
+	//$updateset[] = "enabled = " . sqlesc($enabled);
 	$updateset[] = "uploadpos = " . sqlesc($uploadpos);
 	$updateset[] = "downloadpos = " . sqlesc($downloadpos);
 	$updateset[] = "forumpost = " . sqlesc($forumpost);
@@ -114,6 +114,7 @@ if ($action == "edituser")
 			$subject = sqlesc($lang_modtask_target[get_user_lang($userid)]['msg_username_change']);
 			$msg = sqlesc($lang_modtask_target[get_user_lang($userid)]['msg_your_username_changed_from'].$arr['username'].$lang_modtask_target[get_user_lang($userid)]['msg_to_new'] . $username .$lang_modtask_target[get_user_lang($userid)]['msg_by'].$CURUSER[username]);
 			sql_query("INSERT INTO messages (sender, receiver, subject, msg, added) VALUES(0, $userid, $subject, $msg, $added)") or sqlerr(__FILE__, __LINE__);
+			record_op_log($CURUSER['id'],$arr['id'],htmlspecialchars($arr['username']),"change",$arr['username']."--更名为--". $username);
 		}
 		if ($ori_downloaded != $downloaded){
 			$updateset[] = "downloaded = " . sqlesc($downloaded);
@@ -228,7 +229,24 @@ if ($action == "edituser")
 			$modcomment = date("Y-m-d") . " - Warned by " . $CURUSER['username'] . ".\nReason: $warnpm.\n". $modcomment;
 			$msg = sqlesc($lang_modtask_target[get_user_lang($userid)]['msg_you_are_warned_by'].$CURUSER[username]."." . ($warnpm ? $lang_modtask_target[get_user_lang($userid)]['msg_reason'].$warnpm : ""));
 			$updateset[] = "warneduntil = '0000-00-00 00:00:00'";
-		}else{
+		}
+		elseif ($warnlength == 3) 
+		{
+			$warneduntil = date("Y-m-d H:i:s",(strtotime(date("Y-m-d H:i:s")) + $warnlength * 86400)); 
+			$dur = $warnlength . "天";
+			$msg = sqlesc($lang_modtask_target[get_user_lang($userid)]['msg_you_are_warned_for'].$dur.$lang_modtask_target[get_user_lang($userid)]['msg_by']  . $CURUSER['username'] . "." . ($warnpm ? $lang_modtask_target[get_user_lang($userid)]['msg_reason'].$warnpm : ""));
+			$modcomment = date("Y-m-d") . " - Warned for $dur by " . $CURUSER['username'] .  ".\nReason: $warnpm.\n". $modcomment;
+			$updateset[] = "warneduntil = '$warneduntil'";
+		}
+		elseif ($warnlength === '1d') 
+		{
+			$warneduntil = date("Y-m-d H:i:s",(strtotime(date("Y-m-d H:i:s")) +  86400)); 
+			$dur =  "1天";
+			$msg = sqlesc($lang_modtask_target[get_user_lang($userid)]['msg_you_are_warned_for'].$dur.$lang_modtask_target[get_user_lang($userid)]['msg_by']  . $CURUSER['username'] . "." . ($warnpm ? $lang_modtask_target[get_user_lang($userid)]['msg_reason'].$warnpm : ""));
+			$modcomment = date("Y-m-d") . " - Warned for $dur by " . $CURUSER['username'] .  ".\nReason: $warnpm.\n". $modcomment;
+			$updateset[] = "warneduntil = '$warneduntil'";
+		}
+		else{
 			$warneduntil = date("Y-m-d H:i:s",(strtotime(date("Y-m-d H:i:s")) + $warnlength * 604800)); 
 			$dur = $warnlength . $lang_modtask_target[get_user_lang($userid)]['msg_week'] . ($warnlength > 1 ? $lang_modtask_target[get_user_lang($userid)]['msg_s'] : "");
 			$msg = sqlesc($lang_modtask_target[get_user_lang($userid)]['msg_you_are_warned_for'].$dur.$lang_modtask_target[get_user_lang($userid)]['msg_by']  . $CURUSER['username'] . "." . ($warnpm ? $lang_modtask_target[get_user_lang($userid)]['msg_reason'].$warnpm : ""));
@@ -240,6 +258,7 @@ if ($action == "edituser")
 		sql_query("INSERT INTO messages (sender, receiver, subject, msg, added) VALUES (0, $userid, $subject, $msg, $added)") or sqlerr(__FILE__, __LINE__);
 		$updateset[] = "warned = 'yes', timeswarned = timeswarned+1, lastwarned=$added, warnedby=$CURUSER[id]";
 	}
+	/*封禁用户功能挪到delactadmin.php中执行
 	if ($enabled != $curenabled)
 	{
 		if ($enabled == 'yes') {
@@ -256,6 +275,7 @@ if ($action == "edituser")
 			$modcomment = date("Y-m-d") . " - Disabled by " . $CURUSER['username']. ".\n". $modcomment;		
 		}
 	}
+	*/
 	if ($arr['noad'] != $noad){
 		$updateset[]='noad = '.sqlesc($noad);
 		$modcomment = date("Y-m-d") . " - No Ad set to ".$noad." by ". $CURUSER['username']. ".\n". $modcomment;

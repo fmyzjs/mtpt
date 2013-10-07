@@ -335,6 +335,7 @@ if ($action == "post")
 	$body =  RemoveXSS(trim($_POST["body"]));
 	$onlyauthor = $_POST["onlyauthor"]+0;
 	$hassubject = false;
+
 	switch ($type){
 		case 'new':
 		{
@@ -424,9 +425,9 @@ if ($action == "post")
 		// To ensure that posts are not entered within 20 seconds limiting posts
 		// to a maximum of 360*6 per hour.
 		if (get_user_class() < $postmanage_class) {
-			if (strtotime($CURUSER['last_post']) > (TIMENOW - 20))
+			if (strtotime($CURUSER['last_post']) > (TIMENOW - 5))
 			{
-				$secs = 20 - (TIMENOW - strtotime($CURUSER['last_post']));
+				$secs = 5 - (TIMENOW - strtotime($CURUSER['last_post']));
 				stderr($lang_forums['std_error'],$lang_forums['std_post_flooding'].$secs.$lang_forums['std_seconds_before_making'],false);
 			}
 		}
@@ -453,6 +454,16 @@ if ($action == "post")
 		sql_query("INSERT INTO posts (topicid, userid, added, body, ori_body) VALUES ($topicid, $userid, ".sqlesc($date).", ".sqlesc($body).", ".sqlesc($body).")") or sqlerr(__FILE__, __LINE__);
 		$postid = mysql_insert_id() or die($lang_forums['std_post_id_not_available']);
 		//引用回复提醒
+		$res1 = sql_query("SELECT forumid, userid, subject FROM topics WHERE id=".sqlesc($topicid)." LIMIT 1") or sqlerr(__FILE__, __LINE__);
+		$row1 = mysql_fetch_array($res1);
+		if (!$row1){
+			die;
+		}
+		else {
+		$forumid = $row1['forumid'];
+		$userid = $row1['userid'];
+		$subject = $row1['subject'];
+		}
 	if($type == "quote"){
 		$quotenum = 0 + $_POST['quotenum'];
 		if($quotenum > 0 && $quotenum <= 10){
@@ -460,13 +471,17 @@ if ($action == "post")
 		for($i = 0;$i < $quotenum;$i++){
 		if($username[1][$i] != "" && $username[1][$i] != $CURUSER['username']){
 		$postuserid = get_user_id_from_name($username[1][$i]);
-		$postmsg = "[url=forums.php\?action=viewtopic\&topicid=$topicid\&page=p$postid\#pid$postid]点击进入查看该回复[/url]";
-		sql_query("INSERT INTO messages (sender, receiver, added, subject, msg, unread, location, saved) VALUES ('0', ".$postuserid.", now(), '论坛中有人引用您的回复','".$postmsg."','yes','1','no') ") or sqlerr(__FILE__, __LINE__);
+		$postmsg = "有用户在论坛帖子[url=forums.php\?action=viewtopic\&topicid=$topicid\&page=p$postid\#pid$postid]". htmlspecialchars($subject)."[/url]中引用了你的你的发言，快去看看吧";
+		sql_query("INSERT INTO messages (sender, receiver, added, subject, msg, unread, location, saved, goto) VALUES ('0', ".$postuserid.", now(), '论坛中有人引用您的回复','".$postmsg."','yes','1','no',1) ") or sqlerr(__FILE__, __LINE__);
 		}
 		}
 		}
 	}
-		//引用回复提醒结束
+		//引用回复提醒结束，@提醒
+		
+		$titles = "[url=forums.php?action=viewtopic&topicid=$topicid&page=p$postid#pid$postid]". htmlspecialchars($subject)."[/url]";
+		at_user_message($body,$titles,'topic');
+		//@jieshu
 		$Cache->delete_value('forum_'.$forumid.'_post_'.$today_date.'_count');
 		$Cache->delete_value('today_'.$today_date.'_posts_count');
 		$Cache->delete_value('forum_'.$forumid.'_last_replied_topic_content');
@@ -642,7 +657,8 @@ $(document).ready(function(){
 		var uname = $(this).siblings("#username").val();
 		var psid = $(this).siblings("#postsid").val();
 		var msg = $(this).siblings("#message").val();
-		if(bgift >= 25 && bgift <= 1000){
+		var where = $(this).siblings("#where").val();
+		if(bgift >= 25 && bgift <= 5000){
 			jConfirm('确定要赠送 '+bgift+' 个麦粒给 '+uname+' 吗？', '提示', function(v) {
 				if(v){
 				$.post("mybonus.php?action=exchange&t="+new Date(),{
@@ -650,7 +666,8 @@ $(document).ready(function(){
 					 option: 7,
 					 postsid : psid,
 					 bonusgift : bgift,
-					 message : msg },
+					 message : msg ,
+					 where : where},
 					 function(data){
 						jConfirm('赠送成功，是否立即刷新？', '提示', function(v) {
 								if(v) window.location.reload();
@@ -660,7 +677,7 @@ $(document).ready(function(){
 				}
 			});
 		}else{
-			jAlert('每次只能赠送25至1000个麦粒','提示');
+			jAlert('每次只能赠送25至5000个麦粒','提示');
 		}
 	});
 });
@@ -751,7 +768,8 @@ $(document).ready(function(){
 		if ($authorid)
 			print("<a href=\"?action=viewtopic&topicid=".$topicid."\">".$lang_forums['text_view_all_posts']."</a>");
 		else
-			print("<a href=\"".htmlspecialchars("?action=viewtopic&topicid=".$topicid."&authorid=".$posterid)."\">".$lang_forums['text_view_this_author_only']."</a>");
+			if (get_user_class()>=15||!$onlyauthor) 
+				print("<a href=\"".htmlspecialchars("?action=viewtopic&topicid=".$topicid."&authorid=".$posterid)."\">".$lang_forums['text_view_this_author_only']."</a>");
 
 		//print("</td><td class=\"embedded nowrap\" width=\"1%\"><font class=\"big\">".$lang_forums['text_number']."<b>".($pn+$offset)."</b>".$lang_forums['text_lou']."&nbsp;&nbsp;</font><a href=\"#top\"><img class=\"top\" src=\"pic/trans.gif\" alt=\"Top\" title=\"".$lang_forums['text_back_to_top']."\" /></a>&nbsp;&nbsp;</td></tr>");
 		print("</td><td class=\"embedded nowrap\" width=\"1%\"><font class=\"big\">".$lang_forums['text_number']."<b>".($pn+$offset)."</b>".$lang_forums['text_lou']."&nbsp;&nbsp;</font>&nbsp;&nbsp;</td></tr>");
@@ -789,33 +807,206 @@ $(document).ready(function(){
 		return_avatar_image($avatar). "<br /><br /><br />&nbsp;&nbsp;<img alt=\"".get_user_class_name($arr2["class"],false,false,true)."\" title=\"".get_user_class_name($arr2["class"],false,false,true)."\" src=\"".$uclass."\" />".$stats."</td><td class=\"rowfollow\" valign=\"top\"><br />".$body."</td></tr>\n");
 		$secs = 900;
 		$dt = sqlesc(date("Y-m-d H:i:s",(TIMENOW - $secs))); // calculate date.
-		print("<tr><td class=\"rowfollow\" align=\"center\" valign=\"middle\">".("'".$arr2['last_access']."'">$dt?"<img class=\"f_online\" src=\"pic/trans.gif\" alt=\"Online\" title=\"".$lang_forums['title_online']."\" />":"<img class=\"f_offline\" src=\"pic/trans.gif\" alt=\"Offline\" title=\"".$lang_forums['title_offline']."\" />" )."<a href=\"sendmessage.php?receiver=".htmlspecialchars(trim($arr2["id"]))."\"><img class=\"f_pm\" src=\"pic/trans.gif\" alt=\"PM\" title=\"".$lang_forums['title_send_message_to'].htmlspecialchars($arr2["username"])."\" /></a><a href=\"report.php?forumpost=$postid\"><img class=\"f_report\" src=\"pic/trans.gif\" alt=\"Report\" title=\"".$lang_forums['title_report_this_post']."\" /></a></td>");
+
+	
+		print("<tr><td class=\"rowfollow\" align=\"center\" valign=\"top\">".("'".$arr2['last_access']."'">$dt?"<img class=\"f_online\" src=\"pic/trans.gif\" alt=\"Online\" title=\"".$lang_forums['title_online']."\" />":"<img class=\"f_offline\" src=\"pic/trans.gif\" alt=\"Offline\" title=\"".$lang_forums['title_offline']."\" />" )."<a href=\"sendmessage.php?receiver=".htmlspecialchars(trim($arr2["id"]))."\"><img class=\"f_pm\" src=\"pic/trans.gif\" alt=\"PM\" title=\"".$lang_forums['title_send_message_to'].htmlspecialchars($arr2["username"])."\" /></a><a href=\"report.php?forumpost=$postid\"><img class=\"f_report\" src=\"pic/trans.gif\" alt=\"Report\" title=\"".$lang_forums['title_report_this_post']."\" /></a></td>");
 		print("<td class=\"toolbox\" align=\"right\">");
 $thisusername = get_username($posterid,false,true,true,false,false,true,"",false,true);
 if($thisusername != $CURUSER['username']){
+?>
+<span >
+<form id="giftform" action="mybonus.php?action=exchange" method="post" >
+<b style="float:left"></b>
+<input type="hidden" id="option" name="option" value="7" />
+<input type="hidden" name="bonusgift" id="bonusgift" style="width: 80px" value="30"/>
+<input type="hidden" id="where" name="where" value="[b]论坛[/b]->[b]<?php echo $forumname?>[/b]版块->[url=<?php echo htmlspecialchars("forums.php?action=viewtopic&topicid=".$topicid."&page=p".$postid."#pid".$postid)."]".$subject."[/url]帖子";?> "/>
+<?print("<input type=\"hidden\" id=\"username\" name=\"username\" readonly=\"readonly\" value=\"".$thisusername."\" maxlength=\"24\">");print("<input type=\"hidden\" id=\"postsid\" name=\"postsid\" value=\"$postid\">");?>
+<input type="button" value="+30" id="giftsubmit" style="float:left"/>
+</form>
+<form id="giftform" action="mybonus.php?action=exchange" method="post" >
+<input type="hidden" id="option" name="option" value="7" />
+<input type="hidden" name="bonusgift" id="bonusgift" style="width: 80px" value="50"/>
+<input type="hidden" id="where" name="where" value="[b]论坛[/b]->[b]<?php echo $forumname?>[/b]版块->[url=<?php echo htmlspecialchars("forums.php?action=viewtopic&topicid=".$topicid."&page=p".$postid."#pid".$postid)."]".$subject."[/url]帖子";?> "/>
+<?print("<input type=\"hidden\" id=\"username\" name=\"username\" readonly=\"readonly\" value=\"".$thisusername."\" maxlength=\"24\">");print("<input type=\"hidden\" id=\"postsid\" name=\"postsid\" value=\"$postid\">");?>
+<input type="button" value="+50" id="giftsubmit" style="float:left"/>
+</form>
+<form id="giftform" action="mybonus.php?action=exchange" method="post" >
+<input type="hidden" id="option" name="option" value="7" />
+<input type="hidden" name="bonusgift" id="bonusgift" style="width: 80px" value="100"/>
+<input type="hidden" id="where" name="where" value="[b]论坛[/b]->[b]<?php echo $forumname?>[/b]版块->[url=<?php echo htmlspecialchars("forums.php?action=viewtopic&topicid=".$topicid."&page=p".$postid."#pid".$postid)."]".$subject."[/url]帖子";?> "/>
+<?print("<input type=\"hidden\" id=\"username\" name=\"username\" readonly=\"readonly\" value=\"".$thisusername."\" maxlength=\"24\">");print("<input type=\"hidden\" id=\"postsid\" name=\"postsid\" value=\"$postid\">");?>
+<input type="button" value="+100" id="giftsubmit" style="float:left"/>
+</form>
+<form id="giftform" action="mybonus.php?action=exchange" method="post" >
+<input type="hidden" id="option" name="option" value="7" />
+<input type="hidden" name="bonusgift" id="bonusgift" style="width: 80px" value="200"/>
+<input type="hidden" id="where" name="where" value="[b]论坛[/b]->[b]<?php echo $forumname?>[/b]版块->[url=<?php echo htmlspecialchars("forums.php?action=viewtopic&topicid=".$topicid."&page=p".$postid."#pid".$postid)."]".$subject."[/url]帖子";?> "/>
+<?print("<input type=\"hidden\" id=\"username\" name=\"username\" readonly=\"readonly\" value=\"".$thisusername."\" maxlength=\"24\">");print("<input type=\"hidden\" id=\"postsid\" name=\"postsid\" value=\"$postid\">");?>
+<input type="button" value="+200" id="giftsubmit" style="float:left"/>
+</form>
+<form id="giftform" action="mybonus.php?action=exchange" method="post" >
+<input type="hidden" id="option" name="option" value="7" />
+<input type="hidden" name="bonusgift" id="bonusgift" style="width: 80px" value="300"/>
+<input type="hidden" id="where" name="where" value="[b]论坛[/b]->[b]<?php echo $forumname?>[/b]版块->[url=<?php echo htmlspecialchars("forums.php?action=viewtopic&topicid=".$topicid."&page=p".$postid."#pid".$postid)."]".$subject."[/url]帖子";?> "/>
+<?print("<input type=\"hidden\" id=\"username\" name=\"username\" readonly=\"readonly\" value=\"".$thisusername."\" maxlength=\"24\">");print("<input type=\"hidden\" id=\"postsid\" name=\"postsid\" value=\"$postid\">");?>
+<input type="button" value="+300" id="giftsubmit" style="float:left"/>
+</form></span>
+
+<?php
 		print("<form id=\"giftform\" action=\"mybonus.php?action=exchange\" method=\"post\">");
 		print("<input type=\"hidden\" id=\"username\" name=\"username\" value=\"".$thisusername."\" maxlength=\"24\">");
 		print("<input type=\"hidden\" id=\"option\" name=\"option\" value=\"7\">");
 		print("<input type=\"hidden\" id=\"postsid\" name=\"postsid\" value=\"$postid\">");
+
 ?>
 赠送
-<input type="text" name="bonusgift" id="bonusgift" style="width: 80px">
+<input type="text" name="bonusgift" id="bonusgift" style="width: 80px"/>
+<input type="hidden" id="where" name="where" value="[b]论坛[/b]->[b]<?php echo $forumname?>[/b]版块->[url=<?php echo htmlspecialchars("forums.php?action=viewtopic&topicid=".$topicid."&page=p".$postid."#pid".$postid)."]".$subject."[/url]帖子";?> "/>
 个麦粒给<?=$by?>&nbsp&nbsp原因：<input type="text" id="message" name="message" style="width: 150px" maxlength="100">
 <input type="button" value="赠送" id="giftsubmit">
 <?
 		print("</form>");
 }
 		print($arr['sendlog']);
+		if ($maypost)
+		print("<a href=\"#replaytext\" onClick=\"javascript:quick_reply_to('回复".($pn+$offset)."楼[@".$arr2['username']."]');\"><img class=\"f_reply\" src=\"pic/trans.gif\" alt=\"Add Reply\" title=\"回复\" /></a>");
 		if ($maypost && !$onlyauthor)
+		{
+		
 		print("<a href=\"".htmlspecialchars("?action=quotepost&postid=".$postid)."\"><img class=\"f_quote\" src=\"pic/trans.gif\" alt=\"Quote\" title=\"".$lang_forums['title_reply_with_quote']."\" /></a>");
+		}
 
 		if (get_user_class() >= $postmanage_class || $is_forummod)
 		print("<a href=\"".htmlspecialchars("?action=deletepost&postid=".$postid)."\"><img class=\"f_delete\" src=\"pic/trans.gif\" alt=\"Delete\" title=\"".$lang_forums['title_delete_post']."\" /></a>");
 
 		if (($CURUSER["id"] == $posterid && !$locked) || get_user_class() >= $postmanage_class || $is_forummod)
 		print("<a href=\"".htmlspecialchars("?action=editpost&postid=".$postid)."\"><img class=\"f_edit\" src=\"pic/trans.gif\" alt=\"Edit\" title=\"".$lang_forums['title_edit_post']."\" /></a>");
+		if ($thisusername != $CURUSER['username']) {$thisusernameall .= $thisusername.",";$thisallpostid .= $postid.",";}//计算本页所有用户
+
 		print("</td></tr></table>");
 	}
+		///下面是添加的，本帖用户
+	if (!isset($_GET['sendbonus']) || $_GET['sendbonus'] != 'yes')
+	echo "<a name='delete' href='".$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']."&sendbonus=yes#delete'>显示群发麦粒选项</a>";
+if ($_GET['sendbonus'] == 'yes')
+{//给本帖内所有楼层数除以10余数为tosomelou的用户发麦粒
+		$allusersql = sql_query("SELECT userid, id FROM posts WHERE topicid = $topicid ") ;
+		//$allidsql = sql_query("SELECT 	id FROM posts WHERE topicid = $topicid ") ;
+	$nnnn = 1;
+	if (isset($_GET['tosomelou']))
+	$tosomelou = $_GET['tosomelou'];
+	else $tosomelou = 11;
+	
+	if ($tosomelou == 'all')
+	{
+	while($alluser = mysql_fetch_array($allusersql))
+		{$qquserid = $alluser['userid'];
+		$qqpostid = $alluser['id'];
+	if (get_username($qquserid, false,false,false,false,false,false,false,false,true) != $CURUSER['username'])
+			{$alluseronlysomelou .= get_username($qquserid, false,false,false,false,false,false,false,false,true).",";
+			$allpostid .= $qqpostid.",";}
+		}
+	}
+	else 
+	{	$tosomelou ++;
+		while($alluser = mysql_fetch_array($allusersql))
+		{$qquserid = $alluser['userid'];
+		$qqpostid = $alluser['id'];
+		$nnnn++;
+		if ($nnnn%10 == $tosomelou && $nnnn != 1)
+			if (get_username($qquserid, false,false,false,false,false,false,false,false,true) != $CURUSER['username'])
+			{$alluseronlysomelou .= get_username($qquserid, false,false,false,false,false,false,false,false,true).",";
+			$allpostid .= $qqpostid.",";}
+			}
+	}
+	
+
+		if (isset($_GET['unique'])&&$_GET['unique'] == 1)//删除重复
+		{
+		$thisusernameall = explode(",",$thisusernameall);
+		$thisallpostid = explode(",",$thisallpostid);
+		$userafterunique = array_combine($thisallpostid,$thisusernameall);
+		
+		$userafterunique = array_flip(array_flip($userafterunique));
+		foreach($userafterunique as $afteruniquepost=>$afteruniquename)
+			{
+				$thisusernameall .= $afteruniquename.",";
+				$thisallpostid .= $afteruniquepost.",";
+			}
+		}
+		
+		if (isset($_GET['unique2'])&&$_GET['unique2'] == 1)//删除重复
+		{
+		$alluseronlysomelou = explode(",",$alluseronlysomelou);
+		$allpostid = $beforeuniqueid = explode(",",$allpostid);
+		$userafterunique = array_combine($allpostid,$alluseronlysomelou);
+		
+		$userafterunique = array_flip(array_flip($userafterunique));
+		foreach($userafterunique as $afteruniquepost=>$afteruniquename)
+			{
+				//$afteruniquename = (string)$afteruniquename;
+				$alluseronlysomelou .= $afteruniquename.",";
+				$allpostid .= $afteruniquepost.",";
+			}
+		$afteruniqueid = explode(",",$allpostid);
+		$repeatidarr = array_diff($beforeuniqueid , $afteruniqueid);
+		foreach($repeatidarr as $value){
+		$value = "<a href=\"forums.php?action=viewtopic&topicid=$topicid&page=p$value#pid$value\" class='faqlink'>$value</a>";
+		$repeatid .= $value.",";
+		}
+		}
+		//删除因为删除重复出现的莫名其妙的array和末尾的,
+		$allpostid = preg_replace('/^Array/','',$allpostid);
+		$thisallpostid = preg_replace('/^Array/','',$thisallpostid);
+		$thisusernameall = preg_replace('/^Array/','',$thisusernameall);
+		$alluseronlysomelou = preg_replace('/^Array/','',$alluseronlysomelou);
+		$repeatid = preg_replace('/^Array/','',$repeatid);
+		
+		$allpostid = rtrim($allpostid,",");
+		$thisallpostid = rtrim($thisallpostid,",");
+		$thisusernameall = rtrim($thisusernameall,",");
+		$alluseronlysomelou = rtrim($alluseronlysomelou,",");
+		$repeatid = rtrim($repeatid,",");
+		//计算人数
+		$countthisusernameall = count(explode(",",$thisusernameall));
+		$countalluseronlysomelou = count(explode(",",$alluseronlysomelou));
+
+?>
+<table><b style="color:red">此功能可能不够完善，如果发现bug或有改进意见请及时联系<a name="sendbonusbox"href="sendmessage.php?receiver=2260" class="faqlink"> &nbsp;&nbsp;扬扬&nbsp;&nbsp;</a>，非常感谢。如果利用bug作弊或做破坏将被视为恶意行为而进行严厉惩罚.</b><br/>如果麦粒不足则会发完为止而提示成功，发放是否到位以用户麦粒记录为准，帖子下方记录可做参考
+<tr ><td align="left" width="37%">选中本页所有用户，不包括使用者本人</td><td align ='right'>
+<form id="giftform" action="mybonus.php?action=exchange" method="post" >
+赠送
+<input type="hidden" id="option" name="option" value="7" />
+<input type="text" name="bonusgift" id="bonusgift" style="width: 80px"/>
+<input type="hidden" id="where" name="where" value="[b]论坛[/b]->[b]<?php echo $forumname?>[/b]版块->[url=<?php echo htmlspecialchars("forums.php?action=viewtopic&topicid=".$topicid."&page=".$page)."]".$subject."[/url]帖子";?> "/>
+个麦粒给楼层<b style="color:blue">pid</b>为
+<input type="hidden" id="postsid" name="postsid" readonly="readonly" value="<?php echo $thisallpostid;?>" />
+<?print("<input type=\"hidden\" id=\"username\" name=\"username\" readonly=\"readonly\" value=\"".$thisusernameall."\" maxlength=\"24\">");echo $thisallpostid."<b style=\"color:blue\">用户名</b>为".$thisusernameall."<b style=\"color:blue\">共计</b><b style=\"color:red\">".$countthisusernameall."</b><b style=\"color:blue\">位</b>用户";?>&nbsp&nbsp原因：<input type="text" id="message" name="message" style="width: 150px" maxlength="100">
+<input type="button" value="赠送" id="giftsubmit"><br/><a name='delete' href='<?php ECHO $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']."&unique=1#sendbonusbox";?>'>删除重复用户</a>
+</form>
+</td></tr>
+<tr ><td align="left" width="37%"><form id='tosomelou' action='' method='get'><input type='hidden' name='sendbonus' value='yes'/><input type='hidden' name='action' value='viewtopic'/><input type='hidden' name='topicid' value='<?php echo $topicid;?>'/>计算本帖中楼数除以10的余数为<input type='hidden' name='page' value='<?php echo $page;?>' /><input type='text' name= 'tosomelou' value='<?php echo $_GET['tosomelou'];?>' style="width:20px"/>的用户，为all时计算所有用户，均不包括使用者和1楼。<input type='submit' value='计算'/></form></td><td align ='right'>
+<form id="giftform" action="mybonus.php?action=exchange" method="post" >
+赠送
+<input type="hidden" id="option" name="option" value="7" />
+<input type="text" name="bonusgift" id="bonusgift" style="width: 70px"/>
+<input type="hidden" id="where" name="where" value="[b]论坛[/b]->[b]<?php echo $forumname?>[/b]版块->[url=<?php echo htmlspecialchars("forums.php?action=viewtopic&topicid=".$topicid)."]".$subject."[/url]帖子";?> "/>
+个麦粒给<b style="color:blue">pid</b>为
+<input type="hidden" id="postsid" name="postsid" readonly="readonly" value="<?php echo $allpostid;?>" />
+
+<?print("<input type=\"hidden\" id=\"username\" name=\"username\" readonly=\"readonly\" value=\"".$alluseronlysomelou."\" maxlength=\"24\">");echo $allpostid."，<b style=\"color:blue\">用户名</b>为".$alluseronlysomelou."<b style=\"color:blue\">共计</b><b style=\"color:red\">".$countalluseronlysomelou."</b><b style=\"color:blue\">位</b>用户";
+if (isset($_GET['unique2'])&&$_GET['unique2'] == 1)
+{echo "<b style=\"color:red\">其中pid为 </b>".$repeatid ."楼的用户发帖不止一次";}?>
+<br/>原因：
+<input type="text" id="message" name="message" style="width: 150px" maxlength="100"/>
+<input type="button" value="赠送" id="giftsubmit"/>
+<br/><a href='<?php ECHO $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']."&unique2=1#sendbonusbox";?>'>删除重复用户</a>
+</form>
+</td></tr>
+</table>
+
+<?php
+}//以下内容无修改
 
 	//------ Mod options
 
@@ -976,7 +1167,7 @@ if ($action == "movetopic")
 if ($action == "deletetopic")
 {
 	$topicid = 0+$_GET["topicid"];
-	$res1 = sql_query("SELECT forumid, userid FROM topics WHERE id=".sqlesc($topicid)." LIMIT 1") or sqlerr(__FILE__, __LINE__);
+	$res1 = sql_query("SELECT forumid, userid, subject FROM topics WHERE id=".sqlesc($topicid)." LIMIT 1") or sqlerr(__FILE__, __LINE__);
 	$row1 = mysql_fetch_array($res1);
 	if (!$row1){
 		die;
@@ -984,6 +1175,7 @@ if ($action == "deletetopic")
 	else {
 		$forumid = $row1['forumid'];
 		$userid = $row1['userid'];
+		$subject = $row1['subject'];
 	}
 	$ismod = is_forum_moderator($topicid,'topic');
 	if (!is_valid_id($topicid) || (get_user_class() < $postmanage_class && !$ismod))
@@ -1010,6 +1202,10 @@ if ($action == "deletetopic")
 	//===remove karma
 	KPS("-",$starttopic_bonus,$userid);
 	//===end
+	//给主题发布者发站内信
+	sendMessage(0,$userid,"你发布的主题被删除了","你在[url=forums.php?action=viewforum&forumid=$forumid] 论坛 [/url]中发布的帖子 [b]". htmlspecialchars($subject)." [/b]被 管理员 [url=userdetails.php?id={$CURUSER[id]}] {$CURUSER[username]} [/url]删除了");
+
+	write_log("管理员 $CURUSER[username] 删除了$userid 的帖子  $subject");
 
 	header("Location: " . get_protocol_prefix() . "$BASEURL/forums.php?action=viewforum&forumid=$forumid");
 	die;
@@ -1027,10 +1223,11 @@ if ($action == "deletepost")
 		permissiondenied();
 
 	//------- Get topic id
-	$res = sql_query("SELECT topicid, userid FROM posts WHERE id=$postid") or sqlerr(__FILE__, __LINE__);
+	$res = sql_query("SELECT topicid, userid, body FROM posts WHERE id=$postid") or sqlerr(__FILE__, __LINE__);
 	$arr = mysql_fetch_array($res) or stderr($lang_forums['std_error'], $lang_forums['std_post_not_found']);
 	$topicid = $arr['topicid'];
 	$userid = $arr['userid'];
+	$body = $arr['body'];
 
 	//------- Get the id of the last post before the one we're deleting
 	$res = sql_query("SELECT id FROM posts WHERE topicid=$topicid AND id < $postid ORDER BY id DESC LIMIT 1") or sqlerr(__FILE__, __LINE__);
@@ -1049,7 +1246,9 @@ if ($action == "deletepost")
 		stderr($lang_forums['std_delete_post'], $lang_forums['std_delete_post_note'] .
 		"<a class=altlink href=?action=deletepost&postid=$postid&sure=1>".$lang_forums['std_here_if_sure'],false);
 	}
-
+	//获得帖子的主题
+	$getsubject = sql_query("SELECT subject FROM topics WHERE id=$topicid") or sqlerr(__FILE__,__LINE__);
+	$subject = mysql_fetch_array($getsubject);
 	//------- Delete post
 	sql_query("DELETE FROM posts WHERE id=$postid") or sqlerr(__FILE__, __LINE__);
 	$Cache->delete_value('user_'.$userid.'_post_count');
@@ -1069,7 +1268,9 @@ if ($action == "deletepost")
 
 	//===remove karma
 	KPS("-",$makepost_bonus,$userid);
-
+	//给发布者发站内信
+	sendMessage(0,$userid,"你发表的言论被删除了","你在[url=forums.php?action=viewtopic&topicid=$topicid] 	". htmlspecialchars($subject[0])."  [/url]中发表的言论[quote]". htmlspecialchars($body). "[/quote] 被 管理员 [url=userdetails.php?id={$CURUSER[id]}]{$CURUSER[username]} [/url]删除了");
+	write_log("管理员 $CURUSER[username] 删除了帖子《  $subject[0] 》中的一条跟帖，发布者id是$userid");
 	header("Location: " . get_protocol_prefix() . "$BASEURL/forums.php?action=viewtopic&topicid=$topicid$redirtopost");
 	die;
 }

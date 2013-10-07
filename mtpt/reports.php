@@ -18,7 +18,7 @@ list($pagertop, $pagerbottom, $limit) = pager($perpage, $count, "reports.php?");
 begin_main_frame();
 print("<h1 align=center>".$lang_reports['text_reports']."</h1>");
 print("<table border=1 cellspacing=0 cellpadding=5 align=center>\n");
-print("<tr><td class=colhead><nobr>".$lang_reports['col_added']."</nobr></td><td class=colhead>".$lang_reports['col_reporter']."</td><td class=colhead>".$lang_reports['col_reporting']."</td><td class=colhead><nobr>".$lang_reports['col_type']."</nobr></td><td class=colhead>".$lang_reports['col_reason']."</td><td class=colhead><nobr>".$lang_reports['col_dealt_with']."</nobr></td><td class=colhead><nobr>".$lang_reports['col_action']."</nobr></td>");
+print("<tr><td class=colhead><nobr>".$lang_reports['col_added']."</nobr></td><td class=colhead>".$lang_reports['col_reporter']."</td><td class=colhead>".$lang_reports['col_reporting']."</td><td class=colhead>被举报者</td><td class=colhead><nobr>".$lang_reports['col_type']."</nobr></td><td class=colhead>".$lang_reports['col_reason']."</td><td class=colhead><nobr>".$lang_reports['col_dealt_with']."</nobr></td><td class=colhead><nobr>".$lang_reports['col_action']."</nobr></td>");
 
 print("<form method=post action=takeupdate.php>");
 $reportres = sql_query("SELECT * FROM reports ORDER BY dealtwith ASC, id DESC $limit");
@@ -34,7 +34,7 @@ while ($row = mysql_fetch_array($reportres))
 		case "torrent":
 		{
 			$type = $lang_reports['text_torrent'];
-			$res = sql_query("SELECT id, name FROM torrents WHERE id=".sqlesc($row['reportid']));
+			$res = sql_query("SELECT id, name, owner FROM torrents WHERE id=".sqlesc($row['reportid']));
 			if (mysql_num_rows($res) == 0)
 				$reporting = $lang_reports['text_torrent_does_not_exist'];
 			else
@@ -42,6 +42,7 @@ while ($row = mysql_fetch_array($reportres))
 				$arr = mysql_fetch_array($res);
 				$reporting = "<a href=details.php?id=".$arr['id'].">".htmlspecialchars($arr['name'])."</a>";
 			}
+			$reported = $arr['owner'];
 			break;
 		}
 		case "user":
@@ -55,6 +56,7 @@ while ($row = mysql_fetch_array($reportres))
 				$arr = mysql_fetch_array($res);
 				$reporting = get_username($arr['id']);
 			}
+			$reported = $arr['id'];
 			break;
 		}
 		case "offer":
@@ -73,8 +75,8 @@ while ($row = mysql_fetch_array($reportres))
 
 		case "request":
 		{
-			$type = $lang_reports['text_request'];
-			$res = sql_query("SELECT id, name FROM req WHERE id=".sqlesc($row['reportid']));
+			$type = '求种';
+			$res = sql_query("SELECT id, name ,userid FROM req WHERE id=".sqlesc($row['reportid']));
 			if (mysql_num_rows($res) == 0)
 				$reporting = $lang_reports['text_request_does_not_exist'];
 			else
@@ -82,6 +84,7 @@ while ($row = mysql_fetch_array($reportres))
 				$arr = mysql_fetch_array($res);
 				$reporting = "<a href=\"viewrequest.php?action=view&id=".$arr[id]."&req_details=1\">".htmlspecialchars($arr['name'])."</a>";
 			}
+			$reported = $arr['userid'];
 			break;
 		}
 
@@ -96,6 +99,7 @@ while ($row = mysql_fetch_array($reportres))
 				$arr = mysql_fetch_array($res);
 				$reporting = $lang_reports['text_post_id'].$row['reportid'].$lang_reports['text_of_topic']."<b><a href=\"forums.php?action=viewtopic&topicid=".$arr['topicid']."&page=p".htmlspecialchars($row['reportid'])."#pid".htmlspecialchars($row['reportid'])."\">".htmlspecialchars($arr['subject'])."</a></b>".$lang_reports['text_by'].get_username($arr['postuserid']);
 			}
+			$reported = $arr['postuserid'];
 			break;
 		}
 		case "comment":
@@ -129,6 +133,7 @@ while ($row = mysql_fetch_array($reportres))
 					else //Comment belongs to no one
 						$of = "unknown";
 					$reporting = $lang_reports['text_comment_id'].$row['reportid'].$of."<b><a href=\"".$url."\">".htmlspecialchars($name)."</a></b>".$lang_reports['text_by'].get_username($arr['user']);
+					$reported = $arr['user'];
 			}
 			break;
 		}
@@ -151,10 +156,12 @@ while ($row = mysql_fetch_array($reportres))
 		}
 	}
 
-	print("<tr><td class=rowfollow><nobr>".gettime($row['added'])."</nobr></td><td class=rowfollow>" . get_username($row['addedby']) . "</td><td class=rowfollow>".$reporting."</td><td class=rowfollow><nobr>".$type."</nobr></td><td class=rowfollow>".htmlspecialchars($row['reason'])."</td><td class=rowfollow><nobr>".$dealtwith."</nobr></td><td class=rowfollow><input type=\"checkbox\" name=\"delreport[]\" value=\"" . $row[id] . "\" /></td></tr>\n");
+	print("<tr><td class=rowfollow><nobr>".gettime($row['added'])."</nobr></td><td class=rowfollow>" . get_username($row['addedby']) . "</td><td class=rowfollow>".$reporting."</td><td class=rowfollow><nobr>".get_username($reported)."</nobr></td><td class=rowfollow><nobr>".$type."</nobr></td><td class=rowfollow>".htmlspecialchars($row['reason'])."</td><td class=rowfollow><nobr>".$dealtwith."</nobr></td><td class=rowfollow><input type=\"checkbox\" name=\"delreport[]\" value=\"" . $row[id] . "\" /></td></tr>\n");
+	if ($row['id'] == 0) sql_query ("UPDATE reports SET reported = $reported WHERE id = $row[id] ") or sqlerr();
 }
+
 ?>
-<tr><td class="colhead" colspan="7" align="right">设为已处理并改变举报者的魔力值<input type="text" name="bonus" value="0" /><input type="submit" name="setdealt" value="<?php echo $lang_reports['submit_set_dealt']?>" /><input type="submit" name="delete" value="<?php echo $lang_reports['submit_delete']?>" /></td></tr> 
+<tr><td class="colhead" colspan="7" align="right">设为已处理并改变举报者的麦粒<input type="text" name="bonus" value="0" />以及被举报者<input type="text" name="bonus2" value="0" /><input type="submit" name="setdealt" value="<?php echo $lang_reports['submit_set_dealt']?>" /><input type="submit" name="delete" value="<?php echo $lang_reports['submit_delete']?>" /></td></tr> 
 </form>
 <?php
 print("</table>");

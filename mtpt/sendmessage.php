@@ -46,6 +46,7 @@ parked();
 	if ($_GET["returnto"] || $_SERVER["HTTP_REFERER"])
 		print("<input type=hidden name=returnto value=\"".(htmlspecialchars($_GET["returnto"]) ? htmlspecialchars($_GET["returnto"]) : htmlspecialchars($_SERVER["HTTP_REFERER"]))."\">");
 	$title = $lang_sendmessage['text_message_to'].get_username($receiver);
+	if ($_GET['subject']) $subject = htmlspecialchars($_GET['subject']);
 	begin_compose($title, ($replyto ? "reply" : "new"), $body, true, $subject);
 	print("<tr><td class=toolbox colspan=2 align=center>");
 	if ($replyto) {

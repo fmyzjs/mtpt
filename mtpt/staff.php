@@ -163,8 +163,8 @@ end_frame();
 
 //--------------------- VIP section ---------------------------//
 
-/*unset($ppl);
-$res = sql_query("SELECT * FROM users WHERE class=".UC_VIP." AND status='confirmed' ORDER BY username") or sqlerr();
+unset($ppl);
+$res = sql_query("SELECT * FROM users WHERE class=".UC_VIP." AND status='confirmed' AND stafffor<>'' ORDER BY username") or sqlerr();
 while ($arr = mysql_fetch_assoc($res))
 {
 	$ppl .= "<tr><td class=embedded>". get_username($arr['id']) ."</td>
@@ -192,7 +192,7 @@ begin_frame($lang_staff['text_vip']);
 	<?php echo $ppl?>
 </table>
 <?php
-end_frame();*/
+end_frame();
 
 //--------------------- VIP section ---------------------------//
 end_main_frame();

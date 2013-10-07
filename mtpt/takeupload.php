@@ -221,8 +221,8 @@ $catmod = get_single_value("categories","mode","WHERE id=".sqlesc($catid));
 $offerid = $_POST['offer'];
 $is_offer=false;
 if ($browsecatmode != $specialcatmode && $catmod == $specialcatmode){//upload to special section
-	if (!$allowspecial)
-		bark($lang_takeupload['std_unauthorized_upload_freely']);
+	//if (!$allowspecial)
+		//bark($lang_takeupload['std_unauthorized_upload_freely']);
 }
 elseif($catmod == $browsecatmode){//upload to torrents section
  	if ($offerid){//it is a offer
@@ -235,8 +235,8 @@ elseif($catmod == $browsecatmode){//upload to torrents section
 		}
 		else bark($lang_takeupload['std_uploaded_not_offered']);
 	}
-	elseif (!$allowtorrents)
-		bark($lang_takeupload['std_unauthorized_upload_freely']);
+	//elseif (!$allowtorrents)
+	//	bark($lang_takeupload['std_unauthorized_upload_freely']);
 }
 else //upload to unknown section
 	die("Upload to unknown section.");
@@ -332,9 +332,10 @@ foreach ($promotionrules_torrent as $rule)
 										}
 }
 }
-
-$ret = sql_query("INSERT INTO torrents (filename, owner, visible, anonymous, name, size, numfiles, type, dburl, url, small_descr, descr, ori_descr, category, source, medium, codec, audiocodec, standard, processing, team, save_as, sp_state, added, last_action, nfo, info_hash) VALUES (".sqlesc($fname).", ".sqlesc($CURUSER["id"]).", 'yes', ".sqlesc($anonymous).", ".sqlesc($torrent).", ".sqlesc($totallen).", ".count($filelist).", ".sqlesc($type).", ".sqlesc($dburl).", ".sqlesc($url).", ".sqlesc($small_descr).", ".sqlesc($descr).", ".sqlesc($descr).", ".sqlesc($catid).", ".sqlesc($sourceid).", ".sqlesc($mediumid).", ".sqlesc($codecid).", ".sqlesc($audiocodecid).", ".sqlesc($standardid).", ".sqlesc($processingid).", ".sqlesc($teamid).", ".sqlesc($dname).", ".sqlesc($sp_state) .
-", " . sqlesc(date("Y-m-d H:i:s")) . ", " . sqlesc(date("Y-m-d H:i:s")) . ", ".sqlesc($nfo).", " . sqlesc($infohash). ")");
+//modified by SamuraiMe,2013.06.27
+$status = get_user_class() < UC_POWER_USER ? "candidate" : "normal";
+$visible = get_user_class() >= UC_POWER_USER ? "yes" : "no";
+$ret = sql_query("INSERT INTO torrents (filename, owner, visible, anonymous, name, size, numfiles, type, dburl, url, small_descr, descr, ori_descr, category, source, medium, codec, audiocodec, standard, processing, team, save_as, sp_state, added, last_action, nfo, info_hash, last_status, status ) VALUES (".sqlesc($fname).", ".sqlesc($CURUSER["id"]).", ". sqlesc($visible) .", ".sqlesc($anonymous).", ".sqlesc($torrent).", ".sqlesc($totallen).", ".count($filelist).", ".sqlesc($type).", ".sqlesc($dburl).", ".sqlesc($url).", ".sqlesc($small_descr).", ".sqlesc($descr).", ".sqlesc($descr).", ".sqlesc($catid).", ".sqlesc($sourceid).", ".sqlesc($mediumid).", ".sqlesc($codecid).", ".sqlesc($audiocodecid).", ".sqlesc($standardid).", ".sqlesc($processingid).", ".sqlesc($teamid).", ".sqlesc($dname).", ".sqlesc($sp_state) .", " . sqlesc(date("Y-m-d H:i:s")) . ", " . sqlesc(date("Y-m-d H:i:s")) . ", ".sqlesc($nfo).", " . sqlesc($infohash).", " . sqlesc(date("Y-m-d H:i:s")). ", '$status')");
 if (!$ret) {
 	if (mysql_errno() == 1062)
 	bark($lang_takeupload['std_torrent_existed']);
@@ -342,7 +343,7 @@ if (!$ret) {
 	//bark("mysql puked: ".preg_replace_callback('/./s', "hex_esc2", mysql_error()));
 }
 $id = mysql_insert_id();
-
+//获取种子文件列表写入files表
 @sql_query("DELETE FROM files WHERE torrent = $id");
 foreach ($filelist as $file) {
 	@sql_query("INSERT INTO files (torrent, filename, size) VALUES ($id, ".sqlesc($file[0]).",".$file[1].")");
@@ -359,9 +360,9 @@ if ($fp)
 //===add karma
 KPS("+",$uploadtorrent_bonus,$CURUSER["id"]);
 //===end
+$candidatelog = get_user_class() < UC_POWER_USER ? ",由于等级不足，种子被列为候选" : "";
 
-
-write_log("种子 $id ($torrent) 被修改,操作者 $anon");
+write_log("发布：用户 $anon 上传了 种子$candidatelog $id ($torrent) ");
 
 //===notify people who voted on offer thanks CoLdFuSiOn :)
 if ($is_offer)

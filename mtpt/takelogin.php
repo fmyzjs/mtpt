@@ -16,11 +16,18 @@ function bark($text = "")
 }
 if ($iv == "yes")
 	check_code ($_POST['imagehash'], $_POST['imagestring'],'login.php',true);
+//判断登陆方式
+if ($_POST['loginmethod'] == 'username')
 $res = sql_query("SELECT id, passhash, secret, enabled, status FROM users WHERE username = " . sqlesc($username));
+if ($_POST['loginmethod'] == 'email')
+$res = sql_query("SELECT id, passhash, secret, enabled, status FROM users WHERE email = " . sqlesc($username));
+
 $row = mysql_fetch_array($res);
 
 if (!$row)
-	failedlogins();
+{
+	failedlogins("不存在这个用户名或者邮箱。<br/> 请点击登陆重新输入");
+	}
 if ($row['status'] == 'pending')
 	failedlogins($lang_takelogin['std_user_account_unconfirmed']);
 
@@ -66,7 +73,12 @@ if ($_POST["logout"] == "yes")
 }
 else 
 {
-	logincookie($row["id"], $passh,1,0x7fffffff,$securelogin_indentity_cookie, $ssl, $trackerssl);
+	if ($_POST['dutime'] == 'day')	$dutime = 86400;
+	elseif ($_POST['dutime'] == 'week')	$dutime = 604800;
+	elseif ($_POST['dutime'] == 'month')	$dutime = 18144000;
+	elseif ($_POST['dutime'] == 'forever') $dutime = 0x7fffffff;
+	else $dutime = 3600;
+	logincookie($row["id"], $passh,1,$dutime,$securelogin_indentity_cookie, $ssl, $trackerssl);
 	//sessioncookie($row["id"], $passh,false);
 }
 

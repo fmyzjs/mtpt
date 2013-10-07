@@ -48,7 +48,9 @@ if (!$action) {
 			$answered = "<font color=red>".$lang_staffbox['text_no']."</font>";
 
     		$pmid = $arr["id"];
-		print("<tr><td width=100% class=rowfollow align=left><a href=staffbox.php?action=viewpm&pmid=$pmid>".htmlspecialchars($arr[subject])."</td><td class=rowfollow align=center>" . get_username($arr['sender']) . "</td><td class=rowfollow align=center><nobr>".gettime($arr[added], true, false)."</nobr></td><td class=rowfollow align=center>$answered</td><td class=rowfollow align=center><input type=\"checkbox\" name=\"setanswered[]\" value=\"" . $arr[id] . "\" /></td></tr>\n");
+			if	($arr['sender'] == '0') {$itissender = '系统';if (!$arr[answered])$action2 = "&action2=deal&id=$pmid";}
+			else {$itissender = get_username($arr['sender']);$action2='';}
+		print("<tr><td width=100% class=rowfollow align=left><a href=staffbox.php?action=viewpm&pmid=$pmid$action2>".$arr[subject]."</td><td class=rowfollow align=center>" . $itissender . "</td><td class=rowfollow align=center><nobr>".gettime($arr[added], true, false)."</nobr></td><td class=rowfollow align=center>$answered</td><td class=rowfollow align=center><input type=\"checkbox\" name=\"setanswered[]\" value=\"" . $arr[id] . "\" /></td></tr>\n");
 	}
 	print("<tr><td class=rowfollow align=right colspan=5><input type=\"submit\" name=\"setdealt\" value=\"".$lang_staffbox['submit_set_answered']."\" /><input type=\"submit\" name=\"delete\" value=\"".$lang_staffbox['submit_delete']."\" /></td></tr>");
 	print("</table>\n");
@@ -90,6 +92,13 @@ $width = "33";
 else{
 $colspan = "2";
 $width = "50";
+}
+if ($arr4['goto'] == '1')
+{
+	preg_match("/url=([^\[\s]+?)\]/",$arr4['msg'],$matches);
+	echo $matches[1];
+	sql_query("UPDATE staffmessages SET goto=0 WHERE id =". sqlesc($pmid)) or sqlerr(__FILE__,__LINE__);
+	header("Location: ".$matches[1]);
 }
 stdhead($lang_staffbox['head_view_staff_pm']);
 print("<h1 align=\"center\"><a class=\"faqlink\" href=\"staffbox.php\">".$lang_staffbox['text_staff_pm']."</a>-->".$subject."</h1>");
@@ -148,7 +157,7 @@ if ($action == "answermessage") {
         <input type=hidden name=receiver value=<?php echo $receiver?>>
         <input type=hidden name=answeringto value=<?php echo $answeringto?>>
 <?php
-	$title = $lang_staffbox['text_answering_to']."<a href=\"staffbox.php?action=viewpm&pmid=".$staffmsg['id']."\">".htmlspecialchars($staffmsg['subject'])."</a>".$lang_staffbox['text_sent_by'].get_username($staffmsg['sender']);
+	$title = $lang_staffbox['text_answering_to']."<a href=\"staffbox.php?action=viewpm&pmid=".$staffmsg['id']."\">".$staffmsg['subject']."</a>".$lang_staffbox['text_sent_by'].get_username($staffmsg['sender']);
 	begin_compose($title, "reply", "", false);
 	end_compose();
 	print("</form>");
@@ -213,7 +222,7 @@ $Cache->delete_value('staff_new_message_count');
         // MARK AS ANSWERED        //
        //////////////////////////
 
-if ($action == "setanswered") {
+if ($action == "setanswered" || $_GET['action2'] == 'deal') {
 
  if (get_user_class() < $staffmem_class)
     permissiondenied();

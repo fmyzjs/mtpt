@@ -18,7 +18,7 @@ $lang_details = array
 	'text_half_down' => "50%",
 	'row_download' => "下载",
 	'row_download_method' => "下载方式",
-	'row_mouseclick' => "<font color=brown>↑ 鼠标右键“目标另存为”，或单击((注：首次下载本站种子请勿右键另存)；然后用</font>",
+	'row_mouseclick' => "<font color=brown>↑ --点击左键下载种子--！不行再鼠标右键“目标另存为”。然后</font>",
 	'row_openfile' => "<font color=brown>打开种子文件进行下载</font>",
 	'text_downloading_not_allowed' => "你被禁止下载。",
 	'row_small_description' => "副标题",

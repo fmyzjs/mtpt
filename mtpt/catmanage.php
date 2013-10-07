@@ -149,7 +149,7 @@ function print_sub_category_list($type)
 	if (!$num)
 		print("<p align=\"center\">".$lang_catmanage['text_no_record_yet']."</p>");
 	else{
-		list($pagertop, $pagerbottom, $limit) = pager($perpage, $num, "?");
+		list($pagertop, $pagerbottom, $limit) = pager($perpage, $num, "?$_SERVER[QUERY_STRING]&");
 		$res = sql_query("SELECT * FROM ".$dbtablename." ORDER BY sort_index ASC ".$limit) or sqlerr(__FILE__, __LINE__);
 ?>
 <table border="1" cellspacing="0" cellpadding="5" width="940">
@@ -385,7 +385,7 @@ if ($action == 'view')
 	if (!$num)
 		print("<p align=\"center\">".$lang_catmanage['text_no_record_yet']."</p>");
 	else{
-		list($pagertop, $pagerbottom, $limit) = pager($perpage, $num, "?");
+		list($pagertop, $pagerbottom, $limit) = pager($perpage, $num, "?$_SERVER[QUERY_STRING]&");
 		$res = sql_query("SELECT * FROM ".$dbtablename." ORDER BY id ASC ".$limit) or sqlerr(__FILE__, __LINE__);
 ?>
 <table border="1" cellspacing="0" cellpadding="5" width="940">
@@ -439,7 +439,7 @@ print($pagerbottom);
 	if (!$num)
 		print("<p align=\"center\">".$lang_catmanage['text_no_record_yet']."</p>");
 	else{
-		list($pagertop, $pagerbottom, $limit) = pager($perpage, $num, "?");
+		list($pagertop, $pagerbottom, $limit) = pager($perpage, $num, "?$_SERVER[QUERY_STRING]&");
 		$res = sql_query("SELECT * FROM ".$dbtablename." ORDER BY id ASC ".$limit) or sqlerr(__FILE__, __LINE__);
 ?>
 <table border="1" cellspacing="0" cellpadding="5" width="940">
@@ -485,7 +485,7 @@ print($pagerbottom);
 	if (!$num)
 		print("<p align=\"center\">".$lang_catmanage['text_no_record_yet']."</p>");
 	else{
-		list($pagertop, $pagerbottom, $limit) = pager($perpage, $num, "?");
+		list($pagertop, $pagerbottom, $limit) = pager($perpage, $num, "?$_SERVER[QUERY_STRING]&");
 		$res = sql_query("SELECT * FROM ".$dbtablename." ORDER BY id ASC ".$limit) or sqlerr(__FILE__, __LINE__);
 ?>
 <table border="1" cellspacing="0" cellpadding="5" width="940">
@@ -537,7 +537,7 @@ print($pagerbottom);
 	if (!$num)
 		print("<p align=\"center\">".$lang_catmanage['text_no_record_yet']."</p>");
 	else{
-		list($pagertop, $pagerbottom, $limit) = pager($perpage, $num, "?");
+		list($pagertop, $pagerbottom, $limit) = pager($perpage, $num, "?$_SERVER[QUERY_STRING]&");
 		$res = sql_query("SELECT ".$dbtablename.".*, searchbox.name AS catmodename FROM ".$dbtablename." LEFT JOIN searchbox ON ".$dbtablename.".mode=searchbox.id ORDER BY ".$dbtablename.".mode ASC, ".$dbtablename.".id ASC ".$limit) or sqlerr(__FILE__, __LINE__);
 ?>
 <table border="1" cellspacing="0" cellpadding="5" width="940">

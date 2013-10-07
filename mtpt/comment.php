@@ -60,21 +60,24 @@ if ($action == "add")
 		//引用回复提醒
 		$postid = mysql_insert_id();
 		$quotenum = 0 + $_POST['quotenum'];
+				$respost = sql_query("SELECT owner, name FROM torrents WHERE id = $parent_id") or sqlerr(__FILE__,__LINE__);
+			$arrpost = mysql_fetch_array($respost);
 		if($quotenum > 0 && $quotenum <= 10){
 		preg_match_all('/\[quote=(.*?)\](.*?)/',$text,$username);
 		for($i = 0;$i < $quotenum;$i++){
 		if($username[1][$i] != "" && $username[1][$i] != $CURUSER['username']){
 			$postuserid = get_user_id_from_name($username[1][$i]);
-			$respost = sql_query("SELECT owner FROM torrents WHERE id = $parent_id") or sqlerr(__FILE__,__LINE__);
-			$arrpost = mysql_fetch_array($respost);
 		if($postuserid != $arrpost[0]){
-		$postmsg = "[url=details.php\?id=$parent_id\&cmtpage=1\#cid$postid]点击进入查看该回复[/url]";
-		sql_query("INSERT INTO messages (sender, receiver, added, subject, msg, unread, location, saved) VALUES ('0', ".$postuserid.", now(), '种子中有人引用您的回复','".$postmsg."','yes','1','no') ") or sqlerr(__FILE__, __LINE__);
+		$postmsg = "有用户在种子[url=details.php\?id=$parent_id\&cmtpage=1\#cid$postid]{$arrpost[1]}[/url]中引用了你的评论";
+		sql_query("INSERT INTO messages (sender, receiver, added, subject, msg, unread, location, saved,goto) VALUES ('0', ".$postuserid.", now(), '种子中有人引用您的回复','".$postmsg."','yes','1','no',1) ") or sqlerr(__FILE__, __LINE__);
 		}
 		}
 		}
 		}
-		//引用回复提醒结束
+		//引用回复提醒结束，@提醒
+		$titles = "[url=details.php?id=$parent_id&cmtpage=1#cid$postid]{$arrpost[1]} [/url]";
+		at_user_message($text,$titles,'');
+		//@jieshu
 			$Cache->delete_value('torrent_'.$parent_id.'_last_comment_content');
 		}
 		elseif($type == "offer"){
@@ -82,9 +85,32 @@ if ($action == "add")
 			$Cache->delete_value('offer_'.$parent_id.'_last_comment_content');
 		}
 		elseif($type == "request")
+		{
 			sql_query("INSERT INTO comments (user, request, added, text, ori_text) VALUES (" .$CURUSER["id"] . ",$parent_id, '" . date("Y-m-d H:i:s") . "', " . sqlesc($text) . "," . sqlesc($text) . ")");
+			//引用回复提醒
+		$postid = mysql_insert_id();
+		$quotenum = 0 + $_POST['quotenum'];
+			$respost = sql_query("SELECT userid,name FROM req WHERE id = $parent_id") or sqlerr(__FILE__,__LINE__);
+			$arrpost = mysql_fetch_array($respost);
+		if($quotenum > 0 && $quotenum <= 10){
+		preg_match_all('/\[quote=(.*?)\](.*?)/',$text,$username);
+		for($i = 0;$i < $quotenum;$i++){
+		if($username[1][$i] != "" && $username[1][$i] != $CURUSER['username']){
+			$postuserid = get_user_id_from_name($username[1][$i]);
+		if($postuserid != $arrpost[0]){
+		$postmsg = "有用户在求种[url=viewrequest.php?action=view&id=$parent_id&cmtpage=1#cid$postid]{$arrpost[1]}[/url]中引用了你的回复";
+		sql_query("INSERT INTO messages (sender, receiver, added, subject, msg, unread, location, saved,goto) VALUES ('0', ".$postuserid.", now(), '求种中有人引用您的回复','".$postmsg."','yes','1','no',1) ") or sqlerr(__FILE__, __LINE__);
+		}
+		}
+		}
+		}
+		//引用回复提醒结束，@提醒
+		$titles = "[url=viewrequest.php?action=view&id=$parent_id&cmtpage=1#cid$postid]". sqlesc($arrpost[1])."[/url]";
+		at_user_message($text,$titles,'topic');
+		//@jieshu
+			}
 
-		$newid = mysql_insert_id();
+		//$newid = mysql_insert_id();
 
 		if($type == "torrent")
 			sql_query("UPDATE torrents SET comments = comments + 1 WHERE id = $parent_id");
@@ -101,11 +127,11 @@ if ($action == "add")
 			$added = sqlesc(date("Y-m-d H:i:s"));
 			$subject = sqlesc($lang_comment_target[get_user_lang($arr["owner"])]['msg_new_comment']);
 			if($type == "torrent")
-			$notifs = sqlesc($lang_comment_target[get_user_lang($arr["owner"])]['msg_torrent_receive_comment'] . " [url=" . get_protocol_prefix() . "$BASEURL/details.php?id=$parent_id] " . $arr['name'] . "[/url].");
+			$notifs = sqlesc($lang_comment_target[get_user_lang($arr["owner"])]['msg_torrent_receive_comment'] . " [url=" . get_protocol_prefix() . "$BASEURL/details.php?id=$parent_id#startcomments] " . $arr['name'] . "[/url].");
 			if($type == "offer")
 			$notifs = sqlesc($lang_comment_target[get_user_lang($arr["owner"])]['msg_torrent_receive_comment'] . " [url=" . get_protocol_prefix() . "$BASEURL/offers.php?id=$parent_id&off_details=1] " . $arr['name'] . "[/url].");
 			if($type == "request")
-			$notifs = sqlesc($lang_comment_target[get_user_lang($arr["owner"])]['msg_torrent_receive_comment'] . " [url=" . get_protocol_prefix() . "$BASEURL/viewrequest.php?id=$parent_id&req_details=1] " . $arr['name'] . "[/url].");
+			$notifs = sqlesc( "你的求种 [url=" . get_protocol_prefix() . "$BASEURL/viewrequest.php?action=view&id=$parent_id#cid$postid] 收到了新评论" . $arr['name'] . "[/url].");
 
 			sql_query("INSERT INTO messages (sender, receiver, subject, msg, added) VALUES(0, " . $arr['owner'] . ", $subject, $notifs, $added)") or sqlerr(__FILE__, __LINE__);
 			$Cache->delete_value('user_'.$arr['owner'].'_unread_message_count');
@@ -118,11 +144,11 @@ if ($action == "add")
 		sql_query("UPDATE users SET last_comment = NOW() WHERE id = ".sqlesc($CURUSER['id'])) or sqlerr(__FILE__, __LINE__);
 
 		if($type == "torrent")
-			header("Refresh: 0; url=details.php?id=$parent_id#$newid");
+			header("Refresh: 0; url=details.php?id=$parent_id#cid$postid");
 		else if($type == "offer")
-			header("Refresh: 0; url=offers.php?id=$parent_id&off_details=1#$newid");
+			header("Refresh: 0; url=offers.php?id=$parent_id&off_details=1#cid$postid");
 		else if($type == "request")
-			header("Refresh: 0; url=viewrequest.php?id=$parent_id&req_details=1#$newid");
+			header("Refresh: 0; url=viewrequest.php?action=view&id=$parent_id#cid$postid");
 		die;
 	}
 
@@ -306,7 +332,7 @@ elseif ($action == "vieworiginal")
 		stderr($lang_comment['std_error'], $lang_comment['std_invalid_id']);
 
 		stdhead($lang_comment['head_original_comment']);
-		print("<h1>".$lang_comment['text_original_content_of_comment']."#$commentid</h1>");
+		print("<h1>".$lang_comment['text_original_content_of_comment']."#cid$commentid</h1>");
 		print("<table width=\"737\" border=\"1\" cellspacing=\"0\" cellpadding=\"5\">");
 		print("<tr><td class=\"text\">\n");
 		echo format_comment($arr["ori_text"]);

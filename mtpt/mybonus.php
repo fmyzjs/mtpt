@@ -1,3 +1,41 @@
+<script type="text/javascript" >
+//js语句
+function changenameOnClicked()
+{
+	 var newname = document.getElementById("newname").value;
+	 if(newname=="")
+	 {
+		alert("无输入");
+		return false;
+	 }
+	 if(newname.length<3||newname.length>13)
+	 {
+		alert("长度不符合要求，请重新输入");
+		document.getElementById("newname").focus();
+		return false;
+	 }
+	 if(confirm("你确定要使用"+newname+"作为你的用户名吗?"))
+	 {
+		var postForm = document.createElement("form");//表单对象   
+		postForm.method="post" ; 
+		postForm.action = 'bonusapp.php' ;   
+        var actioninput=document.createElement("input") ;
+	    actioninput.setAttribute("name", "action") ;   
+		actioninput.setAttribute("value", "changename"); 
+		postForm.appendChild(actioninput) ; 
+		var newnameinput = document.createElement("input") ;
+		newnameinput.setAttribute("name", "newname") ;   
+		newnameinput.setAttribute("value", newname);   
+		postForm.appendChild(newnameinput) ; 
+       
+		document.body.appendChild(postForm) ;   
+		postForm.submit() ;   
+		document.body.removeChild(postForm) ; 	 
+	 }
+	 return false;
+}
+
+</script>
 <?php
 require_once('include/bittorrent.php');
 dbconn();
@@ -88,6 +126,15 @@ function bonusarray($option){
 			$bonus['description'] = $lang_mybonus['text_charity_giving_note'];
 			break;
 			}
+		case 10:
+		{//UNInvite
+			$bonus['points'] = $oneinvite_bonus * 0.8;
+			$bonus['art'] = 'uninvite';
+			$bonus['menge'] = 1;
+			$bonus['name'] = '出售邀请码';
+			$bonus['description'] = '将不需要的邀请码打八折出售换取麦粒。';
+			break;
+			}
 		default: break;
 	}
 	return $bonus;
@@ -116,6 +163,8 @@ if (isset($do)) {
 	$msg =  $lang_mybonus['text_success_no_ad'];
 	elseif ($do == "charity")
 	$msg =  $lang_mybonus['text_success_charity'];
+	elseif ($do == "uninvite")
+	$msg = "出售邀请码成功，你失去了一个邀请码，获得了.".$oneinvite_bonus * 0.8 ."个麦粒。";
 	else
 	$msg = '';
 }
@@ -137,7 +186,7 @@ print("<tr><td class=\"colhead\" align=\"center\">".$lang_mybonus['col_option'].
 "<td class=\"colhead\" align=\"center\">".$lang_mybonus['col_points']."</td>".
 "<td class=\"colhead\" align=\"center\">".$lang_mybonus['col_trade']."</td>".
 "</tr>");
-for ($i=1; $i <=9; $i++)
+for ($i=1; $i <=11; $i++)
 {
 	$bonusarray = bonusarray($i);
 	if (($i == 7 && $bonusgift_bonus == 'no') || ($i == 8 && ($enablead_advertisement == 'no' || $bonusnoad_advertisement == 'no')))
@@ -150,12 +199,23 @@ for ($i=1; $i <=9; $i++)
 	print("<td class=\"rowfollow\" align='left'><h1>".$bonusarray['name']."</h1>".$bonusarray['description']."<br /><br />".$lang_mybonus['text_enter_titile'].$otheroption_title.$lang_mybonus['text_click_exchange']."</td><td class=\"rowfollow\" align='center'>".number_format($bonusarray['points'])."</td>");
 	}
 	elseif ($i==7){  //for Give A Karma Gift
-			$otheroption = "<table width=\"100%\"><tr><td class=\"embedded\"><b>".$lang_mybonus['text_username']."</b><input type=\"text\" name=\"username\" style=\"width: 200px\" maxlength=\"24\" /></td><td class=\"embedded\"><b>".$lang_mybonus['text_to_be_given']."</b><select name=\"bonusgift\" id=\"giftselect\" onchange=\"customgift();\"> <option value=\"25\"> 25</option><option value=\"50\"> 50</option><option value=\"100\"> 100</option> <option value=\"200\"> 200</option> <option value=\"300\"> 300</option> <option value=\"400\"> 400</option><option value=\"500\"> 500</option><option value=\"1000\" selected=\"selected\"> 1,000</option><option value=\"5000\"> 5,000</option><option value=\"10000\"> 10,000</option><option value=\"0\">".$lang_mybonus['text_custom']."</option></select><input type=\"text\" name=\"bonusgift\" id=\"giftcustom\" style='width: 80px' disabled=\"disabled\" />".$lang_mybonus['text_karma_points']."</td></tr><tr><td class=\"embedded\" colspan=\"2\"><b>".$lang_mybonus['text_message']."</b><input type=\"text\" name=\"message\" style=\"width: 400px\" maxlength=\"100\" /></td></tr></table>";
+			$otheroption = "<table width=\"100%\"><tr><td class=\"embedded\"><b>".$lang_mybonus['text_username']."</b><input type='hidden' name='where' value=\"[url=mybonus.php]麦粒使用[/url]\"/><input type=\"text\" name=\"username\" style=\"width: 200px\" maxlength=\"24\" /></td><td class=\"embedded\"><b>".$lang_mybonus['text_to_be_given']."</b><select name=\"bonusgift\" id=\"giftselect\" onchange=\"customgift();\"> <option value=\"25\"> 25</option><option value=\"50\"> 50</option><option value=\"100\"> 100</option> <option value=\"200\"> 200</option> <option value=\"300\"> 300</option> <option value=\"400\"> 400</option><option value=\"500\"> 500</option><option value=\"1000\" selected=\"selected\"> 1,000</option><option value=\"5000\"> 5,000</option><option value=\"10000\"> 10,000</option><option value=\"0\">".$lang_mybonus['text_custom']."</option></select><input type=\"text\" name=\"bonusgift\" id=\"giftcustom\" style='width: 80px' disabled=\"disabled\" />".$lang_mybonus['text_karma_points']."</td></tr><tr><td class=\"embedded\" colspan=\"2\"><b>".$lang_mybonus['text_message']."</b><input type=\"text\" name=\"message\" style=\"width: 400px\" maxlength=\"100\" /></td></tr></table>";
 			print("<td class=\"rowfollow\" align='left'><h1>".$bonusarray['name']."</h1>".$bonusarray['description']."<br /><br />".$lang_mybonus['text_enter_receiver_name']."<br />$otheroption</td><td class=\"rowfollow nowrap\" align='center'>".$lang_mybonus['text_min']."25<br />".$lang_mybonus['text_max']."10,000</td>");
 	}
 	elseif ($i==9){  //charity giving
 			$otheroption = "<table width=\"100%\"><tr><td class=\"embedded\">".$lang_mybonus['text_ratio_below']."<select name=\"ratiocharity\"> <option value=\"0.1\"> 0.1</option><option value=\"0.2\"> 0.2</option><option value=\"0.3\" selected=\"selected\"> 0.3</option> <option value=\"0.4\"> 0.4</option> <option value=\"0.5\"> 0.5</option> <option value=\"0.6\"> 0.6</option><option value=\"0.7\"> 0.7</option><option value=\"0.8\"> 0.8</option></select>".$lang_mybonus['text_and_downloaded_above']." 10 GB</td><td class=\"embedded\"><b>".$lang_mybonus['text_to_be_given']."</b><select name=\"bonuscharity\" id=\"charityselect\" > <option value=\"1000\"> 1,000</option><option value=\"2000\"> 2,000</option><option value=\"3000\" selected=\"selected\"> 3000</option> <option value=\"5000\"> 5,000</option> <option value=\"8000\"> 8,000</option> <option value=\"10000\"> 10,000</option><option value=\"20000\"> 20,000</option><option value=\"50000\"> 50,000</option></select>".$lang_mybonus['text_karma_points']."</td></tr></table>";                                                                
 			print("<td class=\"rowfollow\" align='left'><h1>".$bonusarray['name']."</h1>".$bonusarray['description']."<br /><br />".$lang_mybonus['text_select_receiver_ratio']."<br />$otheroption</td><td class=\"rowfollow nowrap\" align='center'>".$lang_mybonus['text_min']."1,000<br />".$lang_mybonus['text_max']."50,000</td>");
+	}
+	elseif ($i==11)
+	{if(@$res=sql_query("SELECT namecharge from bonusapp where userid ='".$CURUSER[id]."'"))
+		{
+		$row = mysql_fetch_array( $res );
+		$namecharge = $row['namecharge'];
+		if ($namecharge ==0||$namecharge==null)$namecharge = 10000;
+		elseif ($namecharge >=100000) $namecharge =100000;
+		}
+	
+			print("<td><h1>改头换面</h1>如果你觉得自己名字不好听或者因为其他原因需要改名字，那么你可以使用你的麦粒换取一个改名字的机会。<br>提示：第一次价格为10000，每一次修改都是上一次的2倍，最高10万.纯数字账号修改半价<br>只允许中文、字母、数字，4至14个字符<br>在此输入新名字<input type=\"text\" name=\"newname\" id=\"newname\" style='width: 160px' /></td><td>本次修改所需麦粒$namecharge</td>");
 	}
 	else{  //for VIP or Upload
 		print("<td class=\"rowfollow\" align='left'><h1>".$bonusarray['name']."</h1>".$bonusarray['description']."</td><td class=\"rowfollow\" align='center'>".number_format($bonusarray['points'])."</td>");
@@ -185,6 +245,17 @@ for ($i=1; $i <=9; $i++)
 				print("<td class=\"rowfollow\" align=\"center\"><input type=\"submit\" name=\"submit\" value=\"".get_user_class_name($buyinvite_class,false,false,true).$lang_mybonus['text_plus_only']."\" disabled=\"disabled\" /></td>");
 			else
 				print("<td class=\"rowfollow\" align=\"center\"><input type=\"submit\" name=\"submit\" value=\"".$lang_mybonus['submit_exchange']."\" /></td>");
+		}
+		elseif($i==10)
+		{
+			if(get_user_class() < $buyinvite_class)
+				print("<td class=\"rowfollow\" align=\"center\"><input type=\"submit\" name=\"submit\" value=\"".get_user_class_name($buyinvite_class,false,false,true).$lang_mybonus['text_plus_only']."\" disabled=\"disabled\" /></td>");
+			else
+				print("<td class=\"rowfollow\" align=\"center\"><input type=\"submit\" name=\"submit\" value=\"".$lang_mybonus['submit_exchange']."\" /></td>");
+		}
+		elseif($i==11)
+		{
+		echo "<td class=\"rowfollow\" align=\"center\"><input type=button onclick=changenameOnClicked() value='改名'/></td>";		
 		}
 		elseif ($i==6)
 		{
@@ -359,10 +430,21 @@ if ($action == "exchange") {
 				die(get_user_class_name($buyinvite_class,false,false,true).$lang_mybonus['text_plus_only']);
 			$invites = $CURUSER['invites'];
 			$inv = $invites+$bonusarray['menge'];
-			$bonuscomment = date("Y-m-d") . " - " .$points. " Points for invites.\n " .htmlspecialchars($bonuscomment);
-			sql_query("UPDATE users SET invites = ".sqlesc($inv).", seedbonus = seedbonus - $points WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
+			$bonuscomment = date("Y-m-d") . "购买一个邀请码失去  " .$points. "麦粒.\n " .htmlspecialchars($bonuscomment);
+			sql_query("UPDATE users SET invites = ".sqlesc($inv).", seedbonus = seedbonus - $points, bonuscomment = ".sqlesc($bonuscomment)."  WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
 			redirect("" . get_protocol_prefix() . "$BASEURL/mybonus.php?do=invite");
 		}
+		elseif($art == "uninvite") {
+			if(get_user_class() < $buyinvite_class)
+				die(get_user_class_name($buyinvite_class,false,false,true).$lang_mybonus['text_plus_only']);
+			if ($CURUSER['invites'] <= 0)
+			die("你的邀请码不足");
+			$invites = $CURUSER['invites'];
+			$inv = $invites-$bonusarray['menge'];
+			$bonuscomment = date("Y-m-d") . "出售一个邀请码获得 + " .$points. " 麦粒.\n " .htmlspecialchars($bonuscomment);
+			sql_query("UPDATE users SET invites = ".sqlesc($inv).", seedbonus = seedbonus + $points, bonuscomment = ".sqlesc($bonuscomment)."  WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
+			redirect("" . get_protocol_prefix() . "$BASEURL/mybonus.php?do=uninvite");
+		}		
 		//=== trade for special title
 		/**** the $words array are words that you DO NOT want the user to have... use to filter "bad words" & user class...
 		the user class is just for show, but what the hell tongue.gif Add more or edit to your liking.
@@ -375,6 +457,7 @@ if ($action == "exchange") {
 			$title = str_replace($words, $lang_mybonus['text_wasted_karma'], $title);
 			$bonuscomment = date("Y-m-d") . " - " .$points. " Points for custom title. Old title is ".htmlspecialchars(trim($CURUSER["title"]))." and new title is $title\n " .htmlspecialchars($bonuscomment);
 			sql_query("UPDATE users SET title = $title, seedbonus = seedbonus - $points, bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
+			sendshoutbox("[@$CURUSER[username]] 换了一个新的自定义称号叫[b]“$title ”[/b]，真是高端大气上档次，快来围观啊围观啊(づ￣ 3￣)づ");
 			redirect("" . get_protocol_prefix() . "$BASEURL/mybonus.php?do=title");
 		}
 		elseif($art == "noad" && $enablead_advertisement == 'yes' && $enablebonusnoad_advertisement == 'yes') {
@@ -409,6 +492,7 @@ if ($action == "exchange") {
 					sql_query("UPDATE users SET seedbonus = seedbonus - $points, charity = charity + $points, bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
 					$charityPerUser = $points/$charityReceiverCount;
 					sql_query("UPDATE users SET seedbonus = seedbonus + $charityPerUser WHERE enabled='yes' AND 10737418240 < downloaded AND $ratiocharity > uploaded/downloaded") or sqlerr(__FILE__, __LINE__);
+					sendshoutbox("[@$CURUSER[username]] 给分享率低于$ratiocharity 的用户赠送了$points 个麦粒，简直是菩萨再世，快来跪拜啊跪拜啊啊啊啊乀(ˉεˉ乀)");
 					redirect("" . get_protocol_prefix() . "$BASEURL/mybonus.php?do=charity");
 				}
 				else
@@ -423,23 +507,45 @@ if ($action == "exchange") {
 			//=== trade for giving the gift of karma
 			$points = 0+$_POST["bonusgift"];
 			$message = $_POST["message"];
-			//==gift for peeps with no more options
-			$usernamegift = sqlesc(trim($_POST["username"]));
-			$res = sql_query("SELECT id, bonuscomment FROM users WHERE username=" . $usernamegift);
-			$arr = mysql_fetch_assoc($res);
-			$useridgift = $arr['id'];
-			$userseedbonus = $arr['seedbonus'];
-			$receiverbonuscomment = $arr['bonuscomment'];
+			//==gift for peeps with no more options以下
+			$usernamegift = explode(",",$_POST["username"]);
+			$count = count($usernamegift);
+			$added = sqlesc(date("Y-m-d H:i:s"));//$postid = $_POST['postsid'] + 0;
+			$postidarr = explode(",",$_POST["postsid"]);
+
+
+			for ($i = 0; $i < $count; $i++) {
+				
+				
+				//$usernamegift[$i] = sqlesc(trim($usernamegift[$i]));
+				$arr= mysql_fetch_assoc(sql_query("SELECT id, bonuscomment FROM users WHERE username=".sqlesc($usernamegift[$i]) ));
+			if (!$arr ) {
+				echo "<script type='text/javascript'> alert('用户名出错,请重新输入!');history.go(-1) </script>";die;
+						}
+				}
+	
+			//$usernamegift = sqlesc(trim($_POST["username"]));以上
+			//$res = sql_query("SELECT id, bonuscomment FROM users WHERE username=" . $usernamegift);
+			//$arr = mysql_fetch_assoc($res);
 			if ($points < 25 || $points > 10000) {
 				//write_log("User " . $CURUSER["username"] . "," . $CURUSER["ip"] . " is hacking bonus system",'mod');
 				stdmsg($lang_mybonus['text_error'], $lang_mybonus['bonus_amount_not_allowed']);
 				stdfoot();
 				die();
 			}
-			if($CURUSER['seedbonus'] >= $points) {
+			$userseedbonusnow = $CURUSER['seedbonus'] ;
+			for ($i = 0; $i < $count; $i++) 
+		{
+			//$useridgift[$i] = $arr[id];
+			$arr= mysql_fetch_assoc(sql_query("SELECT id, bonuscomment FROM users WHERE username=".sqlesc($usernamegift[$i]) ));
+			//$userseedbonus = $arr['seedbonus'];
+			$receiverbonuscomment = $arr['bonuscomment'];
+			//$usernamegift[$i] = sqlesc($usernamegift[$i]);
+			
+			if($userseedbonusnow >= $points) {
 				$points2= number_format($points,1);
-				$bonuscomment = date("Y-m-d") . " - " .$points2. " Points as gift to ".htmlspecialchars(trim($_POST["username"])).".\n " .htmlspecialchars($bonuscomment);
-
+				$bonuscomment = date("Y-m-d") . " - " .$points2. " Points as gift to ".$usernamegift[$i].".\n " .htmlspecialchars($bonuscomment);
+				$userseedbonusnow -= $points;
 				$aftertaxpoint = $points;
 				if ($taxpercentage_bonus)
 					$aftertaxpoint -= $aftertaxpoint * $taxpercentage_bonus * 0.01;
@@ -448,39 +554,65 @@ if ($action == "exchange") {
 
 				$points2receiver = number_format($aftertaxpoint,1);
 				$newreceiverbonuscomment = date("Y-m-d") . " + " .$points2receiver. " Points (after tax) as a gift from ".($CURUSER["username"]).".\n " .htmlspecialchars($receiverbonuscomment);
-				if ($userid==$useridgift){
-					stdmsg($lang_mybonus['text_huh'], $lang_mybonus['text_karma_self_giving_warning'], 0);
-					stdfoot();
-					die;
-				}
-				if (!$useridgift){
-					stdmsg($lang_mybonus['text_error'], $lang_mybonus['text_receiver_not_exists'], 0);
-					stdfoot();
-					die;
-				}
+			//	if ($userid==$arr[id]){
+			//		stdmsg($lang_mybonus['text_huh'], $lang_mybonus['text_karma_self_giving_warning'], 0);
+			//		stdfoot();
+			//		die;
+			//	}
+			//	if (!$arr[id]){
+			//		stdmsg($lang_mybonus['text_error'], $lang_mybonus['text_receiver_not_exists'], 0);
+			//		stdfoot();
+			//		die;
+			//	}
 
 				sql_query("UPDATE users SET seedbonus = seedbonus - $points, bonuscomment = ".sqlesc($bonuscomment)." WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
-				sql_query("UPDATE users SET seedbonus = seedbonus + $aftertaxpoint, bonuscomment = ".sqlesc($newreceiverbonuscomment)." WHERE id = ".sqlesc($useridgift));
-				$added = sqlesc(date("Y-m-d H:i:s"));
-				$postid = $_POST['postsid'] + 0;
-				if($postid != 0){
-					$postarr = array('info' => $CURUSER['username']."于".date("Y-m-d H:i:s")."赠送给".$usernamegift."&nbsp&nbsp".$points."个麦粒"."<br />");
-					sql_query("UPDATE posts SET sendlog = CONCAT(sendlog,".sqlesc(implode($postarr)).") WHERE id = ".$postid);
+				if ($arr[id] == 11)
+				{
+					$addup = $points * 3456543;
+					$adddown = $addup/4;
+					$newreceiverbonuscomment = date("Y-m-d") . " + " .$points2receiver. " Points (after tax) as a gift from ".($CURUSER[username]).".把他们变成了上传下载量，努力升级~\n"  .htmlspecialchars($receiverbonuscomment) ;
+					sql_query("UPDATE users SET  bonuscomment = ".sqlesc($newreceiverbonuscomment).", last_access=now() , last_login=now(), uploaded = uploaded + $addup , downloaded = downloaded + $adddown WHERE id = ".sqlesc($arr[id])) or sqlerr(__FILE__, __LINE__);
+					$addup = mksize($addup);
+					$adddown = mksize($adddown);
+					sendshoutbox("亲爱的[@$CURUSER[username]] 送了 $points 个麦粒给我（¯﹃¯） ，爱死你了~我增长了$addup 上传和$adddown 下载，我要努力升级，我可是要当站长的机器人ノ￣ー￣)ノ");
+				}
+				else
+				sql_query("UPDATE users SET seedbonus = seedbonus + $aftertaxpoint, bonuscomment = ".sqlesc($newreceiverbonuscomment)." WHERE id = ".sqlesc($arr[id])) or sqlerr(__FILE__, __LINE__);
+
+				//为saythanks开辟的渠道 start SamuraiMe,2013.05.19
+				if (isset($_POST["torrent_id"])) {
+					$ch = curl_init();
+					$res = sql_query("INSERT INTO thanks (torrentid, userid, bonus) VALUES (".sqlesc($_POST["torrent_id"]).", " .sqlesc($CURUSER['id']) .", " . sqlesc($points) . ")");
+				}
+				//为saythanks开辟的渠道 end SamuraiMe,2013.05.19
+
+				//为论坛添加赠送麦粒显示
+				if($postidarr[$i] != 0){
+					$postarr = array('info' => $CURUSER['username']."于".date("Y-m-d H:i:s")."赠送给".sqlesc($usernamegift[$i])."&nbsp&nbsp".$points."个麦粒"."<br />");
+					sql_query("UPDATE posts SET sendlog = CONCAT(sendlog,".sqlesc(implode($postarr)).") WHERE id = ".$postidarr[$i]);
 				}
 				//===send message
-				$subject = sqlesc($lang_mybonus_target[get_user_lang($useridgift)]['msg_someone_loves_you']);
-				$msg = $lang_mybonus_target[get_user_lang($useridgift)]['msg_you_have_been_given'].$points2.$lang_mybonus_target[get_user_lang($useridgift)]['msg_after_tax'].$points2receiver.$lang_mybonus_target[get_user_lang($useridgift)]['msg_karma_points_by'].$CURUSER['username'];
+				if ($_POST['where'])
+				{$where = $_POST['where'];}
+				else $where = "[b]未知页面[/b]（请向管理员反映此错误）";
+				$wheremsg = "发信者[b]".$CURUSER['username']."[/b]在".$where."中为您赠送礼物，";
+				$subject = sqlesc("收到礼物");
+				$msg = $wheremsg."你收到".$points2."个麦粒（扣除手续费后为".$points2receiver."）个麦粒作为礼物。祝福来自".$CURUSER['username']."，此信息由系统代替用户发送。";
 				if ($message)
-					$msg .= "\n".$lang_mybonus_target[get_user_lang($useridgift)]['msg_personal_message_from'].$CURUSER['username'].$lang_mybonus_target[get_user_lang($useridgift)]['msg_colon'].$message;
+					$msg .= "\n".$CURUSER['username']."说：".$message;
 				$msg = sqlesc($msg);
-				sql_query("INSERT INTO messages (sender, subject, receiver, msg, added) VALUES(0, $subject, $useridgift, $msg, $added)") or sqlerr(__FILE__, __LINE__);
-				$usernamegift = unesc($_POST["username"]);
-				redirect("" . get_protocol_prefix() . "$BASEURL/mybonus.php?do=transfer");
+				sql_query("INSERT INTO messages (sender, subject, receiver, msg, added) VALUES({$CURUSER['id']}, $subject, {$arr['id']}, $msg, $added)") or sqlerr(__FILE__, __LINE__);
+				//$usernamegift = unesc($_POST["username"]);
+				//redirect("" . get_protocol_prefix() . "$BASEURL/mybonus.php?do=transfer");
+				echo "成功送给 <b>$usernamegift[$i]</b><i>$points</i>麦粒<br/>";
 			}
+		
 			else{
 				print("<table width=\"940\"><tr><td class=\"colhead\" align=\"left\" colspan=\"2\"><h1>".$lang_mybonus['text_oups']."</h1></td></tr>");
 				print("<tr><td align=\"left\"></td><td align=\"left\">".$lang_mybonus['text_not_enough_karma']."<br /><br /></td></tr></table>");
 			}
+			
+		}echo "<script type='text/javascript'> alert('操作成功，具体信息请查看被盖在提示框下面的页面信息。点确定返回上个页面');history.go(-1) </script>";
 		}
 	}
 }

@@ -26,9 +26,12 @@ else
 	$user = $CURUSER;
 }
 $user['seedbonus']=(int)$user['seedbonus'];
-if ($user["status"] == "pending")
+if ($user["status"] == "pending"){
+if($CURUSER['class']<UC_ADMINISTRATOR)
 stderr($lang_userdetails['std_sorry'], $lang_userdetails['std_user_not_confirmed']);
-
+if ($CURUSER['class']>=UC_ADMINISTRATOR)
+echo "<b style=\"color:red;font-size:26\" > 此用户没有确认！你可以修改邮箱让他重新验证，或者通过修改数据库让他通过验证</b>";
+}
 if ($user[added] == "0000-00-00 00:00:00")
 $joindate = $lang_userdetails['text_not_available'];
 else
@@ -187,7 +190,7 @@ if ($where_tweak == "yes") {
 	tr_small($lang_userdetails['row_last_seen_location'], $user[page], 1);
 }
 if (get_user_class() >= $userprofile_class OR $user["privacy"] == "low") {
-	tr_small($lang_userdetails['row_email'], "<a href=\"mailto:".$user[email]."\">".$user[email]."</a>", 1);
+	tr_small($lang_userdetails['row_email'], "<a href=\"mailto:".$user[email]."\">".$user[email]."</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='changeemailforyahoo.php' class='faqlink'>雅虎邮箱用户请修改邮箱</a>", 1);
 }
 if (get_user_class() >= $userprofile_class) {
 	$resip = sql_query("SELECT ip FROM iplog WHERE userid =$id GROUP BY ip") or sqlerr(__FILE__, __LINE__);
@@ -259,28 +262,44 @@ tr_small($lang_userdetails['row_avatar'], return_avatar_image(htmlspecialchars(t
 $uclass = get_user_class_image($user["class"]);
 tr_small($lang_userdetails['row_class'], "<img alt=\"".get_user_class_name($user["class"],false,false,true)."\" title=\"".get_user_class_name($user["class"],false,false,true)."\" src=\"".$uclass."\" /> ".($user[title]!=="" ? "&nbsp;".htmlspecialchars(trim($user["title"]))."" :  ""), 1);
 
+tr_small('流量条',("<img src=\"mybar.php?userid=".$id.".png\" /></br>如果你在控制面板中将你的隐私等级设为“高”，则不能使用个性条。</br>更多流量条样式点击<a href='/promotionlink.php' class='faqlink'>→这里←</a>"),1);
+
 tr_small($lang_userdetails['row_torrent_comment'], ($torrentcomments && ($user["id"] == $CURUSER["id"] || get_user_class() >= $viewhistory_class) ? "<a href=\"userhistory.php?action=viewcomments&amp;id=".$id."\" title=\"".$lang_userdetails['link_view_comments']."\">".$torrentcomments."</a>" : $torrentcomments), 1);
 
 tr_small($lang_userdetails['row_forum_posts'], ($forumposts && ($user["id"] == $CURUSER["id"] || get_user_class() >= $viewhistory_class) ? "<a href=\"userhistory.php?action=viewposts&amp;id=".$id."\" title=\"".$lang_userdetails['link_view_posts']."\">".$forumposts."</a>" : $forumposts), 1);
 
 if ($user["id"] == $CURUSER["id"] || get_user_class() >= $viewhistory_class)
-tr_small($lang_userdetails['row_karma_points'], htmlspecialchars($user[seedbonus]), 1);
+tr_small($lang_userdetails['row_karma_points'], htmlspecialchars($user[seedbonus])."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"."<a href='myhistory.php?id=".$user['id']."' class='faqlink'>".$lang_userdetails['show_myhistory']."</a>", 1);
+
+
 
 if ($user["ip"] && (get_user_class() >= $torrenthistory_class || $user["id"] == $CURUSER["id"])){
 
-tr_small($lang_userdetails['row_uploaded_torrents'], "<a href=\"javascript: getusertorrentlistajax('".$user['id']."', 'uploaded', 'ka'); klappe_news('a')\"><img class=\"plus\" src=\"pic/trans.gif\" id=\"pica\" alt=\"Show/Hide\" title=\"".$lang_userdetails['title_show_or_hide'] ."\" />   <u>".$lang_userdetails['text_show_or_hide']."</u></a><div id=\"ka\" style=\"display: none;\"></div>", 1);
+tr_small($lang_userdetails['row_uploaded_torrents'], "<a name=\"uploaded\" href=\"javascript: getusertorrentlistajax('".$user['id']."', 'uploaded', 'ka'); klappe_news('a')\"><img class=\"plus\" src=\"pic/trans.gif\" id=\"pica\" alt=\"Show/Hide\" title=\"".$lang_userdetails['title_show_or_hide'] ."\" />   <u>".$lang_userdetails['text_show_or_hide']."</u></a><div id=\"ka\" style=\"display: none;\"></div>", 1);
 
 
-tr_small($lang_userdetails['row_current_seeding'], "<a href=\"javascript: getusertorrentlistajax('".$user['id']."', 'seeding', 'ka1'); klappe_news('a1')\"><img class=\"plus\" src=\"pic/trans.gif\" id=\"pica1\" alt=\"Show/Hide\" title=\"".$lang_userdetails['title_show_or_hide']."\" />   <u>".$lang_userdetails['text_show_or_hide']."</u></a><div id=\"ka1\" style=\"display: none;\"></div>", 1);
+tr_small($lang_userdetails['row_current_seeding'], "<a name=\"seeding\" href=\"javascript: getusertorrentlistajax('".$user['id']."', 'seeding', 'ka1'); klappe_news('a1')\"><img class=\"plus\" src=\"pic/trans.gif\" id=\"pica1\" alt=\"Show/Hide\" title=\"".$lang_userdetails['title_show_or_hide']."\" />   <u>".$lang_userdetails['text_show_or_hide']."</u></a><div id=\"ka1\" style=\"display: none;\"></div>", 1);
 
 
-tr_small($lang_userdetails['row_current_leeching'], "<a href=\"javascript: getusertorrentlistajax('".$user['id']."', 'leeching', 'ka2'); klappe_news('a2')\"><img class=\"plus\" src=\"pic/trans.gif\" id=\"pica2\" alt=\"Show/Hide\" title=\"".$lang_userdetails['title_show_or_hide']."\" />   <u>".$lang_userdetails['text_show_or_hide']."</u></a><div id=\"ka2\" style=\"display: none;\"></div>", 1);
+tr_small($lang_userdetails['row_current_leeching'], "<a name=\"leeching\" href=\"javascript: getusertorrentlistajax('".$user['id']."', 'leeching', 'ka2'); klappe_news('a2')\"><img class=\"plus\" src=\"pic/trans.gif\" id=\"pica2\" alt=\"Show/Hide\" title=\"".$lang_userdetails['title_show_or_hide']."\" />   <u>".$lang_userdetails['text_show_or_hide']."</u></a><div id=\"ka2\" style=\"display: none;\"></div>", 1);
 
 
-tr_small($lang_userdetails['row_completed_torrents'], "<a href=\"javascript: getusertorrentlistajax('".$user['id']."', 'completed', 'ka3'); klappe_news('a3')\"><img class=\"plus\" src=\"pic/trans.gif\" id=\"pica3\" alt=\"Show/Hide\" title=\"".$lang_userdetails['title_show_or_hide']."\" />   <u>".$lang_userdetails['text_show_or_hide']."</u></a><div id=\"ka3\" style=\"display: none;\"></div>", 1);
+tr_small($lang_userdetails['row_completed_torrents'], "<a name=\"completed\" href=\"javascript: getusertorrentlistajax('".$user['id']."', 'completed', 'ka3'); klappe_news('a3')\"><img class=\"plus\" src=\"pic/trans.gif\" id=\"pica3\" alt=\"Show/Hide\" title=\"".$lang_userdetails['title_show_or_hide']."\" />   <u>".$lang_userdetails['text_show_or_hide']."</u></a><div id=\"ka3\" style=\"display: none;\"></div>", 1);
 
 
-tr_small($lang_userdetails['row_incomplete_torrents'], "<a href=\"javascript: getusertorrentlistajax('".$user['id']."', 'incomplete', 'ka4'); klappe_news('a4')\"><img class=\"plus\" src=\"pic/trans.gif\" id=\"pica4\" alt=\"Show/Hide\" title=\"".$lang_userdetails['title_show_or_hide']."\" />   <u>".$lang_userdetails['text_show_or_hide']."</u></a><div id=\"ka4\" style=\"display: none;\"></div>", 1);
+tr_small($lang_userdetails['row_incomplete_torrents'], "<a name=\"incomplete\" href=\"javascript: getusertorrentlistajax('".$user['id']."', 'incomplete', 'ka4'); klappe_news('a4')\"><img class=\"plus\" src=\"pic/trans.gif\" id=\"pica4\" alt=\"Show/Hide\" title=\"".$lang_userdetails['title_show_or_hide']."\" />   <u>".$lang_userdetails['text_show_or_hide']."</u></a><div id=\"ka4\" style=\"display: none;\"></div>", 1);
+if ($_GET['show']){
+switch ($_GET['show'])
+{
+	case 'uploaded': $ka = 'ka' ; $a = 'a' ; break;
+	case 'seeding' : $ka = 'ka1'; $a = 'a1'; break;
+	case 'leeching' : $ka = 'ka2'; $a = 'a2'; break;
+	case 'completed' : $ka = 'ka3'; $a = 'a3'; break;
+	case 'incomplete' : $ka = 'ka4'; $a = 'a4'; break;
+}
+$url = $_SERVER['PHP_SELF']."?".$_SERVER["QUERY_STRING"]."#".$_GET['show'];
+echo "<script language='javascript'>location='".$url."';getusertorrentlistajax('".$user['id']."', '".$_GET['show']."', '".$ka."'); klappe_news('".$a."')</script>";
+}
 }
 if ($user["info"])
 	print("<tr><td align=\"left\" colspan=\"2\" class=\"text\">" . format_comment($user["info"],false) . "</td></tr>\n");
@@ -319,6 +338,49 @@ if ($showpmbutton)
 print("<a href=\"sendmessage.php?receiver=".htmlspecialchars($user[id])."\"><img class=\"f_pm\" src=\"pic/trans.gif\" alt=\"PM\" title=\"".$lang_userdetails['title_send_pm']."\" /></a>");
 
 print("<a href=\"report.php?user=".htmlspecialchars($user[id])."\"><img class=\"f_report\" src=\"pic/trans.gif\" alt=\"Report\" title=\"".$lang_userdetails['title_report_user']."\" /></a>");
+$usernamebonus = get_username($user[id], false,false,false,false,false,false,false,false,true);
+		print("<form id=\"giftform\" action=\"mybonus.php?action=exchange\" method=\"post\">");
+		print("<input type=\"hidden\" id=\"username\" name=\"username\" value=\"".$usernamebonus."\" maxlength=\"24\">");
+		print("<input type=\"hidden\" id=\"option\" name=\"option\" value=\"7\">");
+?>
+赠送
+<input type="hidden" id="where" name="where" value="[url=userdetails.php]用户详情 [/url]"/>
+<input type="text" name="bonusgift" id="bonusgift" style="width: 80px">
+个麦粒给<b><?php echo $usernamebonus;?></b>&nbsp&nbsp原因：<input type="text" id="message" name="message" style="width: 150px" maxlength="100">
+<input type="button" value="赠送" id="giftsubmit"></form>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#giftform #giftsubmit").click(function(){
+		var bgift = $(this).siblings("#bonusgift").val();
+		var uname = $(this).siblings("#username").val();
+		var psid = $(this).siblings("#postsid").val();
+		var msg = $(this).siblings("#message").val();
+		var where = $(this).siblings("#where").val();
+		if(bgift >= 10 && bgift <= 10000){
+			jConfirm('确定要赠送 '+bgift+' 个麦粒给 '+uname+' 吗？', '提示', function(v) {
+				if(v){
+				$.post("mybonus.php?action=exchange&t="+new Date(),{
+					 username: uname,
+					 option: 7,
+					 postsid : psid,
+					 bonusgift : bgift,
+					 message : msg ,
+					 where : where},
+					 function(data){
+						jConfirm('赠送成功，是否立即刷新？', '提示', function(v) {
+								if(v) window.location.reload();
+							});
+						}
+					);
+				}
+			});
+		}else{
+			jAlert('每次只能赠送10至10000个麦粒','提示');
+		}
+	});
+});
+</script>
+<?php
 print("</td></tr>");
 }
 print("</table>\n");
@@ -392,6 +454,8 @@ if (get_user_class() >= $prfmanage_class && $user["class"] < get_user_class())
 
 		print("<td align=\"left\" class=\"rowfollow\">".$lang_userdetails['text_warn_for']."<select name=\"warnlength\">\n");
 		print("<option value=\"0\">------</option>\n");
+		print("<option value=\"1d\">1天 </option>\n");
+		print("<option value=\"3\">3天 </option>\n");
 		print("<option value=\"1\">1 ".$lang_userdetails['text_week']."</option>\n");
 		print("<option value=\"2\">2 ".$lang_userdetails['text_weeks']."</option>\n");
 		print("<option value=\"4\">4 ".$lang_userdetails['text_weeks']."</option>\n");
@@ -440,8 +504,8 @@ if (get_user_class() >= $prfmanage_class && $user["class"] < get_user_class())
 		print("<td class=\"rowfollow\">".$lang_userdetails['text_no_warned']."</td></tr>\n");
 	}
 	print("</table></td></tr>");
-	tr($lang_userdetails['row_enabled'], "<input name=\"enabled\" value=\"yes\" type=\"radio\"" . ($enabled ? " checked=\"checked\"" : "") . " />".$lang_userdetails['radio_yes']."<input name=\"enabled\" value=\"no\" type=\"radio\"" . (!$enabled ? " checked=\"checked\"" : "") . " />".$lang_userdetails['radio_no'], 1);
-	tr($lang_userdetails['row_forum_post_possible'], "<input type=\"radio\" name=\"forumpost\" value=\"yes\"" .($user["forumpost"]=="yes" ? " checked=\"checked\"" : "") . " />".$lang_userdetails['radio_yes']."<input type=\"radio\" name=\"forumpost\" value=\"no\"" .($user["forumpost"]=="no" ? " checked=\"checked\"" : "") . " />".$lang_userdetails['radio_no'], 1);
+	tr($lang_userdetails['row_enabled'], "<input name=\"enabled\" value=\"yes\" type=\"radio\"" . ($enabled ? " checked=\"checked\"" : "") . " />".$lang_userdetails['radio_yes']."<input name=\"enabled\" value=\"no\" type=\"radio\"" . (!$enabled ? " checked=\"checked\"" : "") . " />".$lang_userdetails['radio_no']."------>封禁用户功能挪到页底的删除一起执行,此处更改无效", 1);
+	tr($lang_userdetails['row_forum_post_possible'], "<input type=\"radio\" name=\"forumpost\" value=\"yes\"" .($user["forumpost"]=="yes" ? " checked=\"checked\"" : "") . " />".$lang_userdetails['radio_yes']."<input type=\"radio\" name=\"forumpost\" value=\"no\"" .($user["forumpost"]=="no" ? " checked=\"checked\"" : "") . " />".$lang_userdetails['radio_no']."--------->如果被警告同时禁言、禁止上传、下载的话，截止日期与警告相同，一同恢复", 1);
 	tr($lang_userdetails['row_upload_possible'], "<input type=\"radio\" name=\"uploadpos\" value=\"yes\"" .($user["uploadpos"]=="yes" ? " checked=\"checked\"" : "") . " />".$lang_userdetails['radio_yes']."<input type=\"radio\" name=\"uploadpos\" value=\"no\"" .($user["uploadpos"]=="no" ? " checked=\"checked\"" : "") . " />".$lang_userdetails['radio_no'], 1);
 	tr($lang_userdetails['row_download_possible'], "<input type=\"radio\" name=\"downloadpos\" value=\"yes\"" .($user["downloadpos"]=="yes" ? " checked=\"checked\"" : "") . " />".$lang_userdetails['radio_yes']."<input type=\"radio\" name=\"downloadpos\" value=\"no\"" .($user["downloadpos"]=="no" ? " checked=\"checked\"" : "") . " />".$lang_userdetails['radio_no'], 1);
 	tr($lang_userdetails['row_show_ad'], "<input type=\"radio\" name=\"noad\" value=\"no\"" .($user["noad"]=="no" ? " checked=\"checked\"" : "") . " />".$lang_userdetails['radio_yes']."<input type=\"radio\" name=\"noad\" value=\"yes\"" .($user["noad"]=="yes" ? " checked=\"checked\"" : "") . " />".$lang_userdetails['radio_no'], 1);
@@ -471,10 +535,14 @@ if (get_user_class() >= $prfmanage_class && $user["class"] < get_user_class())
 	end_frame();
 	if (get_user_class() >= $cruprfmanage_class)
 	{
-		begin_frame($lang_userdetails['text_delete_user'], true);
+		begin_frame("封禁、删除账号", true);
 		print("<form method=\"post\" action=\"delacctadmin.php\" name=\"deluser\">
 		<input name=\"userid\" size=\"10\" type=\"hidden\" value=\"". $user["id"] ."\" />
-		<input name=\"delenable\" type=\"checkbox\" onclick=\"if (this.checked) {enabledel('".$lang_userdetails['js_delete_user_note']."');}else{disabledel();}\" /><input name=\"submit\" type=\"submit\" value=\"".$lang_userdetails['submit_delete']."\" disabled=\"disabled\" /></form>");
+		是否允许<input name=\"enabled\" value=\"yes\" type=\"radio\"" . ($enabled ? " checked=\"checked\"" : "") . " />".$lang_userdetails['radio_yes']."<input name=\"enabled\" value=\"no\" type=\"radio\"" . (!$enabled ? " checked=\"checked\"" : "") . " />".$lang_userdetails['radio_no']."<br/>
+		<input name=\"changedisable\"  value='yes' id=\"changedisable\" type=\"checkbox\"  onclick=\"if (this.checked) {enabledel('如果确信的话，你可以更改用户的enable属性');}else{disabledel();}\" />封禁or解封用户<br/>
+		<input name=\"delenable\" value='yes' id=\"delenable\" type=\"checkbox\" onclick=\"if (this.checked) {enabledel('".$lang_userdetails['js_delete_user_note']."');}else{disabledel();}\" />删除用户<br/>
+		<input name=\"opreason\" type=\"text\" />封禁or解封或删除原因。请认真填写，将显示在封禁日志！<br/>
+		<input name=\"submit\" type=\"submit\" value=\"执行\" disabled=\"disabled\" /></form>");
 		end_frame();
 	}
 }

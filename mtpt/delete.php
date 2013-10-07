@@ -13,75 +13,123 @@ function bark($msg) {
   exit;
 }
 
+/*
 if (!mkglobal("id"))
 	bark($lang_delete['std_missing_form_date']);
+*/
 
-$id = 0 + $id;
-if (!$id)
-	die();
+$torrentids = is_array($_REQUEST["id"]) ? $_REQUEST["id"] : array($_REQUEST["id"]);
+$recycleMode = $_REQUEST["recycle_mode"];
+switch ($recycleMode) {
+	case 'release':
+		foreach ($torrentids as $id) {
+			$res = sql_query("SELECT name, status, owner FROM torrents WHERE id = ".sqlesc($id));
+			$row = mysql_fetch_array($res);
+			sql_query("UPDATE torrents SET banned = 'no', status = 'normal', added = ".sqlesc(date("Y-m-d H:i:s"))." WHERE id = $id") or sqlerr(__FILE__,__LINE__);
+			$beforeStatus = getTorrentStatus($row['status']);	
+			write_log("种子：管理员 $CURUSER[username] 发布了 $beforeStatus 种子 $id ($row[name]) ");
+			sendMessage(0,$row['owner'],"你的$beforeStatus 种子被管理员发布了","管理员[url=userdetails.php?id=$CURUSER[id]] $CURUSER[username] [/url] 发布了 $beforeStatus 种子 [url=details.php?id=$id] ($row[name])[/url]");
+		}
+		break;
 
-$res = sql_query("SELECT name,owner,seeders,anonymous FROM torrents WHERE id = ".sqlesc($id));
-$row = mysql_fetch_array($res);
-if (!$row)
-	die();
+	case 'delete':
+	case 'recycle':
+		$rt = 0 + $_POST["reasontype"];
 
-if ($CURUSER["id"] != $row["owner"] && get_user_class() < $torrentmanage_class)
-	bark($lang_delete['std_not_owner']);
+		if (!is_int($rt) || $rt < 1 || $rt > 5)
+			bark($lang_delete['std_invalid_reason']."$rt.");
 
-$rt = 0 + $_POST["reasontype"];
+		$r = $_POST["r"];
+		$reason = $_POST["reason"];
 
-if (!is_int($rt) || $rt < 1 || $rt > 5)
-	bark($lang_delete['std_invalid_reason']."$rt.");
+		if ($rt == 1)
+			$reasonstr = "断种: 0 seeders, 0 leechers = 0 peers total";
+		elseif ($rt == 2)
+			$reasonstr = "重复" . ($reason[0] ? (": " . trim($reason[0])) : "!");
+		elseif ($rt == 3)
+			$reasonstr = "劣质" . ($reason[1] ? (": " . trim($reason[1])) : "!");
+		elseif ($rt == 4)
+		{
+			if (!$reason[2])
+				bark($lang_delete['std_describe_violated_rule']);
+		  $reasonstr = $SITENAME." rules broken: " . trim($reason[2]);
+		}
+		else
+		{
+			if (!$reason[3])
+				bark($lang_delete['std_enter_reason']);
+		  $reasonstr = trim($reason[3]);
+		}
 
-$r = $_POST["r"];
-$reason = $_POST["reason"];
 
-if ($rt == 1)
-	$reasonstr = "Dead: 0 seeders, 0 leechers = 0 peers total";
-elseif ($rt == 2)
-	$reasonstr = "Dupe" . ($reason[0] ? (": " . trim($reason[0])) : "!");
-elseif ($rt == 3)
-	$reasonstr = "Nuked" . ($reason[1] ? (": " . trim($reason[1])) : "!");
-elseif ($rt == 4)
-{
-	if (!$reason[2])
-		bark($lang_delete['std_describe_violated_rule']);
-  $reasonstr = $SITENAME." rules broken: " . trim($reason[2]);
+		if ($recycleMode == "delete") {
+			$delMsg = "删除了";
+		} else {
+			$delMsg = "移入回收站";
+			$reasonstr .= "\n 请按照管理员要求修改种子，修改合格之后在15日内联系管理员移出回收站，否则将被系统自动清理。";
+		}
+		
+		foreach ($torrentids as $id) {
+			$id = 0 + $id;
+			if (!$id)
+				die();
+			$res = sql_query("SELECT name,owner,seeders,anonymous,status FROM torrents WHERE id = ".sqlesc($id)) or sqlerr();
+			$row = mysql_fetch_array($res);
+			if (!$row)
+				die();
+
+			if ($CURUSER["id"] != $row["owner"] && get_user_class() < $torrentmanage_class)
+				bark($lang_delete['std_not_owner']);
+
+			// added by SamuraiMe,2013.05.17
+			sendDelMsg($id, $reasonstr, $recycleMode);
+			// added by SamuraiMe,2013.05.17
+
+			$timestamp = sqlesc(date("Y-m-d H:i:s"));
+			if ($recycleMode == "delete") {
+				deletetorrent($id);
+			} else if ($recycleMode == "recycle") {
+				sql_query("UPDATE torrents SET banned = 'yes', visible = '0' ,status = 'recycle', last_status = $timestamp,added =$timestamp WHERE id = ".sqlesc($id)) or sqlerr(__FILE__,__LINE__);
+			}
+
+			$beforeStatus = getTorrentStatus($row['status']);
+			if ($CURUSER["id"] == $row["owner"])
+			{
+				if ($row['anonymous'] == 'yes' ) {
+					write_log("种子：发布者 匿名 $delMsg $beforeStatus 种子 $id ($row[name]) 。原因是 ：($reasonstr)",'normal');
+				} else {
+					write_log("种子：发布者$CURUSER[username] $delMsg $beforeStatus 种子 $id ($row[name])。原因是： ($reasonstr)",'normal');
+				}
+			}
+			else write_log("种子：管理员 $CURUSER[username] $delMsg $beforeStatus 种子 $id ($row[name])。原因是： ($reasonstr)",'normal');
+
+			//===remove karma
+			KPS("-",$uploadtorrent_bonus,$row["owner"]);
+
+		}
+		break;
+
+	default:
+		# code...
+		break;
 }
-else
-{
-	if (!$reason[3])
-		bark($lang_delete['std_enter_reason']);
-  $reasonstr = trim($reason[3]);
+
+if ($recycleMode == "delete") {
+	$title = "删除种子成功";
+} else if ($recycleMode == "recycle") {
+	$title = "成功移入回收站";
+} else if ($recycleMode == "release") {
+	$title = "种子发布成功";
 }
 
-deletetorrent($id);
-
-if ($row['anonymous'] == 'yes' && $CURUSER["id"] == $row["owner"]) {
-	write_log("种子 $id ($row[name]) 被删除,操作者 匿名发布 ($reasonstr)",'normal');
-} else {
-	write_log("种子 $id ($row[name]) 被删除,操作者 $CURUSER[username] ($reasonstr)",'normal');
-}
-
-//===remove karma
-KPS("-",$uploadtorrent_bonus,$row["owner"]);
-
-//Send pm to torrent uploader
-if ($CURUSER["id"] != $row["owner"]){
-	$dt = sqlesc(date("Y-m-d H:i:s"));
-	$subject = sqlesc($lang_delete_target[get_user_lang($row["owner"])]['msg_torrent_deleted']);
-	$msg = sqlesc($lang_delete_target[get_user_lang($row["owner"])]['msg_the_torrent_you_uploaded'].$row['name'].$lang_delete_target[get_user_lang($row["owner"])]['msg_was_deleted_by']."[url=userdetails.php?id=".$CURUSER['id']."]".$CURUSER['username']."[/url]".$lang_delete_target[get_user_lang($row["owner"])]['msg_reason_is'].$reasonstr);
-	sql_query("INSERT INTO messages (sender, receiver, subject, added, msg) VALUES(0, $row[owner], $subject, $dt, $msg)") or sqlerr(__FILE__, __LINE__);
-}
-stdhead($lang_delete['head_torrent_deleted']);
+stdhead($title);
 
 if (isset($_POST["returnto"]))
 	$ret = "<a href=\"" . htmlspecialchars($_POST["returnto"]) . "\">".$lang_delete['text_go_back']."</a>";
 else
 	$ret = "<a href=\"index.php\">".$lang_delete['text_back_to_index']."</a>";
-
 ?>
-<h1><?php echo $lang_delete['text_torrent_deleted'] ?></h1>
+<h1><?php echo $title ?></h1>
 <p><?php echo  $ret ?></p>
 <?php
 stdfoot();

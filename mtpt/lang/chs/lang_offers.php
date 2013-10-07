@@ -99,13 +99,14 @@ $lang_offers = array
 	'text_offers_section' => "候选区",
 	'text_offer_note1' => "<a href=http://pt.nwsuaf6.edu.cn/forums.php?action=viewtopic&topicid=323&page=0><font color=brown size=+2>为了您的种子早日通过审核，请先认真学习PT规则！点击进入...
 </font></a>",
-	'text_offer_note2' => "<a href=http://pt.nwsuaf6.edu.cn/forums.php?action=viewtopic&forumid=2&topicid=538><font color=brown size=+2>发布候选前请务必阅读命名规则！点击进入...</font></a>",
+	'text_offer_note2' => "<a href=rules.php#guize><font color=brown size=+2>发布候选前请务必阅读命名规则！点击进入...</font></a>",
 	'text_add_offer' => "确定无重复种子，点击此处开始添加候选资源",
 	'text_view_request' => "查看求种",
 	'select_show_all' => "(显示全部)",
 	'submit_view_only_selected' => "显示选择",
 	'text_search_offers' => "搜索：",
-	'text_search_offer_note' => "<font size=+1 color=red>为避免重复发种，请务必提前搜索种子是否已经存在，确定无重复方可添加，否则请直接下载种子保种，违者重罚(根据用户等级处以扣1000至4000麦粒处罚，举报有奖)</font><br/>",
+	'text_search_offer_note' => "<font size=+1 color=red>符合上述命名及简介规则的候选<b style=\"color:Black\">可pm管理员</b><a href='sendmessage.php?receiver=14357' class='faqlink'>水水</a>或者<a href='sendmessage.php?receiver=36269' class='faqlink'>cos香小花</a>予以通过
+<i style=\"color:Red\">注意附上自己候选地址</i></font><br/>",
 	'title_comment' => "评论",
 	'col_vote_results' => "投票",
 	'text_nothing_found' => "空！",

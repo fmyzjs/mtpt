@@ -81,25 +81,25 @@ if ($_GET["sent"] == 1) {
 
              <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="11">
              </td>
-             <td style="border: 0"><?php echo $lang_functions['text_uploader']?></td>
+             <td style="border: 0"><?php echo $lang_functions['text_retiree']?></td>
       </tr>
 
-    <tr>
-             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="12">
+    <tr>             <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="12">
              </td>
-             <td style="border: 0"><?php echo $lang_functions['text_moderators']?></td>
-
+             <td style="border: 0"><?php echo $lang_functions['text_downloader']?></td>
              <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="13">
              </td>
-             <td style="border: 0"><?php echo $lang_functions['text_administrators']?></td>
+             <td style="border: 0"><?php echo $lang_functions['text_uploader']?></td>
 
              <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="14">
              </td>
-             <td style="border: 0"><?php echo $lang_functions['text_sysops']?></td>
+             <td style="border: 0"><?php echo $lang_functions['text_moderators']?></td>
 
              <td style="border: 0" width="20"><input type="checkbox" name="clases[]" value="15">
              </td>
-             <td style="border: 0"><?php echo $lang_functions['text_staff_leader']?></td>
+             <td style="border: 0"><?php echo $lang_functions['text_administrators']?></td>
+
+            
 	
        <td style="border: 0">&nbsp;</td>
        <td style="border: 0">&nbsp;</td>

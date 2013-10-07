@@ -174,7 +174,7 @@ else {
 						$order .= " amount DESC";
 					
 					$rows = sql_query ( "SELECT * FROM req WHERE " . $limit . "  ORDER BY $order $page" ) or sqlerr ( __FILE__, __LINE__ );
-					print ("<h1 align=center><a href=viewrequest.php?action=new><input type=\"button\" value=\"" . $lang_req ['head_req'] . "\" onclick=\"window.location='viewrequest.php?action=new';\" style=\"font-weight: bold\"/></a> <a href=forums.php?action=viewtopic&topicid=4678><input type=\"button\" value=\"规则\" onclick=\"window.location='forums.php?action=viewtopic&topicid=4678';\" style=\"color: red; font-weight: bold\"/></a></h1>") ;
+					print ("<h1 align=center><a href=viewrequest.php?action=new><input type=\"button\" value=\"" . $lang_req ['head_req'] . "\" onclick=\"window.location='viewrequest.php?action=new';\" style=\"font-weight: bold\"/></a> <a href=forums.php?action=viewtopic&topicid=4818&page=0><input type=\"button\" value=\"规则\" onclick=\"window.location='forums.php?action=viewtopic&topicid=4818';\" style=\"color: red; font-weight: bold\"/></a></h1>") ;
 					print ($pagertop) ;
 					print ("<table width=940 border=1 cellspacing=0 cellpadding=5 style=border-collapse:collapse >\n") ;
 					if (get_user_class () >= 13) {
@@ -368,7 +368,7 @@ function quick_reply_to(username)
 						$select .= "<option value=\"" . $rows ["id"] . "\">" . $rows ["name"] . "</option>";
 					}
 					$select .= "</select>";
-					print ("<h1 align=center><a href=viewrequest.php?action=new><input type=\"button\" value=\"" . $lang_req ['head_req'] . "\" onclick=\"window.location='viewrequest.php?action=new';\" style=\"font-weight: bold\"/></a> <a href=forums.php?action=viewtopic&topicid=4678><input type=\"button\" value=\"规则\" onclick=\"window.location='forums.php?action=viewtopic&topicid=4678';\" style=\"color: red; font-weight: bold\"/></a></h1>") ;
+					print ("<h1 align=center><a href=viewrequest.php?action=new><input type=\"button\" value=\"" . $lang_req ['head_req'] . "\" onclick=\"window.location='viewrequest.php?action=new';\" style=\"font-weight: bold\"/></a> <a href=forums.php?action=viewtopic&topicid=4818><input type=\"button\" value=\"规则\" onclick=\"window.location='forums.php?action=viewtopic&topicid=4818';\" style=\"color: red; font-weight: bold\"/></a></h1>") ;
 					print ("<form id=edit method=post name=edit action=viewrequest.php >\n<input type=hidden name=action  value=takeadded >\n") ;
 					print ("<table width=940 cellspacing=0 cellpadding=3><tr><td class=colhead align=center colspan=2>新增求种</td></tr>\n") ;
 					tr ( "类型：", $select, 1 );
@@ -407,9 +407,10 @@ function quick_reply_to(username)
 					stderr ( "出错了！", "你没有那么多麦粒！！！<a href=javascript:history.go(-1)>点击这里返回</a>", 0 );
 				if (get_user_class () >= 2) {
 					sql_query ( "UPDATE users SET seedbonus = seedbonus - " . $amount . " WHERE id = " . $CURUSER [id] );
+					writeBonusComment($CURUSER [id],"使用$amount 麦粒新增了求种 " . mysql_insert_id (). sqlesc ( $_POST ["name"] ));
 					sql_query ( "INSERT req ( name , catid , introduce, ori_introduce ,amount , ori_amount , userid ,added, resetdate ) VALUES ( " . sqlesc ( $_POST ["name"] ) . " , " . sqlesc ( $_POST ["catid"] ) . " , " . sqlesc ( $_POST ["introduce"] ) . " , " . sqlesc ( $_POST ["introduce"] ) . " , " . sqlesc ( $_POST ["amount"] ) . " , " . sqlesc ( $_POST ["amount"] ) . " , " . sqlesc ( $CURUSER [id] ) . " , '" . date ( "Y-m-d H:i:s" ) . "', '" . date ( "Y-m-d H:i:s" ) . "' )" ) or sqlerr ( __FILE__, __LINE__ );
 					
-					write_log ( "用户 " . $CURUSER ["username"] . " 新增了求种 " . mysql_insert_id () );
+					write_log ( "求种：用户 $CURUSER[username] 新增了求种 " . mysql_insert_id (). sqlesc ( $_POST ["name"] ) );
 					stderr ( "成功", "新增求种成功，<a href=viewrequest.php>点击这里返回</a>", 0 );
 				} else
 					stderr ( "出错了！！！", "你没有该权限！！！<a href=viewrequest.php>点击这里返回</a>", 0 );
@@ -483,7 +484,7 @@ function quick_reply_to(username)
 				$added = sqlesc ( date ( "Y-m-d H:i:s" ) );
 				$subject = sqlesc ( "你发布的求种" . $arr ["name"] . "有应求" );
 				$notifs = sqlesc ( $CURUSER ["username"] . "应求了你的求种" . "[url=viewrequest.php?action=view&id=" . $arr ["id"] . "]" . $arr ["name"] . "[/url]" );
-				sql_query ( "INSERT INTO messages (sender, receiver, subject, msg, added) VALUES(0, '" . $arr ['userid'] . "', $subject, $notifs, $added)" ) or sqlerr ( __FILE__, __LINE__ );
+				sql_query ( "INSERT INTO messages (sender, receiver, subject, msg, added, goto) VALUES(0, '" . $arr ['userid'] . "', $subject, $notifs, $added, 0)" ) or sqlerr ( __FILE__, __LINE__ );
 				$Cache->delete_value ( 'user_' . $arr ['userid'] . '_unread_message_count' );
 				$Cache->delete_value ( 'user_' . $arr ['userid'] . '_inbox_count' );
 				break;
@@ -512,6 +513,7 @@ function quick_reply_to(username)
 				if ($amount > $CURUSER [seedbonus])
 					stderr ( "出错了！", "你没有那么多麦粒！" );
 				sql_query ( "UPDATE users SET seedbonus = seedbonus - " . $newseedbonus . " WHERE id = " . $CURUSER [id] );
+				writeBonusComment($CURUSER [id],"使用$newseedbonus 麦粒追加了悬赏". sqlesc ( $_POST ["reqid"] ));
 				sql_query ( "UPDATE req SET amount = " . $newamount . ", resetdate = '" . date ( "Y-m-d H:i:s" ) . "' WHERE id = " . sqlesc ( $_POST ["reqid"] ) );
 				if ($arr ["userid"] != $CURUSER ["id"]) {
 					$res = sql_query ( "SELECT * FROM givebonus WHERE bonusfromuserid = '" . $CURUSER ["id"] . "' AND bonustotorrentid =" . sqlesc ( $_POST ["reqid"] ) . " AND type='3'" );
@@ -560,7 +562,7 @@ function quick_reply_to(username)
 						sql_query ( "DELETE FROM resreq WHERE reqid ='" . $_GET ["id"] . "'" ) or sqlerr ( __FILE__, __LINE__ );
 						sql_query ( "DELETE FROM comments WHERE request ='" . $_GET ["id"] . "'" ) or sqlerr ( __FILE__, __LINE__ );
 						sql_query ( "DELETE FROM givebonus WHERE bonustotorrentid ='" . $_GET ["id"] . "' AND type = '3'" ) or sqlerr ( __FILE__, __LINE__ );
-						write_log ( "管理员 " . $CURUSER ["username"] . " 删除了求种 " . $_GET ["id"] . " ( " . $arr ["name"] . " ) ,理由：" . $reason );
+						write_log ( "求种：管理员 " . $CURUSER ["username"] . " 删除了求种 " . $_GET ["id"] . " ( " . $arr ["name"] . " ) ,理由：" . $reason );
 						
 						if ($CURUSER ["id"] != $arr ['userid']) {
 							$added = sqlesc ( date ( "Y-m-d H:i:s" ) );
@@ -610,7 +612,7 @@ function quick_reply_to(username)
 						sql_query ( "DELETE FROM resreq WHERE reqid ='" . $id . "'" ) or sqlerr ( __FILE__, __LINE__ );
 						sql_query ( "DELETE FROM comments WHERE request ='" . $id . "'" ) or sqlerr ( __FILE__, __LINE__ );
 						sql_query ( "DELETE FROM givebonus WHERE bonustotorrentid ='" . $id . "' AND type = '3'" ) or sqlerr ( __FILE__, __LINE__ );
-						write_log ( "管理员 " . $CURUSER ["username"] . " 删除了求种 " . $id . " ( " . $arr ["name"] . " )" );
+						write_log ( "求种：管理员 " . $CURUSER ["username"] . " 删除了求种 " . $id . " ( " . $arr ["name"] . " )" );
 						$Cache->delete_value ( 'req_' . $id . '_req_name' );
 						if ($CURUSER ["id"] != $arr ['userid']) {
 							$added = sqlesc ( date ( "Y-m-d H:i:s" ) );
@@ -627,16 +629,18 @@ function quick_reply_to(username)
 						if (mysql_num_rows ( $amountadds ) > 0)
 							while ( $amountadd = mysql_fetch_array ( $amountadds ) ) {
 								sql_query ( "UPDATE users SET seedbonus=seedbonus +" . $amountadd ["bonus"] . " WHERE id ='" . $amountadd ["bonusfromuserid"] . "'" ) or sqlerr ( __FILE__, __LINE__ );
+								writeBonusComment($amountadd ["bonusfromuserid"],"求种$id 被撤销，返还$amountadd[bonus] 麦粒");
 								$amount -= $amountadd ["bonus"];
 							}
 						sql_query ( "UPDATE users SET seedbonus=seedbonus +" . $amount . " WHERE id ='" . $arr ["userid"] . "'" ) or sqlerr ( __FILE__, __LINE__ );
+						writeBonusComment($arr ["userid"],"求种$id 被撤销，返还$amount 麦粒");
 						sql_query ( "DELETE FROM givebonus WHERE bonustotorrentid ='" . $id . "' AND type = '3'" ) or sqlerr ( __FILE__, __LINE__ );
-						write_log ( ($arr ['userid'] != $CURUSER ["id"] ? "管理员 " : "求种人 ") . $CURUSER ["username"] . " 撤销了求种 " . $id );
+						write_log ( "求种：".($arr ['userid'] != $CURUSER ["id"] ? "管理员 " : "求种人 ") . $CURUSER ["username"] . " 撤销了求种 " . $id );
 						if ($CURUSER ["id"] != $arr ['userid']) {
 							$added = sqlesc ( date ( "Y-m-d H:i:s" ) );
 							$subject = sqlesc ( "你发布的求种" . $arr ["name"] . "被撤销" );
 							$notifs = sqlesc ( "管理员" . $CURUSER ["username"] . "撤销了你的求种 [url=viewrequest.php?action=view&id=" . $arr ["id"] . "]" . $arr ["name"] . "[/url],赏金已经退回到相关账户中。" );
-							sql_query ( "INSERT INTO messages (sender, receiver, subject, msg, added) VALUES(0, '" . $arr ['userid'] . "', $subject, $notifs, $added)" ) or sqlerr ( __FILE__, __LINE__ );
+							sql_query ( "INSERT INTO messages (sender, receiver, subject, msg, added,goto) VALUES(0, '" . $arr ['userid'] . "', $subject, $notifs, $added,1)" ) or sqlerr ( __FILE__, __LINE__ );
 							$Cache->delete_value ( 'user_' . $arr ['userid'] . '_unread_message_count' );
 							$Cache->delete_value ( 'user_' . $arr ['userid'] . '_inbox_count' );
 						}
@@ -696,16 +700,18 @@ function quick_reply_to(username)
 							while ( $amountadd = mysql_fetch_array ( $amountadds ) ) {
 								sql_query ( "UPDATE users SET seedbonus=seedbonus +" . $amountadd ["bonus"] . " WHERE id ='" . $amountadd ["bonusfromuserid"] . "'" ) or sqlerr ( __FILE__, __LINE__ );
 								$amount -= $amountadd ["bonus"];
+								writeBonusComment($amountadd ["bonusfromuserid"],"求种$id 被撤销，返还$amountadd[bonus] 麦粒");
 							}
 						sql_query ( "UPDATE users SET seedbonus=seedbonus +" . $amount . " WHERE id ='" . $arr ["userid"] . "'" ) or sqlerr ( __FILE__, __LINE__ );
+						writeBonusComment($arr ["userid"],"求种$id 被撤销，返还$amount 麦粒");
 					}
 					sql_query ( "DELETE FROM givebonus WHERE bonustotorrentid ='" . $_GET ["id"] . "' AND type = '3'" ) or sqlerr ( __FILE__, __LINE__ );
-					write_log ( ($arr ['userid'] != $CURUSER ["id"] ? "管理员 " : "求种人 ") . $CURUSER ["username"] . " 撤销了求种 " . $_GET ["id"] );
+					write_log ( "求种：".($arr ['userid'] != $CURUSER ["id"] ? "管理员 " : "求种人 ") . $CURUSER ["username"] . " 撤销了求种 " . $_GET ["id"] );
 					if ($CURUSER ["id"] != $arr ['userid']) {
 						$added = sqlesc ( date ( "Y-m-d H:i:s" ) );
 						$subject = sqlesc ( "你发布的求种" . $arr ["name"] . "被撤销" );
 						$notifs = sqlesc ( "管理员" . $CURUSER ["username"] . "撤销了你的求种 [url=viewrequest.php?action=view&id=" . $arr ["id"] . "]" . $arr ["name"] . "[/url],赏金已经退回到相关账户中。" );
-						sql_query ( "INSERT INTO messages (sender, receiver, subject, msg, added) VALUES(0, '" . $arr ['userid'] . "', $subject, $notifs, $added)" ) or sqlerr ( __FILE__, __LINE__ );
+						sql_query ( "INSERT INTO messages (sender, receiver, subject, msg, added,goto) VALUES(0, '" . $arr ['userid'] . "', $subject, $notifs, $added,1)" ) or sqlerr ( __FILE__, __LINE__ );
 						$Cache->delete_value ( 'user_' . $arr ['userid'] . '_unread_message_count' );
 						$Cache->delete_value ( 'user_' . $arr ['userid'] . '_inbox_count' );
 					}
@@ -743,9 +749,10 @@ function quick_reply_to(username)
 					$added = sqlesc ( date ( "Y-m-d H:i:s" ) );
 					foreach ( $owner as $id ) {
 						sql_query ( "UPDATE users SET seedbonus = seedbonus + $amount WHERE id = '" . $id . "'" ) or sqlerr ( __FILE__, __LINE__ );
-						sql_query ( "INSERT INTO messages (sender, receiver, subject, msg, added) VALUES(0, " . $id . ", '$subject', '$notifs', $added)" ) or sqlerr ( __FILE__, __LINE__ );
+						writeBonusComment($id,"求种$_POST[id] 被确认，增加悬赏$amount 麦粒");
+						sql_query ( "INSERT INTO messages (sender, receiver, subject, msg, added,goto) VALUES(0, " . $id . ", '$subject', '$notifs', $added,1)" ) or sqlerr ( __FILE__, __LINE__ );
 					}
-					write_log ( ($arr ['userid'] != $CURUSER ["id"] ? "管理员 " : "求种人 ") . $CURUSER ["username"] . " 确认了求种 " . $_POST ["id"] );
+					write_log ("求种：". ($arr ['userid'] != $CURUSER ["id"] ? "管理员 " : "求种人 ") . $CURUSER ["username"] . " 确认了求种 " . $_POST ["id"] );
 					stderr ( "成功", "确认成功，<a href=viewrequest.php?action=view&id=" . $_POST ["id"] . ">点击这里返回</a>", false );
 				
 				}

@@ -1,143 +1,87 @@
 <?
 class douban {
-	var $doubanxml,$dbarray;
-	var $dbinfo;
-	var $cachepath = "",$siteurl = "",$apikey = "";
-	function __construct() {
-		$this->cachepath = "./imdb/cache/";
-		$this->imagepath = "./imdb/images/";
-		$this->apikey = "03aa7b16be6307e40aff71443b2917ac";
-   	}
+    var $doubanxml,$dbarray;
+    var $dbinfo;
+    var $cachepath = "",$siteurl = "",$apikey = "";
+    function __construct() {
+        $this->cachepath = "./imdb/cache/";
+        $this->imagepath = "./imdb/images/";
+       }
+    function setid($imdb_id = 0,$type = "imdb"){
+        if($type == "imdb")
+            $this->siteurl = "http://api.douban.com/v2/movie/subject/imdb/tt";
+        else if($type == "douban")
+            $this->siteurl = "http://api.douban.com/v2/movie/subject/";  
+        $orijson = file_get_contents($this->siteurl.$imdb_id);
+        $jsonobj = json_decode($orijson);
+        $jsonobj_true = json_decode($orijson,true);
+        $page = $page."<b>资源类型：</b>".$jsonobj ->{'subtype'}."<br />";
+        $page = $page."<b>原名：</b>".$jsonobj ->{'original_title'}."<br />";
+        $page = $page."<b>中文名：</b>".$jsonobj ->{'title'}."<br />";
+        
+        $page = $page."<b>别名：</b>";
+        foreach ($jsonobj ->{'aka'} as $jsonaka)
+        {$page = $page.$jsonaka."&nbsp;/&nbsp;";}
+        $page=$page."<br />";
+        
+        $page = $page."<b>主演：</b>";
+        foreach ($jsonobj_true[casts] as $key=>$castsval)
+       {$strcastsname= $castsval[name];$strcastsalt= $castsval[alt];
+        $page = $page."<a href=\"".$strcastsalt."\">".$strcastsname."</a>&nbsp;/&nbsp;";}
+        $page=$page."<br />";
+        
+        $page = $page."<b>电影/电视剧类型：</b>";
+        foreach ($jsonobj ->{'genres'} as $jsongenres)
+        {$page = $page.$jsongenres."&nbsp;/&nbsp;";}
+        $page=$page."<br />";
+        
+        $page = $page."<b>电影/电视剧语言：</b>";
+        foreach ($jsonobj ->{'languages'} as $jsonlanguages)
+        {$page = $page.$jsonlanguages."&nbsp;/&nbsp;";}
+        $page=$page."<br />";
+        
+        $page = $page."<b>制片国家/地区：</b>";
+        foreach ($jsonobj ->{'countries'} as $jsoncountries)
+        {$page = $page.$jsoncountries."&nbsp;/&nbsp;";}
+        $page=$page."<br />";
+        
+        $page = $page."<b>导演：</b>";
+        foreach ($jsonobj_true[directors] as $key=>$directorsval)
+       {$strdirectorsname= $directorsval[name];
+        $page = $page.$strdirectorsname."&nbsp;/&nbsp;";}
+        $page=$page."<br />";
+        
+        $page = $page."<b>编剧：</b>";
+        foreach ($jsonobj_true[writers] as $key=>$writersval)
+       {$strwritersname= $writersval[name];
+        $page = $page.$strwritersname."&nbsp;/&nbsp;";}
+        $page=$page."<br />";
+        
+        $page = $page."<b>年份：</b>".$jsonobj ->{'year'}."<br />";
+        
+        //以下三项豆瓣吹的，没接口
+        /*$page = $page."<b>上映/首播时间：</b>";
+        foreach ($jsonobj ->{'pubdates'} as $jsonpubdates)
+        {$page = $page.$jsonpubdates."&nbsp;/&nbsp;";}
+        $page=$page."<br />";
+        
+        $page = $page."（大陆）上映/首播时间：</b>";
+        foreach ($jsonobj ->{'mainland_pubdate'} as $jsonmainland)
+        {$page = $page.$jsonmainland."&nbsp;/&nbsp;";}
+        $page=$page."<br />";
+        
+        $page = $page."电影/电视剧时长：</b>";
+        foreach ($jsonobj ->{'durations'} as $jsondurations)
+        {$page = $page.$jsondurations."&nbsp;/&nbsp;";}
+        $page=$page."<br />";*/
+        $page = $page."<b>豆瓣链接：</b><a href=\"".$jsonobj ->{'alt'}."\">".$jsonobj ->{'alt'}."</a><br />";
+        $page = $page."<b>豆瓣评分：</b><font color=\"red\">最高:".$jsonobj_true[rating][max]."</font>&nbsp;&nbsp;<font color=\"purple\">平均:".$jsonobj_true[rating][average]."</font></font>&nbsp;&nbsp;最低:".$jsonobj_true[rating][min]."&nbsp;&nbsp;<font color=\"blue\">星级<img class=\"star\" src=\"pic/trans.gif\"/>：".$jsonobj_true[rating][stars]."</font><br />";
+        $page = $page."<b>简介：</b>".$jsonobj ->{'summary'}."<br />";
+        file_put_contents($this->cachepath.$imdb_id.".page",$page );
+        @ copy($jsonobj_true[images][medium],$this->imagepath.$imdb_id.".jpg");
+    }
+   
 
-	function __destruct() {
-		xml_parser_free($xmlparser);
-   	}
-	function prinfo(){
-		$page = "";
-		$page .= "资源名称：";
-		$page .= $this->dbinfo['name'];
-		$page .="（";
-		foreach($this->dbinfo['aka'] as $key => $value){
-			if($value == $this->dbinfo['aka'][0] && $key !=0)
-				;
-			else
-				if($key > 0)
-					$page .="，".$value;
-				else
-					$page .= $value;
-		}
-		$page .="）";
-		$page .="<br />";
-		$page .="主要演员：";
-		foreach($this->dbinfo['author'] as $key => $value){
-			if($key > 0)
-				$page .="，".$value;
-			else
-				$page .= $value;
-		}
-		$page .="<br />";
-		$page .="其他演员：";
-		foreach($this->dbinfo['cast'] as $key => $value){
-			if($key > 0)
-				$page .="，".$value;
-			else
-				$page .= $value;
-		}
-		$page .="<br />";
-		$page .="电影类型：";
-		foreach($this->dbinfo['movie_type'] as $key => $value){
-			if($key > 0)
-				$page .="，".$value;
-			else
-				$page .= $value;
-		}
-		$page .="<br />";
-		$page .="电影语言：";
-		foreach($this->dbinfo['language'] as $key => $value){
-			if($key > 0)
-				$page .="，".$value;
-			else
-				$page .= $value;
-		}
-		$page .="<br />";
-		$page .="产　　地：";
-		$page .=$this->dbinfo[country][0];
-		$page .="<br />";
-		$page .="导　　演：";
-		$page .=$this->dbinfo[director][0];
-		$page .="<br />";
-		$page .="发布时间：";
-		$page .=$this->dbinfo[pubdate][0];
-		$page .="<br />";
-		$page .="电影时长：";
-		$page .=$this->dbinfo[movie_duration][0];
-		$page .="<br />";
-		$page .="豆瓣标签：";
-		foreach($this->dbinfo['tag'] as $key => $value){
-			if($key > 0)
-				$page .="，".$value;
-			else
-				$page .=$value;
-		}
-		$page .="<br />";
-		$page .="豆瓣评分：";
-		$page .=$this->dbinfo[rating];
-		$page .="<br />";
-		$page .= "豆瓣链接：";
-		$page .= "<a href=\"".$this->dbinfo[link][alternate]."\" target=\"_blank\">".$this->dbinfo[link][alternate]."</a>";
-		$page .="<br />";
-		$page .="简介：";
-		$page .=$this->dbinfo[summary];
-		return $page;
-	}
-	function init(){
-		foreach($this->dbarray as $db){
-			switch($db["tag"]){
-				case "DB:TAG":
-					$this->dbinfo["tag"][] = $db["attributes"]["NAME"];
-					break;
-				case "DB:ATTRIBUTE":
-					$this->dbinfo[$db["attributes"]["NAME"]][] = $db["value"];
-					break;
-				case "LINK":
-					$this->dbinfo["link"][$db["attributes"]["REL"]] = $db["attributes"]["HREF"];
-					break;
-				case "TITLE":
-					$this->dbinfo["name"] = $db["value"];
-					break;
-				case "NAME":
-					$this->dbinfo["author"][] = $db["value"];
-					break;
-				case "SUMMARY":
-					$this->dbinfo["summary"] = $db["value"];
-					break;
-				case "GD:RATING":
-					$this->dbinfo["rating"] = $db["attributes"]["AVERAGE"];
-					break;
-				default:
-					break;
-			}
-		}
-	}
-	function setid($imdb_id = 0,$type = "imdb"){
-		if($type == "imdb")
-			$this->siteurl = "http://api.douban.com/movie/subject/imdb/tt";
-		else if($type == "douban")
-			$this->siteurl = "http://api.douban.com/movie/subject/";
-
-		$xmlparser = xml_parser_create();
-		if(file_exists($this->cachepath.$imdb_id.".xml")){
-			$this->doubanxml = file_get_contents($this->cachepath.$imdb_id.".xml");
-		}else{
-			$this->doubanxml = file_get_contents($this->siteurl.$imdb_id."?apikey=".$this->apikey);
-			if(!xml_parse($xmlparser,$this->doubanxml))
-				return;
-			file_put_contents($this->cachepath.$imdb_id.".xml",$this->doubanxml);
-		}
-		xml_parse_into_struct($xmlparser,$this->doubanxml,$this->dbarray);
-		$this->init();
-		file_put_contents($this->cachepath.$imdb_id.".page",$this->prinfo());
-		@ copy($this->dbinfo[link][image],$this->imagepath.$imdb_id.".jpg");
-	}
+   
 }
 ?>

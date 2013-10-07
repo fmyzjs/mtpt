@@ -3,7 +3,7 @@ require "include/bittorrent.php";
 dbconn();
 loggedinorreturn();
 require_once(get_langfile_path());
-if (get_user_class() < UC_ADMINISTRATOR)
+if (get_user_class() < UC_MODERATOR)
 stderr("Error", "Access denied.");
 if ($_POST['delsubmit'] != "")
 {

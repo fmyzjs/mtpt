@@ -4,13 +4,6 @@ require "./memcache.php";
 dbconn();
 require_once(get_langfile_path());
 loggedinorreturn();
-if($memcache){
-	if($memcache->get('deleterun')!='1'){
-		mysql_query("DELETE FROM sitelog WHERE datediff(DATE(now()),DATE(added)) > 30"); //自动删除30天前的日志
-		$memcache->set('deleterun','1',false,3600) or die ("");
-		//print("自动删除了30天前的日志");
-	}
-}
 
 $action = isset($_POST['action']) ? htmlspecialchars($_POST['action']) : (isset($_GET['action']) ? htmlspecialchars($_GET['action']) : '');
 $allowed_actions = array("userlog","dailylog","chronicle","funbox","news","poll");
@@ -354,10 +347,12 @@ else {
 			while ($arr = mysql_fetch_assoc($res))
 			{
 				$color = "";
-				if (strpos($arr['txt'],'was uploaded by')) $color = "green";
-				if (strpos($arr['txt'],'was deleted by')) $color = "red";
-				if (strpos($arr['txt'],'was added to the Request section')) $color = "purple";
-				if (strpos($arr['txt'],'was edited by')) $color = "blue";
+				if (strpos($arr['txt'],'移入')) $color = "purple";
+				if (strpos($arr['txt'],'移出')) $color = "green";
+				if (strpos($arr['txt'],'发布')) $color = "green";
+				if (strpos($arr['txt'],'上传')) $color = "green";
+				if (strpos($arr['txt'],'删除')) $color = "red";
+				if (strpos($arr['txt'],'编辑')) $color = "blue";
 				if (strpos($arr['txt'],'settings updated by')) $color = "darkred";
 				print("<tr><td class=\"rowfollow nowrap\" align=center>".gettime($arr['added'],true,false)."</td><td class=rowfollow align=left><font color='".$color."'>".htmlspecialchars($arr['txt'])."</font></td></tr>\n");
 			}

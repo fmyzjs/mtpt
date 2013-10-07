@@ -187,6 +187,26 @@ function prolinkclicktable($res, $frame_caption)
 	end_table();
 	end_frame();
 }
+//连续登陆排行
+function logintable($res, $frame_caption)
+{
+	global $lang_topten;
+	begin_frame($frame_caption, true);
+	begin_table();
+
+	print("<tr><td class=\"colhead\">排名</td><td class=\"colhead\">".$lang_topten['col_username']."</td><td class=\"colhead\">连续登陆天数</td></tr>");
+
+	$n = 1;
+	while ($arr = mysql_fetch_assoc($res))
+	{
+		//die();
+		print("<tr><td class=\"rowfollow\" align=\"center\">$n</td><td class=\"rowfollow\" align=\"left\">" . get_username($arr["id"]) . "</td><td class=\"rowfollow\" align=\"right\">" . number_format($arr["salarynum"]) . "</td></tr>\n");
+		$n++;
+	}
+
+	end_table();
+	end_frame();
+}
 
 function charityTable($res, $frame_caption)
 {
@@ -470,7 +490,7 @@ if (!$limit || $limit > 250)
 $limit = 10;
 
 $cachename = "topten_type_".$type."_limit_".$limit."_subtype_".$subtype;
-$cachetime = 60 * 60; // 60 minutes
+$cachetime = 60 * 60 ; // 60 minutes
 // START CACHE
 $Cache->new_page($cachename, $cachetime, true);
 if (!$Cache->get_page())
@@ -480,9 +500,15 @@ $Cache->add_whole_row();
 /////////////////////////////////////////////////////////
 
 if ($type == 1)
-{
-	$mainquery = "SELECT id as userid, username, added, uploaded, downloaded, uploaded / (UNIX_TIMESTAMP(NOW()) - UNIX_TIMESTAMP(added)) AS upspeed, downloaded / (UNIX_TIMESTAMP(NOW()) - UNIX_TIMESTAMP(added)) AS downspeed FROM users WHERE enabled = 'yes'";
+{	
+	if ($limit == 10 || $subtype == "login")
+	{
+		$r = sql_query("SELECT * FROM users ORDER BY salarynum DESC LIMIT $limit") or sqlerr();
+		logintable($r, $lang_topten['text_top']."$limit 连续登陆排行". ($limit == 10 ? " <font class=\"small\"> - [<a class=\"altlink\" href=\"topten.php?type=$type&amp;lim=100&amp;subtype=login\">".$lang_topten['text_one_hundred']."</a>] - [<a class=\"altlink\" href=\"topten.php?type=$type&amp;lim=250&amp;subtype=login\">".$lang_topten['text_top_250']."</a>]</font>" : ""));
+	
+	}
 
+	$mainquery = "SELECT id as userid, username, added, uploaded, downloaded, uploaded / (UNIX_TIMESTAMP(NOW()) - UNIX_TIMESTAMP(added)) AS upspeed, downloaded / (UNIX_TIMESTAMP(NOW()) - UNIX_TIMESTAMP(added)) AS downspeed FROM users WHERE enabled = 'yes'";
 
 	if ($limit == 10 || $subtype == "ul")
 	{
@@ -544,6 +570,7 @@ if ($type == 1)
 }
 elseif ($type == 2)
 {
+
 	if ($limit == 10 || $subtype == "act")
 	{
 		$r = sql_query("SELECT t.*, (t.size * t.times_completed + SUM(p.downloaded)) AS data FROM torrents AS t LEFT JOIN peers AS p ON t.id = p.torrent WHERE p.seeder = 'no' GROUP BY t.id ORDER BY seeders + leechers DESC, seeders DESC, added ASC LIMIT $limit") or sqlerr();
@@ -670,13 +697,13 @@ if ($prolinkpoint_bonus){
 		prolinkclicktable($r, $lang_topten['text_top']."$limit ".$lang_topten['text_most_clicks'] . ($limit == 10 ? " <font class=\"small\"> - [<a class=\"altlink\" href=\"topten.php?type=$type&amp;lim=100&amp;subtype=pl\">".$lang_topten['text_one_hundred']."</a>] - [<a class=\"altlink\" href=\"topten.php?type=$type&amp;lim=250&amp;subtype=pl\">".$lang_topten['text_top_250']."</a>]</font>" : ""));
 	}
 }
-
+		
 	if ($limit == 10 || $subtype == "charity")
 	{
 		$r = sql_query("SELECT * FROM users ORDER BY charity DESC LIMIT $limit") or sqlerr();
 		charityTable($r, $lang_topten['text_top']."$limit ".$lang_topten['text_charity_giver'] . ($limit == 10 ? " <font class=\"small\"> - [<a class=\"altlink\" href=\"topten.php?type=$type&amp;lim=100&amp;subtype=charity\">".$lang_topten['text_one_hundred']."</a>] - [<a class=\"altlink\" href=\"topten.php?type=$type&amp;lim=250&amp;subtype=charity\">".$lang_topten['text_top_250']."</a>]</font>" : ""));
 	}
-
+	
 if ($enabledonation == 'yes'){
 	if ($limit == 10 || $subtype == "do_usd")
 	{

@@ -20,7 +20,9 @@ stdhead($lang_invite['head_invites']);
 print("<table width=700 class=main border=0 cellspacing=0 cellpadding=0><tr><td class=embedded>");
 
 print("<h1 align=center><a href=\"invite.php?id=".$id."\">".$user['username'].$lang_invite['text_invite_system']."</a></h1>");
+print("<h2 align=center><form method=post action=invite.php?id=".htmlspecialchars($id)."&type=new><input type=submit ".($CURUSER[invites] <= 0 ? "disabled " : "")." value='".$lang_invite['sumbit_invite_someone']."'></form>"."</h2>");
 	$sent = htmlspecialchars($_GET['sent']);
+
 	if ($sent == 1){
 		$msg = $lang_invite['text_invite_code_sent'];
 		print("<p align=center><font color=red>".$msg."</font></p>");

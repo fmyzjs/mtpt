@@ -14,7 +14,22 @@ function dropmenu(obj){   //错误已修复
 		showopen = 1;
 	}
 }
-
+function quick_reply_to(userid)
+{
+	var ttt = parent.document.getElementById("replaytext");
+	ttt.value =  userid + "  " + ttt.value;
+	if(document.selection)
+	{
+		range.moveStart('character', ttt.value.length);
+		range.moveEnd('character', ttt.value.length);
+		range.select();
+	}
+	else
+	{
+		ttt.setSelectionRange(ttt.value.length,ttt.value.length);
+		ttt.focus();
+	}
+}
 function confirm_delete(id, note, addon)
 {
    if(confirm(note))
@@ -80,6 +95,33 @@ document.getElementById("nothanks").innerHTML = "";
 document.getElementById("addcuruser").innerHTML = document.getElementById("curuser").innerHTML;
 }
 
+// modified by SamuraiMe,2013.05.16
+function thanksBonus(torrentid, bonus)
+{
+	//先行用js统计麦粒总数
+	if ($("#bonus_sum").length>0) {
+		var currentBonusSum = new Number($("#bonus_sum").text());
+		$("#bonus_sum").text(currentBonusSum+bonus);
+	} else {
+		$("td").has("#nothanks").prev().append("</br>总计<span id=\"bonus_sum\">"+bonus+"</span>麦粒");
+	}
+
+	$.post("mybonus.php?action=exchange", {
+		torrent_id : torrentid,
+		bonusgift : bonus,
+		option : 7,
+		username : $("#owner_name").val(),
+		where : "[url=details.php?id="+ torrentid + "]" + $("#top").text() + "[/url]"
+	},function(){
+		$("#donate, .saythanks").remove();
+	});
+
+	document.getElementById("thanksbutton").innerHTML = document.getElementById("thanksadded").innerHTML;
+	document.getElementById("nothanks").innerHTML = "";
+	document.getElementById("addcuruser").innerHTML = document.getElementById("curuser").innerHTML;
+	$("#addcuruser span").after("("+bonus+")");
+}
+
 // preview.js
 
 function preview(obj) {
@@ -97,6 +139,26 @@ function unpreview(obj){
 	document.getElementById("editorouter").style.display = 'block';
 	document.getElementById("unpreviewbutton").style.display = 'none';
 	document.getElementById("previewbutton").style.display = 'block';
+}
+
+//preview.torrent
+function preview_torrent()
+{
+	var poststr = encodeURIComponent( document.getElementById('descr').value );
+	var result=ajax.posts('preview.php','body=' + poststr);
+	var textareaTable = $('#descr').parents('td.rowfollow');
+	textareaTable.after('<td id="pre_div" class="rowfollow">' + result + '</td>');
+	$('#preDIv').hide();
+	$('#pre_div>table').css('border','none');
+	textareaTable.hide();
+	$('#EditDIv').show();
+}
+function edit_torrent()
+{
+	$('#EditDIv').hide();
+	$('#pre_div').remove();
+	$('#descr').parents('td.rowfollow').show();
+	$('#preDIv').show();
 }
 
 // java_klappe.js

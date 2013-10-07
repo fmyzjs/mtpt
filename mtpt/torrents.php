@@ -1,6 +1,7 @@
 <?php
 require_once("include/bittorrent.php");
 dbconn(true);
+require_once(get_langfile_path("edit.php"));
 require_once(get_langfile_path("torrents.php"));
 loggedinorreturn();
 parked();
@@ -74,7 +75,7 @@ if ($_GET['sort'] && $_GET['type']) {
 
 } else {
 
-	$orderby = "ORDER BY pos_state DESC, torrents.id DESC";
+	$orderby = "ORDER BY pos_state DESC, torrents.added DESC";
 	$pagerlink = "";
 
 }
@@ -137,7 +138,7 @@ elseif ($inclbookmarked == 2)		//not bookmarked
 // ----------------- end bookmarked ---------------------//
 
 if (!isset($CURUSER) || get_user_class() < $seebanned_class)
-	$wherea[] = "banned != 'yes'";
+	$wherea[] = "( ( banned != 'yes' ) OR ( banned = 'yes' AND owner = '".$CURUSER["id"]."' ) )";
 // ----------------- start include dead ---------------------//
 if (isset($_GET["incldead"]))
 	$include_dead = 0 + $_GET["incldead"];
@@ -189,7 +190,7 @@ elseif ($CURUSER['notifs']){
 		$special_state = 5;
 	elseif (strpos($CURUSER['notifs'], "[spstate=6]") !== false)
 		$special_state = 6;
-	elseif (strpos($CURUSER['notifs'], "[spstate=6]") !== false)
+	elseif (strpos($CURUSER['notifs'], "[spstate=7]") !== false)
 		$special_state = 7;
 }
 else $special_state = 0;
@@ -293,8 +294,8 @@ elseif ($special_state == 7)	//30% down
 }
 
 $category_get = 0 + $_GET["cat"];
+$source_get = 0 + $_GET["source"];
 if ($showsubcat){
-if ($showsource) $source_get = 0 + $_GET["source"];
 if ($showmedium) $medium_get = 0 + $_GET["medium"];
 if ($showcodec) $codec_get = 0 + $_GET["codec"];
 if ($showstandard) $standard_get = 0 + $_GET["standard"];
@@ -687,17 +688,26 @@ if (isset($searchstr))
 		case 0:	// AND, OR
 		case 1	:
 			{
-				$searchstr = str_replace(".", " ", $searchstr);
+				if ($search_area != 4)$searchstr = str_replace(".", " ", $searchstr);
 				$searchstr_exploded = explode(" ", $searchstr);
 				$searchstr_exploded_count= 0;
 				foreach ($searchstr_exploded as $searchstr_element)
 				{
-					$searchstr_element = trim($searchstr_element);	// furthur trim to ensure that multi space seperated words still work
-					$searchstr_exploded_count++;
-					if ($searchstr_exploded_count > 10)	// maximum 10 keywords
+					$searchstr_element = trim($searchstr_element);	// furthur trim to ensure that multi space seperated words still work			
+					if(!$searchstr_element)
+					continue;
+					if($searchstr_exploded_count >= 10)	// 每次最多查询10个关键字
 					break;
-					$like_expression_array[] = " LIKE '%" . $searchstr_element. "%'";
+					$searchstr_exploded_count++;
+					if ($search_area == 4) {
+					$searchstr_element = (int)parse_imdb_id($searchstr_element);
+					$like_expression_array[] = " = " . ($searchstr_element?$searchstr_element:"'-1'");
+					}
+					else
+					$like_expression_array[] = ( substr($searchstr_element,0,1)=='!'?" NOT":"")." LIKE '%" .( substr($searchstr_element,0,1)=='!'?substr($searchstr_element ,1,strlen($searchstr_element)):$searchstr_element). "%'";
+
 				}
+				if(!$like_expression_array)$like_expression_array[] = " LIKE '%'";
 				break;
 			}
 		case 2	:	// exact
@@ -776,7 +786,8 @@ if (isset($searchstr))
 	$addparam .= "search_mode=".$search_mode."&";
 }
 
-$where = implode(" AND ", $wherea);
+//$where = implode(" AND ", $wherea);
+if($wherea)$where ="( ". implode(" ) AND ( ", $wherea)." )";
 
 if ($wherecatin)
 $where .= ($where ? " AND " : "") . "category IN(" . $wherecatin . ")";
@@ -848,6 +859,7 @@ if ($count)
 	//stderr("addparam",$addparam);
 	//echo $addparam;
 	list($pagertop, $pagerbottom, $limit) = pager($torrentsperpage, $count, "?" . $addparam);
+$where = $where ? "$where AND torrents.status = 'normal'" : "WHERE torrents.status = 'normal'";
 if ($allsec == 1 || $enablespecial != 'yes'){
 	$query = "SELECT torrents.id, torrents.sp_state, torrents.promotion_time_type, torrents.promotion_until, torrents.banned, torrents.picktype, torrents.pos_state, torrents.category, torrents.source, torrents.medium, torrents.codec, torrents.standard, torrents.processing, torrents.team, torrents.audiocodec, torrents.leechers, torrents.seeders, torrents.name, torrents.small_descr, torrents.times_completed, torrents.size, torrents.added, torrents.comments,torrents.anonymous,torrents.owner,torrents.url,torrents.cache_stamp,torrents.endfree,torrents.endsticky FROM torrents ".($search_area == 3 || $column == "owner" ? "LEFT JOIN users ON torrents.owner = users.id " : "")." $where $orderby $limit";
 }
@@ -883,12 +895,17 @@ if ($allsec != 1 || $enablespecial != 'yes'){ //do not print searchbox if showin
 							global $catpadding,$catsperrow,$lang_torrents,$CURUSER,$CURLANGDIR,$catimgurl;
 
 							print("<tr><td class=\"embedded\" colspan=\"".$catsperrow."\" align=\"left\"><b>".$name."</b></td></tr><tr>");
+							if ($_GET['cat']+0)
+								echo "<input type=\"hidden\" id=\"cat\" name=\"cat\" value=\"$_GET[cat]\" />";
+								if ($_GET['source']+0)
+								echo "<input type=\"hidden\" id=\"source\" name=\"source\" value=\"$_GET[source]\" />";
 							$i = 0;
 							foreach($listarray as $list){
 								if ($i && $i % $catsperrow == 0){
 									print("</tr><tr>");
 								}
 								print("<td align=\"left\" class=\"bottom\" style=\"padding-bottom: 4px; padding-left: ".$catpadding."px;\">".($showimg ? return_category_image($list[id], "?") : "<a title=\"" .$list[name] . "\" href=\"?".$cbname."=".$list[id]."\">".$list[name]."</a>")."</td>\n");
+								
 								//print("<td align=\"left\" class=\"bottom\" style=\"padding-bottom: 4px; padding-left: ".$catpadding."px;\"><input type=\"checkbox\" id=\"".$cbname.$list[id]."\" name=\"".$cbname.$list[id]."\"" . (in_array($list[id],$wherelistina) ? " checked=\"checked\"" : "") . " value=\"1\" />".($showimg ? return_category_image($list[id], "?") : "<a title=\"" .$list[name] . "\" href=\"?".$cbname."=".$list[id]."\">".$list[name]."</a>")."</td>\n");
 								$i++;
 							}
@@ -1097,9 +1114,12 @@ elseif($inclbookmarked == 2)
 {
 	print("<h1 align=\"center\">" . get_username($CURUSER['id']) . $lang_torrents['text_s_not_bookmarked_torrent'] . "</h1>");
 }
-
+?>
+<p align="center"> <a href="?spstate=2" target="_self" title="查看免费种子" style="color: rgb(0, 0, 0);"><font class="free"><b>免费</b></font></a> | <a href="?spstate=3" target="_self" title="查看两倍上传量种子" style="color: rgb(0, 0, 0);"><font class="twoup"><b>2x上传</b></font></a> | <a href="?spstate=4" target="_self" title="查看免费且两倍上传种子"><font class="twoupfree"><b>免费&amp;2x上传</b></font></a> | <a href="?spstate=5" target="_self" title="查看50%下载种子"><font class="halfdown"><b>50%下载</b></font></a> | <a href="?spstate=6" target="_self" title="查看50%下载且两倍上传种子"><font class="twouphalfdown"><b>50%下载&amp;2x上传</b></font></a> | <a href="?spstate=7" target="_self" title="查看30%下载种子"><font class="thirtypercent"><b>30%下载</b></font></a></p>
+<?php
 if ($count) {
 	print($pagertop);
+	print("<form action=\"delete.php?recycle_mode=recycle\" method=\"post\">");
 	if ($sectiontype == $browsecatmode)
 		torrenttable($res, "torrents");
 	elseif ($sectiontype == $specialcatmode) 
@@ -1122,4 +1142,39 @@ if ($CURUSER){
 	else	$USERUPDATESET[] = "last_music = ".TIMENOW;
 }
 print("</td></tr></table>");
+
+print("<div id=\"delete_form\" style=\"display:none\">");
+print("<table border=\"1\" cellspacing=\"0\" cellpadding=\"5\">\n");
+print("<tr><td class=\"colhead\" align=\"left\" style='padding-bottom: 3px' colspan=\"2\">".$lang_edit['text_delete_torrent']."</td></tr>");
+tr("<input name=\"reasontype\" type=\"radio\" value=\"1\" />&nbsp;".$lang_edit['radio_dead'], $lang_edit['text_dead_note'], 1);
+tr("<input name=\"reasontype\" type=\"radio\" value=\"2\" />&nbsp;".$lang_edit['radio_dupe'], "<input type=\"text\" style=\"width: 200px\" name=\"reason[]\" />", 1);
+tr("<input name=\"reasontype\" type=\"radio\" value=\"3\" />&nbsp;".$lang_edit['radio_nuked'], "<input type=\"text\" style=\"width: 200px\" name=\"reason[]\" />", 1);
+tr("<input name=\"reasontype\" type=\"radio\" value=\"4\" />&nbsp;".$lang_edit['radio_rules'], "<input type=\"text\" style=\"width: 200px\" name=\"reason[]\" />".$lang_edit['text_req'], 1);
+tr("<input name=\"reasontype\" type=\"radio\" value=\"5\" checked=\"checked\" />&nbsp;".$lang_edit['radio_other'], "<input type=\"text\" style=\"width: 200px\" name=\"reason[]\" />".$lang_edit['text_req'], 1);
+print("<tr><td class=\"toolbox\" colspan=\"2\" align=\"center\"><input type=\"submit\" style='height: 25px' value=\"移入回收站\" /></td></tr>");
+?>
+</table>
+</div>
+</form>
+<script type="text/javascript">
+$("#delete").click(function (){
+	$(this).attr("disabled", "disabled");
+	$("#delete_form").slideDown();
+});
+
+function checkAll()
+{
+	$(".checkbox").each(function() {
+		this.checked = true;
+	});
+}
+
+function reverseCheck()
+{
+	$(".checkbox").each(function() {
+		this.checked = !this.checked;
+	});
+}
+</script>
+<?php
 stdfoot();

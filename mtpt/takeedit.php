@@ -16,16 +16,16 @@ if (!mkglobal("id:name:descr:type")){
 
 $id = 0 + $id;
 if (!$id)
-	die();
+	die("没有这个id的种子");
 $sourceid = (int)$_POST['source_sel'];
 if ($sourceid == 0)
 bark($lang_takeedit['std_missing_lid']);
 
-$res = sql_query("SELECT category, owner, filename, save_as, anonymous, picktype, picktime, added FROM torrents WHERE id = ".mysql_real_escape_string($id));
+$res = sql_query("SELECT status, category, owner, filename, save_as, anonymous, picktype, picktime, sp_state, pos_state, added FROM torrents WHERE id = ".mysql_real_escape_string($id)) or sqlerr(__FILE__,__LINE__);
 $row = mysql_fetch_array($res);
 $torrentAddedTimeString = $row['added'];
 if (!$row)
-	die();
+	die("没有这个id的种子");
 
 if ($CURUSER["id"] != $row["owner"] && get_user_class() < $torrentmanage_class)
 	bark($lang_takeedit['std_not_owner']);
@@ -38,7 +38,7 @@ $updateset = array();
 //$shortfname = $matches[1];
 //$dname = $row["save_as"];
 
-$url = parse_imdb_id($_POST['url']);
+$url = parse_imdb_id($_POST['imdburl']);
 $dburl = parse_douban_id($_POST['dburl']);
 
 if ($enablenfo_main=='yes'){
@@ -87,32 +87,58 @@ $updateset[] = "processing = " . sqlesc(0 + $_POST["processing_sel"]);
 $updateset[] = "team = " . sqlesc(0 + $_POST["team_sel"]);
 $updateset[] = "audiocodec = " . sqlesc(0 + $_POST["audiocodec_sel"]);
 
+$pick_info = "";
+
+
+
 if (get_user_class() >= $torrentmanage_class) {
-	if ($_POST["banned"]) {
+	//这就是编辑并发布的功能...
+	//added by SamuraiMe,2013.06.12
+	if ($_REQUEST["release"] == "yes") {
+		$updateset[] = "banned = 'no'";
+		$updateset[] = "status = 'normal'";
+		$updateset[] = "visible= 'yes'";
+		$updateset[] = "added = ".sqlesc(date("Y-m-d H:i:s"));
+		$edited = 2;
+	} else	if ($_POST["banned"]) {
 		$updateset[] = "banned = 'yes'";
 		$_POST["visible"] = 0;
+		$pick_info .= "，设置为禁止。";
+		$notshout =1;
 	}
 	else
 		$updateset[] = "banned = 'no'";
 }
 $updateset[] = "visible = '" . ($_POST["visible"] ? "yes" : "no") . "'";
-if(get_user_class()>=$torrentonpromotion_class)
+//设置促销
+$place_info = "";
+if(get_user_class()>=$torrentonpromotion_class && $row['sp_state'] != $_POST['sel_spstate'])
 {
-	if(!isset($_POST["sel_spstate"]) || $_POST["sel_spstate"] == 1)
+	if(!isset($_POST["sel_spstate"]) ){
+		$updateset[] = "sp_state = 1";}
+	if($_POST["sel_spstate"] == 1){
 		$updateset[] = "sp_state = 1";
-	elseif((0 + $_POST["sel_spstate"]) == 2)
+		$place_info .= "取消促销。";$notshout =1;}
+	elseif((0 + $_POST["sel_spstate"]) == 2){
 		$updateset[] = "sp_state = 2";
-	elseif((0 + $_POST["sel_spstate"]) == 3)
+		$place_info .= "设置为免费";}
+	elseif((0 + $_POST["sel_spstate"]) == 3){
 		$updateset[] = "sp_state = 3";
-	elseif((0 + $_POST["sel_spstate"]) == 4)
+		$place_info .= "设置为2X";}
+	elseif((0 + $_POST["sel_spstate"]) == 4){
 		$updateset[] = "sp_state = 4";
-	elseif((0 + $_POST["sel_spstate"]) == 5)
+		$place_info .= "设置为2X免费";}
+	elseif((0 + $_POST["sel_spstate"]) == 5){
 		$updateset[] = "sp_state = 5";
-	elseif((0 + $_POST["sel_spstate"]) == 6)
+		$place_info .= "设置为50%";}
+	elseif((0 + $_POST["sel_spstate"]) == 6){
 		$updateset[] = "sp_state = 6";
-	elseif((0 + $_POST["sel_spstate"]) == 7)
+		$place_info .= "设置为2X50%";}
+	elseif((0 + $_POST["sel_spstate"]) == 7){
 		$updateset[] = "sp_state = 7";
-	//设置免费时长
+		$place_info .= "设置为30%";}
+}
+//设置免费时长
 	if(isset($_POST['freetime']) && (0 + $_POST['freetime']) < 0)
 	{
 		$updateset[] = "endfree = '0000-00-00'";
@@ -120,17 +146,40 @@ if(get_user_class()>=$torrentonpromotion_class)
 		$freetime = 0 + $_POST['freetime'];
 		$freetimeh = 0 + $_POST['freetimeh'];
 		$updateset[] = "endfree = '".date("Y-m-d H:i:s",time() + 86400 * $freetime + 3600 * $freetimeh)."'";
+		$place_info .= "， 至".date("Y-m-d H:i:s",time() + 86400 * $freetime + 3600 * $freetimeh)."。";
 	}
+	
+//设置置顶
+if(get_user_class()>=$torrentsticky_class)
+{	
+	if((0 + $_POST["sel_posstate"]) == 0 && $row['pos_state'] != 'normal'){
+		$updateset[] = "pos_state = 'normal'";
+		$place_info .= "取消置顶";
+		$notshout =1;}
+	elseif((0 + $_POST["sel_posstate"]) == 1 && $row['pos_state'] != 'sticky'){
+		$updateset[] = "pos_state = 'sticky'";
+		$place_info .= "设置为置顶";	
+}
+}
+	
 	//设置置顶时长
-	if(isset($_POST['stickytime']) && (0 + $_POST['stickytime']) < 0)
+	if(!isset($_POST['stickytime'])&&get_user_class()>=$torrentsticky_class&&(0 + $_POST["sel_posstate"]) == 1 && $row['pos_state'] != 'sticky')
+	{
+	$place_info .= "，没有填写置顶时间23333。";
+	}
+	elseif(isset($_POST['stickytime']) && (0 + $_POST['stickytime']) < 0)
 	{
 		$updateset[] = "endsticky = '0000-00-00'";
-	}elseif(isset($_POST['stickytime']) && $_POST['stickytime'] <> ""){
+		$place_info .= " 至 天荒地老";
+
+	}
+	elseif(isset($_POST['stickytime']) && $_POST['stickytime'] <> ""){
 		$stickytime = 0 + $_POST['stickytime'];
 		$stickytimeh = 0 + $_POST['stickytimeh'];
 		$updateset[] = "endsticky = '".date("Y-m-d H:i:s",time() + 86400 * $stickytime + 3600 * $stickytimeh)."'";
+		$place_info .= "， 至".date("Y-m-d H:i:s",time() + 86400 * $stickytime + 3600 * $stickytimeh)."。";
 	}
-	
+
 	//promotion expiration type
 	if(!isset($_POST["promotion_time_type"]) || $_POST["promotion_time_type"] < 0) {
 		$updateset[] = "promotion_time_type = 0";
@@ -147,65 +196,64 @@ if(get_user_class()>=$torrentonpromotion_class)
 			$updateset[] = "promotion_until = '0000-00-00 00:00:00'";
 		}
 	}
-}
-if(get_user_class()>=$torrentsticky_class)
-{
-	if((0 + $_POST["sel_posstate"]) == 0)
-		$updateset[] = "pos_state = 'normal'";
-	elseif((0 + $_POST["sel_posstate"]) == 1)
-		$updateset[] = "pos_state = 'sticky'";
-}
 
-$pick_info = "";
-if(get_user_class()>=$torrentmanage_class && $CURUSER['picker'] == 'yes')
+if((get_user_class()>=$torrentmanage_class && $CURUSER['picker'] == 'yes')||get_user_class()>=15)
 {
-	if((0 + $_POST["sel_recmovie"]) == 0)
+	if((0 + $_POST["sel_recmovie"]) == 0 && $row["picktype"] != 'normal')
 	{
-		if($row["picktype"] != 'normal')
-			$pick_info = ", recomendation canceled!";
+		$pick_info = ", 取消推荐。";
 		$updateset[] = "picktype = 'normal'";
 		$updateset[] = "picktime = '0000-00-00 00:00:00'";
+		$notshout =1;
 	}
-	elseif((0 + $_POST["sel_recmovie"]) == 1)
+	elseif((0 + $_POST["sel_recmovie"]) == 1 && $row["picktype"] != 'hot')
 	{
-		if($row["picktype"] != 'hot')
-			$pick_info = ", recommend as hot movie";
+		$pick_info = ", 推荐为  热门。";
 		$updateset[] = "picktype = 'hot'";
 		$updateset[] = "picktime = ". sqlesc(date("Y-m-d H:i:s"));
 	}
-	elseif((0 + $_POST["sel_recmovie"]) == 2)
+	elseif((0 + $_POST["sel_recmovie"]) == 2 && $row["picktype"] != 'classic')
 	{
-		if($row["picktype"] != 'classic')
-			$pick_info = ", recommend as classic movie";
+		$pick_info = ", 推荐为  经典。";
 		$updateset[] = "picktype = 'classic'";
 		$updateset[] = "picktime = ". sqlesc(date("Y-m-d H:i:s"));
 	}
-	elseif((0 + $_POST["sel_recmovie"]) == 3)
+	elseif((0 + $_POST["sel_recmovie"]) == 3 && $row["picktype"] != 'recommended')
 	{
-		if($row["picktype"] != 'recommended')
-			$pick_info = ", recommend as recommended movie";
+		$pick_info = ", 推荐为  推荐。";
 		$updateset[] = "picktype = 'recommended'";
 		$updateset[] = "picktime = ". sqlesc(date("Y-m-d H:i:s"));
 	}
 }
 sql_query("UPDATE torrents SET " . join(",", $updateset) . " WHERE id = $id") or sqlerr(__FILE__, __LINE__);
 
-if($CURUSER["id"] == $row["owner"])
+$beforeStatus = getTorrentStatus($row['status']);
+if ($_REQUEST["release"] == "yes") 
+{
+	write_log("种子：管理员 $CURUSER[username] 编辑并发布了 $beforeStatus 种子 $id ($name) " . $pick_info . $place_info);
+	sendMessage(0,$row['owner'],"你的$beforeStatus 种子被管理员编辑了","管理员[url=userdetails.php?id=$CURUSER[id]] $CURUSER[username] [/url] 编辑并发布了 $beforeStatus 种子 [url=details.php?id=$id] ($name)[/url]" . $pick_info . $place_info."");
+} 
+else if($CURUSER["id"] == $row["owner"]) 
 {
 	if ($row["anonymous"]=='yes')
 	{
-		write_log("Torrent $id ($name) was edited by Anonymous" . $pick_info . $place_info);
+		write_log("种子：发布者 匿名用户 编辑了 $beforeStatus 种子 $id ($name) " . $pick_info . $place_info);
 	}
 	else
 	{
-		write_log("Torrent $id ($name) was edited by $CURUSER[username]" . $pick_info . $place_info);
+		write_log("种子：发布者 $CURUSER[username] 编辑了 $beforeStatus 种子 $id ($name) " . $pick_info . $place_info);
 	}
 }
 else
 {
-	write_log("Torrent $id ($name) was edited by $CURUSER[username], Mod Edit" . $pick_info . $place_info);
+	write_log("种子：管理员 $CURUSER[username] 编辑了 $beforeStatus 种子 $id ($name) " . $pick_info . $place_info);
+	sendMessage(0,$row['owner'],"你发布的$beforeStatus 种子被管理员编辑了","管理员[url=userdetails.php?id=$CURUSER[id]] $CURUSER[username] [/url] 编辑了种子 [url=details.php?id=$id] ($name)[/url]" . $pick_info . $place_info."");
 }
-$returl = "details.php?id=$id&edited=1";
+$shoutbox = $pick_info . $place_info;
+if ($shoutbox && !$notshout)
+sendshoutbox("管理员将 [url=details.php?id=$id] $name [/url]" . $shoutbox." ~快去看看吧看看吧o(￣︶￣)o");
+$edited = $edited ? 2 : 1;
+$returl = "details.php?id=$id&edited=$edited";
 if (isset($_POST["returnto"]))
 	$returl = $_POST["returnto"];
 header("Refresh: 0; url=$returl");

@@ -324,7 +324,7 @@ elseif ($action == 'submit')
 					$content = "<span style=\"font-size: ".htmlspecialchars($_POST['ad']['text']['size'])."\">".$content."</span>";
 				else
 					$content = "<span style=\"font-size: 30pt\">".$content."</span>";
-				$code = "<a href=\"adredir.php?id=".$adid."&amp;url=".rawurlencode(htmlspecialchars($_POST['ad']['text']['link']))."\" target=\"_blank\">".$content."</a>";
+				$code = "<a href=\"adredir.php?id=".$adid."&amp;url=".rawurlencode(htmlspecialchars($_POST['ad']['text']['link']))."\" target=\"_blank\" class=\"faqlink\">".$content."</a>";
 				break;
 			case 'image':
 				if (!$_POST['ad']['image']['url'] || !$_POST['ad']['image']['link'])
@@ -339,7 +339,7 @@ elseif ($action == 'submit')
 					$imgadd .= " height=\"".$_POST['ad']['image']['height']."\"";
 				if ($_POST['ad']['image']['title'])
 					$imgadd .= " title=\"".$_POST['ad']['image']['title']."\"";
-				$code = "<a href=\"adredir.php?id=".$adid."&amp;url=".rawurlencode(htmlspecialchars($_POST['ad']['image']['link']))."\" target=\"_blank\"><img border=\"0\" src=\"".htmlspecialchars($_POST['ad']['image']['url'])."\"".$imgadd." alt=\"ad\" /></a>";
+				$code = "<a href=\"adredir.php?id=".$adid."&amp;url=".rawurlencode(htmlspecialchars($_POST['ad']['image']['link']))."\" target=\"_blank\ class=\"faqlink\"><img border=\"0\" src=\"".htmlspecialchars($_POST['ad']['image']['url'])."\"".$imgadd." alt=\"ad\" /></a>";
 				break;
 			case 'flash':
 				$_POST['ad']['flash']['width'] = 0+$_POST['ad']['flash']['width'];

@@ -109,6 +109,36 @@ print("<p><table class=main border=0 cellspacing=0 cellpadding=0>".
 "<tr><td class=embedded><h1 style='margin:0px'> " . $lang_friends['text_personallist'] . " ".get_username($user[id])."</h1></td></tr></table></p>\n");
 
 //Start: Friends
+
+$res = sql_query("SELECT blockid as id FROM blocks WHERE userid=$userid ORDER BY id") or sqlerr(__FILE__, __LINE__);
+if(mysql_num_rows($res) == 0)
+$blocks = $lang_friends['text_blocklist_empty'];
+else
+{
+	$i = 0;
+	$blocks = "<table width=100% cellspacing=0 cellpadding=0>";
+	while ($block = mysql_fetch_array($res))
+	{
+		if ($i % 6 == 0)
+		$blocks .= "<tr>";
+		$blocks .= "<td style='border: none; padding: 4px; spacing: 0px;'>[<font class=small><a href=friends.php?id=$userid&action=delete&type=block&targetid=" .
+		$block['id'] . ">D</a></font>] " . get_username($block["id"]) . "</td>";
+		if ($i % 6 == 5)
+		$blocks .= "</tr>";
+		$i++;
+	}
+	$blocks .= "</table>\n";
+}
+print("<br /><br />");
+print("<table class=main width=737 border=0 cellspacing=0 cellpadding=5><tr><td class=embedded>");
+print("<h2 align=left><a name=\"blocks\">".$lang_friends['text_blocked_users']."</a></h2></td></tr>");
+print("<tr class=tableb><td style='padding: 10px;'>");
+print($blocks);
+print("</td></tr></table>\n");
+
+
+if (get_user_class() >= $viewuserlist_class)
+	print("<p><a href=users.php><b>".$lang_friends['text_find_user']."</b></a></p>");
 print("<table class=main width=737 border=0 cellspacing=0 cellpadding=0><tr><td class=embedded>");
 
 print("<br />");
@@ -322,35 +352,7 @@ print("</td></tr></table></table><br />\n");
 
 
 
-
-$res = sql_query("SELECT blockid as id FROM blocks WHERE userid=$userid ORDER BY id") or sqlerr(__FILE__, __LINE__);
-if(mysql_num_rows($res) == 0)
-$blocks = $lang_friends['text_blocklist_empty'];
-else
-{
-	$i = 0;
-	$blocks = "<table width=100% cellspacing=0 cellpadding=0>";
-	while ($block = mysql_fetch_array($res))
-	{
-		if ($i % 6 == 0)
-		$blocks .= "<tr>";
-		$blocks .= "<td style='border: none; padding: 4px; spacing: 0px;'>[<font class=small><a href=friends.php?id=$userid&action=delete&type=block&targetid=" .
-		$block['id'] . ">D</a></font>] " . get_username($block["id"]) . "</td>";
-		if ($i % 6 == 5)
-		$blocks .= "</tr>";
-		$i++;
-	}
-	$blocks .= "</table>\n";
-}
-print("<br /><br />");
-print("<table class=main width=737 border=0 cellspacing=0 cellpadding=5><tr><td class=embedded>");
-print("<h2 align=left><a name=\"blocks\">".$lang_friends['text_blocked_users']."</a></h2></td></tr>");
-print("<tr class=tableb><td style='padding: 10px;'>");
-print($blocks);
 print("</td></tr></table>\n");
 
-print("</td></tr></table>\n");
-if (get_user_class() >= $viewuserlist_class)
-	print("<p><a href=users.php><b>".$lang_friends['text_find_user']."</b></a></p>");
 stdfoot();
 ?>

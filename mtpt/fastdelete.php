@@ -11,7 +11,7 @@ function bark($msg) {
   stdfoot();
   exit;
 }
-
+echo  "<script type='text/javascript'> alert('由于不能填写删种原因，暂时关闭此功能。完善之后再开放');history.go(-1) </script>";die;
 if (!mkglobal("id"))
     bark($lang_fastdelete['std_missing_form_data']);
 

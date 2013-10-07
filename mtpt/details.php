@@ -12,14 +12,13 @@ if (!isset($_GET["id"]) || !$_GET["id"])
 	stderr("错误的参数");
 $id = 0 + $_GET["id"];
 
-$res = sql_query("SELECT torrents.cache_stamp, torrents.sp_state, torrents.url, torrents.dburl, torrents.small_descr, torrents.seeders, torrents.banned, torrents.leechers, torrents.info_hash, torrents.filename, nfo, LENGTH(torrents.nfo) AS nfosz, torrents.last_action, torrents.name, torrents.owner, torrents.save_as, torrents.descr, torrents.visible, torrents.size, torrents.added, torrents.views, torrents.hits, torrents.times_completed, torrents.id, torrents.type, torrents.numfiles, torrents.anonymous, categories.name AS cat_name, sources.name AS source_name, media.name AS medium_name, codecs.name AS codec_name, standards.name AS standard_name, processings.name AS processing_name, teams.name AS team_name, audiocodecs.name AS audiocodec_name FROM torrents LEFT JOIN categories ON torrents.category = categories.id LEFT JOIN sources ON torrents.source = sources.id LEFT JOIN media ON torrents.medium = media.id LEFT JOIN codecs ON torrents.codec = codecs.id LEFT JOIN standards ON torrents.standard = standards.id LEFT JOIN processings ON torrents.processing = processings.id LEFT JOIN teams ON torrents.team = teams.id LEFT JOIN audiocodecs ON torrents.audiocodec = audiocodecs.id WHERE torrents.id = $id LIMIT 1")
+$res = sql_query("SELECT torrents.status AS status, torrents.cache_stamp, torrents.sp_state, torrents.url, torrents.dburl, torrents.small_descr, torrents.seeders, torrents.banned, torrents.leechers, torrents.info_hash, torrents.filename, nfo, LENGTH(torrents.nfo) AS nfosz, torrents.last_action, torrents.name, torrents.owner, torrents.save_as, torrents.descr, torrents.visible, torrents.size, torrents.added, torrents.views, torrents.hits, torrents.times_completed, torrents.id, torrents.type, torrents.numfiles, torrents.anonymous, categories.name AS cat_name, sources.name AS source_name, media.name AS medium_name, codecs.name AS codec_name, standards.name AS standard_name, processings.name AS processing_name, teams.name AS team_name, audiocodecs.name AS audiocodec_name FROM torrents LEFT JOIN categories ON torrents.category = categories.id LEFT JOIN sources ON torrents.source = sources.id LEFT JOIN media ON torrents.medium = media.id LEFT JOIN codecs ON torrents.codec = codecs.id LEFT JOIN standards ON torrents.standard = standards.id LEFT JOIN processings ON torrents.processing = processings.id LEFT JOIN teams ON torrents.team = teams.id LEFT JOIN audiocodecs ON torrents.audiocodec = audiocodecs.id WHERE torrents.id = $id LIMIT 1")
 or sqlerr();
 $row = mysql_fetch_array($res);
-
 if (get_user_class() >= $torrentmanage_class || $CURUSER["id"] == $row["owner"])
 $owned = 1;
 else $owned = 0;
-
+$ownerid = $row['owner'];
 if (!$row)
 	stderr($lang_details['std_error'], $lang_details['std_no_torrent_id']);
 elseif ($row['banned'] == 'yes' && get_user_class() < $seebanned_class && !$owned)
@@ -40,7 +39,11 @@ else {
 			//header("refresh: 1; url=getimdb.php?id=$id&type=1");
 		}
 		elseif ($_GET["edited"]) {
-			print("<h1 align=\"center\">".$lang_details['text_successfully_edited']."</h1>");
+			if ($_GET["edited"] == 1) {
+				print("<h1 align=\"center\">".$lang_details['text_successfully_edited']."</h1>");
+			} elseif ($_GET["edited"] == 2) {
+				print("<h1 align=\"center\">编辑并发布成功!</h1>");
+			}
 			if (isset($_GET["returnto"]))
 				print("<p><b>".$lang_details['text_go_back'] . "<a href=\"".htmlspecialchars($_GET["returnto"])."\">" . $lang_details['text_whence_you_came']."</a></b></p>");
 		}
@@ -78,7 +81,7 @@ else {
 			print("<a class=\"index\" href=\"download.php?id=$id\">" . htmlspecialchars($torrentnameprefix ."." .$row["save_as"]) . ".torrent</a>&nbsp;&nbsp;&nbsp;".$lang_details['row_upped_by']."&nbsp;".$uprow.$uploadtime);
 			print("</td></tr>");
 			print("<tr><td class=\"rowhead\" width=\"13%\">".$lang_details['row_download_method']."</td><td class=\"rowfollow\" width=\"87%\" align=\"left\">");
-			print($lang_details['row_mouseclick']."<a class=\"index\" href=\"uTorrent221.zip\">"."μTorrent"."</a>".$lang_details['row_openfile']);
+			print($lang_details['row_mouseclick']."<a class=\"index\" href=\"/uTorrent/uTorrent2.2.zip\">"."μTorrent"."</a>".$lang_details['row_openfile']);
 			print("</td></tr>");
 		}
 		else
@@ -109,9 +112,10 @@ else {
 			$download = "<a title=\"".$lang_details['title_download_torrent']."\" href=\"download.php?id=".$id."\"><img class=\"dt_download\" src=\"pic/trans.gif\" alt=\"download\" />&nbsp;<b><font class=\"small\">".$lang_details['text_download_torrent'].$bonusnotic."</font></b></a>&nbsp;|&nbsp;";
 		else $download = "";
 
-		tr($lang_details['row_action'], $download. ($owned == 1 ? "<$editlink><img class=\"dt_edit\" src=\"pic/trans.gif\" alt=\"edit\" />&nbsp;<b><font class=\"small\">".$lang_details['text_edit_torrent'] . "</font></b></a>&nbsp;|&nbsp;" : "").  (get_user_class() >= $askreseed_class && $row[seeders] == 0 ? "<a title=\"".$lang_details['title_ask_for_reseed']."\" href=\"takereseed.php?reseedid=$id\"><img class=\"dt_reseed\" src=\"pic/trans.gif\" alt=\"reseed\">&nbsp;<b><font class=\"small\">".$lang_details['text_ask_for_reseed'] ."</font></b></a>&nbsp;|&nbsp;" : "") . "<a title=\"".$lang_details['title_report_torrent']."\" href=\"report.php?torrent=$id\"><img class=\"dt_report\" src=\"pic/trans.gif\" alt=\"report\" />&nbsp;<b><font class=\"small\">".$lang_details['text_report_torrent']."</font></b></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a id=\"bookmark0\" href=\"javascript: bookmark(".$row['id'].",0);\">".get_torrent_bookmark_state($CURUSER['id'], $row['id'], false)."<b><font class=\"small\">".$lang_details['bookmark']."</font></b></a>", 1);
+		$release = ($row["status"] == "candidate" && get_user_class() >= $torrentmanage_class) ? "<a href=\"delete.php?id=$id&recycle_mode=release\"><b><font class=\"small\">发布</font></b></a>&nbsp;|&nbsp;" : "";
+		tr($lang_details['row_action'], $download. ($owned == 1 ? "<$editlink><img class=\"dt_edit\" src=\"pic/trans.gif\" alt=\"edit\" />&nbsp;<b><font class=\"small\">".$lang_details['text_edit_torrent'] . "</font></b></a>&nbsp;|&nbsp;" : ""). $release . (get_user_class() >= $askreseed_class && $row[seeders] == 0 ? "<a title=\"".$lang_details['title_ask_for_reseed']."\" href=\"takereseed.php?reseedid=$id\"><img class=\"dt_reseed\" src=\"pic/trans.gif\" alt=\"reseed\">&nbsp;<b><font class=\"small\">".$lang_details['text_ask_for_reseed'] ."</font></b></a>&nbsp;|&nbsp;" : "") . "<a title=\"引用发布\" href=\"upload.php?cite_torrent_id=$id\">&nbsp;<b><font class=\"small\">".引用发布."</font></b></a>&nbsp;&nbsp;|&nbsp;&nbsp;" . "<a title=\"".$lang_details['title_report_torrent']."\" href=\"report.php?torrent=$id\"><img class=\"dt_report\" src=\"pic/trans.gif\" alt=\"report\" />&nbsp;<b><font class=\"small\">".$lang_details['text_report_torrent']."</font></b></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a id=\"bookmark0\" href=\"javascript: bookmark(".$row['id'].",0);\">".get_torrent_bookmark_state($CURUSER['id'], $row['id'], false)."<b><font class=\"small\">".$lang_details['bookmark']."</font></b></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href=\"usebonus.php?id=$id#torrentid\"><b>购买促销</b></a>", 1);
 
-		tr($lang_details['row_share'], "<div id=\"ckepop\"><a class=\"jiathis_button_tools_1\"></a><a class=\"jiathis_button_tools_2\"></a><a class=\"jiathis_button_tools_3\"></a><a class=\"jiathis_button_tools_4\"></a><a href=\"http://www.jiathis.com/share\" class=\"jiathis jiathis_txt jiathis_separator jtico jtico_jiathis\" target=\"_blank\">更多</a><a class=\"jiathis_counter_style\"></a></div><script type=\"text/javascript\" >var jiathis_config={siteNum:12,sm:\"qzone,tsina,tqq,renren,t163,douban,baidu,tieba,xiaoyou,hi,mop,tianya\",summary:\"\",hideMore:true}</script><script type=\"text/javascript\" src=\"http://v2.jiathis.com/code/jia.js\" charset=\"utf-8\"></script>", 1);
+		//tr($lang_details['row_share'], "<div id=\"ckepop\"><a class=\"jiathis_button_tools_1\"></a><a class=\"jiathis_button_tools_2\"></a><a class=\"jiathis_button_tools_3\"></a><a class=\"jiathis_button_tools_4\"></a><a href=\"http://www.jiathis.com/share\" class=\"jiathis jiathis_txt jiathis_separator jtico jtico_jiathis\" target=\"_blank\">更多</a><a class=\"jiathis_counter_style\"></a></div><script type=\"text/javascript\" >var jiathis_config={siteNum:12,sm:\"qzone,tsina,tqq,renren,t163,douban,baidu,tieba,xiaoyou,hi,mop,tianya\",summary:\"\",hideMore:true}</script><script type=\"text/javascript\" src=\"http://v2.jiathis.com/code/jia.js\" charset=\"utf-8\"></script>", 1);
 
 		// ---------------- start subtitle block -------------------//
 		$r = sql_query("SELECT subs.*, language.flagpic, language.lang_name FROM subs LEFT JOIN language ON subs.lang_id=language.id WHERE torrent_id = " . sqlesc($row["id"]). " ORDER BY subs.lang_id ASC") or sqlerr(__FILE__, __LINE__);
@@ -394,9 +398,21 @@ else {
 		}
 	}
 
-		if ($imdb_id)
+	$douban_id = parse_douban_id($row["dburl"]);
+	if ($douban_id && $showextinfo['imdb'] == 'yes' && $CURUSER['showimdb'] != 'no')
+	{
+		$doubaninfo = "<p>豆瓣信息</p>";
+		if(file_exists("./imdb/images/".$douban_id.".jpg")){
+			$doubaninfo .= "<img src=\""."imdb/images/".$douban_id.".jpg"."\">";
+		}
+		//tr($doubaninfo, file_get_contents("./imdb/cache/".$douban_id.".page")."<a href=\"".htmlspecialchars("retriver.php?id=". $id ."&type=2&siteid=3")."\">更新</a>",1);
+		tr($doubaninfo, file_get_contents("./imdb/cache/".$douban_id.".page")."<a href=\"".htmlspecialchars("retriver.php?id=". $id ."&type=2&siteid=3")."\">更新</a>",1);
+	}
+
+		//通过IMDB和豆瓣id获取其他版本
+		if ($imdb_id || $douban_id)
 		{
-			$where_area = " url = " . sqlesc((int)$imdb_id) ." AND torrents.id != ".sqlesc($id);
+			$where_area = " ((url = " . sqlesc((int)$imdb_id) ." AND url != '') OR (dburl = ". sqlesc((int)$douban_id) ." AND dburl != '')) AND torrents.status ='normal' AND torrents.id != ".sqlesc($id);
 			$copies_res = sql_query("SELECT torrents.id, torrents.name, torrents.sp_state, torrents.size, torrents.added, torrents.seeders, torrents.leechers, categories.id AS catid, categories.name AS catname, categories.image AS catimage, sources.name AS source_name, media.name AS medium_name, codecs.name AS codec_name, standards.name AS standard_name, processings.name AS processing_name FROM torrents LEFT JOIN categories ON torrents.category=categories.id LEFT JOIN sources ON torrents.source = sources.id LEFT JOIN media ON torrents.medium = media.id  LEFT JOIN codecs ON torrents.codec = codecs.id LEFT JOIN standards ON torrents.standard = standards.id LEFT JOIN processings ON torrents.processing = processings.id WHERE " . $where_area . " ORDER BY torrents.id DESC") or sqlerr(__FILE__, __LINE__);
 
 			$copies_count = mysql_num_rows($copies_res);
@@ -440,15 +456,7 @@ else {
 				tr("<a href=\"javascript: klappe_news('othercopy')\"><span class=\"nowrap\"><img class=\"".($copies_count > 5 ? "plus" : "minus")."\" src=\"pic/trans.gif\" alt=\"Show/Hide\" id=\"picothercopy\" title=\"".$lang_detail['title_show_or_hide']."\" /> ".$lang_details['row_other_copies']."</span></a>", "<b>".$copies_count.$lang_details['text_other_copies']." </b><br /><div id='kothercopy' style=\"".($copies_count > 5 ? "display: none;" : "display: block;")."\">".$s."</div>",1);
 			}
 		}
-	$douban_id = parse_douban_id($row["dburl"]);
-	if ($douban_id && $showextinfo['imdb'] == 'yes' && $CURUSER['showimdb'] != 'no')
-	{
-		$doubaninfo = "<p>豆瓣信息</p>";
-		if(file_exists("./imdb/images/".$douban_id.".jpg")){
-			$doubaninfo .= "<img src=\""."imdb/images/".$douban_id.".jpg"."\">";
-		}
-		tr($doubaninfo, file_get_contents("./imdb/cache/".$douban_id.".page")."<a href=\"".htmlspecialchars("retriver.php?id=". $id ."&type=2&siteid=3")."\">更新</a>",1);
-	}
+
 
 		//if ($row["type"] == "multi")    //多文件时显示
 		if (1)
@@ -543,9 +551,12 @@ echo "</script>";
 				$thanks_userid = $rows_t["userid"];
 				if ($rows_t["userid"] == $CURUSER['id']) {
 					$thanks_said = 1;
-				} else {
-					$thanksby .= get_username($thanks_userid)." ";
 				}
+				//start modified by SamuraiMe,2013.05.18
+				$result = sql_query("SELECT bonus FROM thanks WHERE torrentid = " .sqlesc($torrentid). " AND userid = ".sqlesc($thanks_userid)." LIMIT 1");
+				$bonusRow = mysql_fetch_row($result) or die(mysql_error());
+				$userBonus = $bonusRow[0] ? "(".$bonusRow[0].")" : "";
+				$thanksby .= get_username($thanks_userid).$userBonus." ";
 			}
 		}
 		else $nothanks = $lang_details['text_no_thanks_added'];
@@ -553,14 +564,29 @@ echo "</script>";
 		if (!$thanks_said) {
 			$thanks_said = get_row_count("thanks", "WHERE torrentid=$torrentid AND userid=".sqlesc($CURUSER['id']));
 		}
+		$nameResult = sql_query("SELECT username FROM users WHERE id = '" . $ownerid . "'");
+		$nameRow = mysql_fetch_row($nameResult);
+		$nameSpan = "<input id=\"owner_name\" type=\"hidden\" value=\"". $nameRow[0]."\"/>";
+
 		if ($thanks_said == 0) {
 			$buttonvalue = " value=\"".$lang_details['submit_say_thanks']."\"";
+			$bonusNum = array("50", "100", "200", "500", "1000", "2000", "3000", "5000", "10000");
+			$donate = "";  
+			foreach ($bonusNum as $value) {
+				$donate .= '<input type="button" class="saythanks" value="+'.$value.'" onclick="thanksBonus('.$torrentid.','.$value.');"/>';
+			}
 		} else {
 			$buttonvalue = " value=\"".$lang_details['submit_you_said_thanks']."\" disabled=\"disabled\"";
-			$thanksby = get_username($CURUSER['id'])." ".$thanksby;
+			//$thanksby = get_username($CURUSER['id'])." ".$thanksby;
+			$donate = "";
 		}
-		$thanksbutton = "<input class=\"btn\" type=\"button\" id=\"saythanks\"  onclick=\"saythanks(".$torrentid.");\" ".$buttonvalue." />";
-		tr($lang_details['row_thanks_by'],"<span id=\"thanksadded\" style=\"display: none;\"><input class=\"btn\" type=\"button\" value=\"".$lang_details['text_thanks_added']."\" disabled=\"disabled\" /></span><span id=\"curuser\" style=\"display: none;\">".get_username($CURUSER['id'])." </span><span id=\"thanksbutton\">".$thanksbutton."</span>&nbsp;&nbsp;<span id=\"nothanks\">".$nothanks."</span><span id=\"addcuruser\"></span>".$thanksby.($thanks_all < $thanksCount ? $lang_details['text_and_more'].$thanksCount.$lang_details['text_users_in_total'] : ""),1);
+		$thanksbutton = "<input class=\"btn\" type=\"button\" id=\"saythanks\" onclick=\"saythanks(".$torrentid.");\" ".$buttonvalue." />";
+		$thanks = $thanksbutton . $donate .$nameSpan;
+		$result = sql_query("SELECT SUM(bonus) AS sum FROM thanks WHERE torrentid = '$torrentid'");
+		$sumRow = mysql_fetch_row($result);
+		$sumBonusText = $sumRow[0] ? "</br>总计<span id=\"bonus_sum\">".$sumRow[0]."</span>麦粒" : "";
+		tr($lang_details['row_thanks_by'].$sumBonusText,"<span id=\"thanksadded\" style=\"display: none;\"><input class=\"btn\" type=\"button\" value=\"".$lang_details['text_thanks_added']."\" disabled=\"disabled\" /></span><span id=\"curuser\" style=\"display: none;\">".get_username($CURUSER['id'])." </span><span id=\"thanksbutton\">".$thanks."</span>&nbsp;&nbsp;<span id=\"nothanks\">".$nothanks."</span><span id=\"addcuruser\"></span>".$thanksby.($thanks_all < $thanksCount ? $lang_details['text_and_more'].$thanksCount.$lang_details['text_users_in_total'] : ""),1);
+		//end modified by SamuraiMe,2013.05.16 
 		// ------------- end thanked-by block--------------//
 
 		print("</table>\n");

@@ -154,7 +154,11 @@ else {
 		tr($lang_edit['row_pick'], $pickcontent, 1);
 	}
 
-	print("<tr><td class=\"toolbox\" colspan=\"2\" align=\"center\"><input id=\"qr\" type=\"submit\" value=\"".$lang_edit['submit_edit_it']."\" /> <input type=\"reset\" value=\"".$lang_edit['submit_revert_changes']."\" /></td></tr>\n");
+	print("<tr><td class=\"toolbox\" colspan=\"2\" align=\"center\">");
+	if ($row["status"] != "normal" && get_user_class() >= $torrentmanage_class) {
+		print("<input formaction=\"takeedit.php?release=yes\" type=\"submit\" value=\"编辑并发布\" />");
+	}
+	print("<input id=\"qr\" type=\"submit\" value=\"".$lang_edit['submit_edit_it']."\" /> <input type=\"reset\" value=\"".$lang_edit['submit_revert_changes']."\" /></td></tr>\n");
 	print("</table>\n");
 	print("</form>\n");
 	print("<br /><br />");
@@ -169,8 +173,12 @@ else {
 	tr("<input name=\"reasontype\" type=\"radio\" value=\"3\" />&nbsp;".$lang_edit['radio_nuked'], "<input type=\"text\" style=\"width: 200px\" name=\"reason[]\" />", 1);
 	tr("<input name=\"reasontype\" type=\"radio\" value=\"4\" />&nbsp;".$lang_edit['radio_rules'], "<input type=\"text\" style=\"width: 200px\" name=\"reason[]\" />".$lang_edit['text_req'], 1);
 	tr("<input name=\"reasontype\" type=\"radio\" value=\"5\" checked=\"checked\" />&nbsp;".$lang_edit['radio_other'], "<input type=\"text\" style=\"width: 200px\" name=\"reason[]\" />".$lang_edit['text_req'], 1);
-	print("<tr><td class=\"toolbox\" colspan=\"2\" align=\"center\"><input type=\"submit\" style='height: 25px' value=\"".$lang_edit['submit_delete_it']."\" /></td></tr>\n");
-	print("</table>");
+	print("<tr><td class=\"toolbox\" colspan=\"2\" align=\"center\">");
+	print("<input type=\"submit\" formaction=\"delete.php?recycle_mode=delete\" value=\"彻底删除\">");
+	if ($row["status"] == "normal" && $CURUSER['id'] != $row && $CURUSER['class'] >= UC_MODERATOR) {
+		echo " <input type=\"submit\" formaction=\"delete.php?recycle_mode=recycle\" value=\"移入回收站\">";
+	}
+	print("</td></tr>\n</table>");
 ?>
 
 <script type="text/javascript">
@@ -179,6 +187,7 @@ $(document).ready(function(){
 	secondtype(document.getElementById("oricat"));
 	$("#source_sel").val(oricat);
 });
+
 function uplist(name,list) {
         var childRet = document.getElementById(name);
         for (var i = childRet.childNodes.length-1; i >= 0; i--) { 
