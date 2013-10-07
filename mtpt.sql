@@ -10,10 +10,11 @@ Target Server Type    : MYSQL
 Target Server Version : 50045
 File Encoding         : 65001
 
-Date: 2013-03-24 22:59:27
+Date: 2013-10-04 01:15:23
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
 -- ----------------------------
 -- Table structure for `adclicks`
 -- ----------------------------
@@ -24,7 +25,7 @@ CREATE TABLE `adclicks` (
   `userid` int(11) unsigned default NULL,
   `added` datetime default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of adclicks
@@ -40,7 +41,7 @@ CREATE TABLE `adminpanel` (
   `url` varchar(255) NOT NULL default '',
   `info` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of adminpanel
@@ -74,11 +75,8 @@ CREATE TABLE `advertisements` (
   `starttime` datetime default NULL,
   `endtime` datetime default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of advertisements
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for `agent_allowed_exception`
@@ -126,7 +124,7 @@ CREATE TABLE `agent_allowed_family` (
 -- Records of agent_allowed_family
 -- ----------------------------
 INSERT INTO `agent_allowed_family` VALUES ('1', 'Azureus 2.5.0.4', 'Azureus 2.5.0.4', '/^-AZ2504-/', '0', 'dec', '-AZ2504-', '/^Azureus 2.5.0.4/', '0', 'dec', 'Azureus 2.5.0.4', 'no', 'yes', '', '0');
-INSERT INTO `agent_allowed_family` VALUES ('2', 'Ktorrent 4.0.x', 'Ktorrent 4.0.x', '/^-KT4([0-9])([0-9])([0-9])-/', '0', 'dec', '-KT4000-', '/^KTorrent\\/4\\.([0-9])\\.([0-9])/', '0', 'dec', 'KTorrent/4.0.0', 'no', 'yes', '', '2');
+INSERT INTO `agent_allowed_family` VALUES ('2', 'Ktorrent 4.0.x', 'Ktorrent 4.0.x', '/^-KT4([0-9])([0-9])([0-9])-/', '0', 'dec', '-KT4000-', '/^KTorrent\\/4\\.([0-9])\\.([0-9])/', '0', 'dec', 'KTorrent/4.0.0', 'no', 'yes', '', '0');
 INSERT INTO `agent_allowed_family` VALUES ('3', 'Bittorrent 6.x', 'Bittorrent 6.0.1', '/^M6-([0-9])-([0-9])--/', '2', 'dec', 'M6-0-1--', '/^BitTorrent\\/6([0-9])([0-9])([0-9])/', '3', 'dec', 'BitTorrent/6010', 'no', 'yes', '', '0');
 INSERT INTO `agent_allowed_family` VALUES ('4', 'Deluge 0.x', 'Deluge 0.5.8.9', '/^-DE0([0-9])([0-9])([0-9])-/', '3', 'dec', '-DE0589-', '/^Deluge 0\\.([0-9])\\.([0-9])\\.([0-9])/', '3', 'dec', 'Deluge 0.5.8.9', 'no', 'yes', '', '0');
 INSERT INTO `agent_allowed_family` VALUES ('5', 'Transmission1.x', 'Transmission 1.06 (build 5136)', '/^-TR1([0-9])([0-9])([0-9])-/', '3', 'dec', '-TR1060-', '/^Transmission\\/1\\.([0-9])([0-9])/', '3', 'dec', 'Transmission/1.06', 'no', 'yes', '', '0');
@@ -136,15 +134,15 @@ INSERT INTO `agent_allowed_family` VALUES ('8', 'Azureus 3.x', 'Azureus 3.0.5.0'
 INSERT INTO `agent_allowed_family` VALUES ('9', 'uTorrent 1.7.x', 'uTorrent 1.7.5', '/^-UT17([0-9])([0-9])-/', '2', 'dec', '-UT1750-', '/^uTorrent\\/17([0-9])([0-9])/', '2', 'dec', 'uTorrent/1750', 'no', 'yes', '', '0');
 INSERT INTO `agent_allowed_family` VALUES ('10', 'BitRocket 0.x', 'BitRocket 0.3.3(32)', '/^-BR0([0-9])([1-9][0-9]*)-/', '2', 'dec', '-BR0332-', '/^BitRocket\\/0\\.([0-9])\\.([0-9])\\(([1-9][0-9]*)\\) libtorrent\\/0\\.([1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)/', '6', 'dec', 'BitRocket/0.3.3(32) libtorrent/0.13.0.0', 'no', 'yes', '', '0');
 INSERT INTO `agent_allowed_family` VALUES ('11', 'MLDonkey 2.9.x', 'MLDonkey 2.9.2', '/^-ML2\\.9\\.([0-9])-/', '1', 'dec', '-ML2.9.2-', '/^MLDonkey\\/2\\.9\\.([0-9])/', '1', 'dec', 'MLDonkey/2.9.2', 'no', 'yes', '', '0');
-INSERT INTO `agent_allowed_family` VALUES ('12', 'uTorrent 1.8.x', 'uTorrent 1.8.0', '/^-UT18([0-9])([0-9])-/', '2', 'dec', '-UT1800-', '/^uTorrent\\/18([0-9])([0-9])/', '2', 'dec', 'uTorrent/1800', 'no', 'yes', '', '655');
-INSERT INTO `agent_allowed_family` VALUES ('13', 'Azureus 4.x', 'Vuze 4.0.0.2', '/^-AZ4([0-9])([0-9])([0-9])-/', '3', 'dec', '-AZ4002-', '/^Azureus 4\\.([0-9])\\.([0-9])\\.([0-9])/', '3', 'dec', 'Azureus 4.0.0.2', 'no', 'yes', '', '25');
+INSERT INTO `agent_allowed_family` VALUES ('12', 'uTorrent 1.8.x', 'uTorrent 1.8.0', '/^-UT18([0-9])([0-9])-/', '2', 'dec', '-UT1800-', '/^uTorrent\\/18([0-9])([0-9])/', '2', 'dec', 'uTorrent/1800', 'no', 'yes', '', '0');
+INSERT INTO `agent_allowed_family` VALUES ('13', 'Azureus 4.x', 'Vuze 4.0.0.2', '/^-AZ4([0-9])([0-9])([0-9])-/', '3', 'dec', '-AZ4002-', '/^Azureus 4\\.([0-9])\\.([0-9])\\.([0-9])/', '3', 'dec', 'Azureus 4.0.0.2', 'no', 'yes', '', '0');
 INSERT INTO `agent_allowed_family` VALUES ('14', 'SymTorrent', '', '', '0', 'dec', '', '/^SymTorrent/', '0', 'dec', 'SymTorrent', 'no', 'no', '', '0');
-INSERT INTO `agent_allowed_family` VALUES ('15', 'Deluge 1.x', 'Deluge 1.1.6', '/^-DE1([0-9])([0-9])([0-9])-/', '3', 'dec', '-DE1160-', '/^Deluge 1\\.([0-9])\\.([0-9])/', '2', 'dec', 'Deluge 1.1.6', 'no', 'yes', '', '4');
+INSERT INTO `agent_allowed_family` VALUES ('15', 'Deluge 1.x', 'Deluge 1.1.6', '/^-DE1([0-9])([0-9])([0-9])-/', '3', 'dec', '-DE1160-', '/^Deluge 1\\.([0-9])\\.([0-9])/', '2', 'dec', 'Deluge 1.1.6', 'no', 'yes', '', '0');
 INSERT INTO `agent_allowed_family` VALUES ('16', 'uTorrent 1.8xB', 'uTorrent 1.80 Beta (build 9137)', '/^-UT18([0-9])B-/', '1', 'dec', '-UT180B-', '/^uTorrent\\/18([0-9])B\\(([1-9][0-9]*)\\)/', '2', 'dec', 'uTorrent/180B(9137)', 'no', 'yes', '', '0');
-INSERT INTO `agent_allowed_family` VALUES ('17', 'uTorrent 2.x.x', 'uTorrent 2.0(build 17624)', '/^-UT2([0-9])([0-9])([0-9])-/', '3', 'dec', '-UT2000-', '/^uTorrent\\/2([0-9])([0-9])([0-9])/', '3', 'dec', 'uTorrent/2000', 'no', 'yes', '', '9628');
-INSERT INTO `agent_allowed_family` VALUES ('19', 'uTorrent 3.x', 'uTorrent 3.0', '/^-UT3([0-9])([0-9])([0-9])-/', '3', 'dec', '-UT3000-', '/^uTorrent\\/3([0-9])([0-9])([0-9])/', '3', 'dec', 'uTorrent/3000', 'no', 'yes', '', '6140');
-INSERT INTO `agent_allowed_family` VALUES ('18', 'uTorrent 3.x.xB', 'uTorrent 3.0 Beta', '/^-UT3([0-9])([0-9])B-/', '2', 'dec', '-UT300B-', '/^uTorrent\\/3([0-9])([0-9])B/', '2', 'dec', 'uTorrent/300B', 'no', 'yes', '', '791');
-INSERT INTO `agent_allowed_family` VALUES ('20', 'Transmission2.x', 'Transmission 2.00', '/^-TR2([0-9])([0-9])([0-9])-/', '3', 'dec', '-TR2000-', '/^Transmission\\/2\\.([0-9])([0-9])/', '3', 'dec', 'Transmission/2.00', 'no', 'yes', '', '15');
+INSERT INTO `agent_allowed_family` VALUES ('17', 'uTorrent 2.x.x', 'uTorrent 2.0(build 17624)', '/^-UT2([0-9])([0-9])([0-9])-/', '3', 'dec', '-UT2000-', '/^uTorrent\\/2([0-9])([0-9])([0-9])/', '3', 'dec', 'uTorrent/2000', 'no', 'yes', '', '1');
+INSERT INTO `agent_allowed_family` VALUES ('19', 'uTorrent 3.x', 'uTorrent 3.0', '/^-UT3([0-9])([0-9])([0-9])-/', '3', 'dec', '-UT3000-', '/^uTorrent\\/3([0-9])([0-9])([0-9])/', '3', 'dec', 'uTorrent/3000', 'no', 'yes', '', '0');
+INSERT INTO `agent_allowed_family` VALUES ('18', 'uTorrent 3.x.xB', 'uTorrent 3.0 Beta', '/^-UT3([0-9])([0-9])B-/', '2', 'dec', '-UT300B-', '/^uTorrent\\/3([0-9])([0-9])B/', '2', 'dec', 'uTorrent/300B', 'no', 'yes', '', '0');
+INSERT INTO `agent_allowed_family` VALUES ('20', 'Transmission2.x', 'Transmission 2.00', '/^-TR2([0-9])([0-9])([0-9])-/', '3', 'dec', '-TR2000-', '/^Transmission\\/2\\.([0-9])([0-9])/', '3', 'dec', 'Transmission/2.00', 'no', 'yes', '', '0');
 
 -- ----------------------------
 -- Table structure for `allowedemails`
@@ -156,10 +154,6 @@ CREATE TABLE `allowedemails` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of allowedemails
--- ----------------------------
-INSERT INTO `allowedemails` VALUES ('1', '');
 
 -- ----------------------------
 -- Table structure for `attachments`
@@ -183,11 +177,8 @@ CREATE TABLE `attachments` (
   KEY `pid` (`userid`,`id`),
   KEY `dateline` (`added`,`isimage`,`downloads`),
   KEY `dlkey` (`dlkey`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of attachments
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for `audiocodecs`
@@ -227,12 +218,11 @@ CREATE TABLE `avps` (
 -- ----------------------------
 -- Records of avps
 -- ----------------------------
-INSERT INTO `avps` VALUES ('lastcleantime', '', '0', '1364133416');
-INSERT INTO `avps` VALUES ('last24', '', '947', '1211708476');
-INSERT INTO `avps` VALUES ('lastcleantime2', '', '0', '1364133416');
-INSERT INTO `avps` VALUES ('lastcleantime3', '', '0', '1364131208');
-INSERT INTO `avps` VALUES ('lastcleantime4', '', '0', '1364121682');
-INSERT INTO `avps` VALUES ('lastcleantime5', '', '0', '1363576164');
+INSERT INTO `avps` VALUES ('lastcleantime', '', '0', '1380819357');
+INSERT INTO `avps` VALUES ('lastcleantime2', '', '0', '1380819937');
+INSERT INTO `avps` VALUES ('lastcleantime3', '', '0', '1380819937');
+INSERT INTO `avps` VALUES ('lastcleantime4', '', '0', '1380819937');
+INSERT INTO `avps` VALUES ('lastcleantime5', '', '0', '1380819937');
 
 -- ----------------------------
 -- Table structure for `bannedemails`
@@ -247,7 +237,6 @@ CREATE TABLE `bannedemails` (
 -- ----------------------------
 -- Records of bannedemails
 -- ----------------------------
-INSERT INTO `bannedemails` VALUES ('1', '@test.com');
 
 -- ----------------------------
 -- Table structure for `bans`
@@ -267,7 +256,6 @@ CREATE TABLE `bans` (
 -- ----------------------------
 -- Records of bans
 -- ----------------------------
-INSERT INTO `bans` VALUES ('2', '2011-01-19 15:08:18', '1', 'test', '167772161', '167772270');
 
 -- ----------------------------
 -- Table structure for `bitbucket`
@@ -280,7 +268,7 @@ CREATE TABLE `bitbucket` (
   `added` datetime NOT NULL default '0000-00-00 00:00:00',
   `public` enum('0','1') NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of bitbucket
@@ -296,10 +284,24 @@ CREATE TABLE `blocks` (
   `blockid` mediumint(8) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `userfriend` (`userid`,`blockid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of blocks
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `bonusapp`
+-- ----------------------------
+DROP TABLE IF EXISTS `bonusapp`;
+CREATE TABLE `bonusapp` (
+  `userid` int(10) NOT NULL,
+  `namecharge` int(10) NOT NULL,
+  PRIMARY KEY  (`userid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of bonusapp
 -- ----------------------------
 
 -- ----------------------------
@@ -312,7 +314,7 @@ CREATE TABLE `bookmarks` (
   `userid` mediumint(8) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `userid_torrentid` (`userid`,`torrentid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of bookmarks
@@ -331,7 +333,7 @@ CREATE TABLE `categories` (
   `sort_index` smallint(5) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `mode_sort` (`mode`,`sort_index`)
-) ENGINE=MyISAM AUTO_INCREMENT=425 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of categories
@@ -390,7 +392,7 @@ CREATE TABLE `cheaters` (
   `dealtwith` tinyint(1) NOT NULL default '0',
   `comment` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of cheaters
@@ -407,7 +409,7 @@ CREATE TABLE `chronicle` (
   `txt` text,
   PRIMARY KEY  (`id`),
   KEY `added` (`added`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of chronicle
@@ -453,7 +455,7 @@ CREATE TABLE `comments` (
   KEY `torrent_id` (`torrent`,`id`),
   KEY `offer_id` (`offer`,`id`),
   FULLTEXT KEY `text` (`text`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of comments
@@ -599,6 +601,25 @@ INSERT INTO `downloadspeed` VALUES ('14', '8Mbps');
 INSERT INTO `downloadspeed` VALUES ('16', '10Mbps');
 INSERT INTO `downloadspeed` VALUES ('17', '48Mbps');
 INSERT INTO `downloadspeed` VALUES ('18', '100Mbit');
+
+-- ----------------------------
+-- Table structure for `drawlottery`
+-- ----------------------------
+DROP TABLE IF EXISTS `drawlottery`;
+CREATE TABLE `drawlottery` (
+  `id` int(10) NOT NULL auto_increment,
+  `num1` int(10) NOT NULL default '0',
+  `num2` int(10) NOT NULL default '0',
+  `num3` int(10) NOT NULL default '0',
+  `num4` int(10) NOT NULL default '0',
+  `num5` int(10) NOT NULL default '0',
+  `drawtime` date NOT NULL default '0000-00-00',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of drawlottery
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `faq`
@@ -825,7 +846,7 @@ CREATE TABLE `files` (
   `size` bigint(20) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `torrent` (`torrent`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of files
@@ -841,7 +862,7 @@ CREATE TABLE `forummods` (
   `userid` mediumint(8) unsigned NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `forumid` (`forumid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of forummods
@@ -863,7 +884,7 @@ CREATE TABLE `forums` (
   `minclasscreate` tinyint(3) unsigned NOT NULL default '0',
   `forid` smallint(5) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of forums
@@ -879,7 +900,7 @@ CREATE TABLE `friends` (
   `friendid` mediumint(8) unsigned NOT NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `userfriend` (`userid`,`friendid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of friends
@@ -897,7 +918,7 @@ CREATE TABLE `fun` (
   `title` varchar(255) NOT NULL default '',
   `status` enum('normal','dull','notfunny','funny','veryfunny','banned') NOT NULL default 'normal',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of fun
@@ -948,32 +969,35 @@ CREATE TABLE `givebonus` (
   `bonus` decimal(10,1) unsigned NOT NULL,
   `type` int(1) unsigned NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of givebonus
 -- ----------------------------
-INSERT INTO `givebonus` VALUES ('7', '21047', '38', '1000.0', '3');
-INSERT INTO `givebonus` VALUES ('2', '8570', '11', '1000.0', '3');
-INSERT INTO `givebonus` VALUES ('3', '2260', '19', '1000.0', '3');
-INSERT INTO `givebonus` VALUES ('4', '211', '19', '1000.0', '3');
-INSERT INTO `givebonus` VALUES ('6', '8625', '11', '1000.0', '3');
-INSERT INTO `givebonus` VALUES ('16', '6765', '230', '1000.0', '3');
-INSERT INTO `givebonus` VALUES ('9', '10729', '47', '1000.0', '3');
-INSERT INTO `givebonus` VALUES ('10', '10676', '37', '5000.0', '3');
-INSERT INTO `givebonus` VALUES ('11', '27131', '47', '100.0', '3');
-INSERT INTO `givebonus` VALUES ('12', '11314', '65', '1000.0', '3');
-INSERT INTO `givebonus` VALUES ('19', '13172', '269', '2000.0', '3');
-INSERT INTO `givebonus` VALUES ('18', '20552', '256', '1000.0', '3');
-INSERT INTO `givebonus` VALUES ('17', '25070', '230', '1000.0', '3');
-INSERT INTO `givebonus` VALUES ('20', '24069', '270', '4000.0', '3');
-INSERT INTO `givebonus` VALUES ('26', '28709', '371', '1000.0', '3');
-INSERT INTO `givebonus` VALUES ('22', '25327', '291', '5000.0', '3');
-INSERT INTO `givebonus` VALUES ('23', '24867', '291', '5000.0', '3');
-INSERT INTO `givebonus` VALUES ('27', '6765', '398', '1000.0', '3');
-INSERT INTO `givebonus` VALUES ('25', '10571', '330', '1000.0', '3');
-INSERT INTO `givebonus` VALUES ('28', '13729', '375', '2000.0', '3');
-INSERT INTO `givebonus` VALUES ('29', '13729', '398', '3000.0', '3');
+
+-- ----------------------------
+-- Table structure for `invitebox`
+-- ----------------------------
+DROP TABLE IF EXISTS `invitebox`;
+CREATE TABLE `invitebox` (
+  `Id` int(11) NOT NULL auto_increment,
+  `username` varchar(20) NOT NULL default '',
+  `email` varchar(30) NOT NULL default '',
+  `school` varchar(30) default NULL,
+  `grade` varchar(20) default NULL,
+  `web` varchar(50) default NULL,
+  `disk` varchar(50) default NULL,
+  `pic` varchar(100) default NULL,
+  `self_introduction` varchar(255) default NULL,
+  `added` datetime default NULL,
+  `dealt_by` varchar(20) NOT NULL default 'no',
+  `ip` varchar(255) default NULL,
+  PRIMARY KEY  (`Id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of invitebox
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `invites`
@@ -987,7 +1011,7 @@ CREATE TABLE `invites` (
   `time_invited` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`),
   KEY `hash` (`hash`(3))
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of invites
@@ -1004,11 +1028,8 @@ CREATE TABLE `iplog` (
   `access` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`),
   KEY `userid` (`userid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of iplog
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for `isp`
@@ -1092,15 +1113,11 @@ CREATE TABLE `links` (
   `url` varchar(255) NOT NULL,
   `title` varchar(50) NOT NULL default '',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of links
 -- ----------------------------
-INSERT INTO `links` VALUES ('1', '西北农林科技大学', 'http://www.nwsuaf.edu.cn', '西北农林科技大学官网');
-INSERT INTO `links` VALUES ('2', '西农网教中心', 'http://nic.nwsuaf.edu.cn', '网络中心');
-INSERT INTO `links` VALUES ('10', '<b>麦田影视[IPv6]</b><br/>', 'http://video.nwsuaf6.edu.cn/', '麦田自己的在线视频');
-INSERT INTO `links` VALUES ('4', '西农开源社区', 'http://www.xnlinux.cn', '西农学生linux爱好者论坛');
 
 -- ----------------------------
 -- Table structure for `locations`
@@ -1138,10 +1155,36 @@ CREATE TABLE `loginattempts` (
   `attempts` smallint(5) unsigned NOT NULL default '0',
   `type` enum('login','recover') NOT NULL default 'login',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of loginattempts
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `lottery`
+-- ----------------------------
+DROP TABLE IF EXISTS `lottery`;
+CREATE TABLE `lottery` (
+  `id` int(10) NOT NULL auto_increment,
+  `ownerid` int(10) default NULL,
+  `selfkey` text character set utf8 NOT NULL,
+  `drawid` int(10) NOT NULL default '0',
+  `num1` int(10) NOT NULL default '0',
+  `num2` int(10) NOT NULL default '0',
+  `num3` int(10) NOT NULL default '0',
+  `num4` int(10) NOT NULL default '0',
+  `num5` int(10) NOT NULL default '0',
+  `shoptime` date NOT NULL default '0000-00-00',
+  `isencase` int(1) NOT NULL default '1',
+  `encasetime` date NOT NULL default '0000-00-00',
+  `multiple` int(10) NOT NULL default '1',
+  PRIMARY KEY  (`id`),
+  KEY `lotteryowner` (`ownerid`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 ROW_FORMAT=FIXED;
+
+-- ----------------------------
+-- Records of lottery
 -- ----------------------------
 
 -- ----------------------------
@@ -1158,16 +1201,16 @@ CREATE TABLE `media` (
 -- ----------------------------
 -- Records of media
 -- ----------------------------
-INSERT INTO `media` VALUES ('1', 'Blu-ray', '0');
-INSERT INTO `media` VALUES ('2', 'HD DVD', '1');
-INSERT INTO `media` VALUES ('4', 'MiniBD', '4');
-INSERT INTO `media` VALUES ('5', 'HDTV', '5');
-INSERT INTO `media` VALUES ('6', 'DVDR', '6');
-INSERT INTO `media` VALUES ('7', 'Encode', '3');
-INSERT INTO `media` VALUES ('3', 'Remux', '2');
-INSERT INTO `media` VALUES ('8', 'CD', '7');
-INSERT INTO `media` VALUES ('9', 'Track', '9');
-
+INSERT INTO `media` (`id`, `name`, `sort_index`) VALUES
+(1, 'Blu-ray', 0),
+(2, 'HD DVD', 1),
+(4, 'MiniBD', 4),
+(5, 'HDTV', 5),
+(6, 'DVDR', 6),
+(7, 'Encode', 3),
+(3, 'Remux', 2),
+(8, 'CD', 7),
+(9, 'Track', 9);
 -- ----------------------------
 -- Table structure for `messages`
 -- ----------------------------
@@ -1182,6 +1225,7 @@ CREATE TABLE `messages` (
   `unread` enum('yes','no') NOT NULL default 'yes',
   `location` smallint(6) NOT NULL default '1',
   `saved` enum('no','yes') NOT NULL default 'no',
+  `goto` tinyint(1) unsigned zerofill NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `receiver` (`receiver`),
   KEY `sender` (`sender`)
@@ -1234,7 +1278,6 @@ CREATE TABLE `news` (
 -- ----------------------------
 -- Records of news
 -- ----------------------------
-INSERT INTO `news` VALUES ('1', '35802', '2013-03-24 12:42:07', '此版本mtpt从麦田PT的站点上直接搂下来的，所以，在新版本出现之前尽量避免外传，以免给麦田的站点安全带来隐患。[em28]', '这是开篇!', 'no');
 
 -- ----------------------------
 -- Table structure for `offers`
@@ -1271,7 +1314,7 @@ CREATE TABLE `offervotes` (
   `vote` enum('yeah','against') NOT NULL default 'yeah',
   PRIMARY KEY  (`id`),
   KEY `userid` (`userid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of offervotes
@@ -1288,7 +1331,7 @@ CREATE TABLE `overforums` (
   `minclassview` tinyint(3) unsigned NOT NULL default '0',
   `sort` tinyint(3) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of overforums
@@ -1337,7 +1380,7 @@ CREATE TABLE `pmboxes` (
   `boxnumber` tinyint(3) unsigned NOT NULL default '2',
   `name` varchar(15) NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of pmboxes
@@ -1356,7 +1399,7 @@ CREATE TABLE `pollanswers` (
   KEY `pollid` (`pollid`),
   KEY `selection` (`selection`),
   KEY `userid` (`userid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of pollanswers
@@ -1391,7 +1434,7 @@ CREATE TABLE `polls` (
   `option18` varchar(40) NOT NULL default '',
   `option19` varchar(40) NOT NULL default '',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of polls
@@ -1416,7 +1459,7 @@ CREATE TABLE `posts` (
   KEY `topicid_id` (`topicid`,`id`),
   KEY `added` (`added`),
   FULLTEXT KEY `body` (`body`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of posts
@@ -1436,9 +1479,9 @@ CREATE TABLE `processings` (
 -- ----------------------------
 -- Records of processings
 -- ----------------------------
-INSERT INTO `processings` VALUES ('1', 'Raw', '0');
-INSERT INTO `processings` VALUES ('2', 'Encode', '0');
-
+INSERT INTO `processings` (`id`, `name`, `sort_index`) VALUES
+(1, 'Raw', 0),
+(2, 'Encode', 0);
 -- ----------------------------
 -- Table structure for `prolinkclicks`
 -- ----------------------------
@@ -1449,7 +1492,7 @@ CREATE TABLE `prolinkclicks` (
   `ip` varchar(64) NOT NULL default '',
   `added` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of prolinkclicks
@@ -1467,7 +1510,7 @@ CREATE TABLE `readposts` (
   PRIMARY KEY  (`id`),
   KEY `topicid` (`topicid`),
   KEY `userid` (`userid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of readposts
@@ -1502,8 +1545,9 @@ CREATE TABLE `reports` (
   `reason` varchar(255) NOT NULL default '',
   `dealtby` mediumint(8) unsigned NOT NULL default '0',
   `dealtwith` tinyint(1) NOT NULL default '0',
+  `reported` mediumint(11) unsigned NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of reports
@@ -1529,7 +1573,7 @@ CREATE TABLE `req` (
   `resetdate` datetime default NULL,
   PRIMARY KEY  (`id`),
   KEY `finish` (`finish`,`name`,`added`,`amount`,`introduce`(10))
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of req
@@ -1546,7 +1590,7 @@ CREATE TABLE `resreq` (
   `chosen` enum('yes','no') NOT NULL default 'no',
   PRIMARY KEY  (`id`),
   KEY `reqid` (`reqid`,`chosen`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of resreq
@@ -1608,170 +1652,246 @@ CREATE TABLE `schools` (
   `ip` varchar(14) NOT NULL,
   PRIMARY KEY  (`id`),
   FULLTEXT KEY `ip` (`ip`)
-) ENGINE=MyISAM AUTO_INCREMENT=160 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=236 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of schools
 -- ----------------------------
-INSERT INTO `schools` VALUES ('1', '北京化工大学', '2001:250:207');
-INSERT INTO `schools` VALUES ('2', '湖南大学', '2001:250:4402');
-INSERT INTO `schools` VALUES ('3', '中科院', '2001:cc0:2020');
-INSERT INTO `schools` VALUES ('4', '清华大学', '2001:DA8:0200');
-INSERT INTO `schools` VALUES ('5', '北京大学', '2001:DA8:0201');
-INSERT INTO `schools` VALUES ('6', '北京邮电大学', '2001:DA8:0202');
-INSERT INTO `schools` VALUES ('7', '北京航天航空大学', '2001:DA8:0203');
-INSERT INTO `schools` VALUES ('8', '北京理工大学', '2001:DA8:0204');
-INSERT INTO `schools` VALUES ('9', '北京交通大学', '2001:DA8:0205');
-INSERT INTO `schools` VALUES ('10', '北京城市学院', '2001:DA8:0206');
-INSERT INTO `schools` VALUES ('11', '北京师范大学', '2001:DA8:0207');
-INSERT INTO `schools` VALUES ('12', '北京科技大学', '2001:DA8:0208');
-INSERT INTO `schools` VALUES ('13', '首都经济贸易大学', '2001:DA8:0209');
-INSERT INTO `schools` VALUES ('14', '南方工业大学', '2001:DA8:020A');
-INSERT INTO `schools` VALUES ('15', '华北电力大学(北京)', '2001:DA8:020C');
-INSERT INTO `schools` VALUES ('16', '中国传媒大学', '2001:DA8:020E');
-INSERT INTO `schools` VALUES ('17', '北京外国语大学', '2001:DA8:020F');
-INSERT INTO `schools` VALUES ('18', '北京机械工业学院', '2001:DA8:0210');
-INSERT INTO `schools` VALUES ('19', '北京林业大学', '2001:DA8:0211');
-INSERT INTO `schools` VALUES ('20', '北京信息工程学院', '2001:DA8:0212');
+INSERT INTO `schools` VALUES ('1', '清华大学', '2001:DA8:0200');
+INSERT INTO `schools` VALUES ('2', '北京大学', '2001:DA8:0201');
+INSERT INTO `schools` VALUES ('3', '北京邮电大学', '2001:DA8:0202');
+INSERT INTO `schools` VALUES ('4', '北京航天航空大学', '2001:DA8:0203');
+INSERT INTO `schools` VALUES ('5', '北京理工大学', '2001:DA8:0204');
+INSERT INTO `schools` VALUES ('6', '北京交通大学', '2001:DA8:0205');
+INSERT INTO `schools` VALUES ('7', '北京城市学院', '2001:DA8:0206');
+INSERT INTO `schools` VALUES ('8', '北京师范大学', '2001:DA8:0207');
+INSERT INTO `schools` VALUES ('9', '北京科技大学', '2001:DA8:0208');
+INSERT INTO `schools` VALUES ('10', '首都经济贸易大学', '2001:DA8:0209');
+INSERT INTO `schools` VALUES ('11', '北方工业大学', '2001:DA8:020A');
+INSERT INTO `schools` VALUES ('12', '国家计算机网络应急技术处理协调中心', '2001:DA8:020B');
+INSERT INTO `schools` VALUES ('13', '华北电力大学(北京)', '2001:DA8:020C');
+INSERT INTO `schools` VALUES ('14', '赛尔网络有限公司IDC部门', '2001:DA8:020D');
+INSERT INTO `schools` VALUES ('15', '中国传媒大学', '2001:DA8:020E');
+INSERT INTO `schools` VALUES ('16', '北京外国语大学', '2001:DA8:020F');
+INSERT INTO `schools` VALUES ('17', '北京机械工业学院', '2001:DA8:0210');
+INSERT INTO `schools` VALUES ('18', '北京林业大学', '2001:DA8:0211');
+INSERT INTO `schools` VALUES ('19', '北京信息工程学院', '2001:DA8:0212');
+INSERT INTO `schools` VALUES ('20', '教育部科技发展中心', '2001:DA8:0213');
 INSERT INTO `schools` VALUES ('21', '中国地质大学(北京)', '2001:DA8:0214');
 INSERT INTO `schools` VALUES ('22', '北京邮电大学', '2001:DA8:0215');
 INSERT INTO `schools` VALUES ('23', '北京工业大学', '2001:DA8:0216');
-INSERT INTO `schools` VALUES ('24', '首都师范大学', '2001:DA8:0218');
-INSERT INTO `schools` VALUES ('25', '中央民族大学', '2001:DA8:0219');
-INSERT INTO `schools` VALUES ('26', '中国人民大学', '2001:DA8:021C');
-INSERT INTO `schools` VALUES ('27', '内蒙古大学', '2001:DA8:021D');
-INSERT INTO `schools` VALUES ('28', '太原理工大学', '2001:DA8:021E');
-INSERT INTO `schools` VALUES ('29', '中国矿业大学', '2001:DA8:0223');
-INSERT INTO `schools` VALUES ('30', '中国政法大学', '2001:DA8:0224');
-INSERT INTO `schools` VALUES ('31', '清华大学', '2001:DA8:0225');
-INSERT INTO `schools` VALUES ('32', '清华大学网络中心网管研讨', '2001:DA8:0226');
-INSERT INTO `schools` VALUES ('33', '中央音乐学院', '2001:DA8:022B');
-INSERT INTO `schools` VALUES ('34', '北京语言大学', '2001:DA8:022D');
-INSERT INTO `schools` VALUES ('35', '对外经济贸易大学', '2001:DA8:0230');
-INSERT INTO `schools` VALUES ('36', '西北大学', '2001:DA8:1002');
-INSERT INTO `schools` VALUES ('37', '南京师范大学', '2001:DA8:1003');
-INSERT INTO `schools` VALUES ('38', '河海大学', '2001:DA8:1004');
-INSERT INTO `schools` VALUES ('39', '南京农业大学', '2001:DA8:1005');
-INSERT INTO `schools` VALUES ('40', '南京航空航天大学', '2001:DA8:1006');
-INSERT INTO `schools` VALUES ('41', '南京大学', '2001:DA8:1007');
-INSERT INTO `schools` VALUES ('42', '江苏工业学院', '2001:DA8:1008');
-INSERT INTO `schools` VALUES ('43', '河海大学常州校区', '2001:DA8:1009');
-INSERT INTO `schools` VALUES ('44', '苏州大学', '2001:DA8:100A');
-INSERT INTO `schools` VALUES ('45', '中国矿业大学', '2001:DA8:100D');
-INSERT INTO `schools` VALUES ('46', '南京理工大学', '2001:DA8:100E');
-INSERT INTO `schools` VALUES ('47', '西北农林科技大学', '2001:250:1002');
-INSERT INTO `schools` VALUES ('48', '江南大学', '2001:DA8:1010');
-INSERT INTO `schools` VALUES ('49', '华南理工大学', '2001:DA8:2000');
-INSERT INTO `schools` VALUES ('50', '广州市教育局', '2001:DA8:2001');
-INSERT INTO `schools` VALUES ('51', '暨南大学', '2001:DA8:2002');
-INSERT INTO `schools` VALUES ('52', '华南师范大学', '2001:DA8:200B');
-INSERT INTO `schools` VALUES ('53', '华南农业大学', '2001:DA8:2004');
-INSERT INTO `schools` VALUES ('54', '华中科技大学', '2001:DA8:3000');
-INSERT INTO `schools` VALUES ('55', '华中师范大学', '2001:DA8:3001');
-INSERT INTO `schools` VALUES ('56', '华中农业大学', '2001:DA8:3002');
-INSERT INTO `schools` VALUES ('57', '华中科技大学同济医学院', '2001:DA8:3008');
-INSERT INTO `schools` VALUES ('58', '西安交通大学', '2001:DA8:4000');
-INSERT INTO `schools` VALUES ('59', '西安建筑科技大学', '2001:DA8:4003');
-INSERT INTO `schools` VALUES ('60', '郑州大学', '2001:DA8:5000');
-INSERT INTO `schools` VALUES ('61', '河南财经学院', '2001:DA8:5001');
-INSERT INTO `schools` VALUES ('62', '解放军信息工程大学', '2001:DA8:5002');
-INSERT INTO `schools` VALUES ('63', '河南省财经学校', '2001:DA8:5003');
-INSERT INTO `schools` VALUES ('64', '河南省教育科研网', '2001:DA8:5004');
-INSERT INTO `schools` VALUES ('65', '郑州大学西亚斯国际学院', '2001:DA8:5005');
-INSERT INTO `schools` VALUES ('66', '电子科技大学', '2001:DA8:6000');
-INSERT INTO `schools` VALUES ('67', '四川农业大学', '2001:DA8:6004');
-INSERT INTO `schools` VALUES ('68', '山东大学', '2001:DA8:7000');
-INSERT INTO `schools` VALUES ('69', '山东大学', '2001:DA8:7003');
-INSERT INTO `schools` VALUES ('70', '山东农业大学', '2001:DA8:7004');
-INSERT INTO `schools` VALUES ('71', '济南大学', '2001:DA8:7005');
-INSERT INTO `schools` VALUES ('72', '中国石油大学(华东)', '2001:DA8:7006');
-INSERT INTO `schools` VALUES ('73', '中国石油大学(华东)青岛校区', '2001:DA8:7007');
-INSERT INTO `schools` VALUES ('74', '山东理工大学', '2001:DA8:7008');
-INSERT INTO `schools` VALUES ('75', '烟台大学', '2001:DA8:7009');
-INSERT INTO `schools` VALUES ('76', '烟台师范学院', '2001:DA8:700A');
-INSERT INTO `schools` VALUES ('77', '山东省计算中心', '2001:DA8:700B');
-INSERT INTO `schools` VALUES ('78', '山东财政学院', '2001:DA8:700C');
-INSERT INTO `schools` VALUES ('79', '中国陆地大学', '2001:DA8:7013');
-INSERT INTO `schools` VALUES ('80', '上海交通大学', '2001:DA8:8000');
-INSERT INTO `schools` VALUES ('81', '复旦大学', '2001:DA8:8001');
-INSERT INTO `schools` VALUES ('82', '同济大学', '2001:DA8:8002');
-INSERT INTO `schools` VALUES ('83', '上海交通大学', '2001:DA8:8003');
-INSERT INTO `schools` VALUES ('84', '上海理工大学', '2001:DA8:8004');
-INSERT INTO `schools` VALUES ('85', '华东师范大学', '2001:DA8:8005');
-INSERT INTO `schools` VALUES ('86', '上海大学', '2001:DA8:8006');
-INSERT INTO `schools` VALUES ('87', '华东理工大学', '2001:DA8:8007');
-INSERT INTO `schools` VALUES ('88', '东华大学', '2001:DA8:8008');
-INSERT INTO `schools` VALUES ('89', '上海市教育委员会', '2001:DA8:8009');
-INSERT INTO `schools` VALUES ('90', '上海交通大学医学院', '2001:DA8:800A');
-INSERT INTO `schools` VALUES ('91', '上海师范大学', '2001:DA8:800B');
-INSERT INTO `schools` VALUES ('92', '第二军医大学', '2001:DA8:800C');
-INSERT INTO `schools` VALUES ('93', '上海财经大学', '2001:DA8:800D');
-INSERT INTO `schools` VALUES ('94', '上海外国语大学', '2001:DA8:800E');
-INSERT INTO `schools` VALUES ('95', '上海建桥学院', '2001:DA8:800F');
-INSERT INTO `schools` VALUES ('96', '西南大学', '2001:DA8:9000');
-INSERT INTO `schools` VALUES ('97', '辽宁大学', '2001:DA8:9001');
-INSERT INTO `schools` VALUES ('98', '西南大学', '2001:DA8:900B');
-INSERT INTO `schools` VALUES ('99', '天津大学', '2001:DA8:A000');
-INSERT INTO `schools` VALUES ('100', '天津理工大学', '2001:DA8:A001');
-INSERT INTO `schools` VALUES ('101', '天津医科大学', '2001:DA8:A002');
-INSERT INTO `schools` VALUES ('102', '大连理工大学', '2001:DA8:A800');
-INSERT INTO `schools` VALUES ('103', '大连海事大学', '2001:DA8:A801');
-INSERT INTO `schools` VALUES ('104', '大连轻工业学院', '2001:DA8:A802');
-INSERT INTO `schools` VALUES ('105', '吉林大学', '2001:DA8:B000');
-INSERT INTO `schools` VALUES ('106', '西南电力学院', '2001:DA8:B001');
-INSERT INTO `schools` VALUES ('107', '吉林大学农学部', '2001:DA8:B007');
-INSERT INTO `schools` VALUES ('108', '哈尔滨工业大学', '2001:DA8:B800');
-INSERT INTO `schools` VALUES ('109', '哈尔滨工业大学', '2001:DA8:B801');
-INSERT INTO `schools` VALUES ('110', '兰州大学', '2001:DA8:C000');
-INSERT INTO `schools` VALUES ('111', '甘肃政法学院', '2001:DA8:C002');
-INSERT INTO `schools` VALUES ('112', '东南师范大学', '2001:DA8:C003');
-INSERT INTO `schools` VALUES ('113', '重庆大学', '2001:DA8:C800');
-INSERT INTO `schools` VALUES ('114', '重庆交通大学', '2001:DA8:C801');
-INSERT INTO `schools` VALUES ('115', '重庆师范大学', '2001:DA8:C802');
-INSERT INTO `schools` VALUES ('116', '东北大学', '2001:DA8:C803');
-INSERT INTO `schools` VALUES ('117', '中南大学', '2001:DA8:D000');
-INSERT INTO `schools` VALUES ('118', '湖南师范大学', '2001:DA8:D001');
-INSERT INTO `schools` VALUES ('119', '长沙理工大学', '2001:DA8:D002');
-INSERT INTO `schools` VALUES ('120', '湖南商学院', '2001:DA8:D003');
-INSERT INTO `schools` VALUES ('121', '中国科学技术大学', '2001:DA8:D800');
-INSERT INTO `schools` VALUES ('122', '解放军电子工程学院', '2001:DA8:D801');
-INSERT INTO `schools` VALUES ('123', '安徽理工大学', '2001:DA8:D802');
-INSERT INTO `schools` VALUES ('124', '安徽西医学院', '2001:DA8:D803');
-INSERT INTO `schools` VALUES ('125', '皖南医学院', '2001:DA8:D804');
-INSERT INTO `schools` VALUES ('126', '合肥工业大学', '2001:DA8:D805');
-INSERT INTO `schools` VALUES ('127', '浙江大学', '2001:DA8:E000');
-INSERT INTO `schools` VALUES ('128', '浙江工业大学', '2001:DA8:E001');
-INSERT INTO `schools` VALUES ('129', '浙江大学宁波理工学院', '2001:DA8:E002');
-INSERT INTO `schools` VALUES ('130', '厦门大学', '2001:DA8:E800');
-INSERT INTO `schools` VALUES ('131', '福建农林大学', '2001:DA8:E801');
-INSERT INTO `schools` VALUES ('132', '福建师范大学', '2001:DA8:E802');
-INSERT INTO `schools` VALUES ('133', '西安电子科技大学', '2001:250:1006');
-INSERT INTO `schools` VALUES ('134', '武汉大学', '2001:250:4001');
-INSERT INTO `schools` VALUES ('135', '东北师范大学', '2001:250:F004');
-INSERT INTO `schools` VALUES ('136', '长安大学', '2001:250:1005');
-INSERT INTO `schools` VALUES ('137', '西北工业大学', '2001:250:1004');
-INSERT INTO `schools` VALUES ('138', '中国海洋大学', '2001:DA8:7013');
-INSERT INTO `schools` VALUES ('139', '四川大学', '2001:250:2003');
-INSERT INTO `schools` VALUES ('140', '电子科技大学', '2001:DA8:6000');
-INSERT INTO `schools` VALUES ('141', '河北工业大学', '2001:250:405');
-INSERT INTO `schools` VALUES ('142', '西南交通大学', '2001:da8:6005');
-INSERT INTO `schools` VALUES ('143', '第四军医大学', '2001:250:1007');
-INSERT INTO `schools` VALUES ('144', '东北农业大学', '2001:DA8:B803');
-INSERT INTO `schools` VALUES ('145', '东南大学', '2001:DA8:1002');
-INSERT INTO `schools` VALUES ('146', '广西大学', '2001:250:3401');
-INSERT INTO `schools` VALUES ('147', '国防科学技术大学', '2001:250:4402');
-INSERT INTO `schools` VALUES ('148', '南昌大学', '2001:250:6c00');
-INSERT INTO `schools` VALUES ('149', '哈尔滨工程大学', '2001:250:7801');
-INSERT INTO `schools` VALUES ('150', '深圳大学', '2001:250:3c00');
-INSERT INTO `schools` VALUES ('151', '新疆大学', '2001:250:1800');
-INSERT INTO `schools` VALUES ('152', '云南大学', '2001:250:2000');
-INSERT INTO `schools` VALUES ('153', '中国农业大学', '2001:250:209');
-INSERT INTO `schools` VALUES ('154', '中南大学', '2001:250:4400');
-INSERT INTO `schools` VALUES ('155', '中山大学', '2001:250:3002');
-INSERT INTO `schools` VALUES ('156', '安徽大学', '');
-INSERT INTO `schools` VALUES ('157', '北京中医药大学', '');
-INSERT INTO `schools` VALUES ('158', '南开大学', '2001:250:0405');
-INSERT INTO `schools` VALUES ('159', '中国协和医科大学', '');
+INSERT INTO `schools` VALUES ('24', 'DRAGONLAB实验室', '2001:DA8:0217');
+INSERT INTO `schools` VALUES ('25', '首都师范大学', '2001:DA8:0218');
+INSERT INTO `schools` VALUES ('26', '中央民族大学', '2001:DA8:0219');
+INSERT INTO `schools` VALUES ('27', '中国人民大学', '2001:DA8:021C');
+INSERT INTO `schools` VALUES ('28', '内蒙古大学', '2001:DA8:021D');
+INSERT INTO `schools` VALUES ('29', '太原理工大学', '2001:DA8:021E');
+INSERT INTO `schools` VALUES ('30', '中国矿业大学', '2001:DA8:0223');
+INSERT INTO `schools` VALUES ('31', '中国政法大学', '2001:DA8:0224');
+INSERT INTO `schools` VALUES ('32', '清华大学', '2001:DA8:0225');
+INSERT INTO `schools` VALUES ('33', '清华大学网络中心网管研究', '2001:DA8:0226');
+INSERT INTO `schools` VALUES ('34', '中央音乐学院', '2001:DA8:022B');
+INSERT INTO `schools` VALUES ('35', '北京语言大学', '2001:DA8:022D');
+INSERT INTO `schools` VALUES ('36', '对外经济贸易大学', '2001:DA8:0230');
+INSERT INTO `schools` VALUES ('37', 'CERNET2核心节点-南京', '2001:DA8:1000');
+INSERT INTO `schools` VALUES ('38', '江苏省教育和科研计算机网', '2001:DA8:1001');
+INSERT INTO `schools` VALUES ('39', '东南大学', '2001:DA8:1002');
+INSERT INTO `schools` VALUES ('40', '南京师范大学', '2001:DA8:1003');
+INSERT INTO `schools` VALUES ('41', '河海大学', '2001:DA8:1004');
+INSERT INTO `schools` VALUES ('42', '南京农业大学', '2001:DA8:1005');
+INSERT INTO `schools` VALUES ('43', '南京航空航天大学', '2001:DA8:1006');
+INSERT INTO `schools` VALUES ('44', '南京大学', '2001:DA8:1007');
+INSERT INTO `schools` VALUES ('45', '江苏工业学院', '2001:DA8:1008');
+INSERT INTO `schools` VALUES ('46', '河海大学常州校区', '2001:DA8:1009');
+INSERT INTO `schools` VALUES ('47', '苏州大学', '2001:DA8:100A');
+INSERT INTO `schools` VALUES ('48', '中国矿业大学', '2001:DA8:100D');
+INSERT INTO `schools` VALUES ('49', '南京理工大学', '2001:DA8:100E');
+INSERT INTO `schools` VALUES ('50', '江南大学', '2001:DA8:1010');
+INSERT INTO `schools` VALUES ('51', '华南理工大学', '2001:DA8:2000');
+INSERT INTO `schools` VALUES ('52', '广州市教育局', '2001:DA8:2001');
+INSERT INTO `schools` VALUES ('53', '暨南大学', '2001:DA8:2002');
+INSERT INTO `schools` VALUES ('54', '华南师范大学', '2001:DA8:200B');
+INSERT INTO `schools` VALUES ('55', '华南农业大学', '2001:DA8:2004');
+INSERT INTO `schools` VALUES ('56', '华中科技大学', '2001:DA8:3000');
+INSERT INTO `schools` VALUES ('57', '华中师范大学', '2001:DA8:3001');
+INSERT INTO `schools` VALUES ('58', '华中农业大学', '2001:DA8:3002');
+INSERT INTO `schools` VALUES ('59', '华中科技大学同济医学院', '2001:DA8:3008');
+INSERT INTO `schools` VALUES ('60', '西安交通大学', '2001:DA8:4000');
+INSERT INTO `schools` VALUES ('61', '西安建筑科技大学', '2001:DA8:4003');
+INSERT INTO `schools` VALUES ('62', '郑州大学', '2001:DA8:5000');
+INSERT INTO `schools` VALUES ('63', '河南财经学院', '2001:DA8:5001');
+INSERT INTO `schools` VALUES ('64', '解放军信息工程大学', '2001:DA8:5002');
+INSERT INTO `schools` VALUES ('65', '河南省财经学校', '2001:DA8:5003');
+INSERT INTO `schools` VALUES ('66', '河南省教育科研网', '2001:DA8:5004');
+INSERT INTO `schools` VALUES ('67', '郑州大学西亚斯国际学院', '2001:DA8:5005');
+INSERT INTO `schools` VALUES ('68', '电子科技大学', '2001:DA8:6000');
+INSERT INTO `schools` VALUES ('69', '四川农业大学', '2001:DA8:6004');
+INSERT INTO `schools` VALUES ('70', '山东大学', '2001:DA8:7000');
+INSERT INTO `schools` VALUES ('71', '山东大学齐鲁软件学院', '2001:DA8:7001');
+INSERT INTO `schools` VALUES ('72', 'CERNET山东省网络中心', '2001:DA8:7002');
+INSERT INTO `schools` VALUES ('73', '山东大学', '2001:DA8:7003');
+INSERT INTO `schools` VALUES ('74', '山东农业大学', '2001:DA8:7004');
+INSERT INTO `schools` VALUES ('75', '济南大学', '2001:DA8:7005');
+INSERT INTO `schools` VALUES ('76', '中国石油大学(华东)', '2001:DA8:7006');
+INSERT INTO `schools` VALUES ('77', '中国石油大学(华东)青岛校区', '2001:DA8:7007');
+INSERT INTO `schools` VALUES ('78', '山东理工大学', '2001:DA8:7008');
+INSERT INTO `schools` VALUES ('79', '烟台大学', '2001:DA8:7009');
+INSERT INTO `schools` VALUES ('80', '烟台师范学院', '2001:DA8:700A');
+INSERT INTO `schools` VALUES ('81', '山东省计算中心', '2001:DA8:700B');
+INSERT INTO `schools` VALUES ('82', '山东财政学院', '2001:DA8:700C');
+INSERT INTO `schools` VALUES ('83', '中国海洋大学', '2001:DA8:7013');
+INSERT INTO `schools` VALUES ('84', '上海交通大学', '2001:DA8:8000');
+INSERT INTO `schools` VALUES ('85', '复旦大学', '2001:DA8:8001');
+INSERT INTO `schools` VALUES ('86', '同济大学', '2001:DA8:8002');
+INSERT INTO `schools` VALUES ('87', '上海交通大学-上海城域网', '2001:DA8:8003');
+INSERT INTO `schools` VALUES ('88', '上海理工大学', '2001:DA8:8004');
+INSERT INTO `schools` VALUES ('89', '华东师范大学', '2001:DA8:8005');
+INSERT INTO `schools` VALUES ('90', '上海大学', '2001:DA8:8006');
+INSERT INTO `schools` VALUES ('91', '华东理工大学', '2001:DA8:8007');
+INSERT INTO `schools` VALUES ('92', '东华大学', '2001:DA8:8008');
+INSERT INTO `schools` VALUES ('93', '上海市教育委员会', '2001:DA8:8009');
+INSERT INTO `schools` VALUES ('94', '上海交通大学医学院', '2001:DA8:800A');
+INSERT INTO `schools` VALUES ('95', '上海师范大学', '2001:DA8:800B');
+INSERT INTO `schools` VALUES ('96', '第二军医大学', '2001:DA8:800C');
+INSERT INTO `schools` VALUES ('97', '上海财经大学', '2001:DA8:800D');
+INSERT INTO `schools` VALUES ('98', '上海外国语大学', '2001:DA8:800E');
+INSERT INTO `schools` VALUES ('99', '上海建桥学院', '2001:DA8:800F');
+INSERT INTO `schools` VALUES ('100', '东北大学', '2001:DA8:9000');
+INSERT INTO `schools` VALUES ('101', '辽宁大学', '2001:DA8:9001');
+INSERT INTO `schools` VALUES ('102', '东北大学', '2001:DA8:900B');
+INSERT INTO `schools` VALUES ('103', '天津大学', '2001:DA8:A000');
+INSERT INTO `schools` VALUES ('104', '天津理工大学', '2001:DA8:A001');
+INSERT INTO `schools` VALUES ('105', '天津医科大学', '2001:DA8:A002');
+INSERT INTO `schools` VALUES ('106', '大连理工大学', '2001:DA8:A800');
+INSERT INTO `schools` VALUES ('107', '大连海事大学', '2001:DA8:A801');
+INSERT INTO `schools` VALUES ('108', '大连轻工业学院', '2001:DA8:A802');
+INSERT INTO `schools` VALUES ('109', '吉林大学', '2001:DA8:B000');
+INSERT INTO `schools` VALUES ('110', '东北电力学院', '2001:DA8:B001');
+INSERT INTO `schools` VALUES ('111', '吉林大学农学部', '2001:DA8:B007');
+INSERT INTO `schools` VALUES ('112', '哈尔滨工业大学', '2001:DA8:B800');
+INSERT INTO `schools` VALUES ('113', '哈尔滨工业大学', '2001:DA8:B801');
+INSERT INTO `schools` VALUES ('114', '兰州大学', '2001:DA8:C000');
+INSERT INTO `schools` VALUES ('115', '甘肃省教育和科研计算机网', '2001:DA8:C001');
+INSERT INTO `schools` VALUES ('116', '甘肃政法学院', '2001:DA8:C002');
+INSERT INTO `schools` VALUES ('117', '西北师范大学', '2001:DA8:C003');
+INSERT INTO `schools` VALUES ('118', '重庆大学', '2001:DA8:C800');
+INSERT INTO `schools` VALUES ('119', '重庆交通大学', '2001:DA8:C801');
+INSERT INTO `schools` VALUES ('120', '重庆师范大学', '2001:DA8:C802');
+INSERT INTO `schools` VALUES ('121', '西南大学', '2001:DA8:C803');
+INSERT INTO `schools` VALUES ('122', '中南大学', '2001:DA8:D000');
+INSERT INTO `schools` VALUES ('123', '湖南师范大学', '2001:DA8:D001');
+INSERT INTO `schools` VALUES ('124', '长沙理工大学', '2001:DA8:D002');
+INSERT INTO `schools` VALUES ('125', '湖南商学院', '2001:DA8:D003');
+INSERT INTO `schools` VALUES ('126', '中国科技大学', '2001:DA8:D800');
+INSERT INTO `schools` VALUES ('127', '解放军电子工程学院', '2001:DA8:D801');
+INSERT INTO `schools` VALUES ('128', '安徽理工大学', '2001:DA8:D802');
+INSERT INTO `schools` VALUES ('129', '安徽中医学院', '2001:DA8:D803');
+INSERT INTO `schools` VALUES ('130', '皖南医学院', '2001:DA8:D804');
+INSERT INTO `schools` VALUES ('131', '合肥工业大学', '2001:DA8:D805');
+INSERT INTO `schools` VALUES ('132', '浙江大学', '2001:DA8:E000');
+INSERT INTO `schools` VALUES ('133', '浙江工业大学', '2001:DA8:E001');
+INSERT INTO `schools` VALUES ('134', '浙江大学宁波理工学院', '2001:DA8:E002');
+INSERT INTO `schools` VALUES ('135', '厦门大学', '2001:DA8:E800');
+INSERT INTO `schools` VALUES ('136', '福建农林大学', '2001:DA8:E801');
+INSERT INTO `schools` VALUES ('137', '福建师范大学', '2001:DA8:E802');
+INSERT INTO `schools` VALUES ('138', '陕西师范', '2001:DA8:4001');
+INSERT INTO `schools` VALUES ('139', '西安石油大学', '2001:DA8:4015');
+INSERT INTO `schools` VALUES ('140', '清华大学', '2001:250:0200');
+INSERT INTO `schools` VALUES ('141', '北京大学', '2001:250:0201');
+INSERT INTO `schools` VALUES ('142', '北京交通大学', '2001:250:0202');
+INSERT INTO `schools` VALUES ('143', '中国人民大学', '2001:250:0205');
+INSERT INTO `schools` VALUES ('144', '北京航空航天大学', '2001:250:0206');
+INSERT INTO `schools` VALUES ('145', '北京化工大学', '2001:250:0207');
+INSERT INTO `schools` VALUES ('146', '北京大学医学部', '2001:250:0208');
+INSERT INTO `schools` VALUES ('147', '中国农业大学', '2001:250:0209');
+INSERT INTO `schools` VALUES ('148', '中国矿业大学', '2001:250:020A');
+INSERT INTO `schools` VALUES ('149', '北京师范大学', '2001:250:020B');
+INSERT INTO `schools` VALUES ('150', '北京科技大学', '2001:250:020E');
+INSERT INTO `schools` VALUES ('151', '北京中医药大学', '2001:250:0212');
+INSERT INTO `schools` VALUES ('152', '中国传媒大学', '2001:250:0217');
+INSERT INTO `schools` VALUES ('153', '北京外国语大学', '2001:250:0218');
+INSERT INTO `schools` VALUES ('154', '北京林业大学', '2001:250:021A');
+INSERT INTO `schools` VALUES ('155', '北京工业大学', '2001:250:021C');
+INSERT INTO `schools` VALUES ('156', '天津大学', '2001:250:0400');
+INSERT INTO `schools` VALUES ('157', '南开大学', '2001:250:0401');
+INSERT INTO `schools` VALUES ('158', '河北工业大学', '2001:250:0405');
+INSERT INTO `schools` VALUES ('159', '华北工学院', '2001:250:0C00');
+INSERT INTO `schools` VALUES ('160', '太原理工大学', '2001:250:0C01');
+INSERT INTO `schools` VALUES ('161', '内蒙古大学', '2001:250:0E00');
+INSERT INTO `schools` VALUES ('162', '内蒙古师范大学', '2001:250:0E02');
+INSERT INTO `schools` VALUES ('163', '西安交通大学', '2001:250:1001');
+INSERT INTO `schools` VALUES ('164', '西北农林科技大学', '2001:250:1002');
+INSERT INTO `schools` VALUES ('165', '西北大学', '2001:250:1003');
+INSERT INTO `schools` VALUES ('166', '西北工业大学', '2001:250:1004');
+INSERT INTO `schools` VALUES ('167', '长安大学', '2001:250:1005');
+INSERT INTO `schools` VALUES ('168', '西安电子科技大学', '2001:250:1006');
+INSERT INTO `schools` VALUES ('169', '第四军医大学', '2001:250:1007');
+INSERT INTO `schools` VALUES ('170', '兰州大学', '2001:250:1400');
+INSERT INTO `schools` VALUES ('171', '兰州理工大学', '2001:250:1401');
+INSERT INTO `schools` VALUES ('172', '新疆大学', '2001:250:1800');
+INSERT INTO `schools` VALUES ('173', '华南理工大学', '2001:250:1804');
+INSERT INTO `schools` VALUES ('174', '华南理工大学', '2001:250:1999');
+INSERT INTO `schools` VALUES ('175', '电子科技大学', '2001:250:2000');
+INSERT INTO `schools` VALUES ('176', '西南交通大学', '2001:250:2002');
+INSERT INTO `schools` VALUES ('177', '四川大学', '2001:250:2003');
+INSERT INTO `schools` VALUES ('178', '四川西华大学', '2001:250:2009');
+INSERT INTO `schools` VALUES ('179', '云南大学', '2001:250:2800');
+INSERT INTO `schools` VALUES ('180', '华南理工大学', '2001:250:3000');
+INSERT INTO `schools` VALUES ('181', '中山大学', '2001:250:3002');
+INSERT INTO `schools` VALUES ('182', '广西大学', '2001:250:3401');
+INSERT INTO `schools` VALUES ('183', '深圳大学', '2001:250:3C00');
+INSERT INTO `schools` VALUES ('184', '深圳大学城', '2001:250:3C02');
+INSERT INTO `schools` VALUES ('185', '华中科技大学', '2001:250:4000');
+INSERT INTO `schools` VALUES ('186', '武汉大学', '2001:250:4001');
+INSERT INTO `schools` VALUES ('187', '中国地质大学(武汉)', '2001:250:4002');
+INSERT INTO `schools` VALUES ('188', '武汉理工大学', '2001:250:4004');
+INSERT INTO `schools` VALUES ('189', '中南大学', '2001:250:4400');
+INSERT INTO `schools` VALUES ('190', '国防科学技术大学', '2001:250:4401');
+INSERT INTO `schools` VALUES ('191', '湖南大学', '2001:250:4402');
+INSERT INTO `schools` VALUES ('192', '郑州大学', '2001:250:4800');
+INSERT INTO `schools` VALUES ('193', '郑州大学', '2001:250:480B');
+INSERT INTO `schools` VALUES ('194', '解放军信息工程大学', '2001:250:480F');
+INSERT INTO `schools` VALUES ('195', '常熟理工学院', '2001:250:5003');
+INSERT INTO `schools` VALUES ('196', '南京师范大学', '2001:250:5004');
+INSERT INTO `schools` VALUES ('197', '河海大学', '2001:250:5005');
+INSERT INTO `schools` VALUES ('198', '南京农业大学', '2001:250:5006');
+INSERT INTO `schools` VALUES ('199', '南京航空航天大学', '2001:250:5007');
+INSERT INTO `schools` VALUES ('200', '江苏工业学院', '2001:250:5008');
+INSERT INTO `schools` VALUES ('201', '河海大学常州校区', '2001:250:5009');
+INSERT INTO `schools` VALUES ('202', '中国科学技术大学', '2001:250:5400');
+INSERT INTO `schools` VALUES ('203', '安徽大学', '2001:250:5401');
+INSERT INTO `schools` VALUES ('204', '山东大学', '2001:250:5800');
+INSERT INTO `schools` VALUES ('205', '山东大学', '2001:250:580A');
+INSERT INTO `schools` VALUES ('206', '山东大学', '2001:250:5813');
+INSERT INTO `schools` VALUES ('207', '中国海洋大学', '2001:250:5806');
+INSERT INTO `schools` VALUES ('208', '中国石油大学', '2001:250:5807');
+INSERT INTO `schools` VALUES ('209', '中国石油大学（青岛）', '2001:250:5808');
+INSERT INTO `schools` VALUES ('210', '上海交通大学', '2001:250:6000');
+INSERT INTO `schools` VALUES ('211', '复旦大学', '2001:250:6001');
+INSERT INTO `schools` VALUES ('212', '华东理工大学', '2001:250:6003');
+INSERT INTO `schools` VALUES ('213', '上海财经大学', '2001:250:6005');
+INSERT INTO `schools` VALUES ('214', '同济大学', '2001:250:6006');
+INSERT INTO `schools` VALUES ('215', '上海交通大学医学院', '2001:250:6007');
+INSERT INTO `schools` VALUES ('216', '上海大学', '2001:250:6008');
+INSERT INTO `schools` VALUES ('217', '上海交通大学-上海城域网', '2001:250:600D');
+INSERT INTO `schools` VALUES ('218', '上海外国语大学', '2001:250:600F');
+INSERT INTO `schools` VALUES ('219', '浙江大学', '2001:250:6400');
+INSERT INTO `schools` VALUES ('220', '浙江大学', '2001:250:6405');
+INSERT INTO `schools` VALUES ('221', '厦门大学', '2001:250:6800');
+INSERT INTO `schools` VALUES ('222', '集美大学', '2001:250:6801');
+INSERT INTO `schools` VALUES ('223', '福州大学', '2001:250:6803');
+INSERT INTO `schools` VALUES ('224', '南昌大学', '2001:250:6C00');
+INSERT INTO `schools` VALUES ('225', '大连理工大学', '2001:250:7000');
+INSERT INTO `schools` VALUES ('226', '东北大学', '2001:250:7001');
+INSERT INTO `schools` VALUES ('227', '吉林大学', '2001:250:7400');
+INSERT INTO `schools` VALUES ('228', '东北师范大学', '2001:250:7401');
+INSERT INTO `schools` VALUES ('229', '哈尔滨工程大学', '2001:250:7801');
+INSERT INTO `schools` VALUES ('230', '北京邮电大学', '2001:250:9001');
+INSERT INTO `schools` VALUES ('231', '华南农业大学', '2001:251:4003');
+INSERT INTO `schools` VALUES ('232', '暨南大学', '2001:251:4004');
+INSERT INTO `schools` VALUES ('233', '3Tnet网', '2001:256:0100');
+INSERT INTO `schools` VALUES ('234', '中科院研究生院', '2001:CC0:2020');
+INSERT INTO `schools` VALUES ('235', '华南理工大学', '2001:250:3000');
 
 -- ----------------------------
 -- Table structure for `searchbox`
@@ -1796,7 +1916,7 @@ CREATE TABLE `searchbox` (
 -- ----------------------------
 -- Records of searchbox
 -- ----------------------------
-INSERT INTO `searchbox` VALUES ('4', 'chd', '1', '1', '0', '0', '0', '0', '0', '0', '14', '15');
+INSERT INTO `searchbox` VALUES ('4', 'chd', '1', '1', '0', '0', '0', '0', '0', '0', '14', '13');
 INSERT INTO `searchbox` VALUES ('9', 'mt', '1', '1', '0', '0', '0', '0', '0', '0', '8', '3');
 
 -- ----------------------------
@@ -1822,27 +1942,27 @@ CREATE TABLE `secondicons` (
 -- Records of secondicons
 -- ----------------------------
 INSERT INTO `secondicons` VALUES ('1', '0', '1', '1', '0', '0', '0', '0', 'Blu-ray/H.264', null, 'bdh264.png');
-INSERT INTO `secondicons` VALUES ('2', '0', '1', '2', '0', '0', '0', '0', 'Blu-ray/VC-1', null, 'bdvc1.png');
-INSERT INTO `secondicons` VALUES ('3', '0', '1', '4', '0', '0', '0', '0', 'Blu-ray/MPEG-2', null, 'bdmpeg2.png');
-INSERT INTO `secondicons` VALUES ('4', '0', '2', '1', '0', '0', '0', '0', 'HD DVD/H.264', null, 'hddvdh264.png');
-INSERT INTO `secondicons` VALUES ('5', '0', '2', '2', '0', '0', '0', '0', 'HD DVD/VC-1', null, 'hddvdvc1.png');
-INSERT INTO `secondicons` VALUES ('6', '0', '2', '4', '0', '0', '0', '0', 'HD DVD/MPEG-2', null, 'hddvdmpeg2.png');
-INSERT INTO `secondicons` VALUES ('7', '0', '3', '1', '0', '0', '0', '0', 'Remux/H.264', null, 'remuxh264.png');
-INSERT INTO `secondicons` VALUES ('8', '0', '3', '2', '0', '0', '0', '0', 'Remux/VC-1', null, 'remuxvc1.png');
-INSERT INTO `secondicons` VALUES ('9', '0', '3', '4', '0', '0', '0', '0', 'Remux/MPEG-2', null, 'remuxmpeg2.png');
-INSERT INTO `secondicons` VALUES ('10', '0', '4', '0', '0', '0', '0', '0', 'AVCHD', null, 'avchd.png');
-INSERT INTO `secondicons` VALUES ('11', '0', '5', '1', '0', '0', '0', '0', 'HDTV/H.264', null, 'hdtvh264.png');
-INSERT INTO `secondicons` VALUES ('12', '0', '5', '4', '0', '0', '0', '0', 'HDTV/MPEG-2', null, 'hdtvmpeg2.png');
-INSERT INTO `secondicons` VALUES ('13', '0', '6', '0', '0', '0', '0', '0', 'DVDR', null, 'dvdr.png');
-INSERT INTO `secondicons` VALUES ('14', '0', '7', '1', '0', '0', '0', '0', 'Rip/H.264', null, 'riph264.png');
-INSERT INTO `secondicons` VALUES ('15', '0', '7', '3', '0', '0', '0', '0', 'Rip/Xvid', null, 'ripxvid.png');
-INSERT INTO `secondicons` VALUES ('16', '0', '8', '5', '0', '0', '0', '0', 'CD/FLAC', null, 'cdflac.png');
-INSERT INTO `secondicons` VALUES ('17', '0', '8', '6', '0', '0', '0', '0', 'CD/APE', null, 'cdape.png');
-INSERT INTO `secondicons` VALUES ('18', '0', '8', '7', '0', '0', '0', '0', 'CD/DTS', null, 'cddts.png');
-INSERT INTO `secondicons` VALUES ('19', '0', '8', '9', '0', '0', '0', '0', 'CD/Other', null, 'cdother.png');
-INSERT INTO `secondicons` VALUES ('20', '0', '9', '5', '0', '0', '0', '0', 'Extract/FLAC', null, 'extractflac.png');
-INSERT INTO `secondicons` VALUES ('21', '0', '9', '7', '0', '0', '0', '0', 'Extract/DTS', null, 'extractdts.png');
-INSERT INTO `secondicons` VALUES ('22', '0', '9', '8', '0', '0', '0', '0', 'Extract/AC-3', null, 'extractac3.png');
+INSERT INTO `secondicons` VALUES ('2', '0', '1', '2', '0', '0', '0', '0', 'Blu-ray/VC-1', null, 'bdh264.png');
+INSERT INTO `secondicons` VALUES ('3', '0', '1', '4', '0', '0', '0', '0', 'Blu-ray/MPEG-2', null, 'bdh264.png');
+INSERT INTO `secondicons` VALUES ('4', '0', '2', '1', '0', '0', '0', '0', 'HD DVD/H.264', null, 'bdh264.png');
+INSERT INTO `secondicons` VALUES ('5', '0', '2', '2', '0', '0', '0', '0', 'HD DVD/VC-1', null, 'bdh264.png');
+INSERT INTO `secondicons` VALUES ('6', '0', '2', '4', '0', '0', '0', '0', 'HD DVD/MPEG-2', null, 'bdh264.png');
+INSERT INTO `secondicons` VALUES ('7', '0', '3', '1', '0', '0', '0', '0', 'Remux/H.264', null, 'bdh264.png');
+INSERT INTO `secondicons` VALUES ('8', '0', '3', '2', '0', '0', '0', '0', 'Remux/VC-1', null, 'bdh264.png');
+INSERT INTO `secondicons` VALUES ('9', '0', '3', '4', '0', '0', '0', '0', 'Remux/MPEG-2', null, 'bdh264.png');
+INSERT INTO `secondicons` VALUES ('10', '0', '4', '0', '0', '0', '0', '0', 'AVCHD', null, 'bdh264.png');
+INSERT INTO `secondicons` VALUES ('11', '0', '5', '1', '0', '0', '0', '0', 'HDTV/H.264', null, 'bdh264.png');
+INSERT INTO `secondicons` VALUES ('12', '0', '5', '4', '0', '0', '0', '0', 'HDTV/MPEG-2', null, 'bdh264.png');
+INSERT INTO `secondicons` VALUES ('13', '0', '6', '0', '0', '0', '0', '0', 'DVDR', null, 'bdh264.png');
+INSERT INTO `secondicons` VALUES ('14', '0', '7', '1', '0', '0', '0', '0', 'Rip/H.264', null, 'bdh264.png');
+INSERT INTO `secondicons` VALUES ('15', '0', '7', '3', '0', '0', '0', '0', 'Rip/Xvid', null, 'bdh264.png');
+INSERT INTO `secondicons` VALUES ('16', '0', '8', '5', '0', '0', '0', '0', 'CD/FLAC', null, 'bdh264.png');
+INSERT INTO `secondicons` VALUES ('17', '0', '8', '6', '0', '0', '0', '0', 'CD/APE', null, 'bdh264.png');
+INSERT INTO `secondicons` VALUES ('18', '0', '8', '7', '0', '0', '0', '0', 'CD/DTS', null, 'bdh264.png');
+INSERT INTO `secondicons` VALUES ('19', '0', '8', '9', '0', '0', '0', '0', 'CD/Other', null, 'bdh264.png');
+INSERT INTO `secondicons` VALUES ('20', '0', '9', '5', '0', '0', '0', '0', 'Extract/FLAC', null, 'bdh264.png');
+INSERT INTO `secondicons` VALUES ('21', '0', '9', '7', '0', '0', '0', '0', 'Extract/DTS', null, 'bdh264.png');
+INSERT INTO `secondicons` VALUES ('22', '0', '9', '8', '0', '0', '0', '0', 'Extract/AC-3', null, 'bdh264.png');
 
 -- ----------------------------
 -- Table structure for `shoutbox`
@@ -1856,29 +1976,8 @@ CREATE TABLE `shoutbox` (
   `type` enum('sb','hb') NOT NULL default 'sb',
   `ip` varbinary(64) NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of shoutbox
--- ----------------------------
-INSERT INTO `shoutbox` VALUES ('1', '1', '1364131215', '[em12]', 'sb', 0x3132372E302E302E31);
-
--- ----------------------------
--- Table structure for `signin`
--- ----------------------------
-DROP TABLE IF EXISTS `signin`;
-CREATE TABLE `signin` (
-  `id` mediumint(8) unsigned NOT NULL auto_increment,
-  `userid` mediumint(8) unsigned NOT NULL COMMENT '用户ID',
-  `signinleave` enum('no','yes') NOT NULL default 'no' COMMENT '请假',
-  `note` varchar(255) NOT NULL default '' COMMENT '备注',
-  `signindate` date NOT NULL COMMENT '签到时间',
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of signin
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for `sitelog`
@@ -1891,14 +1990,8 @@ CREATE TABLE `sitelog` (
   `security_level` enum('normal','mod') NOT NULL default 'normal',
   PRIMARY KEY  (`id`),
   KEY `added` (`added`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of sitelog
--- ----------------------------
-INSERT INTO `sitelog` VALUES ('1', '2013-03-24 13:04:28', 'Tracker MAIN settings updated by cide. March 24, 2013, 1:04 pm', 'mod');
-INSERT INTO `sitelog` VALUES ('2', '2013-03-24 13:30:00', 'Tracker basic settings updated by admin. March 24, 2013, 1:30 pm', 'mod');
-INSERT INTO `sitelog` VALUES ('3', '2013-03-24 13:56:53', 'Tracker basic settings updated by admin. March 24, 2013, 1:56 pm', 'mod');
 
 -- ----------------------------
 -- Table structure for `snatched`
@@ -1922,7 +2015,7 @@ CREATE TABLE `snatched` (
   PRIMARY KEY  (`id`),
   KEY `torrentid_userid` (`torrentid`,`userid`),
   KEY `userid` (`userid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of snatched
@@ -1938,7 +2031,7 @@ CREATE TABLE `sources` (
   `name` varchar(30) NOT NULL,
   `sort_index` tinyint(3) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=75 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=79 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sources
@@ -1951,7 +2044,7 @@ INSERT INTO `sources` VALUES ('5', '401', '电影-欧美', '7');
 INSERT INTO `sources` VALUES ('6', '401', '电影-国产', '6');
 INSERT INTO `sources` VALUES ('9', '414', '音乐-古典', '144');
 INSERT INTO `sources` VALUES ('8', '414', '音乐-日韩', '143');
-INSERT INTO `sources` VALUES ('7', '401', '电影-rmvb&枪版&其他', '11');
+INSERT INTO `sources` VALUES ('7', '401', '电影-rmvb&枪版&预告片&其他', '11');
 INSERT INTO `sources` VALUES ('10', '414', '音乐-无损', '140');
 INSERT INTO `sources` VALUES ('11', '410', '游戏-单机', '101');
 INSERT INTO `sources` VALUES ('12', '410', '游戏-网络', '102');
@@ -1964,17 +2057,17 @@ INSERT INTO `sources` VALUES ('18', '403', '综艺-娱乐', '30');
 INSERT INTO `sources` VALUES ('19', '403', '综艺-典礼', '33');
 INSERT INTO `sources` VALUES ('20', '407', '体育-篮球', '70');
 INSERT INTO `sources` VALUES ('21', '407', '体育-足球', '71');
-INSERT INTO `sources` VALUES ('22', '407', '体育-其他', '72');
+INSERT INTO `sources` VALUES ('22', '407', '体育-其他', '73');
 INSERT INTO `sources` VALUES ('23', '402', '剧集-大陆', '20');
 INSERT INTO `sources` VALUES ('24', '402', '剧集-港台', '21');
 INSERT INTO `sources` VALUES ('25', '402', '剧集-美剧', '22');
 INSERT INTO `sources` VALUES ('26', '402', '剧集-日剧', '23');
 INSERT INTO `sources` VALUES ('27', '402', '剧集-韩剧', '24');
 INSERT INTO `sources` VALUES ('28', '402', '剧集-合集', '19');
-INSERT INTO `sources` VALUES ('29', '411', '学习-考研', '110');
-INSERT INTO `sources` VALUES ('30', '411', '学习-学科专业', '112');
-INSERT INTO `sources` VALUES ('31', '411', '学习-讲座', '113');
-INSERT INTO `sources` VALUES ('32', '411', '学习-其他', '115');
+INSERT INTO `sources` VALUES ('29', '411', '专业学科', '110');
+INSERT INTO `sources` VALUES ('30', '411', '讲座演讲', '112');
+INSERT INTO `sources` VALUES ('31', '411', '期刊书籍', '113');
+INSERT INTO `sources` VALUES ('32', '411', '外语学习', '114');
 INSERT INTO `sources` VALUES ('50', '408', '软件-Linux', '81');
 INSERT INTO `sources` VALUES ('34', '404', '纪录片-国家地理', '41');
 INSERT INTO `sources` VALUES ('35', '404', '纪录片-探索频道', '42');
@@ -1988,14 +2081,14 @@ INSERT INTO `sources` VALUES ('43', '408', '软件-手机', '83');
 INSERT INTO `sources` VALUES ('44', '408', '软件-其他', '84');
 INSERT INTO `sources` VALUES ('45', '405', '动漫-连载', '50');
 INSERT INTO `sources` VALUES ('46', '405', '动漫-漫画', '53');
-INSERT INTO `sources` VALUES ('47', '405', '动漫-其他', '54');
+INSERT INTO `sources` VALUES ('47', '405', '动漫-其他', '55');
 INSERT INTO `sources` VALUES ('52', '410', '游戏-掌机', '103');
 INSERT INTO `sources` VALUES ('62', '409', '其他-游戏视频', '252');
 INSERT INTO `sources` VALUES ('54', '423', '个人整理合集', '170');
 INSERT INTO `sources` VALUES ('55', '401', '电影-蓝光', '9');
 INSERT INTO `sources` VALUES ('56', '423', '个人录制视频', '172');
 INSERT INTO `sources` VALUES ('57', '401', '电影-合集', '10');
-INSERT INTO `sources` VALUES ('58', '411', '学习-外语', '111');
+INSERT INTO `sources` VALUES ('58', '411', '考研资料', '111');
 INSERT INTO `sources` VALUES ('59', '406', 'MV-合集', '151');
 INSERT INTO `sources` VALUES ('60', '406', 'MV-演唱会', '152');
 INSERT INTO `sources` VALUES ('63', '409', '其他-电子文档', '250');
@@ -2005,8 +2098,11 @@ INSERT INTO `sources` VALUES ('67', '405', '动漫-OVA剧场版', '52');
 INSERT INTO `sources` VALUES ('68', '409', '其他-其他视频', '253');
 INSERT INTO `sources` VALUES ('70', '402', '剧集-其他', '26');
 INSERT INTO `sources` VALUES ('71', '423', '个人原创作品', '171');
-INSERT INTO `sources` VALUES ('72', '423', '麦田影视资源上传', '179');
+INSERT INTO `sources` VALUES ('78', '407', '体育-教学', '72');
 INSERT INTO `sources` VALUES ('73', '423', '晚会活动视频', '173');
+INSERT INTO `sources` VALUES ('75', '411', '其他', '115');
+INSERT INTO `sources` VALUES ('76', '405', '动漫-音乐', '54');
+INSERT INTO `sources` VALUES ('77', '404', '纪录片-NHK', '45');
 
 -- ----------------------------
 -- Table structure for `staffmessages`
@@ -2021,8 +2117,9 @@ CREATE TABLE `staffmessages` (
   `answeredby` mediumint(8) unsigned NOT NULL default '0',
   `answered` tinyint(1) NOT NULL default '0',
   `answer` text,
+  `goto` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of staffmessages
@@ -2093,7 +2190,7 @@ CREATE TABLE `subs` (
   `ext` varchar(10) NOT NULL default '',
   PRIMARY KEY  (`id`),
   KEY `torrentid_langid` (`torrent_id`,`lang_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of subs
@@ -2111,7 +2208,7 @@ CREATE TABLE `suggest` (
   PRIMARY KEY  (`id`),
   KEY `keywords` (`keywords`(4)),
   KEY `adddate` (`adddate`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of suggest
@@ -2176,10 +2273,11 @@ CREATE TABLE `thanks` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `torrentid` mediumint(8) unsigned NOT NULL default '0',
   `userid` mediumint(8) unsigned NOT NULL default '0',
+  `bonus` int(10) NOT NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `torrentid_id` (`torrentid`,`id`),
   KEY `torrentid_userid` (`torrentid`,`userid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of thanks
@@ -2206,7 +2304,7 @@ CREATE TABLE `topics` (
   KEY `subject` (`subject`),
   KEY `forumid_lastpost` (`forumid`,`lastpost`),
   KEY `forumid_sticky_lastpost` (`forumid`,`sticky`,`lastpost`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of topics
@@ -2241,8 +2339,8 @@ CREATE TABLE `torrents` (
   `views` int(10) unsigned NOT NULL default '0',
   `hits` int(10) unsigned NOT NULL default '0',
   `times_completed` mediumint(8) unsigned NOT NULL default '0',
-  `leechers` mediumint(8) unsigned NOT NULL default '0',
-  `seeders` mediumint(8) unsigned NOT NULL default '0',
+  `leechers` mediumint(8) NOT NULL default '0',
+  `seeders` mediumint(8) NOT NULL default '0',
   `last_action` datetime NOT NULL default '0000-00-00 00:00:00',
   `visible` enum('yes','no') NOT NULL default 'yes',
   `banned` enum('yes','no') NOT NULL default 'no',
@@ -2261,6 +2359,8 @@ CREATE TABLE `torrents` (
   `last_reseed` datetime NOT NULL default '0000-00-00 00:00:00',
   `endfree` datetime NOT NULL,
   `endsticky` datetime NOT NULL,
+  `status` enum('normal','recycle','candidate') NOT NULL default 'normal',
+  `last_status` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `info_hash` (`info_hash`),
   KEY `owner` (`owner`),
@@ -2274,7 +2374,7 @@ CREATE TABLE `torrents` (
   KEY `sp_state` (`sp_state`),
   FULLTEXT KEY `name` (`name`),
   FULLTEXT KEY `descr` (`descr`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of torrents
@@ -2291,7 +2391,6 @@ CREATE TABLE `torrents_state` (
 -- ----------------------------
 -- Records of torrents_state
 -- ----------------------------
-INSERT INTO `torrents_state` VALUES ('1');
 
 -- ----------------------------
 -- Table structure for `uploadspeed`
@@ -2306,19 +2405,19 @@ CREATE TABLE `uploadspeed` (
 -- ----------------------------
 -- Records of uploadspeed
 -- ----------------------------
-INSERT INTO `uploadspeed` VALUES ('4', '512kbps');
-INSERT INTO `uploadspeed` VALUES ('5', '768kbps');
-INSERT INTO `uploadspeed` VALUES ('6', '1Mbps');
-INSERT INTO `uploadspeed` VALUES ('7', '1.5Mbps');
-INSERT INTO `uploadspeed` VALUES ('8', '2Mbps');
-INSERT INTO `uploadspeed` VALUES ('9', '3Mbps');
-INSERT INTO `uploadspeed` VALUES ('10', '4Mbps');
-INSERT INTO `uploadspeed` VALUES ('12', '6Mbps');
-INSERT INTO `uploadspeed` VALUES ('14', '8Mbps');
-INSERT INTO `uploadspeed` VALUES ('16', '10Mbps');
-INSERT INTO `uploadspeed` VALUES ('17', '48Mbps');
-INSERT INTO `uploadspeed` VALUES ('18', '100Mbit');
-
+INSERT INTO `uploadspeed` (`id`, `name`) VALUES
+(4, '512kbps'),
+(5, '768kbps'),
+(6, '1Mbps'),
+(7, '1.5Mbps'),
+(8, '2Mbps'),
+(9, '3Mbps'),
+(10, '4Mbps'),
+(12, '6Mbps'),
+(14, '8Mbps'),
+(16, '10Mbps'),
+(17, '48Mbps'),
+(18, '100Mbit');
 -- ----------------------------
 -- Table structure for `users`
 -- ----------------------------
@@ -2441,6 +2540,12 @@ CREATE TABLE `users` (
   `cardnum` varchar(14) NOT NULL,
   `salarynum` int(11) NOT NULL,
   `salary` date NOT NULL,
+  `stealtime` time default NULL,
+  `stealstatus` smallint(11) default '0',
+  `ddzwins` int(10) default '0',
+  `ddzlosses` int(10) default '0',
+  `ddzseedbonus` decimal(10,0) default '1',
+  `ddzbonus` decimal(10,0) default '1',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `username` (`username`),
   KEY `status_added` (`status`,`added`),
@@ -2454,12 +2559,13 @@ CREATE TABLE `users` (
   KEY `cheat` (`cheat`),
   KEY `class` (`class`),
   KEY `passkey` (`passkey`(8))
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', 'admin', '67f35e395b6a95c5c8297b2cdc212040', 0x6B696F727767787670756F6B67746B6875697469, '123@aaa.com', 'confirmed', '2012-05-30 15:26:47', '2013-03-24 21:27:55', '2013-03-24 13:56:56', '2013-03-24 13:56:56', '2013-03-24 13:54:40', '2013-03-24 13:55:47', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2013-03-11 13:49:19', '0000-00-00 00:00:00', '1364133360', '0', '4', '', 'normal', '7', '1', 'medium', '', 'yes', 'yes', 0x3132372E302E302E31, '16', '1', '', '0', '0', '0', '0', '', '8', '[cat401][incldead=0]', '', 'yes', 'yes', 'no', '0.00', '0.00', '0000-00-00 00:00:00', 'no', '0000-00-00 00:00:00', 'no', '0000-00-00 00:00:00', '0', '0', '0', 'firstpage', 'yes', 'no', 'yes', 'yes', 'no', 'no', '', '', '', '', 'e8dea5f02fc1ca4db750ba963ed13b10', 'ba6e48750b4938d310d1dcdba3d2c234', 'yes', 'yes', 'yes', '0', 'yes', '', '25', '0', '0', '0', '0', '0', '0', 'Male', 'no', '0000-00-00 00:00:00', '6488.00000000', '0.0', '', 'no', 'no', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0', '0', '70', '120', 'no', 'yes', 'yes', 'yes', 'no', '0', 'off', 'yes', 'timealive', 'yes', 'yes', 'icon', 'yes', 'yes', 'yes', 'yes', 'yes', 'no', 'no', '10', '35', 'yes', '', '1', '2013-03-24');
+INSERT INTO `users` VALUES ('1', 'admin', 'afb5d12b8e2c442d63c3d4e8deeae97b', 0x697673776D7872667276786B766F7369766F6978, 'admin@admin.com', 'confirmed', '2013-10-03 15:26:47', '2013-10-04 00:41:16', '2013-10-04 01:09:49', '2013-10-04 01:05:39', '2013-06-02 22:51:01', '2013-10-03 19:29:24', '0000-00-00 00:00:00', '2013-09-05 21:29:36', '2013-09-09 13:45:05', '2013-09-09 13:27:58', '1380818684', '0', '3', '', 'normal', '7', '1', 'medium', '', 'yes', 'yes', 0x3137322E31372E3135362E313937, '16', '1', '', '0', '0', '0', '0', '', '8', '[cat401][cat402][cat403][cat404][cat405][cat406][cat407][cat408][cat409][cat410][cat411][cat414][cat423][incldead=0]', '2013-04-16 - Invite amount changed from 0 to  by .\n', 'yes', 'yes', 'no', '0.00', '0.00', '0000-00-00 00:00:00', 'no', '0000-00-00 00:00:00', 'no', '0000-00-00 00:00:00', '50', '0', '0', 'firstpage', 'yes', 'no', 'yes', 'yes', 'no', 'no', '', '', '', '', 'e8dea5f02fc1ca4db750ba963ed13b10', 'ba6e48750b4938d310d1dcdba3d2c234', 'yes', 'yes', 'yes', '17', 'yes', '', '25', '0', '18', '18', '20', '0', '0', 'Male', 'no', '0000-00-00 00:00:00', '1527000.24000000', '0.0', '2013-10-04 01:05:37---彩票第14 期中获得5 等奖，获得麦粒0\n2013-10-04 01:05:36---花费 100 个麦粒购买了彩票\n2013-10-04 01:05:22---花费 100 个麦粒购买了彩票\n2013-10-04 01:04:26---花费 100 个麦粒购买了彩票\n2013-10-04 01:04:25---花费 100 个麦粒购买了彩票\n2013-10-04 01:04:25---花费 100 个麦粒购买了彩票\n2013-10-04 01:04:24---花费 100 个麦粒购买了彩票\n2013-10-04 01:04:23---花费 100 个麦粒购买了彩票\n2013-10-04 01:04:22---花费 100 个麦粒购买了彩票\n2013-10-04 01:04:21---花费 100 个麦粒购买了彩票\n2013-10-04 01:04:21---花费 100 个麦粒购买了彩票\n2013-10-04 01:04:20---花费 100 个麦粒购买了彩票\n2013-10-04 01:04:19---花费 100 个麦粒购买了彩票\n2013-10-04 01:04:18---花费 100 个麦粒购买了彩票\n2013-10-04 01:04:17---花费 100 个麦粒购买了彩票\n2013-10-04 01:04:16---花费 100 个麦粒购买了彩票\n2013-10-04 01:04:15---花费 100 个麦粒购买了彩票\n2013-10-04 01:04:14---花费 100 个麦粒购买了彩票\n2013-10-04 01:04:13---花费 100 个麦粒购买了彩票\n2013-10-04 01:04:12---花费 100 个麦粒购买了彩票\n2013-10-04 01:03:44---花费 100 个麦粒购买了彩票\n2013-10-04 01:03:41---花费 100 个麦粒购买了彩票\n2013-10-04 01:03:37---花费 100 个麦粒购买了彩票\n2013-10-04 01:03:09---彩票第10 期中获得3 等奖，获得麦粒0\n2013-10-04 01:03:08---花费 100 个麦粒购买了彩票\n2013-10-04 01:03:06---花费 100 个麦粒购买了彩票\n2013-10-04 01:03:05---花费 100 个麦粒购买了彩票\n2013-10-04 01:02:38---花费 100 个麦粒购买了彩票\n2013-10-04 01:02:21---花费 100 个麦粒购买了彩票\n2013-10-04 01:01:12---花费 100 个麦粒购买了彩票\n2013-10-04 01:01:09---花费 100 个麦粒购买了彩票\n2013-10-04 00:58:56---花费 100 个麦粒购买了彩票\n2013-10-01 16:16:07---购买促销 ，花费麦粒40\n2013-10-01 16:15:35---购买促销 ，花费麦粒40\n2013-10-01 16:11:44---购买促销 ，花费麦粒20\n2013-10-01 16:11:35---购买促销 ，花费麦粒20\n2013-10-01 16:11:16---购买促销 ，花费麦粒20\n2013-10-01 16:10:39---购买促销 ，花费麦粒20\n2013-09-24 - 25.0 Points as gift to admin1.\n 2013-09-24 - 25.0 Points as gift to admin1.\n 2013-09-09 - 100.0 Points as gift to admin1.\n 2013-09-08 - 100.0 Points as gift to admin1.\n 2013-09-08 - 100.0 Points as gift to admin1.\n 2013-09-01 11:07:15---成功绑定锐捷账号，系统增加1000麦粒\n2013-06-09 17:07:52---花费 1400 个麦粒购买了 2 个保镖\n2013-06-09 17:07:45----2000；退出游戏之后重新加入，花费了2000个麦粒\n2013-06-09 17:07:35---花费 1400 个麦粒购买了 2 个保镖\n2013-06-02 + 9,500.0 Points (after tax) as a gift from admin1.\n 2013-05-23 12:46:36---在偷麦粒应用中花费 500 *2 个麦粒购贿赂系统\n2013-05-23 12:46:32---在偷麦粒应用中花费 500 *2 个麦粒购贿赂系统\n2013-05-23 12:46:29---在偷麦粒应用中花费 500 *2 个麦粒购贿赂系统\n2013-05-23 12:46:27---在偷麦粒应用中花费 500 *2 个麦粒购贿赂系统\n2013-05-23 12:46:25---在偷麦粒应用中花费 500 *2 个麦粒购贿赂系统\n2013-05-23 12:46:15---在偷麦粒应用中花费 500 *2 个麦粒购贿赂系统\n2013-05-22 10:54:18---在偷麦粒应用中花费 500 *2 个麦粒购贿赂系统\n2013-05-22 10:06:40---在偷麦粒应用中花费 500 *2 个麦粒购贿赂系统\n2013-05-22 09:46:15---被adminyahu偷走 500 个麦粒\n2013-05-22 09:45:13---从adminyahu偷到 400 个麦粒\n2013-05-22 09:21:41---从adminyahu偷到 30 个麦粒\n2013-05-22 09:19:28---偷adminyahu的麦粒反而搭进去 155 个\n2013-05-22 09:19:21---从adminyahu偷到 500 个麦粒\n2013-05-22 09:19:16---偷adminyahu的麦粒反而搭进去 45 个\n2013-05-22 09:07:51---从adminyahu偷到 395 个麦粒\n2013-05-22 09:07:50---从adminyahu偷到 100 个麦粒\n2013-05-22 09:07:50---从adminyahu偷到 255 个麦粒\n2013-05-22 09:07:49---从adminyahu偷到 145 个麦粒\n2013-05-22 09:07:48---偷adminyahu的麦粒反而搭进去 500 个\n2013-05-22 09:07:48---从adminyahu偷到 190 个麦粒\n2013-05-22 09:07:47---从adminyahu偷到 500 个麦粒\n2013-05-22 09:07:26---从adminyahu偷到 245 个麦粒\n2013-05-22 09:07:25---偷adminyahu的麦粒反而搭进去 500 个\n2013-05-22 09:07:25---偷adminyahu的麦粒反而搭进去 170 个\n2013-05-22 09:07:24---从adminyahu偷到 500 个麦粒\n2013-05-22 09:07:23---偷adminyahu的麦粒反而搭进去 500 个\n2013-05-22 09:06:51---从adminyahu偷到 80 个麦粒\n2013-05-22 09:06:50---从adminyahu偷到 205 个麦粒\n2013-05-22 09:06:49---偷adminyahu的麦粒反而搭进去 150 个\n2013-05-22 09:06:49---从adminyahu偷到 360 个麦粒\n2013-05-22 09:06:48---偷adminyahu的麦粒反而搭进去 150 个\n2013-05-22 09:06:48---偷adminyahu的麦粒反而搭进去 45 个\n2013-05-22 09:06:47---从adminyahu偷到 115 个麦粒\n2013-05-22 09:06:33---偷adminyahu的麦粒反而搭进去 115 个\n2013-05-22 09:06:32---偷adminyahu的麦粒反而搭进去 150 个\n2013-05-22 09:06:30---偷adminyahu的麦粒反而搭进去 500 个\n2013-05-22 08:41:46---偷adminyahu的麦粒反而搭进去 500 个\n2013-05-22 08:21:15---从adminyahu偷到 500 个麦粒\n2013-05-22 08:21:14---从adminyahu偷到 370 个麦粒\n2013-05-22 08:21:14---偷adminyahu的麦粒反而搭进去 120 个\n2013-05-22 08:21:14---从adminyahu偷到 50 个麦粒\n2013-05-22 08:21:13---偷adminyahu的麦粒反而搭进去 500 个\n2013-05-22 08:21:13---偷adminyahu的麦粒反而搭进去 230 个\n2013-05-22 08:21:12---偷adminyahu的麦粒反而搭进去 5 个\n2013-05-22 08:21:12---从adminyahu偷到 40 个麦粒\n2013-05-22 08:21:11---偷adminyahu的麦粒反而搭进去 500 个\n2013-05-22 08:21:11---从adminyahu偷到 140 个麦粒\n2013-05-22 08:21:11---偷adminyahu的麦粒反而搭进去 500 个\n2013-05-22 08:21:10---偷adminyahu的麦粒反而搭进去 90 个\n2013-05-22 08:21:10---从adminyahu偷到 105 个麦粒\n2013-05-22 08:21:09---偷adminyahu的麦粒反而搭进去 170 个\n2013-05-22 08:21:09---偷adminyahu的麦粒反而搭进去 185 个\n2013-05-22 08:21:08---从adminyahu偷到 135 个麦粒\n2013-05-22 08:21:08---从adminyahu偷到 500 个麦粒\n2013-05-22 08:21:07---从adminyahu偷到 500 个麦粒\n2013-05-22 08:21:07---从adminyahu偷到 400 个麦粒\n2013-05-22 08:21:06---偷adminyahu的麦粒反而搭进去 15 个\n2013-05-22 08:21:06---从adminyahu偷到 195 个麦粒\n2013-05-22 08:21:05---从adminyahu偷到 115 个麦粒\n2013-05-22 08:21:05---从adminyahu偷到 75 个麦粒\n2013-05-22 08:21:04---从adminyahu偷到 500 个麦粒\n2013-05-22 08:21:04---偷adminyahu的麦粒反而搭进去 30 个\n2013-05-22 08:21:03---从adminyahu偷到 85 个麦粒\n2013-05-22 08:21:03---偷adminyahu的麦粒反而搭进去 500 个\n2013-05-22 08:21:03---从adminyahu偷到 250 个麦粒\n2013-05-22 08:21:02---从adminyahu偷到 145 个麦粒\n2013-05-22 08:21:02---从adminyahu偷到 500 个麦粒\n2013-05-22 08:21:01---偷adminyahu的麦粒反而搭进去 190 个\n2013-05-22 08:21:01---偷adminyahu的麦粒反而搭进去 200 个\n2013-05-22 08:21:00---偷adminyahu的麦粒反而搭进去 105 个\n2013-05-22 08:21:00---偷adminyahu的麦粒反而搭进去 230 个\n2013-05-22 08:20:59---偷adminyahu的麦粒反而搭进去 500 个\n2013-05-22 08:20:59---从adminyahu偷到 500 个麦粒\n2013-05-22 08:20:58---偷adminyahu的麦粒反而搭进去 235 个\n2013-05-22 08:20:58---从adminyahu偷到 35 个麦粒\n2013-05-22 08:20:57---从adminyahu偷到 500 个麦粒\n2013-05-22 08:20:57---偷adminyahu的麦粒反而搭进去 130 个\n2013-05-22 08:20:56---偷adminyahu的麦粒反而搭进去 235 个\n2013-05-22 08:20:56---偷adminyahu的麦粒反而搭进去 5 个\n2013-05-22 08:20:55---从adminyahu偷到 170 个麦粒\n2013-05-22 08:20:55---偷adminyahu的麦粒反而搭进去 500 个\n2013-05-22 08:20:54---从adminyahu偷到 395 个麦粒\n2013-05-22 08:20:54---偷adminyahu的麦粒反而搭进去 110 个\n2013-05-22 08:20:53---偷adminyahu的麦粒反而搭进去 110 个\n2013-05-22 08:20:53---从adminyahu偷到 85 个麦粒\n2013-05-22 08:20:52---从adminyahu偷到 335 个麦粒\n2013-05-22 08:20:52---从adminyahu偷到 205 个麦粒\n2013-05-22 08:20:51---偷adminyahu的麦粒反而搭进去 500 个\n2013-05-22 08:20:51---从adminyahu偷到 105 个麦粒\n2013-05-22 08:20:50---偷adminyahu的麦粒反而搭进去 20 个\n2013-05-22 08:20:50---从adminyahu偷到 500 个麦粒\n2013-05-22 08:20:49---偷adminyahu的麦粒反而搭进去 35 个\n2013-05-22 08:20:49---从adminyahu偷到 315 个麦粒\n2013-05-22 08:20:48---偷adminyahu的麦粒反而搭进去 190 个\n2013-05-22 08:20:48---从adminyahu偷到 165 个麦粒\n2013-05-22 08:20:47---偷adminyahu的麦粒反而搭进去 60 个\n2013-05-22 08:20:47---从adminyahu偷到 225 个麦粒\n2013-05-22 08:20:46---从adminyahu偷到 500 个麦粒\n2013-05-22 08:20:46---从adminyahu偷到 340 个麦粒\n2013-05-22 08:20:45---偷adminyahu的麦粒反而搭进去 140 个\n2013-05-22 08:20:45---偷adminyahu的麦粒反而搭进去 500 个\n2013-05-22 08:20:44---从adminyahu偷到 135 个麦粒\n2013-05-22 08:20:44---偷adminyahu的麦粒反而搭进去 115 个\n2013-05-22 08:20:43---从adminyahu偷到 500 个麦粒\n2013-05-22 08:20:43---从adminyahu偷到 310 个麦粒\n2013-05-22 08:20:42---偷adminyahu的麦粒反而搭进去 110 个\n2013-05-22 08:20:42---从adminyahu偷到 50 个麦粒\n2013-05-22 08:20:41---从adminyahu偷到 240 个麦粒\n2013-05-22 08:20:41---偷adminyahu的麦粒反而搭进去 175 个\n2013-05-22 08:20:40---偷adminyahu的麦粒反而搭进去 90 个\n2013-05-22 08:20:39---从adminyahu偷到 240 个麦粒\n2013-05-22 08:20:39---从adminyahu偷到 500 个麦粒\n2013-05-22 08:20:37---偷adminyahu的麦粒反而搭进去 500 个\n2013-05-22 08:20:37---偷adminyahu的麦粒反而搭进去 105 个\n2013-05-22 08:20:37---偷adminyahu的麦粒反而搭进去 500 个\n2013-05-22 08:20:37---偷adminyahu的麦粒反而搭进去 200 个\n2013-05-22 08:20:36---从adminyahu偷到 280 个麦粒\n2013-05-22 08:20:36---偷adminyahu的麦粒反而搭进去 500 个\n2013-05-22 08:20:35---从adminyahu偷到 170 个麦粒\n2013-05-22 08:20:35---从adminyahu偷到 380 个麦粒\n2013-05-22 08:20:35---从adminyahu偷到 500 个麦粒\n2013-05-22 08:20:34---从adminyahu偷到 120 个麦粒\n2013-05-22 08:20:33---从adminyahu偷到 400 个麦粒\n2013-05-22 08:20:33---偷adminyahu的麦粒反而搭进去 95 个\n2013-05-22 08:20:33---偷adminyahu的麦粒反而搭进去 135 个\n2013-05-22 08:20:32---从adminyahu偷到 145 个麦粒\n2013-05-22 08:20:32---从adminyahu偷到 10 个麦粒\n2013-05-22 08:20:31---从adminyahu偷到 500 个麦粒\n2013-05-22 08:20:31---从adminyahu偷到 50 个麦粒\n2013-05-22 08:20:30---从adminyahu偷到 15 个麦粒\n2013-05-22 08:20:30---偷adminyahu的麦粒反而搭进去 100 个\n2013-05-22 08:20:29---从adminyahu偷到 5 个麦粒\n2013-05-22 08:20:29---偷adminyahu的麦粒反而搭进去 225 个\n2013-05-22 08:20:28---偷adminyahu的麦粒反而搭进去 215 个\n2013-05-22 08:20:28---从adminyahu偷到 135 个麦粒\n2013-05-22 08:20:27---偷adminyahu的麦粒反而搭进去 215 个\n2013-05-22 08:20:26---偷adminyahu的麦粒反而搭进去 240 个\n2013-05-22 08:20:22---偷adminyahu的麦粒反而搭进去 95 个\n2013-05-22 08:20:21---偷adminyahu的麦粒反而搭进去 195 个\n2013-05-22 08:20:19---偷adminyahu的麦粒反而搭进去 145 个\n2013-05-22 08:20:19---从adminyahu偷到 180 个麦粒\n2013-05-22 08:20:18---从adminyahu偷到 500 个麦粒\n2013-05-22 08:20:17---偷adminyahu的麦粒反而搭进去 215 个\n2013-05-22 08:20:17---从adminyahu偷到 50 个麦粒\n2013-05-22 08:20:16---从adminyahu偷到 110 个麦粒\n2013-05-22 08:20:16---偷adminyahu的麦粒反而搭进去 65 个\n2013-05-22 08:20:15---从adminyahu偷到 210 个麦粒\n2013-05-22 08:20:15---偷adminyahu的麦粒反而搭进去 500 个\n2013-05-22 08:20:14---从adminyahu偷到 260 个麦粒\n2013-05-22 08:20:14---从adminyahu偷到 60 个麦粒\n2013-05-22 08:20:13---偷adminyahu的麦粒反而搭进去 500 个\n2013-05-22 08:20:13---偷adminyahu的麦粒反而搭进去 500 个\n2013-05-22 08:20:12---从adminyahu偷到 355 个麦粒\n2013-05-22 08:20:12---从adminyahu偷到 500 个麦粒\n2013-05-22 08:20:11---从adminyahu偷到 150 个麦粒\n2013-05-22 08:20:10---偷adminyahu的麦粒反而搭进去 25 个\n2013-05-22 08:20:10---偷adminyahu的麦粒反而搭进去 115 个\n2013-05-22 08:20:09---偷adminyahu的麦粒反而搭进去 140 个\n2013-05-22 08:20:09---偷adminyahu的麦粒反而搭进去 30 个\n2013-05-22 08:20:08---从adminyahu偷到 235 个麦粒\n2013-05-22 08:20:07---偷adminyahu的麦粒反而搭进去 500 个\n2013-05-22 08:20:07---从adminyahu偷到 500 个麦粒\n2013-05-22 08:20:06---从adminyahu偷到 290 个麦粒\n2013-05-22 08:20:06---从adminyahu偷到 220 个麦粒\n2013-05-22 08:20:05---偷adminyahu的麦粒反而搭进去 190 个\n2013-05-22 08:20:04---偷adminyahu的麦粒反而搭进去 230 个\n2013-05-22 08:20:03---从adminyahu偷到 500 个麦粒\n2013-05-22 08:20:02---偷adminyahu的麦粒反而搭进去 500 个\n2013-05-22 08:19:53---偷adminyahu的麦粒反而搭进去 500 个\n2013-05-22 08:18:33---偷adminyahu的麦粒反而搭进去 215 个\n2013-05-22 08:18:26---从adminyahu偷到 500 个麦粒\n2013-05-22 08:18:17---从adminyahu偷到 500 个麦粒\n2013-05-22 08:17:42---从adminyahu偷到 340 个麦粒\n2013-05-22 08:17:17---偷adminyahu的麦粒反而搭进去 500 个\n2013-05-22 08:15:31---从adminyahu偷到 500 个麦粒\n2013-05-22 08:15:30---从adminyahu偷到 500 个麦粒\n2013-05-22 08:15:30---从adminyahu偷到 170 个麦粒\n2013-05-22 08:15:30---偷adminyahu的麦粒反而搭进去 45 个\n2013-05-22 08:15:29---从adminyahu偷到 215 个麦粒\n2013-05-22 08:15:29---偷adminyahu的麦粒反而搭进去 500 个\n2013-05-22 08:15:28---从adminyahu偷到 160 个麦粒\n2013-05-22 08:15:28---偷adminyahu的麦粒反而搭进去 205 个\n2013-05-22 08:15:27---偷adminyahu的麦粒反而搭进去 210 个\n2013-05-22 08:15:27---偷adminyahu的麦粒反而搭进去 180 个\n2013-05-22 08:15:26---从adminyahu偷到 95 个麦粒\n2013-05-22 08:15:26---偷adminyahu的麦粒反而搭进去 245 个\n2013-05-22 08:15:25---偷adminyahu的麦粒反而搭进去 150 个\n2013-05-22 08:15:25---从adminyahu偷到 260 个麦粒\n2013-05-22 08:15:24---从adminyahu偷到 265 个麦粒\n2013-05-22 08:15:24---从adminyahu偷到 500 个麦粒\n2013-05-22 08:15:23---从adminyahu偷到 105 个麦粒\n2013-05-22 08:15:21---偷adminyahu的麦粒反而搭进去 110 个\n2013-05-22 08:15:04---偷adminyahu的麦粒反而搭进去 500 个\n2013-05-22 08:14:39---从adminyahu偷到 310 个麦粒\n2013-05-22 08:14:05---从adminyahu偷到 210 个麦粒\n2013-05-22 08:13:59---从adminyahu偷到 230 个麦粒\n2013-05-22 08:13:18---从adminyahu偷到 500 个麦粒\n2013-05-22 08:13:12---从adminyahu偷到 135 个麦粒\n2013-05-22 08:12:53---偷adminyahu的麦粒反而搭进去 125 个\n2013-05-22 08:12:52---从adminyahu偷到 100 个麦粒\n2013-05-22 08:12:50---偷adminyahu的麦粒反而搭进去 105 个\n2013-05-22 08:12:49---从adminyahu偷到 100 个麦粒\n2013-05-22 08:12:44---偷adminyahu的麦粒反而搭进去 75 个\n2013-05-22 08:12:15---偷adminyahu的麦粒反而搭进去 500 个\n2013-05-22 07:28:56---adminyahu来偷麦粒，反而留下 500 个\n2013-05-22 07:28:55---adminyahu来偷麦粒，反而留下 500 个\n2013-05-22 07:28:54---被adminyahu偷走 105 个麦粒\n2013-05-22 07:28:52---被adminyahu偷走 380 个麦粒\n2013-05-22 07:24:13---adminyahu来偷麦粒，反而留下 250 个\n2013-05-22 07:21:41---被adminyahu偷走 230 个麦粒\n2013-05-22 07:21:36---adminyahu来偷麦粒，反而留下 500 个\n2013-05-22 07:21:33---adminyahu来偷麦粒，反而留下 500 个\n2013-05-22 07:21:26---被adminyahu偷走 100 个麦粒\n2013-05-22 07:21:25---adminyahu来偷麦粒，反而留下 10 个\n2013-05-22 07:21:24---被adminyahu偷走 500 个麦粒\n2013-05-22 07:21:23---被adminyahu偷走 290 个麦粒\n2013-05-22 07:21:22---adminyahu来偷麦粒，反而留下 500 个\n2013-05-22 07:21:20---被adminyahu偷走 400 个麦粒\n2013-05-22 07:18:20---adminyahu来偷麦粒，反而留下 100 个\n2013-05-22 07:18:02---adminyahu来偷麦粒，反而留下 500 个\n2013-05-22 07:17:59---adminyahu来偷麦粒，反而留下 500 个\n2013-05-22 07:13:58---被adminyahu偷走 150 个麦粒\n2013-05-22 07:08:24---被adminyahu偷走 305 个麦粒\n2013-05-22 07:08:23---被adminyahu偷走 290 个麦粒\n2013-05-22 07:08:21---adminyahu来偷麦粒，反而留下 500 个\n2013-05-22 07:08:18---adminyahu来偷麦粒，反而留下 90 个\n2013-05-22 07:08:05---adminyahu来偷麦粒，反而留下 500 个\n2013-05-21 17:15:59---被adminyahu偷走 630 个麦粒\n2013-05-21 17:15:58---被adminyahu偷走 460 个麦粒\n2013-05-21 17:15:57---被adminyahu偷走 580 个麦粒\n2013-05-21 17:15:57---被adminyahu偷走 1000 个麦粒\n2013-05-21 17:15:56---adminyahu来偷麦粒，反而留下 690 个\n2013-05-21 17:15:55---被adminyahu偷走 410 个麦粒\n2013-05-21 17:15:54---adminyahu来偷麦粒，反而留下 1000 个\n2013-05-21 17:15:53---adminyahu来偷麦粒，反而留下 490 个\n2013-05-21 17:15:52---adminyahu来偷麦粒，反而留下 1000 个\n2013-05-21 17:15:51---被adminyahu偷走 310 个麦粒\n2013-05-21 17:15:50---adminyahu来偷麦粒，反而留下 1000 个\n2013-05-21 17:15:49---adminyahu来偷麦粒，反而留下 90 个\n2013-05-21 17:15:48---adminyahu来偷麦粒，反而留下 310 个\n2013-05-21 17:15:47---adminyahu来偷麦粒，反而留下 1000 个\n2013-05-21 17:15:45---adminyahu来偷麦粒，反而留下 1000 个\n2013-05-21 17:15:44---被adminyahu偷走 800 个麦粒\n2013-05-21 17:15:44---被adminyahu偷走 280 个麦粒\n2013-05-21 17:15:43---adminyahu来偷麦粒，反而留下 1000 个\n2013-05-21 17:15:42---被adminyahu偷走 500 个麦粒\n2013-05-21 17:15:41---被adminyahu偷走 1000 个麦粒\n2013-05-21 17:15:40---被adminyahu偷走 1000 个麦粒\n2013-05-21 17:14:58---adminyahu来偷麦粒，反而留下 380 个\n2013-05-21 17:14:57---被adminyahu偷走 700 个麦粒\n2013-05-21 17:14:55---被adminyahu偷走 1000 个麦粒\n2013-05-21 17:14:54---被adminyahu偷走 310 个麦粒\n2013-05-21 17:14:52---adminyahu来偷麦粒，反而留下 1000 个\n2013-05-21 17:14:51---被adminyahu偷走 440 个麦粒\n2013-05-21 17:14:20---被adminyahu偷走 580 个麦粒\n2013-05-21 17:13:37---被adminyahu偷走 400 个麦粒\n2013-05-21 + 9,500.0 Points (after tax) as a gift from adminyahu.\n 2013-05-21 16:54:48---偷adminyahu的麦粒被保镖抓了，损失1000个麦粒干掉他一个保镖\n2013-05-21 16:44:28---偷adminyahu的麦粒被保镖抓了，损失1000个麦粒干掉他一个保镖\n2013-05-21 16:44:19---偷adminyahu的麦粒被保镖抓了，损失1000个麦粒干掉他一个保镖\n2013-05-21 + 9,500.0 Points (after tax) as a gift from adminyahu.\n 2013-05-21 16:35:06---偷adminyahu的麦粒被保镖抓了，损失1000个麦粒干掉他一个保镖\n2013-05-21 16:34:57---偷adminyahu的麦粒被保镖抓了，损失1000个麦粒干掉他一个保镖\n2013-05-21 16:34:53---偷adminyahu的麦粒被保镖抓了，损失1000个麦粒干掉他一个保镖\n2013-05-21 16:32:27---偷adminyahu的麦粒被保镖抓了，损失1000个麦粒干掉他一个保镖\n2013-05-21 16:32:22---偷adminyahu的麦粒被保镖抓了，损失1000个麦粒干掉他一个保镖\n2013-05-21 16:29:00---偷adminyahu的麦粒被保镖抓了，损失1000个麦粒干掉他一个保镖\n2013-05-21 16:28:16---偷adminyahu的麦粒被保镖抓了，损失1000个麦粒干掉他一个保镖\n2013-05-21 16:27:23---偷adminyahu的麦粒被保镖抓了，损失1000个麦粒干掉他一个保镖\n2013-05-21 16:23:15---偷adminyahu的麦粒被保镖抓了，损失1000个麦粒干掉他一个保镖\n2013-05-21 16:23:11---偷adminyahu的麦粒被保镖抓了，损失1000个麦粒干掉他一个保镖\n2013-05-21 16:23:04---偷adminyahu的麦粒被保镖抓了，损失1000个麦粒干掉他一个保镖\n2013-05-21 16:08:05---adminyahu来偷麦粒，反而留下 140 个\n2013-05-21 15:59:37---adminyahu来偷麦粒，反而留下 1000 个\n2013-05-21 15:55:50---被adminyahu偷走 720 个麦粒\n2013-05-21 12:58:14---被adminyahu偷走 300 个麦粒\n2013-05-21 12:57:48---被adminyahu偷走 500 个麦粒\n2013-05-21 12:57:41---被adminyahu偷走 800 个麦粒\n2013-05-21 12:57:30---adminyahu来偷麦粒，反而留下 1000 个\n2013-05-21 12:57:05---adminyahu来偷麦粒，反而留下 500 个\n2013-05-21 12:56:41---adminyahu来偷麦粒，反而留下 1000 个\n2013-05-21 12:56:30---被adminyahu偷走 500 个麦粒\n2013-05-21 12:56:15---被adminyahu偷走 300 个麦粒\n2013-05-21 12:55:59---adminyahu来偷麦粒，反而留下 1000 个\n2013-05-21 12:55:03---被adminyahu偷走 100 个麦粒\n2013-05-21 12:54:36---被adminyahu偷走 200 个麦粒\n2013-05-21 12:52:24---adminyahu来偷麦粒，反而留下 500 个\n2013-05-21 12:52:00---adminyahu来偷麦粒，反而留下 400 个\n2013-05-21 + 9,500.0 Points (after tax) as a gift from adminyahu.\n 2013-05-08 - 1,111.0 Points as gift to admin1.\n 2013-05-08 - 1,111.0 Points as gift to admin1.\n 2013-05-08 - 1,111.0 Points as gift to admin1.\n 2013-05-07 - 30.0 Points as gift to admin1.\n 2013-05-07 + 28.5 Points (after tax) as a gift from admin1.\n 2013-05-07 + 285.0 Points (after tax) as a gift from admin1.\n 2013-05-07 + 105.5 Points (after tax) as a gift from admin1.\n 2013-05-07 + 28.5 Points (after tax) as a gift from admin1.\n 2013-05-07 - 300.0 Points as gift to admin1.\n 2013-05-07 - 30.0 Points as gift to admin1.\n 2013-05-07 - 100.0 Points as gift to admin1.\n 2013-05-07 - 30.0 Points as gift to admin1.\n 2013-05-07 - 30.0 Points as gift to admin1.\n 2013-05-07 - 30.0 Points as gift to admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from adminyahu.\n 2013-05-07 + 105.5 Points (after tax) as a gift from adminyahu.\n 2013-05-07 + 73.2 Points (after tax) as a gift from admin1.\n 2013-05-07 + 52.3 Points (after tax) as a gift from admin1.\n 2013-05-07 + 52.3 Points (after tax) as a gift from admin1.\n 2013-05-07 + 52.3 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 41.8 Points (after tax) as a gift from admin1.\n 2013-05-07 + 31.4 Points (after tax) as a gift from admin1.\n 2013-05-07 + 31.4 Points (after tax) as a gift from admin1.\n 2013-05-07 + 83.6 Points (after tax) as a gift from admin1.\n 2013-05-07 + 83.6 Points (after tax) as a gift from admin1.\n 2013-05-07 + 83.6 Points (after tax) as a gift from admin1.\n 2013-05-07 - 1,000.0 Points as gift to admin2.\n 2013-05-07 - 1,000.0 Points as gift to admin1.\n 2013-05-07 - 123.0 Points as gift to admin1.\n 2013-05-07 - 123.0 Points as gift to admin1.\n 2013-05-07 - 123.0 Points as gift to admin1.\n 2013-05-07 - 33.0 Points as gift to admin1.\n 2013-05-07 - 33.0 Points as gift to admin1.\n 2013-05-07 - 111.0 Points as gift to admin1.\n 2013-05-07 - 111.0 Points as gift to admin1.\n 2013-05-07 - 111.0 Points as gift to admin1.\n 2013-05-07 - 881.0 Points as gift to admin1.\n 2013-05-07 - 88.0 Points as gift to admin1.\n 2013-05-07 - 88.0 Points as gift to admin1.\n 2013-05-07 - 88.0 Points as gift to admin1.\n 2013-05-07 - 88.0 Points as gift to admin1.\n 2013-05-07 - 88.0 Points as gift to admin1.\n 2013-05-07 - 88.0 Points as gift to admin1.\n 2013-05-07 - 88.0 Points as gift to admin1.\n 2013-05-07 - 88.0 Points as gift to admin1.\n 2013-05-07 - 88.0 Points as gift to admin1.\n 2013-05-07 - 222.0 Points as gift to admin1.\n 2013-05-07 - 222.0 Points as gift to admin1.\n 2013-05-07 - 222.0 Points as gift to admin1.\n 2013-05-06 + 95.0 Points (after tax) as a gift from admin1.\n 2013-05-06 - 44.0 Points as gift to admin1.\n 2013-05-06 - 44.0 Points as gift to admin1.\n 2013-05-06 - 44.0 Points as gift to admin1.\n 2013-05-06 - 100.0 Points as gift to admin1.\n 2013-05-06 - 100.0 Points as gift to admin1.\n 2013-05-06 - 100.0 Points as gift to admin1.\n 2013-05-06 - 44.0 Points as gift to admin1.\n 2013-05-06 + 62.7 Points (after tax) as a gift from admin1.\n 2013-05-06 - 33.0 Points as gift to admin1.\n 2013-05-06 - 88.0 Points as gift to admin1.\n 2013-05-06 - 33.0 Points as gift to admin1.\n 2013-05-06 - 33.0 Points as gift to admin1.\n 2013-05-06 - 33.0 Points as gift to admin1.\n 2013-05-06 - 1,000.0 Points as gift to adminyahu.\n 2013-05-06 - 1,000.0 Points as gift to admin2.\n 2013-05-06 - 1,000.0 Points as gift to admin1.\n 2013-05-06 - 1,000.0 Points as gift to adminyahu.\n 2013-05-06 - 1,000.0 Points as gift to admin2.\n 2013-05-06 - 1,000.0 Points as gift to admin1.\n 2013-05-06 - 1,000.0 Points as gift to adminyahu.\n 2013-05-06 - 1,000.0 Points as gift to admin2.\n 2013-05-06 - 1,000.0 Points as gift to admin1.\n 2013-05-06 - 1,000.0 Points as gift to adminyahu.\n 2013-05-06 - 1,000.0 Points as gift to admin2.\n 2013-05-06 - 1,000.0 Points as gift to admin1.\n 2013-05-06 - 1,000.0 Points as gift to adminyahu.\n 2013-05-06 - 1,000.0 Points as gift to admin2.\n 2013-05-06 - 1,000.0 Points as gift to admin1.\n 2013-05-06 - 100.0 Points as gift to admin2.\n 2013-05-06 - 100.0 Points as gift to admin1.\n 2013-05-06 - 1,000.0 Points as gift to admin2.\n 2013-05-06 - 1,000.0 Points as gift to admin2.\n 2013-05-06 - 200.0 Points as gift to admin1.\n 2013-05-06 - 200.0 Points as gift to admin1.\n 2013-05-06 - 200.0 Points as gift to admin1.\n 2013-05-06 - 1,000.0 Points as gift to admin1.\n 2013-05-06 - 100.0 Points as gift to admin1.\n 2013-05-06 - 50.0 Points as gift to admin1.\n 2013-05-06 - 50.0 Points as gift to admin1.\n 2013-05-06 - 1,000.0 Points as gift to admin1.\n 2013-05-06 - 1,000.0 Points as gift to admin1.\n 2013-05-06 - 1,000.0 Points as gift to admin1.\n 2013-05-06 - 1,000.0 Points as gift to admin1.\n 2013-05-06 - 1,000.0 Points as gift to admin1.\n 2013-05-06 - 1,000.0 Points as gift to admin1.\n 2013-05-06 - 1,000.0 Points as gift to admin1.\n 2013-05-06 12 Points added by admin.\n2013-05-06 - 1,000.0 Points as gift to \'admin\'.\n 2013-05-06 - 1,000.0 Points as gift to \'admin1\'.\n 2013-05-06 + 950.0 Points (after tax) as a gift from admin.\n 2013-05-06 - 111.0 Points as gift to admin.\n 2013-05-06 + 105.5 Points (after tax) as a gift from admin.\n 2013-05-06 - 111.0 Points as gift to admin.\n 2013-05-06 + 31.4 Points (after tax) as a gift from admin.\n 2013-05-05 + 95.0 Points (after tax) as a gift from admin.\n 2013-05-05 + 105.5 Points (after tax) as a gift from admin.\n 2013-05-05 + 115.9 Points (after tax) as a gift from admin.\n 2013-05-05 + 115.9 Points (after tax) as a gift from admin.\n 2013-05-05 + 2,966.9 Points (after tax) as a gift from admin.\n 2013-05-05 + 2,966.9 Points (after tax) as a gift from admin.\n 2013-05-05 + 116.9 Points (after tax) as a gift from admin.\n 2013-05-05 + 116.9 Points (after tax) as a gift from admin.\n 2013-05-05 + 116.9 Points (after tax) as a gift from admin.\n 2013-05-04 - 2,222.0 Points as gift to admin.\n 2013-05-04 + 116.9 Points (after tax) as a gift from admin.\n 2013-05-04 - 444.0 Points as gift to admin.\n 2013-05-04 + 527.3 Points (after tax) as a gift from admin.\n 2013-05-04 + 116.9 Points (after tax) as a gift from admin.\n 2013-05-04 + 9,500.0 Points (after tax) as a gift from admin.\n 2013-05-04 + 527.3 Points (after tax) as a gift from admin.\n 2013-05-04 - 123.0 Points as gift to admin.\n 2013-05-04 + 210.9 Points (after tax) as a gift from admin.\n 2013-05-04 - 222.0 Points as gift to admin.\n 2013-05-04 + 105.5 Points (after tax) as a gift from admin.\n 2013-05-04 - 111.0 Points as gift to admin.\n 2013-05-04 + 116.9 Points (after tax) as a gift from admin.\n 2013-05-04 + 950.0 Points (after tax) as a gift from admin.\n 2013-05-04 + 115.9 Points (after tax) as a gift from admin.\n 2013-05-04 - 123.0 Points as gift to admin.\n 2013-05-04 - 1,000.0 Points as gift to admin.\n 2013-05-04 + 950.0 Points (after tax) as a gift from admin.\n 4026', 'no', 'no', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0', '0', '70', '120', 'no', 'yes', 'yes', 'yes', 'no', '0', 'off', 'yes', 'timealive', 'yes', 'yes', 'icon', 'yes', 'yes', 'yes', 'yes', 'yes', 'no', 'no', '50', '0', 'yes', '2010011756', '5', '2013-10-03', '08:05:15', '0', '0', '0', '123', '937');
+INSERT INTO `users` VALUES ('11', '机器人', '3076c489152c1715096e93bc82a70e4c', 0x666670776D706E716F76726B7871716971686870, 'email@email.com', 'confirmed', '2013-10-04 00:56:42', '0000-00-00 00:00:00', '2013-10-04 00:56:42', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0', '0', '0', '', 'normal', '7', '1', 'medium', null, 'yes', 'yes', '', '1', '1', '', '0', '0', '0', '0', '', '107', '[incldead=0]', null, 'yes', 'yes', 'no', '0.00', '0.00', '0000-00-00 00:00:00', 'no', '0000-00-00 00:00:00', 'no', '0000-00-00 00:00:00', '0', '0', '0', 'firstpage', 'yes', 'no', 'yes', 'yes', 'no', 'no', '', '', '', '', '', null, 'yes', 'yes', 'yes', '0', 'yes', '', '6', '0', '0', '0', '0', '0', '0', 'N/A', 'no', '0000-00-00 00:00:00', '0.00000000', '0.0', null, 'no', 'no', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0', '0', '70', '120', 'no', 'yes', 'yes', 'yes', 'no', '1', 'off', 'yes', 'timealive', 'yes', 'yes', 'icon', 'yes', 'yes', 'yes', 'yes', 'yes', 'no', 'no', '10', '35', 'yes', '', '0', '0000-00-00', null, '0', '0', '0', '1', '1');
 
 -- ----------------------------
 -- Table structure for `users_log`
@@ -2474,7 +2580,7 @@ CREATE TABLE `users_log` (
   `detail` text NOT NULL,
   `op_time` datetime NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of users_log
