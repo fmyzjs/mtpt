@@ -24,7 +24,93 @@ function docleanup($forceAll = 0, $printProgress = false) {
 	set_time_limit(0);
 	ignore_user_abort(1);
 	$now = time();
+//彩票开奖函数，每3天一次
+	function drawlotteryfun(){
+	require_once "./memcache.php";
+	
+	$hapcharge=100;//预设单注价格
+	$cash=array();
+	$cash[1]=5000000;
+	$cash[2]=500000;
+	$cash[3]=10000;
+	$cash[4]=1000;
+	$cash[5]=0;
+	$cash[6]=0;
 
+
+	$lasttime=$memcache->get('drawnumtime');
+
+		if((((int)date('w'))==5||((int)date('w')==2))&&(((int)date('H'))>=21)&& ((((int)time())-$lasttime)>= 24*3600))
+		{
+			$memcache->set('drawnumtime',(int)time());
+			//echo time();
+			$date=date('Y-m-d',time());
+			$num1=rand(1,12);
+			$num2=rand(1,12);
+			$num3=rand(1,12);
+			$num4=rand(1,12);
+			$num5=rand(1,12);
+			sql_query("INSERT INTO drawlottery (num1, num2, num3, num4, num5,drawtime) VALUES ('$num1', '$num2', '$num3', '$num4', '$num5','$date')")or sqlerr(__FILE__, __LINE__);
+			
+			$sql="SELECT MAX(id) from drawlottery";
+			$res=sql_query($sql);
+			$row = mysql_fetch_array( $res );
+			$drawid=(int)$row['0'];			
+			$memcache->set('drawid',$drawid+1);
+			sendshoutbox("开奖啦开奖啦，彩票第$drawid  期选出了[color=red][b]$num1 -- $num2 -- $num3 -- $num4 -- $num5 [/b][/color]五个数字~记名彩票已经发奖了，不记名的快来兑奖吧~分给我一半吧（口水 ");
+			
+			$sql="SELECT * from lottery where drawid='".$drawid."' and ownerid!= '0'";
+			$res = sql_query($sql)or sqlerr(__FILE__, __LINE__);
+			while($row=mysql_fetch_array($res)){
+				//sendshoutbox("口水 ");
+				$userid=$row['ownerid'];
+				$lotteryid=$row['id'];
+				$lnum1=$row['num1'];
+				$lnum2=$row['num2'];
+				$lnum3=$row['num3'];
+				$lnum4=$row['num4'];
+				$lnum5=$row['num5'];
+				$multiple = $row['multiple'];
+				$level=6;
+				if($lnum1==$num1)
+				{
+					$level=$level-1;
+				}
+				if($lnum2==$num2)
+				{
+					$level=$level-1;
+				}
+				if($lnum3==$num3)
+				{
+					$level=$level-1;
+				}
+				if($lnum4==$num4)
+				{
+					$level=$level-1;
+				}
+				if($lnum5==$num5)
+				{
+					$level=$level-1;
+				}
+				//sendshoutbox("$level ");
+				if($level<5){
+					$bonus=$cash[$level]*$multiple;
+					$sql="UPDATE users SET seedbonus =seedbonus +".$bonus." WHERE id = ".$userid;
+					sql_query($sql) or sqlerr(__FILE__, __LINE__);
+					
+						sql_query("UPDATE lottery SET isencase ='0'  WHERE 	id = ".$lotteryid) or sqlerr(__FILE__, __LINE__);
+						$date=date('Y-m-d',time());
+						sql_query("UPDATE lottery SET encasetime ='".$date."'  WHERE id = ".$lotteryid) or sqlerr(__FILE__, __LINE__);
+						sendMessage(0, $userid, "恭喜你中奖了","恭喜你在彩票第$drawid 期中获得$level 等奖，获得麦粒$bonus");
+						writeBonusComment($userid,"彩票第$drawid 期中获得$level 等奖，获得麦粒$bonus");
+						//sendshoutbox("彩票第$drawid 期中获得$level 等奖，获得麦粒$bonus");
+						if ($level <=4) sendshoutbox("有人在彩票第$drawid 期中了$level 等奖，获得麦粒$bonus ！！！！土豪~~求包养~~我知道你是谁，我不会告诉别人滴，土豪来做朋友吧");
+					
+				}
+			}	
+		}		
+	
+	}
 //Priority Class 1: cleanup every 15 mins
 //2.update peer status
 	$deadtime = deadtime();
@@ -94,7 +180,11 @@ function docleanup($forceAll = 0, $printProgress = false) {
 	}
 	
 //Priority Class 3: cleanup every 60 mins
-
+//彩票开奖
+	drawlotteryfun();
+		if ($printProgress) {
+		printProgress("彩票开奖");
+	}	
 //自动清理过期短信
 if(time() > 1323069888 + 604800){
 		$deltime = date("Y-m-d H:i:s", time() - 2592000);//一个月前时间
@@ -345,97 +435,8 @@ function torrent_promotion_expire($days, $type = 2, $targettype = 1){
 	} else {
 		sql_query("UPDATE avps SET value_u = ".sqlesc($now)." WHERE arg='lastcleantime4'") or sqlerr(__FILE__, __LINE__);
 	}
-//彩票开奖，每3天一次
-	function drawlotteryfun(){
-	require_once "./memcache.php";
-	
-	$hapcharge=100;//预设单注价格
-	$cash=array();
-	$cash[1]=5000000;
-	$cash[2]=500000;
-	$cash[3]=10000;
-	$cash[4]=1000;
-	$cash[5]=0;
-	$cash[6]=0;
 
 
-	$lasttime=$memcache->get('drawnumtime');
-
-		if((((int)date('w'))==5||((int)date('w')==2))&&(((int)date('H'))>=21)&& ((((int)time())-$lasttime)>= 24*3600))
-		{
-			$memcache->set('drawnumtime',(int)time());
-			//echo time();
-			$date=date('Y-m-d',time());
-			$num1=rand(1,12);
-			$num2=rand(1,12);
-			$num3=rand(1,12);
-			$num4=rand(1,12);
-			$num5=rand(1,12);
-			sql_query("INSERT INTO drawlottery (num1, num2, num3, num4, num5,drawtime) VALUES ('$num1', '$num2', '$num3', '$num4', '$num5','$date')")or sqlerr(__FILE__, __LINE__);
-			
-			$sql="SELECT MAX(id) from drawlottery";
-			$res=sql_query($sql);
-			$row = mysql_fetch_array( $res );
-			$drawid=(int)$row['0'];			
-			$memcache->set('drawid',$drawid+1);
-			sendshoutbox("开奖啦开奖啦，彩票第$drawid  期选出了[color=red][b]$num1 -- $num2 -- $num3 -- $num4 -- $num5 [/b][/color]五个数字~记名彩票已经发奖了，不记名的快来兑奖吧~分给我一半吧（口水 ");
-			
-			$sql="SELECT * from lottery where drawid='".$drawid."' and ownerid!= '0'";
-			$res = sql_query($sql)or sqlerr(__FILE__, __LINE__);
-			while($row=mysql_fetch_array($res)){
-				//sendshoutbox("口水 ");
-				$userid=$row['ownerid'];
-				$lotteryid=$row['id'];
-				$lnum1=$row['num1'];
-				$lnum2=$row['num2'];
-				$lnum3=$row['num3'];
-				$lnum4=$row['num4'];
-				$lnum5=$row['num5'];
-				$multiple = $row['multiple'];
-				$level=6;
-				if($lnum1==$num1)
-				{
-					$level=$level-1;
-				}
-				if($lnum2==$num2)
-				{
-					$level=$level-1;
-				}
-				if($lnum3==$num3)
-				{
-					$level=$level-1;
-				}
-				if($lnum4==$num4)
-				{
-					$level=$level-1;
-				}
-				if($lnum5==$num5)
-				{
-					$level=$level-1;
-				}
-				//sendshoutbox("$level ");
-				if($level<5){
-					$bonus=$cash[$level]*$multiple;
-					$sql="UPDATE users SET seedbonus =seedbonus +".$bonus." WHERE id = ".$userid;
-					sql_query($sql) or sqlerr(__FILE__, __LINE__);
-					
-						sql_query("UPDATE lottery SET isencase ='0'  WHERE 	id = ".$lotteryid) or sqlerr(__FILE__, __LINE__);
-						$date=date('Y-m-d',time());
-						sql_query("UPDATE lottery SET encasetime ='".$date."'  WHERE id = ".$lotteryid) or sqlerr(__FILE__, __LINE__);
-						sendMessage(0, $userid, "恭喜你中奖了","恭喜你在彩票第$drawid 期中获得$level 等奖，获得麦粒$bonus");
-						writeBonusComment($userid,"彩票第$drawid 期中获得$level 等奖，获得麦粒$bonus");
-						//sendshoutbox("彩票第$drawid 期中获得$level 等奖，获得麦粒$bonus");
-						if ($level <=4) sendshoutbox("有人在彩票第$drawid 期中了$level 等奖，获得麦粒$bonus ！！！！土豪~~求包养~~我知道你是谁，我不会告诉别人滴，土豪来做朋友吧");
-					
-				}
-			}	
-		}		
-	
-	}
-	drawlotteryfun();
-		if ($printProgress) {
-		printProgress("彩票开奖");
-	}	
 	//3.delete unconfirmed accounts
 	$deadtime = time() - $signup_timeout;
 	$delres = sql_query("SELECT id, username FROM users WHERE status = 'pending' AND added < FROM_UNIXTIME($deadtime) AND last_login < FROM_UNIXTIME($deadtime) AND last_access < FROM_UNIXTIME($deadtime)");
@@ -480,27 +481,28 @@ function torrent_promotion_expire($days, $type = 2, $targettype = 1){
 	if ($deletenotransfer_account){
 		$secs = $deletenotransfer_account*24*60*60;
 		$dt = sqlesc(date("Y-m-d H:i:s",(TIMENOW - $secs)));
+		$maxclass = $neverdelete_account;
+		/*发邮件
 		$secs2 = $secs*0.8;
 		$dt2 = sqlesc(date("Y-m-d H:i:s",(TIMENOW - $secs2)));
-		$maxclass = $neverdelete_account;
-		//发邮件
 		$delres = sql_query("SELECT id, username, email FROM users WHERE parked='no' AND status='confirmed' AND class < $maxclass AND last_access < $dt2 AND (uploaded = 0 || uploaded = ".sqlesc($iniupload_main).") AND downloaded = 0");
 		$notransfererr=0;$notransferdone=0;
 		$notransferemail = array();
 		while ($userinfo = mysql_fetch_assoc($delres)){
-                    //if(	sent_mail($userinfo['email'], $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $deletetitle), change_email_encode(get_langfolder_cookie(),$body), '', false, false, '', get_email_encode(get_langfolder_cookie()),'noerror'))
-						//{$emailflag =1;$notransferdone++;}
-					//else
-				//	{$emailflag =0;
-				//	$notransfererr++;continue;}
+                    if(	sent_mail($userinfo['email'], $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $deletetitle), change_email_encode(get_langfolder_cookie(),$body), '', false, false, '', get_email_encode(get_langfolder_cookie()),'noerror'))
+						{$emailflag =1;$notransferdone++;}
+					else
+					{$emailflag =0;
+					$notransfererr++;continue;}
 				$notransferemail[] = $userinfo['email'];$notransfererr++;
                 }
-		//	if(sent_mail($notransferemail[0], $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $deletetitle), change_email_encode(get_langfolder_cookie(),$body), '', false, true, $notransferemail, get_email_encode(get_langfolder_cookie()),'noerror'))	
-		//	write_log("系统自动发送邮件：给$notransfererr 位注册后连续".$deletenotransfer_account*0.8 ." 天未登录且无流量用户发送邮件提醒",'normal');
-		//	else write_log("系统自动发送邮件：有$notransfererr 位无流量用户发送邮件失败！！！！！！！$notransferdone 位成功".__LINE__,'normal');
+			if(sent_mail($notransferemail[0], $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $deletetitle), change_email_encode(get_langfolder_cookie(),$body), '', false, true, $notransferemail, get_email_encode(get_langfolder_cookie()),'noerror'))	
+			write_log("系统自动发送邮件：给$notransfererr 位注册后连续".$deletenotransfer_account*0.8 ." 天未登录且无流量用户发送邮件提醒",'normal');
+			else write_log("系统自动发送邮件：有$notransfererr 位无流量用户发送邮件失败！！！！！！！$notransferdone 位成功".__LINE__,'normal');
 			if ($printProgress) {
 		printProgress("给注册后连续".$deletenotransfer_account*0.8 ." 天未登录且无流量用户发送邮件提醒");
 	}
+	*/
 		$delres = sql_query("SELECT id, username FROM users WHERE parked='no' AND status='confirmed' AND class < $maxclass AND last_access < $dt AND (uploaded = 0 || uploaded = ".sqlesc($iniupload_main).") AND downloaded = 0");
 	        while ($userinfo = mysql_fetch_assoc($delres)){
 	                record_op_log(0,$userinfo['id'],$userinfo['username'],'del','无流量账号连续'.$deletenotransfer_account.'天未登录');
@@ -518,23 +520,23 @@ function torrent_promotion_expire($days, $type = 2, $targettype = 1){
 		$dt = sqlesc(date("Y-m-d H:i:s",(TIMENOW - $secs)));
 		$dt2 = sqlesc(date("Y-m-d H:i:s",(TIMENOW - $secs2)));
 		$maxclass = $neverdelete_account;
+		/*发送email
 		$notransfererr1=0;$notransferdone1=0;
 		$notransferemail1 = array();
-		//发送站内信
 		$delres = sql_query("SELECT id, username, email FROM users WHERE  parked='no' AND status='confirmed' AND class < $maxclass AND added < $dt2 AND (uploaded = 0 || uploaded = ".sqlesc($iniupload_main).") AND downloaded = 0");
                while ($userinfo = mysql_fetch_assoc($delres)){
-                   // if(	sent_mail($userinfo['email'], $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $deletetitle), change_email_encode(get_langfolder_cookie(),$body), '', false, false, '', get_email_encode(get_langfolder_cookie()),'noerror'))
-				//		$emailflag =1;
-				//	else
-				//	{$notransfererr1++;$emailflag =0;continue;}
+                    if(	sent_mail($userinfo['email'], $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $deletetitle), change_email_encode(get_langfolder_cookie(),$body), '', false, false, '', get_email_encode(get_langfolder_cookie()),'noerror'))
+						$emailflag =1;
+					else
+					{$notransfererr1++;$emailflag =0;continue;}
 				$notransferemail1[] = $userinfo['email'];$notransfererr1++;
                 }
-			//if(sent_mail($notransferemail1[0], $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $deletetitle), change_email_encode(get_langfolder_cookie(),$body), '', false, true, $notransferemail1, get_email_encode(get_langfolder_cookie()),'noerror'))
-		//	write_log("系统自动发送邮件：给$notransfererr1 位注册后连续".$deletenotransfertwo_account*0.8 ." 天未登录且无流量用户发送邮件提醒",'normal');
-		//	else write_log("系统自动发送邮件：有$notransfererr1 位长时间未登录用户发送邮件失败！！！！$notransferdone1 位成功！！！".__LINE__,'normal');
+			if(sent_mail($notransferemail1[0], $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $deletetitle), change_email_encode(get_langfolder_cookie(),$body), '', false, true, $notransferemail1, get_email_encode(get_langfolder_cookie()),'noerror'))
+			write_log("系统自动发送邮件：给$notransfererr1 位注册后连续".$deletenotransfertwo_account*0.8 ." 天未登录且无流量用户发送邮件提醒",'normal');
+			else write_log("系统自动发送邮件：有$notransfererr1 位长时间未登录用户发送邮件失败！！！！$notransferdone1 位成功！！！".__LINE__,'normal');
 			if ($printProgress) {
 		printProgress("给注册后连续".$deletenotransfertwo_account*0.8 ." 天未登录用户发送邮件提醒");
-	}
+	}*/
 				//delete
 		$delres = sql_query("SELECT id, username FROM users WHERE  parked='no' AND status='confirmed' AND class < $maxclass AND added < $dt AND (uploaded = 0 || uploaded = ".sqlesc($iniupload_main).") AND downloaded = 0");
                 while ($userinfo = mysql_fetch_assoc($delres)){
@@ -554,23 +556,25 @@ function torrent_promotion_expire($days, $type = 2, $targettype = 1){
 		$secs2 = $secs*0.8;
 		$dt2 = sqlesc(date("Y-m-d H:i:s",(TIMENOW - $secs2)));
 		$maxclass = $neverdelete_account;
+		/*
 		$uppackederrnum =0;$uppackeddonenum =0;
 		$uppackedemail = array();
 			$body = "你好，你在麦田pt注册的账号 {$userinfo['username']}  已经连续 ".$deleteunpacked_account*0.8 ."天未登录，由于你的账号没有封存，如果连续$deleteunpacked_account 天未登录，你的账号将会被删除。\n 麦田pt期待您的回归，我们的地址是 pt.nwsuaf6.edu.cn  如果没有ipv6环境可以使用pt.nwsuaf6.edu.cn.ipv4.sixxs.org 登陆账号";
                 $delres = sql_query("SELECT id, username,email FROM users WHERE parked='no' AND status='confirmed' AND class < $maxclass AND last_access < $dt2");
                 while ($userinfo = mysql_fetch_assoc($delres)){
-                  //  if(	sent_mail($userinfo['email'], $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $deletetitle), change_email_encode(get_langfolder_cookie(),$body), '', false, false, '', get_email_encode(get_langfolder_cookie()),'noerror'))
-				//		{$emailflag =1;$uppackeddonenum++;}
-				//	else
-				//	{$uppackederrnum++;$emailflag =0;continue;}
+                    if(	sent_mail($userinfo['email'], $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $deletetitle), change_email_encode(get_langfolder_cookie(),$body), '', false, false, '', get_email_encode(get_langfolder_cookie()),'noerror'))
+				{$emailflag =1;$uppackeddonenum++;}
+					else
+					{$uppackederrnum++;$emailflag =0;continue;}
 				$uppackedemail[] = $userinfo['email'];$uppackederrnum++;
                 }
-			//if(sent_mail($uppackedemail[0], $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $deletetitle), change_email_encode(get_langfolder_cookie(),$body), '', false, true, $uppackedemail, get_email_encode(get_langfolder_cookie()),'noerror'))	
-		//	write_log("系统自动发送邮件：给$uppackederrnum 位未封存账号连续".$deleteunpacked_account*0.8 ." 天未登录用户发送邮件提醒",'normal');
-		//	else write_log("系统自动发送邮件：有$uppackederrnum 位封存长时间未登录用户发送邮件失败！！！$uppackeddonenum 位成功！！！！".__LINE__,'normal');
+			if(sent_mail($uppackedemail[0], $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $deletetitle), change_email_encode(get_langfolder_cookie(),$body), '', false, true, $uppackedemail, get_email_encode(get_langfolder_cookie()),'noerror'))	
+			write_log("系统自动发送邮件：给$uppackederrnum 位未封存账号连续".$deleteunpacked_account*0.8 ." 天未登录用户发送邮件提醒",'normal');
+			else write_log("系统自动发送邮件：有$uppackederrnum 位封存长时间未登录用户发送邮件失败！！！$uppackeddonenum 位成功！！！！".__LINE__,'normal');
 			if ($printProgress) {
 		printProgress("给未封存账号连续".$deleteunpacked_account*0.8 ." 天未登录用户发送邮件提醒");
 	}
+	*/
 			//delete
                 $delres = sql_query("SELECT id, username FROM users WHERE parked='no' AND status='confirmed' AND class < $maxclass AND last_access < $dt");
                 while ($userinfo = mysql_fetch_assoc($delres)){
@@ -590,25 +594,27 @@ function torrent_promotion_expire($days, $type = 2, $targettype = 1){
 		$secs2 = $secs * 0.8;
 		$dt2 = sqlesc(date("Y-m-d H:i:s",(TIMENOW - $secs2)));
 		$maxclass = $neverdeletepacked_account;
+		/*发邮件
 		$packednum=0;$packeddonenum=0;
 		 $packedemail[] = array();
 			$body ="你好，你在麦田pt注册的账号 {$userinfo['username']}  已经连续 ".$deletepacked_account*0.8 ."天未登录，虽然你的账号已经封存，但是如果连续$deletepacked_account 天未登录，你的账号仍然会被删除。\n 麦田pt期待您的回归，我们的地址是 pt.nwsuaf6.edu.cn  如果没有ipv6环境可以使用pt.nwsuaf6.edu.cn.ipv4.sixxs.org 登陆账号";
                 $delres = sql_query("SELECT id, username, email FROM users WHERE parked='yes' AND status='confirmed' AND class < $maxclass AND last_access < $dt2");
 				
                 while ($userinfo = mysql_fetch_assoc($delres)){
-                   // if(	sent_mail($userinfo['email'], $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $deletetitle), change_email_encode(get_langfolder_cookie(),$body), '', false, false, '', get_email_encode(get_langfolder_cookie()),'noerror'))
-						//{$emailflag =1;$packeddonenum++;}
-					//else
-					//{$emailflag =0;continue;}
+                    if(	sent_mail($userinfo['email'], $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $deletetitle), change_email_encode(get_langfolder_cookie(),$body), '', false, false, '', get_email_encode(get_langfolder_cookie()),'noerror'))
+						{$emailflag =1;$packeddonenum++;}
+					else
+					{$emailflag =0;continue;}
 					$packednum++;
 					$packedemail[] = $userinfo['email'];
                 }
-			//	if (sent_mail($packedemail[0], $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $deletetitle), change_email_encode(get_langfolder_cookie(),$body), '', false, true, $packedemail, get_email_encode(get_langfolder_cookie()),'noerror'))
-		//	write_log("系统自动发送邮件：给$packednum 位封存账号连续".$deletepacked_account*0.8 ." 天未登录用户发送邮件提醒",'normal');
-		//	else write_log("系统自动发送邮件：有$packednum 位封存账号发送邮件失败！！！！！！！".__LINE__,'normal');
+				if (sent_mail($packedemail[0], $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $deletetitle), change_email_encode(get_langfolder_cookie(),$body), '', false, true, $packedemail, get_email_encode(get_langfolder_cookie()),'noerror'))
+			write_log("系统自动发送邮件：给$packednum 位封存账号连续".$deletepacked_account*0.8 ." 天未登录用户发送邮件提醒",'normal');
+			else write_log("系统自动发送邮件：有$packednum 位封存账号发送邮件失败！！！！！！！".__LINE__,'normal');
 			if ($printProgress) {
 		printProgress("给封存账号连续".$deletepacked_account*0.8 ." 天未登录用户发送邮件提醒");
 	}
+	*/
 			//delete
                 $delres = sql_query("SELECT id, username FROM users WHERE parked='yes' AND status='confirmed' AND class < $maxclass AND last_access < $dt");
                 while ($userinfo = mysql_fetch_assoc($delres)){
@@ -914,10 +920,10 @@ function user_to_peasant($down_floor_gb, $minratio){
 	//delete old readpost records
 	$length = 180*86400; //half a year
 	$until = date("Y-m-d H:i:s",(TIMENOW - $length));
-	$postIdHalfYearAgo = get_single_value('posts', 'id', 'WHERE added < ' . sqlesc($until).' ORDER BY added DESC');
+//	$postIdHalfYearAgo = get_single_value('posts', 'id', 'WHERE added < ' . sqlesc($until).' ORDER BY added DESC');echo "333<br/>";这一行代码执行失败，暂时修改无能
 	if ($postIdHalfYearAgo) {
-		sql_query("UPDATE users SET last_catchup = ".sqlesc($postIdHalfYearAgo)." WHERE last_catchup < ".sqlesc($postIdHalfYearAgo));
-		sql_query("DELETE FROM readposts WHERE lastpostread < ".sqlesc($postIdHalfYearAgo));
+		sql_query("UPDATE users SET last_catchup = ".sqlesc($postIdHalfYearAgo)." WHERE last_catchup < ".sqlesc($postIdHalfYearAgo))or sqlerr(__FILE__, __LINE__);
+		sql_query("DELETE FROM readposts WHERE lastpostread < ".sqlesc($postIdHalfYearAgo))or sqlerr(__FILE__, __LINE__);
 	}
 	if ($printProgress) {
 		printProgress("delete old readpost records");
