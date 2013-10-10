@@ -14,6 +14,7 @@ function printProgress($msg) {
 //彩票开奖函数，每3天一次
 function drawlotteryfun(){
 	global $memcache;
+	if (!$memcache) require_once "./memcache.php";
 	$hapcharge=100;//预设单注价格
 	$cash=array();
 	$cash[1]=5000000;
