@@ -121,19 +121,20 @@ echo ("<input type=\"button\" value='随机选择' onclick=\" return randnum() \
 </form>
 </table>
 <br/><br/><hr/>");
-print("<h2>我的中奖纪录</h2>这里只显示拥有的非匿名并且中奖的彩票，不显示几等奖。如果还没有的话赶紧加油吧~<br/><h3><a href=\"lottery.php?action=showmylottery\" target=\"_blank\" >我购买过的所有彩票</a></h3><table>
+print("<h2>我的中奖纪录</h2>这里只显示拥有的非匿名并且中奖的彩票。如果还没有的话赶紧加油吧~<br/><table>
 	<tr>
-<td>期数</td><td>彩票ID</td><td>NUM1</td><td>NUM2</td><td>NUM3</td><td>NUM4</td><td>NUM5</td><td>是否已兑奖</td>
+<td class='colhead'>期数</td><td class='colhead'>彩票ID</td><td class='colhead'>NUM1</td><td class='colhead'>NUM2</td><td class='colhead'>NUM3</td><td class='colhead'>NUM4</td><td class='colhead'>NUM5</td><td class='colhead'>倍数</td><td class='colhead'>中奖等级</td><td class='colhead'>中奖奖励</td>
 </tr>");
 	
 	
-	$sql="select * from lottery where id ".$userid." isencse= 0";
+	$sql="select * from lottery where ownerid=".$CURUSER['id']." and isencase!= 0";
 	$res=sql_query($sql);
 	while($row = mysql_fetch_array( $res ))
 	{
-		print("<tr><td>".$row['drawid']."</td><td>".$row['id']."</td><td>".$row['num1']."</td><td>".$row['num2']."</td><td>".$row['num3']."</td><td>".$row['num4']."</td><td>".$row['num5']."</td></tr>");
+		print("<tr><td>".$row['drawid']."</td><td>".$row['id']."</td><td>".$row['num1']."</td><td>".$row['num2']."</td><td>".$row['num3']."</td><td>".$row['num4']."</td><td>".$row['num5']."</td><td>".$row['multiple']."</td><td>".$row['isencase']."</td><td>".($cash[$row['isencase']]*$row['multiple'])."麦粒</td></tr>");
 	}
-	print("</table><hr/><br/><br/><h2>手动兑奖（匿名彩票）</h2>
+	
+	print("</table><h3><a href=\"lottery.php?action=showmylottery\" target=\"_blank\" >点击查看我购买过的所有彩票</a></h3><hr/><br/><br/><h2>手动兑奖（匿名彩票）</h2>
 <table>
 <form action=\"?action=encash\" method=\"post\">
 	<tr>
@@ -261,7 +262,7 @@ print("<h2>我的中奖纪录</h2>这里只显示拥有的非匿名并且中奖�
 		$lnum5=(int)$row['num5'];		
 		$multiple=(int)$row['multiple'];
 		
-		if(((int)$row['isencase'])!=1)
+		if(((int)$row['isencase'])!=0)
 		{
 			stdmsg("错误", "该彩票似乎已经兑过奖了");
 			die();
@@ -313,7 +314,7 @@ print("<h2>我的中奖纪录</h2>这里只显示拥有的非匿名并且中奖�
 		echo $sql;
 		if(sql_query($sql) or sqlerr(__FILE__, __LINE__))
 		{
-			sql_query("UPDATE lottery SET isencase ='1'  WHERE id = ".$drawid) or sqlerr(__FILE__, __LINE__);
+			sql_query("UPDATE lottery SET isencase ='$level'  WHERE id = ".$drawid) or sqlerr(__FILE__, __LINE__);
 			$date=$date=date('Y-m-d',time());
 			sql_query("UPDATE lottery SET encasetime ='".$date."'  WHERE id = ".$drawid) or sqlerr(__FILE__, __LINE__);
 			writeBonusComment($userid,"把第$drawid 期中了奖的不记名id为$lotteryid 的彩票兑了奖啦，得到了$bonus 个麦粒");
@@ -326,14 +327,28 @@ print("<h2>我的中奖纪录</h2>这里只显示拥有的非匿名并且中奖�
 	if($action == "drawlog"){
 	print("<h2>近50期开奖纪录</h2><table>
 	<tr>
-<td>期数</td><td>NUM1</td><td>NUM2</td><td>NUM3</td><td>NUM4</td><td>NUM5</td><td>开奖日期</td>
-</tr>");	
+<td class='colhead'>期数</td><td class='colhead'>NUM1</td><td class='colhead'>NUM2</td><td class='colhead'>NUM3</td><td class='colhead'>NUM4</td><td class='colhead'>NUM5</td><td class='colhead'>开奖日期</td>");
+if (get_user_class()>14)
+echo ("<td class='colhead'>中奖人数（右边数据站长以上可见，请保密</td><td class='colhead'>出</td><td class='colhead'>入</td><td class='colhead'>入-出</td>");
+echo ("</tr>");	
 	
 	$sql="select * from drawlottery order by id desc limit 0,50";
 	$res=sql_query($sql);
 	while($row = mysql_fetch_array( $res ))
 	{
-		print("<tr><td>".$row['id']."</td><td>".$row['num1']."</td><td>".$row['num2']."</td><td>".$row['num3']."</td><td>".$row['num4']."</td><td>".$row['num5']."</td><td>".$row['drawtime']."</td></tr>");
+		print("<tr><td>".$row['id']."</td><td>".$row['num1']."</td><td>".$row['num2']."</td><td>".$row['num3']."</td><td>".$row['num4']."</td><td>".$row['num5']."</td><td>".$row['drawtime']."</td>");
+	if (get_user_class()>14){
+	$sql = "select sum(multiple) from lottery where drawid=".$row['id']." and isencase=";
+		$level1 = mysql_fetch_array(sql_query($sql."1"));
+		$level2 = mysql_fetch_array(sql_query($sql."2"));
+		$level3 = mysql_fetch_array(sql_query($sql."3"));
+		$level4 = mysql_fetch_array(sql_query($sql."4"));
+		$allnum = '一等奖'.$level1[0].'注，二等奖'.$level2[0].'注，三等奖'.$level3[0].'注，四等奖'.$level4[0].'注';
+		$out = $level1[0]*$cash[1]+$level2[0]*$cash[2]+$level3[0]*$cash[3]+$level4[0]*$cash[4];
+		$in = mysql_fetch_array(sql_query("select sum(multiple*100) from lottery where drawid=".$row['id']));
+echo ("<td>$allnum</td><td>$out</td><td>$in[0]</td><td>".($in[0]-$out)."</td>");
+}
+echo ("</tr>");	
 	}
 	print("</table>");
 	}
@@ -344,16 +359,16 @@ print("<h2>我的中奖纪录</h2>这里只显示拥有的非匿名并且中奖�
 			echo "<h2>别人的彩票</h2>";}
 		else 
 			{$id = $CURUSER['id'];
-			print("<h2>我的彩票</h2>这里显示我拥有的彩票，不管是否中奖，都将显示在这里<table><tr><td>期数</td><td>彩票ID</td><td>NUM1</td><td>NUM2</td><td>NUM3</td><td>NUM4</td><td>NUM5</td><td>是否已兑奖</td></tr>");}
+			print("<h2>我的彩票</h2>这里显示我拥有的彩票，不管是否中奖，都将显示在这里<table><tr><td class='colhead'>期数</td><td class='colhead'>彩票ID</td><td class='colhead'>NUM1</td><td class='colhead'>NUM2</td><td class='colhead'>NUM3</td><td class='colhead'>NUM4</td><td class='colhead'>NUM5</td><td class='colhead'>倍数</td></tr>");}
 		
 		$sql="select * from lottery where ownerid= ".$id;
 		$res=sql_query($sql) or sqlerr(__FILE__,__LINE__);
 		
 		while($row = mysql_fetch_array( $res ))
 		{
-			print("<tr><td>".$row['drawid']."</td><td>".$row['id'].	"</td><td>".$row['num1']."</td><td>".$row['num2']."</td><td>".$row['num3']."</td><td>".$row['num4']."</td><td>".$row['num5']."</td></tr>");
+			print("<tr><td>".$row['drawid']."</td><td>".$row['id'].	"</td><td>".$row['num1']."</td><td>".$row['num2']."</td><td>".$row['num3']."</td><td>".$row['num4']."</td><td>".$row['num5']."</td><td>".$row['multiple']."</td></tr>");
 		}
-		if (!$row) echo "<h1>购买记录为空</h1>";
+		//if (!mysql_fetch_array( $res )) echo "<h1>购买记录为空</h1>";
 	}
 	
 	stdfoot();
