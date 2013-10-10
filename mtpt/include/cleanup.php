@@ -5,29 +5,15 @@ if(!defined('IN_TRACKER'))
 die('Hacking attempt!');
 require_once("include/bittorrent.php");
 require_once($rootpath . 'lang/_target/lang_cleanup.php');
-
+//error_reporting(E_ALL);
 function printProgress($msg) {
 	echo $msg.'...done<br />';
 	ob_flush();
 	flush();
 }
-function docleanup($forceAll = 0, $printProgress = false) {
-	//require_once(get_langfile_path("cleanup.php",true));
-	global $lang_cleanup_target;
-	global $torrent_dir, $signup_timeout, $max_dead_torrent_time, $autoclean_interval_one, $autoclean_interval_two, $autoclean_interval_three, $autoclean_interval_four, $autoclean_interval_five, $SITENAME,$bonus,$invite_timeout,$offervotetimeout_main,$offeruptimeout_main, $iniupload_main;
-	global $donortimes_bonus, $perseeding_bonus, $maxseeding_bonus, $tzero_bonus, $nzero_bonus, $bzero_bonus, $l_bonus;
-	global $expirehalfleech_torrent, $expirefree_torrent, $expiretwoup_torrent, $expiretwoupfree_torrent, $expiretwouphalfleech_torrent, $expirethirtypercentleech_torrent, $expirenormal_torrent, $hotdays_torrent, $hotseeder_torrent,$halfleechbecome_torrent,$freebecome_torrent,$twoupbecome_torrent,$twoupfreebecome_torrent, $twouphalfleechbecome_torrent, $thirtypercentleechbecome_torrent, $normalbecome_torrent, $deldeadtorrent_torrent;
-	global $neverdelete_account, $neverdeletepacked_account, $deletepacked_account, $deleteunpacked_account, $deletenotransfer_account, $deletenotransfertwo_account, $deletepeasant_account, $psdlone_account, $psratioone_account, $psdltwo_account, $psratiotwo_account, $psdlthree_account, $psratiothree_account, $psdlfour_account, $psratiofour_account, $psdlfive_account, $psratiofive_account, $putime_account, $pudl_account, $puprratio_account, $puderatio_account, $eutime_account, $eudl_account, $euprratio_account, $euderatio_account, $cutime_account, $cudl_account, $cuprratio_account, $cuderatio_account, $iutime_account, $iudl_account, $iuprratio_account, $iuderatio_account, $vutime_account, $vudl_account, $vuprratio_account, $vuderatio_account, $exutime_account, $exudl_account, $exuprratio_account, $exuderatio_account, $uutime_account, $uudl_account, $uuprratio_account, $uuderatio_account, $nmtime_account, $nmdl_account, $nmprratio_account, $nmderatio_account, $getInvitesByPromotion_class;
-	global $enablenoad_advertisement, $noad_advertisement;
-	global $Cache;
-
-	set_time_limit(0);
-	ignore_user_abort(1);
-	$now = time();
 //彩票开奖函数，每3天一次
-	function drawlotteryfun(){
-	require_once "./memcache.php";
-	
+function drawlotteryfun(){
+	global $memcache;
 	$hapcharge=100;//预设单注价格
 	$cash=array();
 	$cash[1]=5000000;
@@ -36,20 +22,17 @@ function docleanup($forceAll = 0, $printProgress = false) {
 	$cash[4]=1000;
 	$cash[5]=0;
 	$cash[6]=0;
-
-
-	$lasttime=$memcache->get('drawnumtime');
-
+$lasttime=$memcache->get('drawnumtime');
 		if((((int)date('w'))==5||((int)date('w')==2))&&(((int)date('H'))>=21)&& ((((int)time())-$lasttime)>= 24*3600))
 		{
 			$memcache->set('drawnumtime',(int)time());
 			//echo time();
 			$date=date('Y-m-d',time());
-			$num1=rand(1,12);
-			$num2=rand(1,12);
-			$num3=rand(1,12);
-			$num4=rand(1,12);
-			$num5=rand(1,12);
+			$num1=mt_rand(1,12);
+			$num2=mt_rand(1,12);
+			$num3=mt_rand(1,12);
+			$num4=mt_rand(1,12);
+			$num5=mt_rand(1,12);
 			sql_query("INSERT INTO drawlottery (num1, num2, num3, num4, num5,drawtime) VALUES ('$num1', '$num2', '$num3', '$num4', '$num5','$date')")or sqlerr(__FILE__, __LINE__);
 			
 			$sql="SELECT MAX(id) from drawlottery";
@@ -98,19 +81,34 @@ function docleanup($forceAll = 0, $printProgress = false) {
 					$sql="UPDATE users SET seedbonus =seedbonus +".$bonus." WHERE id = ".$userid;
 					sql_query($sql) or sqlerr(__FILE__, __LINE__);
 					
-						sql_query("UPDATE lottery SET isencase ='0'  WHERE 	id = ".$lotteryid) or sqlerr(__FILE__, __LINE__);
+						sql_query("UPDATE lottery SET isencase ='$level'  WHERE 	id = ".$lotteryid) or sqlerr(__FILE__, __LINE__);
 						$date=date('Y-m-d',time());
 						sql_query("UPDATE lottery SET encasetime ='".$date."'  WHERE id = ".$lotteryid) or sqlerr(__FILE__, __LINE__);
 						sendMessage(0, $userid, "恭喜你中奖了","恭喜你在彩票第$drawid 期中获得$level 等奖，获得麦粒$bonus");
 						writeBonusComment($userid,"彩票第$drawid 期中获得$level 等奖，获得麦粒$bonus");
 						//sendshoutbox("彩票第$drawid 期中获得$level 等奖，获得麦粒$bonus");
-						if ($level <=4) sendshoutbox("有人在彩票第$drawid 期中了$level 等奖，获得麦粒$bonus ！！！！土豪~~求包养~~我知道你是谁，我不会告诉别人滴，土豪来做朋友吧");
+						if ($level <=4) sendshoutbox("有人在彩票第$drawid 期中了$level 等奖，获得麦粒$bonus ！！！！土豪~~快检查一下站内信看看是不是你吧，土豪来做朋友吧！",'',$date+5);
 					
 				}
 			}	
-		}		
-	
+		}	
 	}
+function docleanup($forceAll = 0, $printProgress = false) {
+	//require_once(get_langfile_path("cleanup.php",true));
+	global $lang_cleanup_target;
+	global $torrent_dir, $signup_timeout, $max_dead_torrent_time, $autoclean_interval_one, $autoclean_interval_two, $autoclean_interval_three, $autoclean_interval_four, $autoclean_interval_five, $SITENAME,$bonus,$invite_timeout,$offervotetimeout_main,$offeruptimeout_main, $iniupload_main;
+	global $donortimes_bonus, $perseeding_bonus, $maxseeding_bonus, $tzero_bonus, $nzero_bonus, $bzero_bonus, $l_bonus;
+	global $expirehalfleech_torrent, $expirefree_torrent, $expiretwoup_torrent, $expiretwoupfree_torrent, $expiretwouphalfleech_torrent, $expirethirtypercentleech_torrent, $expirenormal_torrent, $hotdays_torrent, $hotseeder_torrent,$halfleechbecome_torrent,$freebecome_torrent,$twoupbecome_torrent,$twoupfreebecome_torrent, $twouphalfleechbecome_torrent, $thirtypercentleechbecome_torrent, $normalbecome_torrent, $deldeadtorrent_torrent;
+	global $neverdelete_account, $neverdeletepacked_account, $deletepacked_account, $deleteunpacked_account, $deletenotransfer_account, $deletenotransfertwo_account, $deletepeasant_account, $psdlone_account, $psratioone_account, $psdltwo_account, $psratiotwo_account, $psdlthree_account, $psratiothree_account, $psdlfour_account, $psratiofour_account, $psdlfive_account, $psratiofive_account, $putime_account, $pudl_account, $puprratio_account, $puderatio_account, $eutime_account, $eudl_account, $euprratio_account, $euderatio_account, $cutime_account, $cudl_account, $cuprratio_account, $cuderatio_account, $iutime_account, $iudl_account, $iuprratio_account, $iuderatio_account, $vutime_account, $vudl_account, $vuprratio_account, $vuderatio_account, $exutime_account, $exudl_account, $exuprratio_account, $exuderatio_account, $uutime_account, $uudl_account, $uuprratio_account, $uuderatio_account, $nmtime_account, $nmdl_account, $nmprratio_account, $nmderatio_account, $getInvitesByPromotion_class;
+	global $enablenoad_advertisement, $noad_advertisement;
+	global $Cache;
+	global $memcache;
+	set_time_limit(0);
+	ignore_user_abort(1);
+	$now = time();
+
+
+	
 //Priority Class 1: cleanup every 15 mins
 //2.update peer status
 	$deadtime = deadtime();
@@ -139,9 +137,9 @@ function docleanup($forceAll = 0, $printProgress = false) {
 			$torrentres = sql_query("select torrents.added, torrents.size, torrents.seeders from torrents LEFT JOIN peers ON peers.torrent = torrents.id WHERE peers.userid = $arr[userid] AND peers.seeder ='yes'")  or sqlerr(__FILE__, __LINE__);
 			while ($torrent = mysql_fetch_array($torrentres))
 			{
-				$weeks_alive = ($timenow - strtotime($torrent[added])) / $sectoweek;
-				$gb_size = $torrent[size] / 1073741824;
-				$temp = (1 - exp($valueone * $weeks_alive)) * $gb_size * (1 + $sqrtof2 * exp($valuethree * ($torrent[seeders] - 1)));
+				$weeks_alive = ($timenow - strtotime($torrent['added'])) / $sectoweek;
+				$gb_size = $torrent['size'] / 1073741824;
+				$temp = (1 - exp($valueone * $weeks_alive)) * $gb_size * (1 + $sqrtof2 * exp($valuethree * ($torrent['seeders'] - 1)));
 				$A += $temp;
 				$count++;
 			}
@@ -157,7 +155,6 @@ function docleanup($forceAll = 0, $printProgress = false) {
 	if ($printProgress) {
 		printProgress('为做种用户发放奖励');
 	}
-
 //Priority Class 2: cleanup every 30 mins
 	$res = sql_query("SELECT value_u FROM avps WHERE arg = 'lastcleantime2'");
 	$row = mysql_fetch_array($res);
@@ -180,11 +177,6 @@ function docleanup($forceAll = 0, $printProgress = false) {
 	}
 	
 //Priority Class 3: cleanup every 60 mins
-//彩票开奖
-	drawlotteryfun();
-		if ($printProgress) {
-		printProgress("彩票开奖");
-	}	
 //自动清理过期短信
 if(time() > 1323069888 + 604800){
 		$deltime = date("Y-m-d H:i:s", time() - 2592000);//一个月前时间
@@ -421,7 +413,6 @@ function torrent_promotion_expire($days, $type = 2, $targettype = 1){
 	if ($printProgress) {
 		printProgress("判断种子是否热门automatically pick hot");
 	}
-
 //Priority Class 4: cleanup every 24 hours
 	$res = sql_query("SELECT value_u FROM avps WHERE arg = 'lastcleantime4'");
 	$row = mysql_fetch_array($res);
@@ -429,13 +420,13 @@ function torrent_promotion_expire($days, $type = 2, $targettype = 1){
 		sql_query("INSERT INTO avps (arg, value_u) VALUES ('lastcleantime4',$now)") or sqlerr(__FILE__, __LINE__);
 		return;
 	}
+	
 	$ts = $row[0];
 	if ($ts + $autoclean_interval_four > $now && !$forceAll) {
 		return 'Cleanup ends at Priority Class 3';
 	} else {
 		sql_query("UPDATE avps SET value_u = ".sqlesc($now)." WHERE arg='lastcleantime4'") or sqlerr(__FILE__, __LINE__);
 	}
-
 
 	//3.delete unconfirmed accounts
 	$deadtime = time() - $signup_timeout;
@@ -472,7 +463,6 @@ function torrent_promotion_expire($days, $type = 2, $targettype = 1){
 	//10.clean up user accounts
 	$deletetitle = '你在麦田pt的账号将要被删除';
 	$body = "你好，你在麦田pt注册的账号 {$userinfo['username']}  已经连续 ".$deletenotransfer_account*0.8 ."天未登录，由于你的账号没有产生流量，如果连续$deletenotransfer_account 天未登录，你的账号将会被删除。\n 麦田pt期待您的回归，我们的地址是 pt.nwsuaf6.edu.cn  如果没有ipv6环境可以使用pt.nwsuaf6.edu.cn.ipv4.sixxs.org 登陆账号";
-
 	// make sure VIP or above never get deleted
 	
 	$neverdelete_account = ($neverdelete_account <= UC_VIP ? $neverdelete_account : UC_VIP);
@@ -661,16 +651,15 @@ function peasant_to_user($down_floor_gb, $down_roof_gb, $minratio){
 			$dt = sqlesc(date("Y-m-d H:i:s"));
 			while ($arr = mysql_fetch_assoc($res))
 			{
-				$subject = sqlesc($lang_cleanup_target[get_user_lang($arr[id])]['msg_low_ratio_warning_removed']);
-				$msg = sqlesc($lang_cleanup_target[get_user_lang($arr[id])]['msg_your_ratio_warning_removed']);
-				writecomment($arr[id],"Leech Warning removed by System.");
+				$subject = sqlesc($lang_cleanup_target[get_user_lang($arr['id'])]['msg_low_ratio_warning_removed']);
+				$msg = sqlesc($lang_cleanup_target[get_user_lang($arr['id'])]['msg_your_ratio_warning_removed']);
+				writecomment($arr['id'],"Leech Warning removed by System.");
 				sql_query("UPDATE users SET class = 1, leechwarn = 'no', leechwarnuntil = '0000-00-00 00:00:00' WHERE id = $arr[id]") or sqlerr(__FILE__, __LINE__);
 				sql_query("INSERT INTO messages (sender, receiver, added, subject, msg) VALUES(0, $arr[id], $dt, $subject, $msg)") or sqlerr(__FILE__, __LINE__);
 			}
 		}
 	}
 }
-
 	peasant_to_user($psdlfive_account,0, $psratiofive_account);
 	peasant_to_user($psdlfour_account,$psdlfive_account, $psratiofour_account);
 	peasant_to_user($psdlthree_account,$psdlfour_account, $psratiothree_account);
@@ -695,8 +684,8 @@ function promotion($class, $down_floor_gb, $minratio, $time_week, $addinvite = 0
 			$dt = sqlesc(date("Y-m-d H:i:s"));
 			while ($arr = mysql_fetch_assoc($res))
 			{
-				$subject = sqlesc($lang_cleanup_target[get_user_lang($arr[id])]['msg_promoted_to'].get_user_class_name($class,false,false,false));
-				$msg = sqlesc($lang_cleanup_target[get_user_lang($arr[id])]['msg_now_you_are'].get_user_class_name($class,false,false,false).$lang_cleanup_target[get_user_lang($arr[id])]['msg_see_faq']);
+				$subject = sqlesc($lang_cleanup_target[get_user_lang($arr['id'])]['msg_promoted_to'].get_user_class_name($class,false,false,false));
+				$msg = sqlesc($lang_cleanup_target[get_user_lang($arr['id'])]['msg_now_you_are'].get_user_class_name($class,false,false,false).$lang_cleanup_target[get_user_lang($arr['id'])]['msg_see_faq']);
 				if($class<=$arr[max_class_once])
 					sql_query("UPDATE users SET class = $class WHERE id = $arr[id]") or sqlerr(__FILE__, __LINE__);
 				else
@@ -732,8 +721,8 @@ function demotion($class,$deratio){
 		$dt = sqlesc(date("Y-m-d H:i:s"));
 		while ($arr = mysql_fetch_assoc($res))
 		{
-			$subject = $lang_cleanup_target[get_user_lang($arr[id])]['msg_demoted_to'].get_user_class_name($newclass,false,false,false);
-			$msg = $lang_cleanup_target[get_user_lang($arr[id])]['msg_demoted_from'].get_user_class_name($class,false,false,false).$lang_cleanup_target[get_user_lang($arr[id])]['msg_to'].get_user_class_name($newclass,false,false,false).$lang_cleanup_target[get_user_lang($arr[id])]['msg_because_ratio_drop_below'].$deratio.".\n";
+			$subject = $lang_cleanup_target[get_user_lang($arr['id'])]['msg_demoted_to'].get_user_class_name($newclass,false,false,false);
+			$msg = $lang_cleanup_target[get_user_lang($arr['id'])]['msg_demoted_from'].get_user_class_name($class,false,false,false).$lang_cleanup_target[get_user_lang($arr['id'])]['msg_to'].get_user_class_name($newclass,false,false,false).$lang_cleanup_target[get_user_lang($arr['id'])]['msg_because_ratio_drop_below'].$deratio.".\n";
 			sql_query("UPDATE users SET class = $newclass WHERE id = $arr[id]") or sqlerr(__FILE__, __LINE__);
 			sql_query("INSERT INTO messages (sender, receiver, added, subject, msg) VALUES(0, $arr[id], $dt, ".sqlesc($subject).", ".sqlesc($msg).")") or sqlerr(__FILE__, __LINE__);
 		}
@@ -767,9 +756,9 @@ function user_to_peasant($down_floor_gb, $minratio){
 		$dt = sqlesc(date("Y-m-d H:i:s"));
 		while ($arr = mysql_fetch_assoc($res))
 		{
-			$subject = $lang_cleanup_target[get_user_lang($arr[id])]['msg_demoted_to'].get_user_class_name(UC_PEASANT,false,false,false);
-			$msg = $lang_cleanup_target[get_user_lang($arr[id])]['msg_must_fix_ratio_within'].$deletepeasant_account.$lang_cleanup_target[get_user_lang($arr[id])]['msg_days_or_get_banned'];
-			writecomment($arr[id],"Leech Warned by System - Low Ratio.");
+			$subject = $lang_cleanup_target[get_user_lang($arr['id'])]['msg_demoted_to'].get_user_class_name(UC_PEASANT,false,false,false);
+			$msg = $lang_cleanup_target[get_user_lang($arr['id'])]['msg_must_fix_ratio_within'].$deletepeasant_account.$lang_cleanup_target[get_user_lang($arr['id'])]['msg_days_or_get_banned'];
+			writecomment($arr['id'],"Leech Warned by System - Low Ratio.");
 			sql_query("UPDATE users SET class = 0 , leechwarn = 'yes', leechwarnuntil = ".sqlesc($until)." WHERE id = $arr[id]") or sqlerr(__FILE__, __LINE__);
 			sql_query("INSERT INTO messages (sender, receiver, added, subject, msg) VALUES(0, $arr[id], $dt, ".sqlesc($subject).", ".sqlesc($msg).")") or sqlerr(__FILE__, __LINE__);
 		}
@@ -785,7 +774,6 @@ function user_to_peasant($down_floor_gb, $minratio){
 		printProgress("降级到土豆demote Users to peasant");
 	}
 	// end Users to Peasant
-
 	//ban users with leechwarning expired
 	$length = 1*86400; // warn users until xxx days
 	$dt = date("Y-m-d H:i:s",(TIMENOW - $length));
@@ -804,7 +792,6 @@ function user_to_peasant($down_floor_gb, $minratio){
 	}
 	$dt = sqlesc(date("Y-m-d H:i:s")); // take date time
 	$res = sql_query("SELECT id, username FROM users WHERE enabled = 'yes' AND leechwarn = 'yes' AND leechwarnuntil < $dt") or sqlerr(__FILE__, __LINE__);
-
 	if (mysql_num_rows($res) > 0)
 	{
 		while ($arr = mysql_fetch_assoc($res))
@@ -884,7 +871,12 @@ function user_to_peasant($down_floor_gb, $minratio){
 	if ($printProgress) {
 		printProgress("清理断种delete torrents that have been dead for a long time");
 	}
-
+	
+//彩票开奖
+	drawlotteryfun();
+		if ($printProgress) {
+		printProgress("彩票开奖");
+	}	
 //Priority Class 5: cleanup every 15 days
 	$res = sql_query("SELECT value_u FROM avps WHERE arg = 'lastcleantime5'");
 	$row = mysql_fetch_array($res);
@@ -921,6 +913,7 @@ function user_to_peasant($down_floor_gb, $minratio){
 	$length = 180*86400; //half a year
 	$until = date("Y-m-d H:i:s",(TIMENOW - $length));
 //	$postIdHalfYearAgo = get_single_value('posts', 'id', 'WHERE added < ' . sqlesc($until).' ORDER BY added DESC');echo "333<br/>";这一行代码执行失败，暂时修改无能
+$postIdHalfYearAgo=0;	
 	if ($postIdHalfYearAgo) {
 		sql_query("UPDATE users SET last_catchup = ".sqlesc($postIdHalfYearAgo)." WHERE last_catchup < ".sqlesc($postIdHalfYearAgo))or sqlerr(__FILE__, __LINE__);
 		sql_query("DELETE FROM readposts WHERE lastpostread < ".sqlesc($postIdHalfYearAgo))or sqlerr(__FILE__, __LINE__);
