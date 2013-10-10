@@ -1,5 +1,6 @@
 <?php
 require_once("include/bittorrent.php");
+require_once("./memcache.php");
 dbconn(true);
 require_once(get_langfile_path("edit.php"));
 require_once(get_langfile_path("torrents.php"));
