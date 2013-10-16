@@ -56,6 +56,21 @@ countdown(time);
 }
 
 </script>
+<style>
+/*Shutbox Section*/
+.shoutrow{min-height:42px;border-top:1px solid #aaa;border-bottom:1px solid #aaa;padding:5px;margin:-1px 10px;font-size:14px;}
+.shoutrow:hover{background:#eee;}
+.shoutbox_avatar{height:40px;width:40px;margin-right:5px;position:relative;float:left;}
+.shoutbox_main{vertical-align:top;position:relative;margin:0 0 0 48px;font-size:14px;font-weight:normal;}
+.shoutbox_main span,.shoutbox_main span a,.shoutbox_main span a b,.shoutbox_main b{vertical-align:top;}
+.shoutbox_content{word-wrap:break-word;word-break: break-all;}
+.shoutrow .date{position:relative;font-size:12px;color:#aaa;}
+.shoutbox_reply{border-left:1px solid #aaa;}
+.shoutbox_reply,.shoutbox_del,.shoutbox_user{padding:0px 5px;font-size:12px;}
+.shoutbox_reply a,.shoutbox_del a{color:#aaa;}
+h1{margin-left:10px;}
+/*End Shutbox*/
+</style>
 </head>
 <body class='inframe' <?php if ($_GET["type"] != "helpbox"){?> onload="<?php echo $startcountdown?>" <?php } else {?> onload="hbquota()" <?php } ?>>
 <?php
@@ -258,13 +273,20 @@ EOD;
 		$messtext = $arr["text"];
 		
 		$messtext = str_replace("[@".$CURUSER['username']."]","[color=Red][b]@".$CURUSER['username']."[/b][/color]",$messtext);  //将回复给自己的名字染红
-		print("<tr><td class=\"shoutrow\"><span class='date'>[".$time."]</span> ".
-$del ." <span onclick=\"retuser('".$arr2["username"]."');\" style=\"cursor:pointer;\">[@]</span> ". $username." " . format_comment($messtext,1,true,true,600,true,false)."
-</td></tr>\n");
-		$i++;
-	}
-	print("</table>");
-}
+// 		print("<tr><td class=\"shoutrow\"><span class='date'>[".$time."]</span> ".
+// $del ." <span onclick=\"retuser('".$arr2["username"]."');\" style=\"cursor:pointer;\">[@]</span> ". $username." " . format_comment($messtext,1,true,true,600,true,false)."
+// </td></tr>\n");
+// 		$i++;
+// 	}
+// 	print("</table>");
+// }
+		print("<div class=\"shoutrow\"> <img class=\"shoutbox_avatar\" src=".($arr2["avatar"] ? "'$arr2[avatar]'" : "'" . get_protocol_prefix() . $BASEURL . "/pic/default_avatar.png'")." ><h3 class=\"shoutbox_main\">  <span class=\"shoutbox_del\"> ".
+$del ." </span>  ". $username." : <span class=\"shoutbox_content\"> " . format_comment($messtext,true,false,true,true,600,true,false)." </span><br> <span class='date'>[".$time."]</span> <span class=\"shoutbox_reply\" > <a onclick=\"retuser('".$arr2["username"]."');\" style=\"cursor:pointer;\" >[@]</a></span></h3></div>\n");
+                $i++;
+        }
+                print("</table>");
+        }
+
 ?>
 </body>
 </html>

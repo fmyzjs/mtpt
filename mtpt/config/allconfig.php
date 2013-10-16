@@ -1,5 +1,6 @@
 <?php
-$ACCOUNT=array(	'neverdelete' => '6',
+$ACCOUNT=array(
+	'neverdelete' => '6',
 	'neverdeletepacked' => '3',
 	'deletepacked' => '5',
 	'deleteunpacked' => '10',
@@ -48,7 +49,8 @@ $ACCOUNT=array(	'neverdelete' => '6',
 	'nmdl' => '3072',
 	'nmprratio' => '4.55',
 	'nmderatio' => '4.45',
-	'getInvitesByPromotion' => array(		'2' => '0',
+	'getInvitesByPromotion' => array(
+		'2' => '0',
 		'3' => '0',
 		'4' => '1',
 		'5' => '1',
@@ -58,7 +60,8 @@ $ACCOUNT=array(	'neverdelete' => '6',
 		'9' => '5',
 	),
 );
-$ADVERTISEMENT=array(	'enablead' => 'yes',
+$ADVERTISEMENT=array(
+	'enablead' => 'yes',
 	'enablenoad' => NULL,
 	'noad' => '14',
 	'enablebonusnoad' => NULL,
@@ -67,7 +70,8 @@ $ADVERTISEMENT=array(	'enablead' => 'yes',
 	'bonusnoadtime' => '15',
 	'adclickbonus' => '0',
 );
-$ATTACHMENT=array(	'enableattach' => 'yes',
+$ATTACHMENT=array(
+	'enableattach' => 'yes',
 	'classone' => '0',
 	'countone' => '15',
 	'sizeone' => '512',
@@ -98,7 +102,8 @@ $ATTACHMENT=array(	'enableattach' => 'yes',
 	'altthumbwidth' => '600',
 	'altthumbheight' => '450',
 );
-$AUTHORITY=array(	'defaultclass' => '1',
+$AUTHORITY=array(
+	'defaultclass' => '1',
 	'staffmem' => '14',
 	'newsmanage' => '15',
 	'newfunitem' => '1',
@@ -144,15 +149,17 @@ $AUTHORITY=array(	'defaultclass' => '1',
 	'againstoffer' => '1',
 	'userbar' => '2',
 );
-$BASIC=array(	'SITENAME' => '麦田 PT',
-	'BASEURL' => 'localhost',
-	'announce_url' => 'localhost',
+$BASIC=array(
+	'SITENAME' => '麦田 PT',
+	'BASEURL' => 'mtpt.test.com',
+	'announce_url' => 'mtpt.test.com/announce.php',
 	'mysql_host' => 'localhost',
-	'mysql_user' => 'root',
-	'mysql_pass' => '',
+	'mysql_user' => 'mtpt',
+	'mysql_pass' => 'hzjstq',
 	'mysql_db' => 'mtpt',
 );
-$BONUS=array(	'donortimes' => '2',
+$BONUS=array(
+	'donortimes' => '2',
 	'perseeding' => '0.5',
 	'maxseeding' => '15',
 	'tzero' => '4',
@@ -184,12 +191,14 @@ $BONUS=array(	'donortimes' => '2',
 	'prolinkpoint' => '20',
 	'prolinktime' => '600',
 );
-$CODE=array(	'mainversion' => 'MTPT',
+$CODE=array(
+	'mainversion' => 'MTPT',
 	'subversion' => 'Standard v0.3',
 	'releasedate' => '2013-10-01',
 	'website' => '<a href="http://pt.nwsuaf6.edu.cn">麦田PT</a>',
 );
-$MAIN=array(	'site_online' => 'yes',
+$MAIN=array(
+	'site_online' => 'yes',
 	'max_torrent_size' => '2097152',
 	'announce_interval' => '1800',
 	'annintertwoage' => '7',
@@ -264,7 +273,8 @@ $MAIN=array(	'site_online' => 'yes',
 	'startsubid' => NULL,
 	'logo' => 'banner/banner.png',
 );
-$SECURITY=array(	'securelogin' => 'no',
+$SECURITY=array(
+	'securelogin' => 'no',
 	'securetracker' => 'no',
 	'https_announce_url' => '',
 	'iv' => 'no',
@@ -274,14 +284,16 @@ $SECURITY=array(	'securelogin' => 'no',
 	'cheaterdet' => '1',
 	'nodetect' => '11',
 );
-$SMTP=array(	'smtptype' => 'external',
+$SMTP=array(
+	'smtptype' => 'external',
 	'emailnotify' => 'no',
 	'smtpaddress' => '',
 	'smtpport' => '25',
 	'accountname' => '',
 	'accountpassword' => '',
 );
-$TORRENT=array(	'prorules' => 'no',
+$TORRENT=array(
+	'prorules' => 'no',
 	'randomhalfleech' => '5',
 	'randomfree' => '2',
 	'randomtwoup' => '2',
@@ -309,7 +321,8 @@ $TORRENT=array(	'prorules' => 'no',
 	'thirtypercentleechbecome' => '1',
 	'expirethirtypercentleech' => '0',
 );
-$TWEAK=array(	'where' => 'no',
+$TWEAK=array(
+	'where' => 'no',
 	'iplog1' => 'yes',
 	'bonus' => 'enable',
 	'datefounded' => '2010-08-19',
