@@ -38,7 +38,7 @@ echo "<form method=\"post\" action=\"getcardnum.php\">
 <tr><td class=rowhead>锐捷平台密码</td><td class=rowfollow align=left><input name=\"cardpass\" type=\"password\" style=\"width: 200px\" id=\"cardpass\" /><span id=\"cardpassspan\" style=\"color:red\">&nbsp;</span></td></tr>
 
 </table><input type='submit' id='cardsubmit' value='点击验证锐捷密码' style='height: 25px'>
-学工号是登陆锐捷时候输入的账号，密码是登陆锐捷的密码。非西农用户请忽略此功能。
+学工号是登陆锐捷时候输入的账号，密码是登陆锐捷的密码。非比斯兔用户请忽略此功能。
 </form>";
 
 end_main_frame();

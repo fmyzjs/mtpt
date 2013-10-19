@@ -77,7 +77,7 @@ $url = str_replace(" ", "%20","invite/$filename");}
 stdhead("邀请申请区");
 ?>
 <h1>邀请申请区</h1>
-<h3></br>西北农林科技大学 的用户请使用 学工号自助注册<a class="faqlink" target=_blank href=signupcard.php>校内用户注册</a>注册帐号。<br/></h3>
+<h3></br>北京信息科技大学 的用户请使用 学工号自助注册<a class="faqlink" target=_blank href=signupcard.php>校内用户注册</a>注册帐号。<br/></h3>
 <form method="post" action=invitebox.php enctype="multipart/form-data">
 <table border=1 cellspacing=0 cellpadding=5>
 <?php
@@ -90,7 +90,7 @@ print("<tr><td align=left colspan=2>"."注意：上传路径不可写。请将�
 <tr><td class="rowhead">邮箱</td>
 	<td class="rowfollow" align="left"><input type="text" id="email" name="email" autocomplete="off" style="width: 200px; border: 1px solid gray"></td><td class="rowfollow" align="left">必须填写，邀请将发到此邮箱。部分邮箱可能将邀请信视为垃圾邮件，请注意查收。</td></tr>
 <tr><td class="rowhead">所在学校</td>
-<td class="rowfollow" align="left"><input type="text" id="school" name="school" autocomplete="off" style="width: 200px; border: 1px solid gray"></td><td class="rowfollow" align="left">西北农林科技大学 的用户请使用 学工号自助注册<a class="faqlink" target=_blank href=signupcard.php>校内用户注册</a>注册帐号。</td></tr>
+<td class="rowfollow" align="left"><input type="text" id="school" name="school" autocomplete="off" style="width: 200px; border: 1px solid gray"></td><td class="rowfollow" align="left">北京信息科技大学 的用户请使用 学工号自助注册<a class="faqlink" target=_blank href=signupcard.php>校内用户注册</a>注册帐号。</td></tr>
 <tr><td class="rowhead">年级</td>
 <td class="rowfollow" align="left"><input type="text" id="grade" name="grade" autocomplete="off" style="width: 200px; border: 1px solid gray"></td><td class="rowfollow" align="left">考研党慎入！（为什么看不起考研党￣へ￣）</td></tr>
 <tr><td class="rowhead">网络情况</td>

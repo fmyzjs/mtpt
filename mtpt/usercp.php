@@ -858,7 +858,7 @@ tr_small($lang_usercp['row_join_date'], $joindate, 1);
 tr_small($lang_usercp['row_email_address'], $CURUSER['email']."&nbsp;&nbsp;&nbsp;&nbsp;<a href='changeemailforyahoo.php' class='faqlink'>雅虎邮箱用户请修改邮箱</a>", 1);
 //显示学号
 $cardnum = $CURUSER['cardnum'];
-if ($cardnum == null) $cardnumtext = "您没有登记学号，如果您不是西农学生请忽略。<a href='getcardnum.php' class='faqlink'>点击登记学号送麦粒</a>";
+if ($cardnum == null) $cardnumtext = "您没有登记学号，如果您不是比斯兔学生请忽略。<a href='getcardnum.php' class='faqlink'>点击登记学号送麦粒</a>";
 else $cardnumtext = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果学号登记有误请联系管理组';
 $cardnumtext .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学号仅本人可见，管理组也不能随意查看。学号可用于密码找回。"; 
 tr_small('用户学号', $cardnum . $cardnumtext, 1);

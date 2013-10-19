@@ -15,7 +15,7 @@ $lang_functions = array
 	'text_connectfaq' => "<b><p>您的<font color=red>可连接状态为\"否\"</font></p><p>他人可能会无法下载您的种子资源，影响您的上传量</p><p>详细解决方案请<a href=\"faq.php#id12\"><font color=red>[点击这里]</font></a>查看uTorrent配置方法，或<a href=\"uTorrent221.zip\"><font color=red>[右键另存为直接下载]</font></a>本站提供的客户端</p></b>",
 	'std_success' => "成功",
 	'std_confirmation_email_sent' => "验证邮件已经发至",
-	'std_please_wait' => "请等候邮件抵达。<br/><span style='color:red' >如果学校网络出现故障，则可能导致邮件发送失败。邮件将在网络恢复之后自动发送。<br/><a  target=_blank style='color:blue' href='http://nic.nwsuaf.edu.cn/tzgg/index.htm'>西北农林科技大学网络与教育中心-通知公告</a>",
+	'std_please_wait' => "请等候邮件抵达。<br/><span style='color:red' >如果学校网络出现故障，则可能导致邮件发送失败。邮件将在网络恢复之后自动发送。<br/><a  target=_blank style='color:blue' href='http://nic.nwsuaf.edu.cn/tzgg/index.htm'>北京信息科技大学网络与教育中心-通知公告</a>",
 	'std_account_details_sent' => "新的帐户信息已发至",
 	'std_locked' => " 锁定！(认证的最大错误尝试次数",
 	'std_attempts_reached' => "次已到)",
@@ -266,7 +266,7 @@ $lang_functions = array
 	'row_subject' => "主题",
 	'row_body' => "正文",
 	/*
-	'text_peasant' => "西农土豆",
+	'text_peasant' => "比斯兔",
 	'text_user' => "入道新丁",
 	'text_power_user' => "初学乍练",
 	'text_elite_user' => "渐入佳境",
@@ -313,7 +313,7 @@ $lang_functions = array
 	'text_thirty_percent_down' => "30%",
 	'text_please_download_something_within' => "请在",
 	'text_inactive_account_be_deleted' => "内做些下载。没有流量的用户会被删除账号。",
-	'text_about' => "站点设计与维护：<a href=http://nic.nwsuaf.edu.cn target=_blank>西北农林科技大学网络与教育技术中心</a><br />",
+	'text_about' => "站点设计与维护：<a href=http://nic.nwsuaf.edu.cn target=_blank>北京信息科技大学网络与教育技术中心</a><br />",
 'text_utdown' => "<a href=\"http://pt.nwsuaf6.edu.cn/forums.php?action=viewtopic&forumid=13&topicid=4740\" target=\"_blank\" >本站资源不支持迅雷等软件下载,推荐使用utorrent：<img src=\"./pic/ut.png\" width=\"20px\" height=\"20px\" /></a><br />"
 );
 
