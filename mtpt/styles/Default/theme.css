@@ -9,7 +9,7 @@ body
 	background-attachment: fixed!important;
 	margin-bottom: 0px;
 	color: #000000;
-	font-family: "Segoe UI","微软雅黑", "文泉驿微米黑", "黑体", "Microsoft Yahei", "STHeiti", "Microsoft JhengHei", "SimHei", serif;
+	font-family: "arial","Segoe UI","微软雅黑", "文泉驿微米黑", "黑体", "Microsoft Yahei", "STHeiti", "Microsoft JhengHei", "SimHei", serif;
 	background-color: #e6e6e6;
 	-moz-background-size: cover !important;
 	background-size: cover !important;
@@ -882,6 +882,28 @@ background-color:white;
 -webkit-box-shadow:5px 5px 10px rgba(0, 0, 0, 0.4)!important;
 box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4)!important;
 }
+
+::-webkit-scrollbar-track-piece{
+	background-color:#fff;
+	-webkit-border-radius:0;
+}
+::-webkit-scrollbar{
+	width:10px;
+	height:10px;
+}
+::-webkit-scrollbar-thumb{
+	height:50px;
+	background-color:#999;
+	-webkit-border-radius:5px;
+	outline:2px solid #fff;
+	outline-offset:-2px;
+	border: 2px solid #fff;
+}
+::-webkit-scrollbar-thumb:hover{
+	height:50px;
+	-webkit-border-radius:5px;
+}
+
 
 .snatched_no_no   { background-color: #ffb6c1; }
 .snatched_yes_no  { background-color: #add8e6; }
