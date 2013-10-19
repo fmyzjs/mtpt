@@ -91,10 +91,14 @@ print("</td></tr></table></form></td>");
 <!-- <h2><?php echo "登陆" ?><font class="small"> </font></h2> -->
 <!--login-->
 
-<form method="post" action="takelogin.php">
+<form method="post"  action="takelogin.php">
 <div class="login_form" border='0' >
 <div class="login_logo"></div>
-<p><input autocomplete="off" class="text" id="icon_usr" type="text" name="username" placeholder="用户名或注册邮箱"/></p>
+<select name="loginmethod" style="display:none;" >
+<option value="username" selected="selected">用户名</option>
+<option value="email">注册邮箱</option>
+</select >
+<p><input autocomplete="off" class="text" id="icon_usr" type="text" name="username" placeholder="用户名"/></p>
 <p><input autocomplete="off" class="text" id="icon_pwd" type="password" name="password" placeholder="密码"/></p>
 <?php show_image_code()?>
 <?php
