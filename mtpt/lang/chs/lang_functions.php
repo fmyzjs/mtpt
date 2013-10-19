@@ -76,7 +76,7 @@ $lang_functions = array
 	'text_staff_panel' => "日常维护",
 	'text_site_settings' => "网站设置",
 	'text_logout' => "退出",
-	'text_bonus' => "麦粒 ",
+	'text_bonus' => "萝卜 ",
 	'text_use' => "使用",
 	'text_ratio' => "分享率：",
 	'text_uploaded' => "上传量：",
@@ -168,7 +168,7 @@ $lang_functions = array
 	'title_delbookmark_torrent' => "去除收藏",
 	'text_mark' => "标记",
 	'text_unmark' => "去除标记",
-	'text_award' => "麦粒奖励：",
+	'text_award' => "萝卜奖励：",
 	'text_additional_notes' => "附加注释：",
 	'title_view_reviews' => "点击查看点评",
 	'title_has_new_comment' => "有新评论",
@@ -265,7 +265,7 @@ $lang_functions = array
 	'text_tags' => "标签",
 	'row_subject' => "主题",
 	'row_body' => "正文",
-	/*
+	
 	'text_peasant' => "比斯兔",
 	'text_user' => "入道新丁",
 	'text_power_user' => "初学乍练",
@@ -276,8 +276,8 @@ $lang_functions = array
 	'text_extreme_user' => " 登峰造极",
 	'text_ultimate_user' => "出神入化",
 	'text_nexus_master' => "绝世神人",
-	*/
 	
+	/*
 	'text_peasant' => "深眠土豆",
 	'text_user' => "沃土新苗",
 	'text_power_user' => "抽枝发芽",
@@ -288,6 +288,7 @@ $lang_functions = array
 	'text_extreme_user' => "天花乱坠",
 	'text_ultimate_user' => "春华秋实",
 	'text_nexus_master' => "硕果累累",
+	*/
 	'text_vip' => "贵宾",
 	'text_downloader' => "保种员",
 	'text_uploader' => "发布员",

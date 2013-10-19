@@ -346,7 +346,7 @@ $usernamebonus = get_username($user[id], false,false,false,false,false,false,fal
 赠送
 <input type="hidden" id="where" name="where" value="[url=userdetails.php]用户详情 [/url]"/>
 <input type="text" name="bonusgift" id="bonusgift" style="width: 80px">
-个麦粒给<b><?php echo $usernamebonus;?></b>&nbsp&nbsp原因：<input type="text" id="message" name="message" style="width: 150px" maxlength="100">
+个萝卜给<b><?php echo $usernamebonus;?></b>&nbsp&nbsp原因：<input type="text" id="message" name="message" style="width: 150px" maxlength="100">
 <input type="button" value="赠送" id="giftsubmit"></form>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -357,7 +357,7 @@ $(document).ready(function(){
 		var msg = $(this).siblings("#message").val();
 		var where = $(this).siblings("#where").val();
 		if(bgift >= 10 && bgift <= 10000){
-			jConfirm('确定要赠送 '+bgift+' 个麦粒给 '+uname+' 吗？', '提示', function(v) {
+			jConfirm('确定要赠送 '+bgift+' 个萝卜给 '+uname+' 吗？', '提示', function(v) {
 				if(v){
 				$.post("mybonus.php?action=exchange&t="+new Date(),{
 					 username: uname,
@@ -375,7 +375,7 @@ $(document).ready(function(){
 				}
 			});
 		}else{
-			jAlert('每次只能赠送10至10000个麦粒','提示');
+			jAlert('每次只能赠送10至10000个萝卜','提示');
 		}
 	});
 });

@@ -6,7 +6,7 @@ dbconn();
 loggedinorreturn();
 parked();
 if ($CURUSER['enabled'] == 'no') stderr("禁止","你的账号被禁止登陆",0);
-//每次计算随机数基数cost，每次偷麦粒手续费tax，20几率输掉，randlose，10几率双倍，其他rand。getcaughtrand被抓几率，被抓扣caughtcost，需要needprotect个保镖，每隔limittime秒可以偷一次。
+//每次计算随机数基数cost，每次偷萝卜手续费tax，20几率输掉，randlose，10几率双倍，其他rand。getcaughtrand被抓几率，被抓扣caughtcost，需要needprotect个保镖，每隔limittime秒可以偷一次。
 $cost = 500;
 $tax = $cost * 0.06;
 $rand = mt_rand(90,180)*0.01;
@@ -54,40 +54,40 @@ sql_query("UPDATE users SET stealtime = $writetime WHERE id={$CURUSER['id']}") o
 */
 //error message
 if ($CURUSER['seedbonus'] <= $cost)  {
-stderr("出错了","你的麦粒不足$cost 了，偷窃经费不够(-$tax)".$return,0);
+stderr("出错了","你的萝卜不足$cost 了，偷窃经费不够(-$tax)".$return,0);
 die;
 }
 if ($CURUSER['stealstatus'] == -5)  {
 addBonus($CURUSER['id'],-$cost);
-stderr("出错了","你退出了这个游戏，不能偷别人，但是麦粒一样要扣(-$cost)，不做记录".$return,0);
+stderr("出错了","你退出了这个游戏，不能偷别人，但是萝卜一样要扣(-$cost)，不做记录".$return,0);
 die;
 }
 if ($CURUSER['stealstatus'] < -5)  {
 addBonus($CURUSER['id'],-$cost);
-stderr("出错了","你正在蹲监狱，不能偷别人，但是麦粒一样要扣(-$cost)，不做记录".$return,0);
+stderr("出错了","你正在蹲监狱，不能偷别人，但是萝卜一样要扣(-$cost)，不做记录".$return,0);
 die;
 }
 if ($username == $opusername)  {
-stderr("出错了","花偷窃经费偷自己，偷窃经费倒是没丢，系统拿走部分浪费了(-$tax)。将不记录到麦粒记录，免得丢人~".$return,0);
+stderr("出错了","花偷窃经费偷自己，偷窃经费倒是没丢，系统拿走部分浪费了(-$tax)。将不记录到萝卜记录，免得丢人~".$return,0);
 die;
 }
 if (!$arr['id']) {
-stderr("出错了","没有这个用户，花了偷窃经费，偷了个空(-$tax)。将不记录到麦粒记录，免得丢人~".$return,0);
+stderr("出错了","没有这个用户，花了偷窃经费，偷了个空(-$tax)。将不记录到萝卜记录，免得丢人~".$return,0);
 die;
 }
 
 if ($arr['stealstatus'] == -5) {
-stderr("出错了","他不玩这个游戏。偷窃经费白花了，(-$tax)将不记录到麦粒记录。".$return,0);
+stderr("出错了","他不玩这个游戏。偷窃经费白花了，(-$tax)将不记录到萝卜记录。".$return,0);
 die;
 } 
 if ($arr['stealstatus'] < -5) {
 addBonus($CURUSER['id'],-$cost);
-stderr("出错了","他正在坐牢呢，你也要坐牢吗~？(-$cost)将不记录到麦粒记录。".$return,0);
+stderr("出错了","他正在坐牢呢，你也要坐牢吗~？(-$cost)将不记录到萝卜记录。".$return,0);
 die;
 }
 
 if ($arr['seedbonus'] <= 5*$cost) {
-stderr("出错了","他的麦粒不足5*$cost 了，换个有钱的偷吧，偷窃经费还给你(-$tax)".$return,0);
+stderr("出错了","他的萝卜不足5*$cost 了，换个有钱的偷吧，偷窃经费还给你(-$tax)".$return,0);
 die;
 } 
 
@@ -96,16 +96,16 @@ die;
 //change &&check stealtime memcache方法
 if($memcache->get('app_steal_'.$CURUSER['id'])!='') {
 $lasttime = $memcache->get('app_steal_'.$CURUSER['id']);
-stderr("错误","你在$limittime 秒内($lasttime)偷过麦粒，休息一会吧".$return,0);}
+stderr("错误","你在$limittime 秒内($lasttime)偷过萝卜，休息一会吧".$return,0);}
 $memcache->set('app_steal_'.$CURUSER['id'],$date,false,$limittime) or die ("请向管理员报告此错误");
 
 //被抓
 if ($getcaughtrand == 1)
 {
 	addBonus($CURUSER['id'],-$caughtcost);
-	writeBonusComment($CURUSER['id'],"偷麦粒被抓了，麦粒被扣了$caughtcost ！");
+	writeBonusComment($CURUSER['id'],"偷萝卜被抓了，萝卜被扣了$caughtcost ！");
 	changestealstatus($CURUSER['id'],0,$caught);
-	stderr("很不幸","你偷麦粒被抓了。。你的麦粒被扣除了$caughtcost 。你现在被抓进了监狱，不能偷别人的麦粒，也不会被偷。你需要找$needprotect 个保镖把你救出来才能继续游戏。出狱之后记得重新加入游戏".$return,0);
+	stderr("很不幸","你偷萝卜被抓了。。你的萝卜被扣除了$caughtcost 。你现在被抓进了监狱，不能偷别人的萝卜，也不会被偷。你需要找$needprotect 个保镖把你救出来才能继续游戏。出狱之后记得重新加入游戏".$return,0);
 	die;
 }
 
@@ -114,12 +114,12 @@ if ($arr['stealstatus'] > 0){
 $becaught = mt_rand(1,100);
 if($becaught > 30){
 addBonus($CURUSER['id'],-$cost);
-writeBonusComment($CURUSER['id'],"偷{$arr['username']}的麦粒被保镖抓了，损失$cost 个麦粒干掉他一个保镖");
+writeBonusComment($CURUSER['id'],"偷{$arr['username']}的萝卜被保镖抓了，损失$cost 个萝卜干掉他一个保镖");
 stderr("出错了","他花钱雇保镖，被暂时保护了。偷窃经费花掉了，但是你也干掉了他一个保镖~（-$cost ）".$return,0,1,1,0);
 changestealstatus($arr['id'],-1,'no');
 addBonus($arr['id'],$cost/2);
-writeBonusComment($arr['id'],"{$CURUSER['username']}来偷你的麦粒！但是因为你有保镖，他失败了。你获得了偷窃者的$cost /2个麦粒，另外一半被保镖带走了");
-if ($arr['stealstatus' != -1])sendMessage(0, $arr['id'], "你的麦粒被偷了！", "[b]{$CURUSER['username']}[/b]来偷你的麦粒！但是因为你有保镖，他失败了。你获得了偷窃者的$cost /2个麦粒，另外一半被保镖带走了。\n如果你想偷回来，或者申请保护，或者不想参与这个游戏，[url=steal.php]都可以在这里完成[/url]\n[url=sendmessage.php?receiver={$CURUSER['id']}]给他发站内信[/url]");
+writeBonusComment($arr['id'],"{$CURUSER['username']}来偷你的萝卜！但是因为你有保镖，他失败了。你获得了偷窃者的$cost /2个萝卜，另外一半被保镖带走了");
+if ($arr['stealstatus' != -1])sendMessage(0, $arr['id'], "你的萝卜被偷了！", "[b]{$CURUSER['username']}[/b]来偷你的萝卜！但是因为你有保镖，他失败了。你获得了偷窃者的$cost /2个萝卜，另外一半被保镖带走了。\n如果你想偷回来，或者申请保护，或者不想参与这个游戏，[url=steal.php]都可以在这里完成[/url]\n[url=sendmessage.php?receiver={$CURUSER['id']}]给他发站内信[/url]");
 die;}
 else $return .= "（你的保镖睡着了）";
 }  
@@ -148,25 +148,25 @@ $message = "但是，他没有从你这里捞到任何好处~";
 }
 elseif ($cost < $opget)
 {
-$message = "你被他偷走了$abs 个麦粒。";
+$message = "你被他偷走了$abs 个萝卜。";
 addBonus($arr['id'],-$abs);
-writeBonusComment($arr['id'],"被{$CURUSER['username']}偷走 $abs 个麦粒");
+writeBonusComment($arr['id'],"被{$CURUSER['username']}偷走 $abs 个萝卜");
 addBonus($CURUSER['id'],$abs);
-writeBonusComment($CURUSER['id'],"从{$arr['username']}偷到 $abs 个麦粒");
-stderr("结果" ,"从{$arr['username']}偷到 $abs 个麦粒".$return,0,1,1,0);
+writeBonusComment($CURUSER['id'],"从{$arr['username']}偷到 $abs 个萝卜");
+stderr("结果" ,"从{$arr['username']}偷到 $abs 个萝卜".$return,0,1,1,0);
 }
 else 
 {
-$message = "但是，他不仅没有成功，反而给你留下了$abs 个麦粒~";
+$message = "但是，他不仅没有成功，反而给你留下了$abs 个萝卜~";
 addBonus($arr['id'],$abs);
-writeBonusComment($arr['id'],"{$CURUSER['username']}来偷麦粒，反而留下 $abs 个");
+writeBonusComment($arr['id'],"{$CURUSER['username']}来偷萝卜，反而留下 $abs 个");
 addBonus($CURUSER['id'],-$abs);
-writeBonusComment($CURUSER['id'],"偷{$arr['username']}的麦粒反而搭进去 $abs 个");
-stderr("结果", "偷{$arr['username']}的麦粒反而搭进去 $abs 个".$return,0,1,1,0);
+writeBonusComment($CURUSER['id'],"偷{$arr['username']}的萝卜反而搭进去 $abs 个");
+stderr("结果", "偷{$arr['username']}的萝卜反而搭进去 $abs 个".$return,0,1,1,0);
 }
 //send message to user
 
-if ($arr['stealstatus' != -1])sendMessage(0, $arr['id'], "你的麦粒被偷了！", "你的麦粒被[b]{$CURUSER['username']}[/b]偷了!\n".$message."\n如果你想偷回来，或者申请保护，或者不想参与这个游戏，[url=steal.php]都可以在这里完成[/url]\n[url=sendmessage.php?receiver={$CURUSER['id']}]给他发站内信[/url]");
+if ($arr['stealstatus' != -1])sendMessage(0, $arr['id'], "你的萝卜被偷了！", "你的萝卜被[b]{$CURUSER['username']}[/b]偷了!\n".$message."\n如果你想偷回来，或者申请保护，或者不想参与这个游戏，[url=steal.php]都可以在这里完成[/url]\n[url=sendmessage.php?receiver={$CURUSER['id']}]给他发站内信[/url]");
 die;
 //end steal
 }
@@ -180,16 +180,16 @@ if ($_POST['action'] == 'option')
 	if ($_POST['quite'] == 'on' && $CURUSER['stealstatus'] < -1)  {
 	changestealstatus($CURUSER['id'],0,'0');
 	addBonus($CURUSER['id'],-2000);
-	writeBonusComment($CURUSER['id'],"-2000；退出游戏之后重新加入，花费了2000个麦粒");
+	writeBonusComment($CURUSER['id'],"-2000；退出游戏之后重新加入，花费了2000个萝卜");
 	stderr("操作成功","你成功重新加入了游戏".$return,0);die;}
 	if ($_POST['quite'] == 'off' && $CURUSER['stealstatus'] > 0)
 	{stderr("提示信息","你现在还有保镖，不要抛弃他们啊。".$return,0);die;}
 	if ($_POST['quite'] == 'off')  {
 	changestealstatus($CURUSER['id'],0,-5);
-	stderr("操作成功","你成功退出了这个游戏，你将不能偷别人，别人也不再能偷走你的麦粒。".$return,0);die;}
+	stderr("操作成功","你成功退出了这个游戏，你将不能偷别人，别人也不再能偷走你的萝卜。".$return,0);die;}
 	if ($_POST['message'] == false && $CURUSER['stealstatus'] == 0)  {
 	changestealstatus($CURUSER['id'],0,-1);
-	stderr("操作成功","你成功拦截了偷麦粒应用的站内信，你家被偷光都不会告诉你了~".$return,0);die;}
+	stderr("操作成功","你成功拦截了偷萝卜应用的站内信，你家被偷光都不会告诉你了~".$return,0);die;}
 	if ($_POST['message'] == true && $CURUSER['stealstatus'] == -1)  {
 	changestealstatus($CURUSER['id'],0,'0');
 	stderr("操作成功","你将继续接收站内信提示".$return,0);die;}
@@ -206,13 +206,13 @@ if ($_POST['action'] == 'changesteal')
 	if ($changenum <= 0) stderr("错误","你输入的数字不是正数".$return,0);
 	if ($CURUSER['seedbonus'] < $costforchange)
 	{
-		stderr("麦粒不够","你的麦粒不够买这么多的保镖".$return,0);die;}
+		stderr("萝卜不够","你的萝卜不够买这么多的保镖".$return,0);die;}
 	$abssteal = abs($CURUSER['stealstatus']) - 5 -$changenum ;
 	$pronow = $CURUSER['stealstatus']>0?"你现在有{$CURUSER['stealstatus']}个保镖":"你还需要$abssteal 个保镖才能把你救出来";
 	addBonus($CURUSER['id'],-$costforchange);
-	writeBonusComment($CURUSER['id'],"花费 $costforchange 个麦粒购买了 $changenum 个保镖");
+	writeBonusComment($CURUSER['id'],"花费 $costforchange 个萝卜购买了 $changenum 个保镖");
 	changestealstatus($CURUSER['id'],$changenum,'no');
-	stderr("操作成功","你花费 $costforchange 个麦粒购买了 $changenum 个保镖.".$pronow.$return,0);die;
+	stderr("操作成功","你花费 $costforchange 个萝卜购买了 $changenum 个保镖.".$pronow.$return,0);die;
 	
 }
 
@@ -220,12 +220,12 @@ if ($_POST['action'] == 'changesteal')
 if ($_POST['action'] == 'show')
 {
 	if ($CURUSER['seedbonus'] <= $cost)  {
-	stderr("出错了","你的麦粒不足$cost 了，贿赂经费不够".$return,0);
+	stderr("出错了","你的萝卜不足$cost 了，贿赂经费不够".$return,0);
 	die;
 	}
 	addBonus($CURUSER['id'],-($cost*2));
-	writeBonusComment($CURUSER['id'],"在偷麦粒应用中花费 $cost *2 个麦粒购贿赂系统");
-	$show = "每次花费$cost 个麦粒去别人家，系统额外收取$tax 。每次查看参数花费2*$cost <br/><b>你有10%几率输掉（获得0.50~1.00倍花费的麦粒），有10%几率偷双倍。其他情况下，随机获得0.90~1.80倍花费的麦粒。有万分之一的几率被抓。</b><br/>被抓之后需要购买$needprotect 个保镖把你救出来。每个保镖需要$protectcost 个麦粒。出狱之后需要重新加入游戏。<br/>如果对游戏规则有修改建议，请在论坛灌水区发帖讨论，不要透露太多信息哦<br/>";
+	writeBonusComment($CURUSER['id'],"在偷萝卜应用中花费 $cost *2 个萝卜购贿赂系统");
+	$show = "每次花费$cost 个萝卜去别人家，系统额外收取$tax 。每次查看参数花费2*$cost <br/><b>你有10%几率输掉（获得0.50~1.00倍花费的萝卜），有10%几率偷双倍。其他情况下，随机获得0.90~1.80倍花费的萝卜。有万分之一的几率被抓。</b><br/>被抓之后需要购买$needprotect 个保镖把你救出来。每个保镖需要$protectcost 个萝卜。出狱之后需要重新加入游戏。<br/>如果对游戏规则有修改建议，请在论坛灌水区发帖讨论，不要透露太多信息哦<br/>";
 	stderr("不要告诉别人哦","$show ",0);
 }
 //挑衅
@@ -245,7 +245,7 @@ if ($_POST['writename'] == 'yes')
 }
 
 }
-stdhead("偷麦粒应用");
+stdhead("偷萝卜应用");
 ?>
 
 <b style="color:blue;font-size:54px;">嘿，小偷儿</b>
@@ -254,11 +254,11 @@ stdhead("偷麦粒应用");
 请输入对方的用户名<input type="text"   name="username" />
 <input type="submit" name="submit" value="动手！"/>
 </form>
-<a href="topten.php?type=6&lim=100&subtype=bo" class="faqlink" target="_blank">查看麦粒排行榜的土豪</a><br/>土豪家里可能有保镖，偷麦粒需谨慎
+<a href="topten.php?type=6&lim=100&subtype=bo" class="faqlink" target="_blank">查看萝卜排行榜的土豪</a><br/>土豪家里可能有保镖，偷萝卜需谨慎
 <br/>
 <form action="" method="post" >
 <input type="hidden" name="action" value="show"/>
-贿赂系统了解计算规则(每次查看规则将花费2*<?php echo $cost;?>个麦粒)
+贿赂系统了解计算规则(每次查看规则将花费2*<?php echo $cost;?>个萝卜)
 <input type="submit" name="submit" value="知己知彼"/>
 </form>
 <br/><br/><br/>
@@ -274,18 +274,18 @@ stdhead("偷麦粒应用");
 <span class="rules">
 <?php
 echo "
-首先<b>每次</b>偷窃行为会被系统收$tax 个麦粒。每$limittime 秒能偷一次<br/>
-然后你可以去别人家里偷麦粒了~不过会有几率赔哦。（跟碰运气一样，但是赢的概率更大）<br/>
+首先<b>每次</b>偷窃行为会被系统收$tax 个萝卜。每$limittime 秒能偷一次<br/>
+然后你可以去别人家里偷萝卜了~不过会有几率赔哦。（跟碰运气一样，但是赢的概率更大）<br/>
 <br/>
-有极小的几率被警察抓到，抓到的话将进监狱，损失$caughtcost 麦粒 ，不能继续偷别人的麦粒（退出游戏）。<br/>
+有极小的几率被警察抓到，抓到的话将进监狱，损失$caughtcost 萝卜 ，不能继续偷别人的萝卜（退出游戏）。<br/>
 
 <br/>
-你可以购买保镖保护自己的麦粒，拥有保镖的时候别人不能偷你，但是你可以偷别人。<br/>
-偷到被保镖保护的用户，将损失$cost 个麦粒（其中的一半给被偷的用户），另外一半保镖会拿着跑掉。<br/>
+你可以购买保镖保护自己的萝卜，拥有保镖的时候别人不能偷你，但是你可以偷别人。<br/>
+偷到被保镖保护的用户，将损失$cost 个萝卜（其中的一半给被偷的用户），另外一半保镖会拿着跑掉。<br/>
 <br/>
-如果你不想玩这个游戏，不希望被偷麦粒的站内信困扰，你可以在下面的设置中退出这个游戏，其他人将不能偷你<br/>
+如果你不想玩这个游戏，不希望被偷萝卜的站内信困扰，你可以在下面的设置中退出这个游戏，其他人将不能偷你<br/>
 
-每个保镖需要花费$protectcost 个麦粒<br/>"
+每个保镖需要花费$protectcost 个萝卜<br/>"
 ?>
 </span>
 <b style="color:red;font-size:33px;">游戏设置</b><br/>
@@ -295,7 +295,7 @@ echo "
 if ($CURUSER['stealstatus'] != -5)
 	echo ($CURUSER['stealstatus']<-5?"你现在还需要购买". $needpro."个保镖才能把你从监狱救出来":"你现在有".$CURUSER['stealstatus']."个保镖");
 else	
-	echo "你退出了游戏，购买保镖将使你损失麦粒并且有可能重新加入游戏";
+	echo "你退出了游戏，购买保镖将使你损失萝卜并且有可能重新加入游戏";
 	?><br/>
 请输入你要购买的保镖数量
 <input type="hidden" name="action" value="changesteal"/>
@@ -303,7 +303,7 @@ else
 <input type="submit" value="购买保镖"/>
 </form>
 <form action="" method="post">
-<b style="color:blue;font-size:22px;">是否接收站内信？</b><br/>选择不接收站内信将不退出游戏，别人可以来偷。你在有保镖的状态下不能停止接收站内信。被偷的状况请到<a href='myhistory.php?type=bonus'class='faqlink'>麦粒记录</a>查看。<br/>
+<b style="color:blue;font-size:22px;">是否接收站内信？</b><br/>选择不接收站内信将不退出游戏，别人可以来偷。你在有保镖的状态下不能停止接收站内信。被偷的状况请到<a href='myhistory.php?type=bonus'class='faqlink'>萝卜记录</a>查看。<br/>
 <input type="hidden" name="action" value="option"/>
 <?php
 echo "接收<input type=\"checkbox\" name=\"message\" ".($CURUSER['stealstatus']!=-1? "  checked=\"checked\" ":"")." /><br/>";
@@ -311,7 +311,7 @@ echo "接收<input type=\"checkbox\" name=\"message\" ".($CURUSER['stealstatus']
 <input type="submit" name="submit" value="执行"/>
 </form>
 <form action="" method="post">
-<b style="color:blue;font-size:22px;">是否继续参与游戏</b><br/>为了防止用户频繁退出加入游戏，每次退出之后<b style="color:red">重新加入</b>游戏将收取2000个麦粒。<br/>
+<b style="color:blue;font-size:22px;">是否继续参与游戏</b><br/>为了防止用户频繁退出加入游戏，每次退出之后<b style="color:red">重新加入</b>游戏将收取2000个萝卜。<br/>
 <input type="hidden" name="action" value="option"/>
 <?php
 echo "参与游戏<input type=\"radio\" name=\"quite\" value=\"on\" ".($CURUSER['stealstatus']>=-1? "  checked=\"checked\" ":"")." /><br/>";

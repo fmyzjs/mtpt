@@ -161,7 +161,7 @@ while ($row = mysql_fetch_array($reportres))
 }
 
 ?>
-<tr><td class="colhead" colspan="7" align="right">设为已处理并改变举报者的麦粒<input type="text" name="bonus" value="0" />以及被举报者<input type="text" name="bonus2" value="0" /><input type="submit" name="setdealt" value="<?php echo $lang_reports['submit_set_dealt']?>" /><input type="submit" name="delete" value="<?php echo $lang_reports['submit_delete']?>" /></td></tr> 
+<tr><td class="colhead" colspan="7" align="right">设为已处理并改变举报者的萝卜<input type="text" name="bonus" value="0" />以及被举报者<input type="text" name="bonus2" value="0" /><input type="submit" name="setdealt" value="<?php echo $lang_reports['submit_set_dealt']?>" /><input type="submit" name="delete" value="<?php echo $lang_reports['submit_delete']?>" /></td></tr> 
 </form>
 <?php
 print("</table>");

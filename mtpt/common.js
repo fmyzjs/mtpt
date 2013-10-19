@@ -98,12 +98,12 @@ document.getElementById("addcuruser").innerHTML = document.getElementById("curus
 // modified by SamuraiMe,2013.05.16
 function thanksBonus(torrentid, bonus)
 {
-	//先行用js统计麦粒总数
+	//先行用js统计萝卜总数
 	if ($("#bonus_sum").length>0) {
 		var currentBonusSum = new Number($("#bonus_sum").text());
 		$("#bonus_sum").text(currentBonusSum+bonus);
 	} else {
-		$("td").has("#nothanks").prev().append("</br>总计<span id=\"bonus_sum\">"+bonus+"</span>麦粒");
+		$("td").has("#nothanks").prev().append("</br>总计<span id=\"bonus_sum\">"+bonus+"</span>萝卜");
 	}
 
 	$.post("mybonus.php?action=exchange", {

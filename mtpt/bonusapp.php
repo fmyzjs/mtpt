@@ -53,13 +53,13 @@ if ($action == "changename") {
 		//echo $userbonus;
 		if($charge>$userbouns)
 		{
-			echo "麦粒不足，攒点麦粒再来吧^_^";
+			echo "萝卜不足，攒点萝卜再来吧^_^";
 			die();
 		}
 		if(@sql_query("UPDATE users SET username ='".$newname."' WHERE id = ".$userid))
 		{
 			sql_query("UPDATE users SET seedbonus =seedbonus -".$charge." WHERE id = ".$userid) or sqlerr(__FILE__, __LINE__);
-			echo "改名成功，本次消费麦粒".$charge."，欢迎再次光临^_^";
+			echo "改名成功，本次消费萝卜".$charge."，欢迎再次光临^_^";
 			$charge=$charge*2;
 			sql_query("INSERT into bonusapp(userid, namecharge) values(".$userid.",". $charge.")") or sqlerr(__FILE__, __LINE__);
 		}else
@@ -80,13 +80,13 @@ if ($action == "changename") {
 		}
 		if($charge>$userbouns)
 		{
-			echo "麦粒不足，攒点麦粒再来吧^_^";
+			echo "萝卜不足，攒点萝卜再来吧^_^";
 			die();
 		}
 		if(@sql_query("UPDATE users SET username ='".$newname."' WHERE id = ".$userid))
 		{
 			sql_query("UPDATE users SET seedbonus =seedbonus -".$charge." WHERE id = ".$userid) or sqlerr(__FILE__, __LINE__);
-			echo "改名成功，本次消费麦粒".$charge."，欢迎再次光临^_^。";
+			echo "改名成功，本次消费萝卜".$charge."，欢迎再次光临^_^。";
 			$charge=$charge*2;
 			sql_query("UPDATE bonusapp set namecharge=".$charge." where userid=".$userid) or sqlerr(__FILE__, __LINE__);
 		}else
@@ -96,10 +96,10 @@ if ($action == "changename") {
 		}
 	}	
 	$charge=$charge/2;
-	sendshoutbox("薄情寡义的[@$CURUSER[username]] 不喜欢自己的名字啦，花了$charge 个麦粒给自己换了个新名字叫[@$newname]快来围观土豪吧¬_¬");
-	writeBonusComment($CURUSER[id],"用户名由$CURUSER[username]更换为$newname ，花费麦粒$charge");
-	writeModComment($CURUSER[id],"用户名由$CURUSER[username]更换为$newname ，花费麦粒$charge");
-	record_op_log(0,$CURUSER[id],htmlspecialchars($CURUSER['username']),"change",$CURUSER['username']."--花费麦粒自助更名为--". $newname);
+	sendshoutbox("薄情寡义的[@$CURUSER[username]] 不喜欢自己的名字啦，花了$charge 个萝卜给自己换了个新名字叫[@$newname]快来围观土豪吧¬_¬");
+	writeBonusComment($CURUSER[id],"用户名由$CURUSER[username]更换为$newname ，花费萝卜$charge");
+	writeModComment($CURUSER[id],"用户名由$CURUSER[username]更换为$newname ，花费萝卜$charge");
+	record_op_log(0,$CURUSER[id],htmlspecialchars($CURUSER['username']),"change",$CURUSER['username']."--花费萝卜自助更名为--". $newname);
 	
 	print("<br>建议重新登录，<a href=\"logout.php\" align=\"center\">点我去登录</a>");
 }
@@ -143,61 +143,61 @@ if($action=="prm"){//促销
 		$charge=((int)$prmtime)*$ycharge['setallfree'];
 		if($charge>$userbouns)
 		{
-			echo "麦粒不足，攒点麦粒再来吧^_^";
+			echo "萝卜不足，攒点萝卜再来吧^_^";
 			die();
 		}
 
 		if(@sql_query("UPDATE torrents SET sp_state = 2 where id=".$torrentid))
 		{
-			echo $info = $CURUSER['username']."花费了".$charge."个麦粒，种子 ".$record['name']." 种子设置为免费".$prmtime."天";
+			echo $info = $CURUSER['username']."花费了".$charge."个萝卜，种子 ".$record['name']." 种子设置为免费".$prmtime."天";
 		}
 	}
 	else if($prmtype=="3"){
 		$charge=((int)$prmtime)*$ycharge['setall2up'];
 		if($charge>$userbouns)
 		{
-			echo "麦粒不足，攒点麦粒再来吧^_^";
+			echo "萝卜不足，攒点萝卜再来吧^_^";
 			die();
 		}
 		if(@sql_query("UPDATE torrents SET sp_state = 3 where id=".$torrentid))
 		{	
-			echo $info = $CURUSER['username']."花费了".$charge."个麦粒，种子 ".$record['name']." 种子设置为2倍上传".$prmtime."天";
+			echo $info = $CURUSER['username']."花费了".$charge."个萝卜，种子 ".$record['name']." 种子设置为2倍上传".$prmtime."天";
 		}
 	}
 	else if($prmtype=="4"){
 		$charge=((int)$prmtime)*$ycharge['setall2up_free'];
 		if($charge>$userbouns)
 		{
-			echo "麦粒不足，攒点麦粒再来吧^_^";
+			echo "萝卜不足，攒点萝卜再来吧^_^";
 			die();
 		}
 		if(@sql_query("UPDATE torrents SET sp_state = 4 where id=".$torrentid))
 		{			
-			echo $info = $CURUSER['username']."花费了".$charge."个麦粒，种子 ".$record['name']." 种子设置为2倍上传并且免费".$prmtime."天";
+			echo $info = $CURUSER['username']."花费了".$charge."个萝卜，种子 ".$record['name']." 种子设置为2倍上传并且免费".$prmtime."天";
 		}
 	}
 	else if($prmtype=="5"){
 		$charge=((int)$prmtime)*$ycharge['setallhalf_down'];
 		if($charge>$userbouns)
 		{
-			echo "麦粒不足，攒点麦粒再来吧^_^";
+			echo "萝卜不足，攒点萝卜再来吧^_^";
 			die();
 		}
 		if(@sql_query("UPDATE torrents SET sp_state = 5 where id=".$torrentid))
 		{
-			echo $info = $CURUSER['username']."花费了".$charge."个麦粒，种子 ".$record['name']." 种子设置为50&下载".$prmtime."天";
+			echo $info = $CURUSER['username']."花费了".$charge."个萝卜，种子 ".$record['name']." 种子设置为50&下载".$prmtime."天";
 		}
 	}
 	else if($prmtype=="6"){
 		$charge=((int)$prmtime)*$ycharge['setall2up_half_down'];
 		if($charge>$userbouns)
 		{
-			echo "麦粒不足，攒点麦粒再来吧^_^";
+			echo "萝卜不足，攒点萝卜再来吧^_^";
 			die();
 		}
 		if(@sql_query("UPDATE torrents SET sp_state = 6 where id=".$torrentid))
 		{
-			echo $info = $CURUSER['username']."花费了".$charge."个麦粒，种子 ".$record['name']." 种子设置为50%下载并且免费".$prmtime."天";
+			echo $info = $CURUSER['username']."花费了".$charge."个萝卜，种子 ".$record['name']." 种子设置为50%下载并且免费".$prmtime."天";
 		}
 	}
 	else if($prmtype=="7"){//置顶
@@ -210,13 +210,13 @@ if($action=="prm"){//促销
 		$deadline=date('Y-m-d H:i:s',time()+(3600*$prmtime));
 		if($charge>$userbouns)
 		{
-			echo "麦粒不足，攒点麦粒再来吧^_^";
+			echo "萝卜不足，攒点萝卜再来吧^_^";
 			die();
 		}
 		if(sql_query("UPDATE torrents SET pos_state = 'sticky' where id=".$torrentid) or sqlerr(__FILE__, __LINE__))
 		{
 			sql_query("UPDATE torrents SET Endsticky = '".$deadline."' where id=".$torrentid) or sqlerr(__FILE__, __LINE__);
-			echo $info = $CURUSER['username']."花费了".$charge."个麦粒，种子 ".$record['name']." 种子设置置顶".$prmtime."小时";
+			echo $info = $CURUSER['username']."花费了".$charge."个萝卜，种子 ".$record['name']." 种子设置置顶".$prmtime."小时";
 		}
 	}
 		if($prmtype>='2'&&$prmtype<='6')
@@ -228,7 +228,7 @@ if($action=="prm"){//促销
 		{
 			if ($discount <0.8)
 				{sql_query("UPDATE torrents SET endfree = '".date('Y-m-d H:i:s',time()+(86400*7))."'where id=".$torrentid) 		or sqlerr(__FILE__, __LINE__);
-				echo ("but活动期间不允许购买永久，自动变更为7天。多的麦粒没收了~");
+				echo ("but活动期间不允许购买永久，自动变更为7天。多的萝卜没收了~");
 				}
 			else  {
 				echo "你购买了永久促销";
@@ -240,13 +240,13 @@ if($action=="prm"){//促销
 		}		
 	}
 	
-	sql_query("UPDATE users SET seedbonus =seedbonus -".$charge." WHERE id = ".$userid) or sqlerr(__FILE__, __LINE__);//扣麦粒
-	sendshoutbox("土豪君[@$CURUSER[username]] 花了$charge 个麦粒给种子 [url=details.php?id=$torrentid]$record[name][/url] 购买了促销~来瞅瞅是什么种子吧");
-	writeBonusComment($CURUSER[id],"购买促销 ，花费麦粒$charge");
+	sql_query("UPDATE users SET seedbonus =seedbonus -".$charge." WHERE id = ".$userid) or sqlerr(__FILE__, __LINE__);//扣萝卜
+	sendshoutbox("土豪君[@$CURUSER[username]] 花了$charge 个萝卜给种子 [url=details.php?id=$torrentid]$record[name][/url] 购买了促销~来瞅瞅是什么种子吧");
+	writeBonusComment($CURUSER[id],"购买促销 ，花费萝卜$charge");
 	write_log("自助购买促销：".$info);
 	if ($CURUSER['id'] != $record['owner'])
 	{
-	sendMessage($CURUSER['id'], $record['owner'], "我替你的种子购买了促销", "$CURUSER[username] 花了$charge 个麦粒给种子 [url=details.php?id=$torrentid]$record[name][/url] 购买了促销\n $info \n 此站内信由系统代替用户发送");}
+	sendMessage($CURUSER['id'], $record['owner'], "我替你的种子购买了促销", "$CURUSER[username] 花了$charge 个萝卜给种子 [url=details.php?id=$torrentid]$record[name][/url] 购买了促销\n $info \n 此站内信由系统代替用户发送");}
 
 	sql_query("Insert comments(user,torrent,added,text) values(11,$torrentid,now(),".sqlesc("你好我是替系统来留言的[em12]\n".$info).")")or sqlerr(__FILE__, __LINE__);
 }

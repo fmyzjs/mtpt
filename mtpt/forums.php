@@ -187,7 +187,7 @@ function insert_compose_frame($id, $type = 'new')
 			$forumname = get_single_value("forums","name","WHERE id=".sqlesc($id));
 			$title = $lang_forums['text_new_topic_in']." <a href=\"".htmlspecialchars("?action=viewforum&forumid=".$id)."\">".htmlspecialchars($forumname)."</a> ".$lang_forums['text_forum'];
 			$hassubject = true;
-			if($id == 5)$subject = "【悬赏***麦粒】【求*****】";
+			if($id == 5)$subject = "【悬赏***萝卜】【求*****】";
 			break;
 		}
 		case 'reply':
@@ -659,7 +659,7 @@ $(document).ready(function(){
 		var msg = $(this).siblings("#message").val();
 		var where = $(this).siblings("#where").val();
 		if(bgift >= 25 && bgift <= 5000){
-			jConfirm('确定要赠送 '+bgift+' 个麦粒给 '+uname+' 吗？', '提示', function(v) {
+			jConfirm('确定要赠送 '+bgift+' 个萝卜给 '+uname+' 吗？', '提示', function(v) {
 				if(v){
 				$.post("mybonus.php?action=exchange&t="+new Date(),{
 					 username: uname,
@@ -677,7 +677,7 @@ $(document).ready(function(){
 				}
 			});
 		}else{
-			jAlert('每次只能赠送25至5000个麦粒','提示');
+			jAlert('每次只能赠送25至5000个萝卜','提示');
 		}
 	});
 });
@@ -862,7 +862,7 @@ if($thisusername != $CURUSER['username']){
 赠送
 <input type="text" name="bonusgift" id="bonusgift" style="width: 80px"/>
 <input type="hidden" id="where" name="where" value="[b]论坛[/b]->[b]<?php echo $forumname?>[/b]版块->[url=<?php echo htmlspecialchars("forums.php?action=viewtopic&topicid=".$topicid."&page=p".$postid."#pid".$postid)."]".$subject."[/url]帖子";?> "/>
-个麦粒给<?=$by?>&nbsp&nbsp原因：<input type="text" id="message" name="message" style="width: 150px" maxlength="100">
+个萝卜给<?=$by?>&nbsp&nbsp原因：<input type="text" id="message" name="message" style="width: 150px" maxlength="100">
 <input type="button" value="赠送" id="giftsubmit">
 <?
 		print("</form>");
@@ -887,9 +887,9 @@ if($thisusername != $CURUSER['username']){
 	}
 		///下面是添加的，本帖用户
 	if (!isset($_GET['sendbonus']) || $_GET['sendbonus'] != 'yes')
-	echo "<a name='delete' href='".$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']."&sendbonus=yes#delete'>显示群发麦粒选项</a>";
+	echo "<a name='delete' href='".$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']."&sendbonus=yes#delete'>显示群发萝卜选项</a>";
 if ($_GET['sendbonus'] == 'yes')
-{//给本帖内所有楼层数除以10余数为tosomelou的用户发麦粒
+{//给本帖内所有楼层数除以10余数为tosomelou的用户发萝卜
 		$allusersql = sql_query("SELECT userid, id FROM posts WHERE topicid = $topicid ") ;
 		//$allidsql = sql_query("SELECT 	id FROM posts WHERE topicid = $topicid ") ;
 	$nnnn = 1;
@@ -972,14 +972,14 @@ if ($_GET['sendbonus'] == 'yes')
 		$countalluseronlysomelou = count(explode(",",$alluseronlysomelou));
 
 ?>
-<table><b style="color:red">此功能可能不够完善，如果发现bug或有改进意见请及时联系<a name="sendbonusbox"href="sendmessage.php?receiver=2260" class="faqlink"> &nbsp;&nbsp;扬扬&nbsp;&nbsp;</a>，非常感谢。如果利用bug作弊或做破坏将被视为恶意行为而进行严厉惩罚.</b><br/>如果麦粒不足则会发完为止而提示成功，发放是否到位以用户麦粒记录为准，帖子下方记录可做参考
+<table><b style="color:red">此功能可能不够完善，如果发现bug或有改进意见请及时联系<a name="sendbonusbox"href="sendmessage.php?receiver=2260" class="faqlink"> &nbsp;&nbsp;扬扬&nbsp;&nbsp;</a>，非常感谢。如果利用bug作弊或做破坏将被视为恶意行为而进行严厉惩罚.</b><br/>如果萝卜不足则会发完为止而提示成功，发放是否到位以用户萝卜记录为准，帖子下方记录可做参考
 <tr ><td align="left" width="37%">选中本页所有用户，不包括使用者本人</td><td align ='right'>
 <form id="giftform" action="mybonus.php?action=exchange" method="post" >
 赠送
 <input type="hidden" id="option" name="option" value="7" />
 <input type="text" name="bonusgift" id="bonusgift" style="width: 80px"/>
 <input type="hidden" id="where" name="where" value="[b]论坛[/b]->[b]<?php echo $forumname?>[/b]版块->[url=<?php echo htmlspecialchars("forums.php?action=viewtopic&topicid=".$topicid."&page=".$page)."]".$subject."[/url]帖子";?> "/>
-个麦粒给楼层<b style="color:blue">pid</b>为
+个萝卜给楼层<b style="color:blue">pid</b>为
 <input type="hidden" id="postsid" name="postsid" readonly="readonly" value="<?php echo $thisallpostid;?>" />
 <?print("<input type=\"hidden\" id=\"username\" name=\"username\" readonly=\"readonly\" value=\"".$thisusernameall."\" maxlength=\"24\">");echo $thisallpostid."<b style=\"color:blue\">用户名</b>为".$thisusernameall."<b style=\"color:blue\">共计</b><b style=\"color:red\">".$countthisusernameall."</b><b style=\"color:blue\">位</b>用户";?>&nbsp&nbsp原因：<input type="text" id="message" name="message" style="width: 150px" maxlength="100">
 <input type="button" value="赠送" id="giftsubmit"><br/><a name='delete' href='<?php ECHO $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']."&unique=1#sendbonusbox";?>'>删除重复用户</a>
@@ -991,7 +991,7 @@ if ($_GET['sendbonus'] == 'yes')
 <input type="hidden" id="option" name="option" value="7" />
 <input type="text" name="bonusgift" id="bonusgift" style="width: 70px"/>
 <input type="hidden" id="where" name="where" value="[b]论坛[/b]->[b]<?php echo $forumname?>[/b]版块->[url=<?php echo htmlspecialchars("forums.php?action=viewtopic&topicid=".$topicid)."]".$subject."[/url]帖子";?> "/>
-个麦粒给<b style="color:blue">pid</b>为
+个萝卜给<b style="color:blue">pid</b>为
 <input type="hidden" id="postsid" name="postsid" readonly="readonly" value="<?php echo $allpostid;?>" />
 
 <?print("<input type=\"hidden\" id=\"username\" name=\"username\" readonly=\"readonly\" value=\"".$alluseronlysomelou."\" maxlength=\"24\">");echo $allpostid."，<b style=\"color:blue\">用户名</b>为".$alluseronlysomelou."<b style=\"color:blue\">共计</b><b style=\"color:red\">".$countalluseronlysomelou."</b><b style=\"color:blue\">位</b>用户";

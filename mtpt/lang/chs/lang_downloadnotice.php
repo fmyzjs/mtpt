@@ -8,8 +8,8 @@ $lang_downloadnotice = array
 	'text_low_ratio_notice' => "低分享率提示",
 	'text_low_ratio_note_one' => "<span class='striking'><b>警告：</b></span>你的分享率过低！你必须在",
 	'text_low_ratio_note_two' => "内改善它，否则你在本站的<b>账号将被禁止</b>。如果你不明白什么是分享率，请仔细阅读以下说明。",
-	'text_low_bonus_notice' => "低麦粒值提示",
-	'text_low_bonus_note_one' => "<span class='striking'><b>警告：</b></span>你的麦粒值过低！已经限制下载",
+	'text_low_bonus_notice' => "低萝卜值提示",
+	'text_low_bonus_note_one' => "<span class='striking'><b>警告：</b></span>你的萝卜值过低！已经限制下载",
 	'text_first_time_download_notice' => "第一次下载提示",
 	'text_first_time_download_note' => "你好！<br />这可能是你<b>第一次</b>在本站下载种子。<br />在此之前请阅读以下几个简短的注意事项。",
 	'text_this_is_private_tracker' => "这是非公开BT站点，有分享率要求",
@@ -36,7 +36,7 @@ $lang_downloadnotice = array
 	'text_let_me_download' => "我会提高分享率的。",
 	'text_notice_not_show_again' => "下次不显示此提示",
 	'text_notice_always_show' => "每次都会显示此提示，直到你改善了分享率为止。",
-	'text_bonus_always_show' => "每次都会显示此提示，直到你提高了麦粒值为止。",
+	'text_bonus_always_show' => "每次都会显示此提示，直到你提高了萝卜值为止。",
 	'submit_download_the_torrent' => "下载种子文件",
 );
 

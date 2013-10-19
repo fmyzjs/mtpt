@@ -98,7 +98,7 @@ else{
 </span>
 </span>
 <?php
-echo "<span style=\"color:blue;font-size:22px;   \"> <br/>现行考核标准为：</span><br/>每月发布种子大小 >= <b>".$standardsize."GB</b>，<b style=\"color:red\">且</b>发布种子数量 >= <b>".$standardcount."</b>个。则视为合格<br/>如果发布种子大小 >= <b>".$oversize."GB</b>，<b style=\"color:red\">或</b>发布种子数量 >= <b>".$overcount."</b>个，则无视另一项数据，视为合格。<br/>拥有免流量账号的发布员考核标准为上述数字乘以2。人工判断是否合格。<br/><br/>发布员发布资源不得使用非法手段，不得发布违禁资源；<br/>发布员不得为了完成任务月末突击，一经发现，PASS!；<br/>发布员之间不得为抢发某一资源，产生争执或者交易；<br/>新加入的发布员根据加入的时间，上旬和中旬加入按满月考核，下旬加入本月免考核，无奖励。<span style=\"color:blue;font-size:20px;   \"> <br/>现行奖励标准为：每月通过考核奖励麦粒<b style=\"color:red\">$salary</b> ，数据给力则酌情增加(计算规则：<font size='2'>".'额外工资 = 基本工资 * rand(3,12) *0.1 * (log(上传大小/要求大小)/log(10) + log(发布种子数量/要求数量)/log(10) )，如果此数值小于(基本工资/2)，则发基本工资，否则发（额外工资+基本工资）。rand(3,12)为获取3到12之间的随机整数。</font>没有通过考核则没有奖励</span><br/>种子管理员考核不与发布员一同进行，标准待定。';
+echo "<span style=\"color:blue;font-size:22px;   \"> <br/>现行考核标准为：</span><br/>每月发布种子大小 >= <b>".$standardsize."GB</b>，<b style=\"color:red\">且</b>发布种子数量 >= <b>".$standardcount."</b>个。则视为合格<br/>如果发布种子大小 >= <b>".$oversize."GB</b>，<b style=\"color:red\">或</b>发布种子数量 >= <b>".$overcount."</b>个，则无视另一项数据，视为合格。<br/>拥有免流量账号的发布员考核标准为上述数字乘以2。人工判断是否合格。<br/><br/>发布员发布资源不得使用非法手段，不得发布违禁资源；<br/>发布员不得为了完成任务月末突击，一经发现，PASS!；<br/>发布员之间不得为抢发某一资源，产生争执或者交易；<br/>新加入的发布员根据加入的时间，上旬和中旬加入按满月考核，下旬加入本月免考核，无奖励。<span style=\"color:blue;font-size:20px;   \"> <br/>现行奖励标准为：每月通过考核奖励萝卜<b style=\"color:red\">$salary</b> ，数据给力则酌情增加(计算规则：<font size='2'>".'额外工资 = 基本工资 * rand(3,12) *0.1 * (log(上传大小/要求大小)/log(10) + log(发布种子数量/要求数量)/log(10) )，如果此数值小于(基本工资/2)，则发基本工资，否则发（额外工资+基本工资）。rand(3,12)为获取3到12之间的随机整数。</font>没有通过考核则没有奖励</span><br/>种子管理员考核不与发布员一同进行，标准待定。';
 ?>
 </div>
 <div style="margin-top: 8px">

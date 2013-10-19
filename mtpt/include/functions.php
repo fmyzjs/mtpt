@@ -2621,14 +2621,14 @@ if($Days == 1){
 	mysql_query("UPDATE users SET seedbonus=seedbonus+$addbonus , salary=now(), salarynum=salarynum + 1 WHERE id=".$CURUSER['id']);
 ?>
 <script type="text/javascript">
-	jAlert('<font color=red>连续登录<?=$salarynum?>天奖励，恭喜你获取了<?=$addbonus?>点麦粒，继续保持哦</font>', '每日登录奖励');
+	jAlert('<font color=red>连续登录<?=$salarynum?>天奖励，恭喜你获取了<?=$addbonus?>点萝卜，继续保持哦</font>', '每日登录奖励');
 </script>
 <?
 }else if($Days > 0){
 	mysql_query("UPDATE users SET seedbonus=seedbonus+$addbonus , salary=now(), salarynum=1 WHERE id=".$CURUSER['id']);
 ?>
 <script type="text/javascript">
-	jAlert('<font color=red>每日登录奖励，恭喜你获取了<?=$addbonus?>点麦粒，连续多天登录会有更多奖励哦</font>', '每日登录奖励');
+	jAlert('<font color=red>每日登录奖励，恭喜你获取了<?=$addbonus?>点萝卜，连续多天登录会有更多奖励哦</font>', '每日登录奖励');
 </script>
 <?
 		}
@@ -4886,7 +4886,7 @@ function writeModComment($id, $newModComment,$added)
 	$modcomment = sqlesc($modcomment);
 	sql_query("UPDATE users SET modcomment=$modcomment WHERE id=$id ") or sqlerr(__FILE__,__LINE__);
 }
-//用于添加麦粒记录
+//用于添加萝卜记录
 function writeBonusComment($id,$newLog,$added)
 {
 	if (!isset($added)) $added = date("Y-m-d H:i:s");
@@ -4897,7 +4897,7 @@ function writeBonusComment($id,$newLog,$added)
 	$log = sqlesc($log);
 	sql_query("UPDATE users SET bonuscomment=$log WHERE id=$id ") or sqlerr(__FILE__,__LINE__);
 }
-//为用户添加麦粒，num可以为负数。与KPS函数功能重复。by扬扬
+//为用户添加萝卜，num可以为负数。与KPS函数功能重复。by扬扬
 function addBonus($userid, $num)
 {
 	sql_query("UPDATE users SET seedbonus = seedbonus + $num WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);

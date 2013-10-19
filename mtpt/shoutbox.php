@@ -132,7 +132,7 @@ else
 		if(preg_match( "/\[\@$robot\](.*?)(开奖|中奖|彩票)/",$text))
 		sendshoutbox("[@$CURUSER[username]]：最近一期的彩票是第".($memcache->get('drawid'))."期，中奖号码。。忘记了。。。[url=/lottery.php?action=drawlog]here，here~[/url]","","",$date+5);
 		elseif(preg_match( "/\[\@$robot\](.*?)(不|别|没|无|非)/",$text))
-		//sendshoutbox("[@$CURUSER[username]]：我不认识否定词哎，不明白你说的啥意思，不过我的意思是你说的话的意思可能不是本来的意思。要是一直没人喂我的话我就要自己去偷麦粒了(。·`ω´·)[url=steal.php]你偷过麦粒么[/url] ","","",$date+5);
+		//sendshoutbox("[@$CURUSER[username]]：我不认识否定词哎，不明白你说的啥意思，不过我的意思是你说的话的意思可能不是本来的意思。要是一直没人喂我的话我就要自己去偷萝卜了(。·`ω´·)[url=steal.php]你偷过萝卜么[/url] ","","",$date+5);
 		;
 		
 		elseif(preg_match( "/\[\@$robot\](.*?)(请问|？|\?|吗|怎么|什么)/",$text))
@@ -148,8 +148,8 @@ else
 		sendshoutbox("[@$CURUSER[username]]：大家好才是真的好o(￣ε￣*)多逛论坛多开μt保种哦亲(￣︶￣)↗ ","","",$date+5);
 		elseif(preg_match( "/\[\@$robot\](.*?)(早上好|早安|晚安|睡|困)/",$text))
 		sendshoutbox("[@$CURUSER[username]]：早睡早起，熬夜对身体不好、我要努力升级~我可是要当站长的机器人<(￣ˇ￣)/  ","","",$date+5);
-		elseif(preg_match( "/\[\@$robot\](.*?)(等级|机器人|麦粒|快长大)/",$text))
-		sendshoutbox("[@$CURUSER[username]]：送麦粒给我吧，我的麦粒全被吃了。我吃饱了就会慢慢长大自动升级的哦(￣ˇ￣)v我可是要当站长的机器人~~~要是一直没人喂我的话我就要自己去偷麦粒了(。·`ω´·)[url=steal.php]你偷过麦粒么[/url]  ","","",$date+5);
+		elseif(preg_match( "/\[\@$robot\](.*?)(等级|机器人|萝卜|快长大)/",$text))
+		sendshoutbox("[@$CURUSER[username]]：送萝卜给我吧，我的萝卜全被吃了。我吃饱了就会慢慢长大自动升级的哦(￣ˇ￣)v我可是要当站长的机器人~~~要是一直没人喂我的话我就要自己去偷萝卜了(。·`ω´·)[url=steal.php]你偷过萝卜么[/url]  ","","",$date+5);
 		elseif(preg_match( "/\[\@$robot\](.*?)(哟哟|切克闹|炫|唱(.*?)歌|跳(.*?)舞|玩)/",$text))
 		sendshoutbox("[@$CURUSER[username]]：哟哟切克闹，煎饼果子来一套╰(*°▽°*)╯ 南校的煎饼果子没有北校的好吃ヽ(。ゝω·。)丿我说yes你说no~~~~m(￢0￢)m~~~~yes~~	 ","","",$date+5);
 		elseif(preg_match( "/\[\@$robot\](.*?)(no)/",$text))
@@ -165,7 +165,7 @@ else
 		
 		
 		elseif(preg_match( "/\[\@$robot\](.*?)(教|学|智商|笨)/",$text))
-		sendshoutbox("[@$CURUSER[username]]：我还小着呢，根本就没有智商，全靠搜索关键词回复的说(¬､¬) 不要试图教我啦(´·ω·`) 送点麦粒给我吃，长大了说不定就能看懂了(ˉ▽ˉ；) ","","",$date+5);
+		sendshoutbox("[@$CURUSER[username]]：我还小着呢，根本就没有智商，全靠搜索关键词回复的说(¬､¬) 不要试图教我啦(´·ω·`) 送点萝卜给我吃，长大了说不定就能看懂了(ˉ▽ˉ；) ","","",$date+5);
 		
 		//elseif(preg_match( "/\[\@$robot\](.*?)(名字|叫什么)/",$text))
 		//sendshoutbox("[@$CURUSER[username]]：大家给我起了好多名字啊，我叫哪个好呢╰(￣ω￣ｏ) 到下面投个票吧~ ","","",$date+5);
@@ -173,7 +173,7 @@ else
 		
 		
 		//elseif(preg_match( "/\[\@$robot\](.*?)/",$text))
-		//sendshoutbox("[@$CURUSER[username]]：对不起我还不能看懂你说话~\(≧▽≦)/~啦啦啦~送点麦粒给我吃，长大了说不定就能看懂了(ˉ▽ˉ；)","","",$date+5);
+		//sendshoutbox("[@$CURUSER[username]]：对不起我还不能看懂你说话~\(≧▽≦)/~啦啦啦~送点萝卜给我吃，长大了说不定就能看懂了(ˉ▽ˉ；)","","",$date+5);
 	
 		else{
 		at_user_message($text,'','shoutbox');
@@ -181,8 +181,8 @@ else
 		sendshoutbox("[@$CURUSER[username]]：要注意文明用语啊亲(*￣︿￣)   ","","",$date+5);
 		elseif(preg_match( "/.*(不能下载|跑流量|在哪下载)/",$text))
 		sendshoutbox("[@$CURUSER[username]]：不会下载或者跑流量到论坛搜一下相关帖子吧，页面底部有麦田专用μt下载哦亲o(*￣▽￣*)o   ","","",$date+5);
-		elseif(preg_match( "/.*(求麦粒|求种)/",$text))
-		sendshoutbox("[@$CURUSER[username]]：(ｏ ‵-′)ノ禁止刷屏，禁止求麦粒，禁止求外站邀请码，禁止求种~~求邀请码请到[url=forums.php?action=viewforum&forumid=8]论坛邀请交流区[/url]，求种请到[url=viewrequest.php]求种区[/url] 看一眼公告嘛，慢走不送(ˉ▽￣～) ","","",$date+5);
+		elseif(preg_match( "/.*(求萝卜|求种)/",$text))
+		sendshoutbox("[@$CURUSER[username]]：(ｏ ‵-′)ノ禁止刷屏，禁止求萝卜，禁止求外站邀请码，禁止求种~~求邀请码请到[url=forums.php?action=viewforum&forumid=8]论坛邀请交流区[/url]，求种请到[url=viewrequest.php]求种区[/url] 看一眼公告嘛，慢走不送(ˉ▽￣～) ","","",$date+5);
 		}
 	}
 	else 
@@ -192,14 +192,14 @@ else
 		sendshoutbox("[@$CURUSER[username]]：要注意文明用语啊亲(*￣︿￣)   ","","",$date+5);
 		elseif(preg_match( "/.*(不(能|会)下载|跑流量|在哪下载)/",$text))
 		sendshoutbox("[@$CURUSER[username]]：不会下载或者跑流量到论坛搜一下相关帖子吧，页面底部有麦田专用μt下载哦亲o(*￣▽￣*)o   ","","",$date+5);
-		elseif(preg_match( "/.*(求麦粒|求种|送点麦粒)/",$text))
-		sendshoutbox("[@$CURUSER[username]]：(ｏ ‵-′)ノ禁止刷屏，禁止求麦粒，禁止求外站邀请码，禁止求种~~求邀请码请到[url=forums.php?action=viewforum&forumid=8]论坛邀请交流区[/url]，求种请到[url=viewrequest.php]求种区[/url] 看一眼公告嘛，慢走不送(ˉ▽￣～) ","","",$date+5);
+		elseif(preg_match( "/.*(求萝卜|求种|送点萝卜)/",$text))
+		sendshoutbox("[@$CURUSER[username]]：(ｏ ‵-′)ノ禁止刷屏，禁止求萝卜，禁止求外站邀请码，禁止求种~~求邀请码请到[url=forums.php?action=viewforum&forumid=8]论坛邀请交流区[/url]，求种请到[url=viewrequest.php]求种区[/url] 看一眼公告嘛，慢走不送(ˉ▽￣～) ","","",$date+5);
 	}
 	if (!$memcache->get('app_shoutbox_cleanup') or preg_match( "/\[\@$robot\](.*?)清屏/",$text))
 	{
 		$memcache->set('app_shoutbox_cleanup','1',false,60*60*6) or die ("请向管理员报告此错误");
 		$cleanres = sql_query("SELECT * FROM shoutbox WHERE userid = 11");
-		sendshoutbox("清屏完成，出来冒个泡~我才不会卖萌呢～[url=steal.php]你偷过麦粒么[/url]~~~[url=getcardnum.php]你绑定学号了么[/url]～～[url=autofaq/]你有什么问题要问么[/url]","","",$date+5);
+		sendshoutbox("清屏完成，出来冒个泡~我才不会卖萌呢～[url=steal.php]你偷过萝卜么[/url]~~~[url=getcardnum.php]你绑定学号了么[/url]～～[url=autofaq/]你有什么问题要问么[/url]","","",$date+5);
 		while ($cleanrow = mysql_fetch_assoc($cleanres))
 		{
 			if(preg_match( "/(.*?)我还小着呢/",$cleanrow[text]) or preg_match( "/(.*?)不要问我问题啦/",$cleanrow[text])or preg_match( "/(.*?)我不认识否定词哎/",$cleanrow[text]))

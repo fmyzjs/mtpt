@@ -91,8 +91,8 @@ $lang_topten = array
 	'text_last_month_search' => "上月搜索",
 	'text_current_year_search' => "今年搜索",
 	
-	'text_most_bonuses' => "麦粒",
-	'col_bonus' => "麦粒",
+	'text_most_bonuses' => "萝卜",
+	'col_bonus' => "萝卜",
 	'text_countries_users' => "用户数",
 	'col_users' => "用户数",
 	'text_countries_uploaded' => "总上传量",

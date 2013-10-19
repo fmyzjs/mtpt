@@ -27,8 +27,8 @@ else{
 }
 sql_query("UPDATE users SET cardnum = $stuid WHERE id = $CURUSER[id]") or sqlerr();
 addBonus($CURUSER['id'], 1000);
-writeBonusComment($CURUSER['id'],"成功绑定锐捷账号，系统增加1000麦粒");
-bark('成功',"你成功将一卡通$stuid 绑定至 $CURUSER[username] ,系统为你增加了1000麦粒");
+writeBonusComment($CURUSER['id'],"成功绑定锐捷账号，系统增加1000萝卜");
+bark('成功',"你成功将一卡通$stuid 绑定至 $CURUSER[username] ,系统为你增加了1000萝卜");
 }
 stdhead();
 begin_main_frame();

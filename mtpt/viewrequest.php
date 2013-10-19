@@ -246,7 +246,7 @@ else {
 					}
 					
 					if ($arr ["finish"] == "no")
-						tr ( "追加悬赏", "<form action=viewrequest.php method=post> <input type=hidden name=action value=addamount><input type=hidden name=reqid value=" . $arr ["id"] . "><input size=6 name=amount value=1000 ><input type=submit value=提交 > 追加悬赏每次将扣减25个麦粒作为手续费" . $amountadder . "</form>", 1 );
+						tr ( "追加悬赏", "<form action=viewrequest.php method=post> <input type=hidden name=action value=addamount><input type=hidden name=reqid value=" . $arr ["id"] . "><input size=6 name=amount value=1000 ><input type=submit value=提交 > 追加悬赏每次将扣减25个萝卜作为手续费" . $amountadder . "</form>", 1 );
 					tr ( "介绍", format_comment ( unesc ( $arr ["introduce"] ) ), 1 );
 					$limit = ($arr ['finish'] == "no" ? "" : " AND chosen = 'yes' ");
 					$res = sql_query ( "SELECT * FROM resreq WHERE reqid ='" . $_GET ["id"] . "'" . $limit ) or sqlerr ( __FILE__, __LINE__ );
@@ -373,7 +373,7 @@ function quick_reply_to(username)
 					print ("<table width=940 cellspacing=0 cellpadding=3><tr><td class=colhead align=center colspan=2>新增求种</td></tr>\n") ;
 					tr ( "类型：", $select, 1 );
 					tr ( "标题：", "<input name=name size=134><br/>", 1 );
-					tr ( "悬赏：", "<input name=amount size=11 value=2000>赏金不得低于1000麦粒，每次求种将扣去100麦粒作为手续费。<br/>", 1 );
+					tr ( "悬赏：", "<input name=amount size=11 value=2000>赏金不得低于1000萝卜，每次求种将扣去100萝卜作为手续费。<br/>", 1 );
 					print ("<tr><td class=rowhead align=right valign=top><b>介绍：</b></td><td class=rowfollow align=left>") ;
 					textbbcode ( "edit", "introduce", $arr ["introduce"] );
 					print ("</td></tr>") ;
@@ -399,15 +399,15 @@ function quick_reply_to(username)
 					stderr ( "出错了！！！", "赏金必须为数字！<a href=javascript:history.go(-1)>点击这里返回</a>", 0 );
 				$amount = $_POST ["amount"];
 				if ($amount < 1000)
-					stderr ( "出错了！", "发布求种赏金不得小于1000个麦粒！<a href=javascript:history.go(-1)>点击这里返回</a>", 0 );
+					stderr ( "出错了！", "发布求种赏金不得小于1000个萝卜！<a href=javascript:history.go(-1)>点击这里返回</a>", 0 );
 				if ($amount > 10000)
-					stderr ( "出错了！", "发布求种赏金不得大于10000个麦粒！<a href=javascript:history.go(-1)>点击这里返回</a>", 0 );
+					stderr ( "出错了！", "发布求种赏金不得大于10000个萝卜！<a href=javascript:history.go(-1)>点击这里返回</a>", 0 );
 				$amount += 100;
 				if ($amount + 100 > $CURUSER [seedbonus])
-					stderr ( "出错了！", "你没有那么多麦粒！！！<a href=javascript:history.go(-1)>点击这里返回</a>", 0 );
+					stderr ( "出错了！", "你没有那么多萝卜！！！<a href=javascript:history.go(-1)>点击这里返回</a>", 0 );
 				if (get_user_class () >= 2) {
 					sql_query ( "UPDATE users SET seedbonus = seedbonus - " . $amount . " WHERE id = " . $CURUSER [id] );
-					writeBonusComment($CURUSER [id],"使用$amount 麦粒新增了求种 " . mysql_insert_id (). sqlesc ( $_POST ["name"] ));
+					writeBonusComment($CURUSER [id],"使用$amount 萝卜新增了求种 " . mysql_insert_id (). sqlesc ( $_POST ["name"] ));
 					sql_query ( "INSERT req ( name , catid , introduce, ori_introduce ,amount , ori_amount , userid ,added, resetdate ) VALUES ( " . sqlesc ( $_POST ["name"] ) . " , " . sqlesc ( $_POST ["catid"] ) . " , " . sqlesc ( $_POST ["introduce"] ) . " , " . sqlesc ( $_POST ["introduce"] ) . " , " . sqlesc ( $_POST ["amount"] ) . " , " . sqlesc ( $_POST ["amount"] ) . " , " . sqlesc ( $CURUSER [id] ) . " , '" . date ( "Y-m-d H:i:s" ) . "', '" . date ( "Y-m-d H:i:s" ) . "' )" ) or sqlerr ( __FILE__, __LINE__ );
 					
 					write_log ( "求种：用户 $CURUSER[username] 新增了求种 " . mysql_insert_id (). sqlesc ( $_POST ["name"] ) );
@@ -504,16 +504,16 @@ function quick_reply_to(username)
 					stderr ( "出错了！", "赏金必须为数字！" );
 				$amount = 0 + $_POST ["amount"];
 				if ($amount < 100)
-					stderr ( "出错了！", "追加悬赏赏金不得小于100个麦粒！" );
+					stderr ( "出错了！", "追加悬赏赏金不得小于100个萝卜！" );
 				if ($amount > 5000)
-					stderr ( "出错了！", "追加悬赏赏金不得大于5000个麦粒！" );
+					stderr ( "出错了！", "追加悬赏赏金不得大于5000个萝卜！" );
 					// $amount += 25;
 				$newseedbonus = $amount + 25;
 				$newamount = $arr ["amount"] + $amount;
 				if ($amount > $CURUSER [seedbonus])
-					stderr ( "出错了！", "你没有那么多麦粒！" );
+					stderr ( "出错了！", "你没有那么多萝卜！" );
 				sql_query ( "UPDATE users SET seedbonus = seedbonus - " . $newseedbonus . " WHERE id = " . $CURUSER [id] );
-				writeBonusComment($CURUSER [id],"使用$newseedbonus 麦粒追加了悬赏". sqlesc ( $_POST ["reqid"] ));
+				writeBonusComment($CURUSER [id],"使用$newseedbonus 萝卜追加了悬赏". sqlesc ( $_POST ["reqid"] ));
 				sql_query ( "UPDATE req SET amount = " . $newamount . ", resetdate = '" . date ( "Y-m-d H:i:s" ) . "' WHERE id = " . sqlesc ( $_POST ["reqid"] ) );
 				if ($arr ["userid"] != $CURUSER ["id"]) {
 					$res = sql_query ( "SELECT * FROM givebonus WHERE bonusfromuserid = '" . $CURUSER ["id"] . "' AND bonustotorrentid =" . sqlesc ( $_POST ["reqid"] ) . " AND type='3'" );
@@ -629,11 +629,11 @@ function quick_reply_to(username)
 						if (mysql_num_rows ( $amountadds ) > 0)
 							while ( $amountadd = mysql_fetch_array ( $amountadds ) ) {
 								sql_query ( "UPDATE users SET seedbonus=seedbonus +" . $amountadd ["bonus"] . " WHERE id ='" . $amountadd ["bonusfromuserid"] . "'" ) or sqlerr ( __FILE__, __LINE__ );
-								writeBonusComment($amountadd ["bonusfromuserid"],"求种$id 被撤销，返还$amountadd[bonus] 麦粒");
+								writeBonusComment($amountadd ["bonusfromuserid"],"求种$id 被撤销，返还$amountadd[bonus] 萝卜");
 								$amount -= $amountadd ["bonus"];
 							}
 						sql_query ( "UPDATE users SET seedbonus=seedbonus +" . $amount . " WHERE id ='" . $arr ["userid"] . "'" ) or sqlerr ( __FILE__, __LINE__ );
-						writeBonusComment($arr ["userid"],"求种$id 被撤销，返还$amount 麦粒");
+						writeBonusComment($arr ["userid"],"求种$id 被撤销，返还$amount 萝卜");
 						sql_query ( "DELETE FROM givebonus WHERE bonustotorrentid ='" . $id . "' AND type = '3'" ) or sqlerr ( __FILE__, __LINE__ );
 						write_log ( "求种：".($arr ['userid'] != $CURUSER ["id"] ? "管理员 " : "求种人 ") . $CURUSER ["username"] . " 撤销了求种 " . $id );
 						if ($CURUSER ["id"] != $arr ['userid']) {
@@ -700,10 +700,10 @@ function quick_reply_to(username)
 							while ( $amountadd = mysql_fetch_array ( $amountadds ) ) {
 								sql_query ( "UPDATE users SET seedbonus=seedbonus +" . $amountadd ["bonus"] . " WHERE id ='" . $amountadd ["bonusfromuserid"] . "'" ) or sqlerr ( __FILE__, __LINE__ );
 								$amount -= $amountadd ["bonus"];
-								writeBonusComment($amountadd ["bonusfromuserid"],"求种$id 被撤销，返还$amountadd[bonus] 麦粒");
+								writeBonusComment($amountadd ["bonusfromuserid"],"求种$id 被撤销，返还$amountadd[bonus] 萝卜");
 							}
 						sql_query ( "UPDATE users SET seedbonus=seedbonus +" . $amount . " WHERE id ='" . $arr ["userid"] . "'" ) or sqlerr ( __FILE__, __LINE__ );
-						writeBonusComment($arr ["userid"],"求种$id 被撤销，返还$amount 麦粒");
+						writeBonusComment($arr ["userid"],"求种$id 被撤销，返还$amount 萝卜");
 					}
 					sql_query ( "DELETE FROM givebonus WHERE bonustotorrentid ='" . $_GET ["id"] . "' AND type = '3'" ) or sqlerr ( __FILE__, __LINE__ );
 					write_log ( "求种：".($arr ['userid'] != $CURUSER ["id"] ? "管理员 " : "求种人 ") . $CURUSER ["username"] . " 撤销了求种 " . $_GET ["id"] );
@@ -745,11 +745,11 @@ function quick_reply_to(username)
 						$owner [] = $row [0];
 					$resuser = get_user_row ( $arr ['userid'] );
 					$subject = ($arr ['userid'] != $CURUSER [id] ? "管理员" . $CURUSER ['username'] . "代替" : "") . $resuser [username] . "通过了你的应求";
-					$notifs = "你因此获得了悬赏的" . $amount . "麦粒。详情请见[url=viewrequest.php?action=view&id=" . $_POST ["id"] . "]这里[/url]";
+					$notifs = "你因此获得了悬赏的" . $amount . "萝卜。详情请见[url=viewrequest.php?action=view&id=" . $_POST ["id"] . "]这里[/url]";
 					$added = sqlesc ( date ( "Y-m-d H:i:s" ) );
 					foreach ( $owner as $id ) {
 						sql_query ( "UPDATE users SET seedbonus = seedbonus + $amount WHERE id = '" . $id . "'" ) or sqlerr ( __FILE__, __LINE__ );
-						writeBonusComment($id,"求种$_POST[id] 被确认，增加悬赏$amount 麦粒");
+						writeBonusComment($id,"求种$_POST[id] 被确认，增加悬赏$amount 萝卜");
 						sql_query ( "INSERT INTO messages (sender, receiver, subject, msg, added,goto) VALUES(0, " . $id . ", '$subject', '$notifs', $added,1)" ) or sqlerr ( __FILE__, __LINE__ );
 					}
 					write_log ("求种：". ($arr ['userid'] != $CURUSER ["id"] ? "管理员 " : "求种人 ") . $CURUSER ["username"] . " 确认了求种 " . $_POST ["id"] );

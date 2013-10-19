@@ -97,9 +97,9 @@ print("<h2>彩票5/12（12选5）</h2><br/>上期开奖：".$row['num1']."，".$
 <table>
 <form action=\"?action=takelattery\" method=\"post\">
 <tr>
-	<td width=\"70%\">彩票玩过没？咱没有RMB，但咱有麦粒哈，用你的麦粒来买彩票吧。当然了，中奖了也只能奖励麦粒的（囧，没有RMB）。<br/><br/><strong>玩法简介</strong>:在12个数字(1-12)中选择5个数字,若数字无错误即可购买成功，无任何限制购买（每期可购买多次），价格$hapcharge 每次/每注，也可倍注，倍注价格为原价x倍注。<br/><br/><strong>如何中奖</strong>：系统<b style=\"color:red\">每周二周五的21:00左右</b>会随机生成5个数字，若你购买时输入的数字跟系统随机产生的数字相同（位置和数字都相同），即认为彩中1个，两个位置的数字相同，即认为彩中2个，依此类推，最多彩中5个</td><td width=\"30%\"><strong>奖项设置</strong>：<br/>");
+	<td width=\"70%\">彩票玩过没？咱没有RMB，但咱有萝卜哈，用你的萝卜来买彩票吧。当然了，中奖了也只能奖励萝卜的（囧，没有RMB）。<br/><br/><strong>玩法简介</strong>:在12个数字(1-12)中选择5个数字,若数字无错误即可购买成功，无任何限制购买（每期可购买多次），价格$hapcharge 每次/每注，也可倍注，倍注价格为原价x倍注。<br/><br/><strong>如何中奖</strong>：系统<b style=\"color:red\">每周二周五的21:00左右</b>会随机生成5个数字，若你购买时输入的数字跟系统随机产生的数字相同（位置和数字都相同），即认为彩中1个，两个位置的数字相同，即认为彩中2个，依此类推，最多彩中5个</td><td width=\"30%\"><strong>奖项设置</strong>：<br/>");
 	for ($i=5;$i>=2;$i--)
-	echo ((6-$i)."等奖(彩中$i 个)：奖励".$cash[6-$i]."麦粒 x 倍注<br/>");
+	echo ((6-$i)."等奖(彩中$i 个)：奖励".$cash[6-$i]."萝卜 x 倍注<br/>");
 	echo ("</td></tr>
 <tr>
 	<td width=\"80%\">依次输入5个数字
@@ -115,7 +115,7 @@ print("<h2>彩票5/12（12选5）</h2><br/>上期开奖：".$row['num1']."，".$
 	echo "</select>";
 }
 
-echo ("<input type=\"button\" value='随机选择' onclick=\" return randnum() \" />&nbsp;倍注<input type=\"text\" name=\"multiple\" value=1 id=\"multiple\" style='width: 20px' />倍</td><td width=\"200px\">$hapcharge  麦粒/倍注</td></tr>
+echo ("<input type=\"button\" value='随机选择' onclick=\" return randnum() \" />&nbsp;倍注<input type=\"text\" name=\"multiple\" value=1 id=\"multiple\" style='width: 20px' />倍</td><td width=\"200px\">$hapcharge  萝卜/倍注</td></tr>
 <tr>
 	<td width=\"80%\">彩票兑奖人<select name=\"gived\" id=\"gived\" onchange=\"givedchanged()\"><option value=\"0\">自己</option><option value=\"1\">好友</option><<option value=\"2\">匿名</option></select><input type=\"text\" name=\"ackey\" id=\"ackey\" value=\"此项无需填写\" disabled=\"true\"  style='width: 180px' /><br/>提示：匿名彩票不记名，不挂失，可以随意转让。兑奖时输入彩票id和验证码即可领奖。如果购买时验证码留空则默认是购买者的注册邮箱地址。非匿名彩票开奖后自动发奖，匿名彩票需要手动兑奖。（匿名彩票有什么用？可以随便送，可以证明程序员脑子比较水灵）</td><td width=200px\"><input type=\"submit\"  value='购买' onclick=\"return latteryOnclicked();\"/></td></tr>
 </form>
@@ -131,7 +131,7 @@ print("<h2>我的中奖纪录</h2>这里只显示拥有的非匿名并且中奖�
 	$res=sql_query($sql);
 	while($row = mysql_fetch_array( $res ))
 	{
-		print("<tr><td>".$row['drawid']."</td><td>".$row['id']."</td><td>".$row['num1']."</td><td>".$row['num2']."</td><td>".$row['num3']."</td><td>".$row['num4']."</td><td>".$row['num5']."</td><td>".$row['multiple']."</td><td>".$row['isencase']."</td><td>".($cash[$row['isencase']]*$row['multiple'])."麦粒</td></tr>");
+		print("<tr><td>".$row['drawid']."</td><td>".$row['id']."</td><td>".$row['num1']."</td><td>".$row['num2']."</td><td>".$row['num3']."</td><td>".$row['num4']."</td><td>".$row['num5']."</td><td>".$row['multiple']."</td><td>".$row['isencase']."</td><td>".($cash[$row['isencase']]*$row['multiple'])."萝卜</td></tr>");
 	}
 	
 	print("</table><h3><a href=\"lottery.php?action=showmylottery\" target=\"_blank\" >点击查看我购买过的所有彩票</a></h3><hr/><br/><br/><h2>手动兑奖（匿名彩票）</h2>
@@ -165,7 +165,7 @@ print("<h2>我的中奖纪录</h2>这里只显示拥有的非匿名并且中奖�
 		$charge=$multiple * $hapcharge;
 		if($charge > $userbouns)
 		{
-			stdmsg("错误", "你的麦粒不足，攒点麦粒再来吧^_^");
+			stdmsg("错误", "你的萝卜不足，攒点萝卜再来吧^_^");
 			die();
 		}
 		
@@ -218,20 +218,20 @@ print("<h2>我的中奖纪录</h2>这里只显示拥有的非匿名并且中奖�
 			$lotteryid=mysql_insert_id() ;
 			$sql="UPDATE users SET seedbonus =seedbonus - ".$charge." WHERE id = ".$userid;
 			@sql_query($sql) or sqlerr(__FILE__, __LINE__);
-			writeBonusComment($userid,"花费 $charge 个麦粒购买了彩票");
+			writeBonusComment($userid,"花费 $charge 个萝卜购买了彩票");
 		
 			stdmsg( "购买成功","购买成功,id为".$lotteryid."，彩票数字为$num1,$num2,$num3,$num4,$num5 倍注为 $multiple  。稍后会将详细信息发到你信箱，请不要删除，领奖时可能需要输入彩票id才可领奖");
 			if ($ownid==$userid)
 			{
-				sendMessage(0, $ownid, "彩票购买成功","你获得了第$drawid  期的彩票，id为$lotteryid ，彩票数字为$num1,$num2,$num3,$num4,$num5 倍注为 $multiple 够买时间为$date ，总共花费 $charge 个麦粒。若中奖，麦粒将自动发送到你账户");
+				sendMessage(0, $ownid, "彩票购买成功","你获得了第$drawid  期的彩票，id为$lotteryid ，彩票数字为$num1,$num2,$num3,$num4,$num5 倍注为 $multiple 够买时间为$date ，总共花费 $charge 个萝卜。若中奖，萝卜将自动发送到你账户");
 			}else if($ownid==0)
 			{
-				sendMessage(0, $userid, "彩票购买成功"," 你成功购买了一张不记名彩票，你获得了第$drawid  期的彩票，id为$lotteryid ，彩票数字为$num1,$num2,$num3,$num4,$num5 倍注为 $multiple 够买时间为$date ，总共花费 $charge 个麦粒。彩票验证码为$selfkey 由于该彩票匿名购买，领奖时请直接输入彩票id和验证码领奖");
+				sendMessage(0, $userid, "彩票购买成功"," 你成功购买了一张不记名彩票，你获得了第$drawid  期的彩票，id为$lotteryid ，彩票数字为$num1,$num2,$num3,$num4,$num5 倍注为 $multiple 够买时间为$date ，总共花费 $charge 个萝卜。彩票验证码为$selfkey 由于该彩票匿名购买，领奖时请直接输入彩票id和验证码领奖");
 			}
 			else if ($ownid!=$userid)
 			{
-				sendMessage($userid, $ownid, "你的好友送你一张彩票","我买了一张彩票送给你，你获得了第$drawid  期的彩票，id为$lotteryid ，彩票数字为$num1,$num2,$num3,$num4,$num5 倍注为 $multiple 够买时间为$date 。若中奖，麦粒将自动发送到你账户\n 此信息由系统代替用户发送");
-				sendMessage(0, $userid, "成功赠送好友一张彩票","彩票数字为$num1,$num2,$num3,$num4,$num5 倍注为 $multiple 够买时间为$date 总共花费麦粒 $charge 。若中奖，麦粒将自动发送到你的好友账户");
+				sendMessage($userid, $ownid, "你的好友送你一张彩票","我买了一张彩票送给你，你获得了第$drawid  期的彩票，id为$lotteryid ，彩票数字为$num1,$num2,$num3,$num4,$num5 倍注为 $multiple 够买时间为$date 。若中奖，萝卜将自动发送到你账户\n 此信息由系统代替用户发送");
+				sendMessage(0, $userid, "成功赠送好友一张彩票","彩票数字为$num1,$num2,$num3,$num4,$num5 倍注为 $multiple 够买时间为$date 总共花费萝卜 $charge 。若中奖，萝卜将自动发送到你的好友账户");
 			}
 		}
 	}
@@ -317,11 +317,11 @@ print("<h2>我的中奖纪录</h2>这里只显示拥有的非匿名并且中奖�
 			sql_query("UPDATE lottery SET isencase ='$level'  WHERE id = ".$drawid) or sqlerr(__FILE__, __LINE__);
 			$date=$date=date('Y-m-d',time());
 			sql_query("UPDATE lottery SET encasetime ='".$date."'  WHERE id = ".$drawid) or sqlerr(__FILE__, __LINE__);
-			writeBonusComment($userid,"把第$drawid 期中了奖的不记名id为$lotteryid 的彩票兑了奖啦，得到了$bonus 个麦粒");
-			sendshoutbox("幸运儿[@$CURUSER[username]] 把第$drawid 期中了奖的不记名id为$lotteryid 的彩票兑了奖啦，得到了$bonus 个麦粒~~喂你站住，交个朋友怎么样");
+			writeBonusComment($userid,"把第$drawid 期中了奖的不记名id为$lotteryid 的彩票兑了奖啦，得到了$bonus 个萝卜");
+			sendshoutbox("幸运儿[@$CURUSER[username]] 把第$drawid 期中了奖的不记名id为$lotteryid 的彩票兑了奖啦，得到了$bonus 个萝卜~~喂你站住，交个朋友怎么样");
 		}
 		
-		stdmsg("恭喜" ,"恭喜你在该期开奖中获得$level 等奖，倍注为$multiple 倍，获得麦粒$bonus"."<br/>");
+		stdmsg("恭喜" ,"恭喜你在该期开奖中获得$level 等奖，倍注为$multiple 倍，获得萝卜$bonus"."<br/>");
 		}
 	}
 	if($action == "drawlog"){

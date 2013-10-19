@@ -584,7 +584,7 @@ echo "</script>";
 		$thanks = $thanksbutton . $donate .$nameSpan;
 		$result = sql_query("SELECT SUM(bonus) AS sum FROM thanks WHERE torrentid = '$torrentid'");
 		$sumRow = mysql_fetch_row($result);
-		$sumBonusText = $sumRow[0] ? "</br>总计<span id=\"bonus_sum\">".$sumRow[0]."</span>麦粒" : "";
+		$sumBonusText = $sumRow[0] ? "</br>总计<span id=\"bonus_sum\">".$sumRow[0]."</span>萝卜" : "";
 		tr($lang_details['row_thanks_by'].$sumBonusText,"<span id=\"thanksadded\" style=\"display: none;\"><input class=\"btn\" type=\"button\" value=\"".$lang_details['text_thanks_added']."\" disabled=\"disabled\" /></span><span id=\"curuser\" style=\"display: none;\">".get_username($CURUSER['id'])." </span><span id=\"thanksbutton\">".$thanks."</span>&nbsp;&nbsp;<span id=\"nothanks\">".$nothanks."</span><span id=\"addcuruser\"></span>".$thanksby.($thanks_all < $thanksCount ? $lang_details['text_and_more'].$thanksCount.$lang_details['text_users_in_total'] : ""),1);
 		//end modified by SamuraiMe,2013.05.16 
 		// ------------- end thanked-by block--------------//

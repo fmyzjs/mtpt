@@ -28,7 +28,7 @@ if ($CURUSER[id] == $_GET[id]||get_user_class()>= $viewhistory_class)
 	if ($_GET[type]==account)
 	{
 		$form_acc = preg_replace('/(\d\d\d\d)-(\d\d)-(\d\d) /','</td></tr><tr><td class="rowfollow" align="center">\\1年\\2月\\3日</td><td class="rowfollow" align="center">',$acc_his);
-		print '<table class="main" width="940" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td class="embedded"><div id="lognav"><ul id="logmenu" class="menu"><li class="selected"><a href="?id='.$_GET[id].'&type=account">账&nbsp;&nbsp;户</a></li><li><a href="?id='.$_GET[id].'&type=bonus">麦粒</a></li></ul></div></td></tr></tbody></table><br/>';
+		print '<table class="main" width="940" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td class="embedded"><div id="lognav"><ul id="logmenu" class="menu"><li class="selected"><a href="?id='.$_GET[id].'&type=account">账&nbsp;&nbsp;户</a></li><li><a href="?id='.$_GET[id].'&type=bonus">萝卜</a></li></ul></div></td></tr></tbody></table><br/>';
 		print get_username($_GET[id], true,false).'的账户历史<br/><br/>';
 		if($acc_his)
 		{
@@ -40,8 +40,8 @@ if ($CURUSER[id] == $_GET[id]||get_user_class()>= $viewhistory_class)
 	elseif ($_GET[type]==bonus)
 	{
 		$form_bo = preg_replace('/(\d\d\d\d)-(\d\d)-(\d\d) /','</td></tr><tr><td class="rowfollow" align="center">\\1年\\2月\\3日</td><td class="rowfollow" align="center">',$bo_his);
-		print '<table class="main" width="940" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td class="embedded"><div id="lognav"><ul id="logmenu" class="menu"><li><a href="?id='.$_GET[id].'&type=account">账&nbsp;&nbsp;户</a></li><li  class="selected"><a href="?id='.$_GET[id].'&type=bonus">麦粒</a></li></ul></div></td></tr></tbody></table><br/>';
-		print get_username($_GET[id], true,false).'的麦粒历史<br/><br/>';
+		print '<table class="main" width="940" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td class="embedded"><div id="lognav"><ul id="logmenu" class="menu"><li><a href="?id='.$_GET[id].'&type=account">账&nbsp;&nbsp;户</a></li><li  class="selected"><a href="?id='.$_GET[id].'&type=bonus">萝卜</a></li></ul></div></td></tr></tbody></table><br/>';
+		print get_username($_GET[id], true,false).'的萝卜历史<br/><br/>';
 		if($bo_his)
 		{
 		print '<table class="main" border="1" cellspacing="0" cellpadding="5"><tbody><tr><td class="colhead" align="center">时间</td><td class="colhead" align="center">事件'.$form_bo;
@@ -53,7 +53,7 @@ if ($CURUSER[id] == $_GET[id]||get_user_class()>= $viewhistory_class)
 	echo('<b>你没有权限查看其他用户的历史记录。</b>');
 	}
 	else
-	print '<table class="main" width="940" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td class="embedded"><div id="lognav"><ul id="logmenu" class="menu"><li class="selected"><a href="?type=account">账&nbsp;&nbsp;户</a></li><li><a href="?type=bonus">麦粒</a></li></ul></div></td></tr></tbody></table><br/>你搞错了吧，没有id为'.$_GET[id].'的用户诶。';
+	print '<table class="main" width="940" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td class="embedded"><div id="lognav"><ul id="logmenu" class="menu"><li class="selected"><a href="?type=account">账&nbsp;&nbsp;户</a></li><li><a href="?type=bonus">萝卜</a></li></ul></div></td></tr></tbody></table><br/>你搞错了吧，没有id为'.$_GET[id].'的用户诶。';
 	}
 	else
 	echo('<b>你没有权限查看其他用户的历史记录。</b>');

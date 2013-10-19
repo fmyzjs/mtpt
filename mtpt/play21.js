@@ -1,15 +1,15 @@
 $(document).ready(function(){
 	$("#startpark").click(function(){
-	jPrompt('麦粒值:', '1', '请输入你要压多少麦粒', function(r) {
+	jPrompt('萝卜值:', '1', '请输入你要压多少萝卜', function(r) {
     		if( r )
 			if(r > 0 && r <= 200){
-			$("#mess").html("您压了"+r+"点麦粒");
+			$("#mess").html("您压了"+r+"点萝卜");
 			$.getJSON("play21.php?action=init&bonus="+r+"&t="+new Date() ,function(data){ 
 			var $park = data['park'];
 			if($park=='start'){
 				jAlert('您已开局');
 			}else if($park=='no'){
-				jAlert('您的麦粒不足');
+				jAlert('您的萝卜不足');
 			}
 				$("#computerpark").html(data['compark']);
 				$("#computernum").html(data['comnum']+"点");
@@ -19,7 +19,7 @@ $(document).ready(function(){
 						jAlert('黑杰克!');
 			});
 			}else{
-				jAlert("测试阶段，只允许使用1至200个麦粒");
+				jAlert("测试阶段，只允许使用1至200个萝卜");
 			}
 		});
 	});
@@ -32,9 +32,9 @@ $(document).ready(function(){
 				$("#computerpark").html(data['compark']);
 				$("#computernum").html(data['comnum']+"点");
 				if(data['comnum'] > 21)
-				jAlert("庄家爆掉了，恭喜你获得了："+data['playbonus']+"点麦粒");
+				jAlert("庄家爆掉了，恭喜你获得了："+data['playbonus']+"点萝卜");
 				else
-				jAlert("你获得了："+data['playbonus']+"点麦粒");
+				jAlert("你获得了："+data['playbonus']+"点萝卜");
 			}
 		});
 	});

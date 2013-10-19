@@ -189,18 +189,18 @@ for ($i=1; $i <=5; $i++)
 			print("<td class=\"rowfollow\" align='left'><h1>".$otheroption."</h1>（敢不敢再测人品！)</td><td>点左边标题啦</td>");
 	}
 	
-	if ($i==3){  //偷麦粒
+	if ($i==3){  //偷萝卜
 			$otheroption = "<table width=\"100%\"><tr><td class=\"embedded\"><b><a  class='faqlink' href=steal.php>嘿，小偷儿</a></b>~<br/></td></tr></table>";
 			print("<td class=\"rowfollow\" align='left'><h1>".$otheroption."</h1>类似碰运气，不过是从别人手里偷过来哦(测试中)</td><td>点左边标题啦</td>");
 	}
 	if ($i==4){  //prm促销
 			$otheroption = "<table width=\"100%\"><tr><td class=\"embedded\"><b>我顶</b></td></tr></table>";
-			print("<td class=\"rowfollow\" align='left'><h1>".$otheroption."</h1>麦粒多的没地方用么？点这儿给你的种子买个特权吧<br>提示：输入种子id， 如果你不知道你的种子的id，你可以点开你的种子页面，看见地址栏后面有个id=XXXX了么？，等号后面的几个数字就是了（其余请忽略）<br/>提示：天数输入大于39可以购买永久，价格为原价的39倍（你是在抢劫么？你咋知道的 ^_^）。另外置顶不允许购买永久，最好等当前促销已结束再购买新的促销，否则新购买的促销将替换旧的<br>每天每位用户只能使用一次此功能<br>ID为<input type=\"text\" value=\"".$_GET['id']."\" name=\"torrentid\" id=\"torrentid\" style='width: 80px' />的种子<select name=\"prmtype\" id=\"prmtype\" onchange=\"selectchanged()\" style='width: 130px' > <option value=\"2\">免费</option> <option value=\"3\">2X上传</option><option value=\"4\">2X上传&免费</option><option value=\"5\">50%下载</option><option value=\"6\">50%下载&2X上传</option><option value=\"7\">置顶</option>
+			print("<td class=\"rowfollow\" align='left'><h1>".$otheroption."</h1>萝卜多的没地方用么？点这儿给你的种子买个特权吧<br>提示：输入种子id， 如果你不知道你的种子的id，你可以点开你的种子页面，看见地址栏后面有个id=XXXX了么？，等号后面的几个数字就是了（其余请忽略）<br/>提示：天数输入大于39可以购买永久，价格为原价的39倍（你是在抢劫么？你咋知道的 ^_^）。另外置顶不允许购买永久，最好等当前促销已结束再购买新的促销，否则新购买的促销将替换旧的<br>每天每位用户只能使用一次此功能<br>ID为<input type=\"text\" value=\"".$_GET['id']."\" name=\"torrentid\" id=\"torrentid\" style='width: 80px' />的种子<select name=\"prmtype\" id=\"prmtype\" onchange=\"selectchanged()\" style='width: 130px' > <option value=\"2\">免费</option> <option value=\"3\">2X上传</option><option value=\"4\">2X上传&免费</option><option value=\"5\">50%下载</option><option value=\"6\">50%下载&2X上传</option><option value=\"7\">置顶</option>
 </select><input type=\"text\" name=\"prmtime\" id=\"prmtime\" style='width: 40px' /><input type=\"text\"  id=\"timetype\" size=\"2\" style=\"background:transparent;border:0;color:red\" value=\"天\" disabled =\"false\"/></td><td>免费2000/天<br/>2X上传2000/天<br/>2X上传&免费5000/天<br/>50%下载1200/天<br/>50%下载&2X上传3500/天<br/>置顶4000/小时<br/><b style=\"color:red\">国庆(1-7号)超级优惠，促销打0.01折，置顶打0.1折</b></td>");
 	}
 	if ($i==5){  //c彩票
 			$otheroption = "<table width=\"100%\"><tr><td class=\"embedded\"><b><a href=lottery.php class='faqlink'>彩票5/12（12选5）</a></b><br/></td></tr></table>";
-			print("<td class=\"rowfollow\" align='left'><h1>".$otheroption."</h1>点这里才能进入彩票站！才能看到开奖记录，才能一次买好多注，才能送彩票给别人，才能知道每隔三天22:00开奖，还能手动兑奖！这些都不是重点，重点是进去才知道一等奖500w麦粒！！二等奖50w麦粒！！而每一注才100麦粒~没有闲钱买彩票的话用麦粒试试运气吧</td><td>点<a href=lottery.php class='faqlink'>左边</a>进入彩票站，点右边一键随机购买一注彩票</td>");
+			print("<td class=\"rowfollow\" align='left'><h1>".$otheroption."</h1>点这里才能进入彩票站！才能看到开奖记录，才能一次买好多注，才能送彩票给别人，才能知道每隔三天22:00开奖，还能手动兑奖！这些都不是重点，重点是进去才知道一等奖500w萝卜！！二等奖50w萝卜！！而每一注才100萝卜~没有闲钱买彩票的话用萝卜试试运气吧</td><td>点<a href=lottery.php class='faqlink'>左边</a>进入彩票站，点右边一键随机购买一注彩票</td>");
 	}
 
 	if($CURUSER['seedbonus'] >= $bonusarray['points'])
@@ -287,12 +287,12 @@ if ($action == "exchange") {
 			$sqlluckbonus = $retluckbonus - $luckbonus;
 			sql_query("UPDATE users SET seedbonus = seedbonus + $sqlluckbonus WHERE id = ".sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
 		if($sqlluckbonus > 0)
-			$retinfo = "恭喜".$CURUSER['username']."<b><font color=red>获得了".$sqlluckbonus."个</font></b>麦粒";
+			$retinfo = "恭喜".$CURUSER['username']."<b><font color=red>获得了".$sqlluckbonus."个</font></b>萝卜";
 		elseif($sqlluckbonus == 0)
-			$retinfo = $CURUSER['username']."即没有得到也没有失去麦粒";
+			$retinfo = $CURUSER['username']."即没有得到也没有失去萝卜";
 		else
-			$retinfo = "很遗憾，".$CURUSER['username']."<b><font color=green>失去了".abs($sqlluckbonus)."个</font></b>麦粒";
-			$message = $CURUSER['username']."使用了：".$luckbonus."个麦粒，获得了：".$retluckbonus.$lang_mybonus['text_point']."，".$retinfo;
+			$retinfo = "很遗憾，".$CURUSER['username']."<b><font color=green>失去了".abs($sqlluckbonus)."个</font></b>萝卜";
+			$message = $CURUSER['username']."使用了：".$luckbonus."个萝卜，获得了：".$retluckbonus.$lang_mybonus['text_point']."，".$retinfo;
 			stdmsg($lang_mybonus['text_success'], $message);
 			$date = date("H:i:s");
 			$memcache->set('app_luck_'.$CURUSER['id'],$date,false,600) or die ("");

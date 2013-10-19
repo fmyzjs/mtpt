@@ -85,10 +85,10 @@ $lasttime=$memcache->get('drawnumtime');
 						sql_query("UPDATE lottery SET isencase ='$level'  WHERE 	id = ".$lotteryid) or sqlerr(__FILE__, __LINE__);
 						$date=date('Y-m-d',time());
 						sql_query("UPDATE lottery SET encasetime ='".$date."'  WHERE id = ".$lotteryid) or sqlerr(__FILE__, __LINE__);
-						sendMessage(0, $userid, "恭喜你中奖了","恭喜你在彩票第$drawid 期中获得$level 等奖，获得麦粒$bonus");
-						writeBonusComment($userid,"彩票第$drawid 期中获得$level 等奖，获得麦粒$bonus");
-						//sendshoutbox("彩票第$drawid 期中获得$level 等奖，获得麦粒$bonus");
-						if ($level <=4) sendshoutbox("有人在彩票第$drawid 期中了$level 等奖，获得麦粒$bonus ！！！！土豪~~快检查一下站内信看看是不是你吧，土豪来做朋友吧！",'',$date+5);
+						sendMessage(0, $userid, "恭喜你中奖了","恭喜你在彩票第$drawid 期中获得$level 等奖，获得萝卜$bonus");
+						writeBonusComment($userid,"彩票第$drawid 期中获得$level 等奖，获得萝卜$bonus");
+						//sendshoutbox("彩票第$drawid 期中获得$level 等奖，获得萝卜$bonus");
+						if ($level <=4) sendshoutbox("有人在彩票第$drawid 期中了$level 等奖，获得萝卜$bonus ！！！！土豪~~快检查一下站内信看看是不是你吧，土豪来做朋友吧！",'',$date+5);
 					
 				}
 			}	
@@ -269,7 +269,7 @@ if ($printProgress) {
 	//set no-advertisement-by-bonus time out
 	sql_query("UPDATE users SET noad='no' WHERE noaduntil < ".sqlesc(date("Y-m-d H:i:s")).($enablenoad_advertisement == 'yes' ? " AND class < ".sqlesc($noad_advertisement) : ""));
 	if ($printProgress) {
-		printProgress("判断麦粒购买不显示广告截止set no-advertisement-by-bonus time out");
+		printProgress("判断萝卜购买不显示广告截止set no-advertisement-by-bonus time out");
 	}
 	//12. update forum post/topic count
 	$forums = sql_query("select id from forums") or sqlerr(__FILE__, __LINE__);
@@ -667,7 +667,7 @@ function peasant_to_user($down_floor_gb, $down_roof_gb, $minratio){
 	peasant_to_user($psdltwo_account,$psdlthree_account, $psratiotwo_account);
 	peasant_to_user($psdlone_account,$psdltwo_account, $psratioone_account);
 	if ($printProgress) {
-		printProgress("土豆判断升级promote peasant back to user");
+		printProgress("比斯兔判断升级promote peasant back to user");
 	}
 	//end promote peasant back to user
 
@@ -772,7 +772,7 @@ function user_to_peasant($down_floor_gb, $minratio){
 	user_to_peasant($psdlfour_account, $psratiofour_account);
 	user_to_peasant($psdlfive_account, $psratiofive_account);
 	if ($printProgress) {
-		printProgress("降级到土豆demote Users to peasant");
+		printProgress("降级到比斯兔demote Users to peasant");
 	}
 	// end Users to Peasant
 	//ban users with leechwarning expired
@@ -784,12 +784,12 @@ function user_to_peasant($down_floor_gb, $minratio){
 		while ($arr = mysql_fetch_assoc($res))
 		{
 			$addup = $arr['seedbonus']*2222222;
-			writeBonusComment($arr[id],"即将被封号，系统自动将所有麦粒换成上传量.");
+			writeBonusComment($arr[id],"即将被封号，系统自动将所有萝卜换成上传量.");
 			sql_query("UPDATE users SET uploaded = uploaded + $addup,seedbonus = 0 WHERE id =".$arr['id']) or sqlerr(__FILE__, __LINE__);
 		}
 	}
 	if ($printProgress) {
-		printProgress("系统自动将一天后即将被封号的土豆的所有麦粒换成上传量");
+		printProgress("系统自动将一天后即将被封号的比斯兔的所有萝卜换成上传量");
 	}
 	$dt = sqlesc(date("Y-m-d H:i:s")); // take date time
 	$res = sql_query("SELECT id, username FROM users WHERE enabled = 'yes' AND leechwarn = 'yes' AND leechwarnuntil < $dt") or sqlerr(__FILE__, __LINE__);
@@ -803,7 +803,7 @@ function user_to_peasant($down_floor_gb, $minratio){
 		}
 	}
 	if ($printProgress) {
-		printProgress("ban掉持续未改善分享率的土豆ban users with leechwarning expired");
+		printProgress("ban掉持续未改善分享率的比斯兔ban users with leechwarning expired");
 	}
 
 	//Remove warning of users//同时如果被禁言、禁止上传下载的话，一同恢复
