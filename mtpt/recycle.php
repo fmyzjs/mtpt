@@ -675,7 +675,7 @@ if (isset($searchstr)) {
                         if ($whereaudiocodecin) $where.= ($where ? " AND " : "") . "audiocodec IN(" . $whereaudiocodecin . ")";
                     }
 					if ($CURUSER['class'] < UC_MODERATOR)
-							$hideelse = " AND torrents.visible = 'yes' AND torrents.owner = $CURUSER[id] ";
+							$hideelse = " AND torrents.owner = $CURUSER[id] ";
                     if ($allsec == 1 || $enablespecial != 'yes') {
                         if ($where != "") $where = "WHERE $where ";
                         else $where = "";
