@@ -5,3 +5,5 @@ mtpt/imdb/images/*.jpg
 mtpt/torrents/*.torrent
 mtpt/subs/
 .gitignore
+mtpt/announce.php
+

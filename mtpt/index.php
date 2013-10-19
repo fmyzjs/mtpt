@@ -341,7 +341,7 @@ $(document).ready(function(){
 userAutoTips({id:"shbox_text"});
 })
 	var shoutbox_value = 0;
-	setInterval(check_shoutbox_new,2000);
+	setInterval(check_shoutbox_new,60000);
 	function check_shoutbox_new()
 	{
 	  $.get("shoutbox_new.html",function(result){
