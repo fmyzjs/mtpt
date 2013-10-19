@@ -161,3 +161,9 @@ pip-log.txt
 
 # Mac crap
 .DS_Store
+####################
+
+mtpt/config/allconfig.php
+mtpt/attachments/
+mtpt/imdb/cache/*.page
+mtpt/imdb/image/*.jpg
