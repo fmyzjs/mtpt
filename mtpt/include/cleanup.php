@@ -462,8 +462,8 @@ function torrent_promotion_expire($days, $type = 2, $targettype = 1){
 		printProgress("delete regimage codes");
 	}
 	//10.clean up user accounts
-	$deletetitle = '你在麦田pt的账号将要被删除';
-	$body = "你好，你在麦田pt注册的账号 {$userinfo['username']}  已经连续 ".$deletenotransfer_account*0.8 ."天未登录，由于你的账号没有产生流量，如果连续$deletenotransfer_account 天未登录，你的账号将会被删除。\n 麦田pt期待您的回归，我们的地址是 pt.nwsuaf6.edu.cn  如果没有ipv6环境可以使用pt.nwsuaf6.edu.cn.ipv4.sixxs.org 登陆账号";
+	$deletetitle = '你在勤信pt的账号将要被删除';
+	$body = "你好，你在勤信pt注册的账号 {$userinfo['username']}  已经连续 ".$deletenotransfer_account*0.8 ."天未登录，由于你的账号没有产生流量，如果连续$deletenotransfer_account 天未登录，你的账号将会被删除。\n 勤信pt期待您的回归，我们的地址是 pt.nwsuaf6.edu.cn  如果没有ipv6环境可以使用pt.nwsuaf6.edu.cn.ipv4.sixxs.org 登陆账号";
 	// make sure VIP or above never get deleted
 	
 	$neverdelete_account = ($neverdelete_account <= UC_VIP ? $neverdelete_account : UC_VIP);
@@ -550,7 +550,7 @@ function torrent_promotion_expire($days, $type = 2, $targettype = 1){
 		/*
 		$uppackederrnum =0;$uppackeddonenum =0;
 		$uppackedemail = array();
-			$body = "你好，你在麦田pt注册的账号 {$userinfo['username']}  已经连续 ".$deleteunpacked_account*0.8 ."天未登录，由于你的账号没有封存，如果连续$deleteunpacked_account 天未登录，你的账号将会被删除。\n 麦田pt期待您的回归，我们的地址是 pt.nwsuaf6.edu.cn  如果没有ipv6环境可以使用pt.nwsuaf6.edu.cn.ipv4.sixxs.org 登陆账号";
+			$body = "你好，你在勤信pt注册的账号 {$userinfo['username']}  已经连续 ".$deleteunpacked_account*0.8 ."天未登录，由于你的账号没有封存，如果连续$deleteunpacked_account 天未登录，你的账号将会被删除。\n 勤信pt期待您的回归，我们的地址是 pt.nwsuaf6.edu.cn  如果没有ipv6环境可以使用pt.nwsuaf6.edu.cn.ipv4.sixxs.org 登陆账号";
                 $delres = sql_query("SELECT id, username,email FROM users WHERE parked='no' AND status='confirmed' AND class < $maxclass AND last_access < $dt2");
                 while ($userinfo = mysql_fetch_assoc($delres)){
                     if(	sent_mail($userinfo['email'], $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $deletetitle), change_email_encode(get_langfolder_cookie(),$body), '', false, false, '', get_email_encode(get_langfolder_cookie()),'noerror'))
@@ -588,7 +588,7 @@ function torrent_promotion_expire($days, $type = 2, $targettype = 1){
 		/*发邮件
 		$packednum=0;$packeddonenum=0;
 		 $packedemail[] = array();
-			$body ="你好，你在麦田pt注册的账号 {$userinfo['username']}  已经连续 ".$deletepacked_account*0.8 ."天未登录，虽然你的账号已经封存，但是如果连续$deletepacked_account 天未登录，你的账号仍然会被删除。\n 麦田pt期待您的回归，我们的地址是 pt.nwsuaf6.edu.cn  如果没有ipv6环境可以使用pt.nwsuaf6.edu.cn.ipv4.sixxs.org 登陆账号";
+			$body ="你好，你在勤信pt注册的账号 {$userinfo['username']}  已经连续 ".$deletepacked_account*0.8 ."天未登录，虽然你的账号已经封存，但是如果连续$deletepacked_account 天未登录，你的账号仍然会被删除。\n 勤信pt期待您的回归，我们的地址是 pt.nwsuaf6.edu.cn  如果没有ipv6环境可以使用pt.nwsuaf6.edu.cn.ipv4.sixxs.org 登陆账号";
                 $delres = sql_query("SELECT id, username, email FROM users WHERE parked='yes' AND status='confirmed' AND class < $maxclass AND last_access < $dt2");
 				
                 while ($userinfo = mysql_fetch_assoc($delres)){

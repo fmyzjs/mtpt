@@ -180,7 +180,7 @@ else
 		if(preg_match( "/.*(滚|贱|sb|傻b|傻逼|猪|fuck|我操|艹|2b|靠|我日|痴|2b|2B|操你|tmd)/",$text))
 		sendshoutbox("[@$CURUSER[username]]：要注意文明用语啊亲(*￣︿￣)   ","","",$date+5);
 		elseif(preg_match( "/.*(不能下载|跑流量|在哪下载)/",$text))
-		sendshoutbox("[@$CURUSER[username]]：不会下载或者跑流量到论坛搜一下相关帖子吧，页面底部有麦田专用μt下载哦亲o(*￣▽￣*)o   ","","",$date+5);
+		sendshoutbox("[@$CURUSER[username]]：不会下载或者跑流量到论坛搜一下相关帖子吧，页面底部有勤信专用μt下载哦亲o(*￣▽￣*)o   ","","",$date+5);
 		elseif(preg_match( "/.*(求萝卜|求种)/",$text))
 		sendshoutbox("[@$CURUSER[username]]：(ｏ ‵-′)ノ禁止刷屏，禁止求萝卜，禁止求外站邀请码，禁止求种~~求邀请码请到[url=forums.php?action=viewforum&forumid=8]论坛邀请交流区[/url]，求种请到[url=viewrequest.php]求种区[/url] 看一眼公告嘛，慢走不送(ˉ▽￣～) ","","",$date+5);
 		}
@@ -191,7 +191,7 @@ else
 		if(preg_match( "/.*(滚|贱|sb|傻b|傻逼|猪|fuck|我操|艹|2b|靠|我日|痴|2b|2B|操你|tmd)/",$text))
 		sendshoutbox("[@$CURUSER[username]]：要注意文明用语啊亲(*￣︿￣)   ","","",$date+5);
 		elseif(preg_match( "/.*(不(能|会)下载|跑流量|在哪下载)/",$text))
-		sendshoutbox("[@$CURUSER[username]]：不会下载或者跑流量到论坛搜一下相关帖子吧，页面底部有麦田专用μt下载哦亲o(*￣▽￣*)o   ","","",$date+5);
+		sendshoutbox("[@$CURUSER[username]]：不会下载或者跑流量到论坛搜一下相关帖子吧，页面底部有勤信专用μt下载哦亲o(*￣▽￣*)o   ","","",$date+5);
 		elseif(preg_match( "/.*(求萝卜|求种|送点萝卜)/",$text))
 		sendshoutbox("[@$CURUSER[username]]：(ｏ ‵-′)ノ禁止刷屏，禁止求萝卜，禁止求外站邀请码，禁止求种~~求邀请码请到[url=forums.php?action=viewforum&forumid=8]论坛邀请交流区[/url]，求种请到[url=viewrequest.php]求种区[/url] 看一眼公告嘛，慢走不送(ˉ▽￣～) ","","",$date+5);
 	}

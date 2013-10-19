@@ -112,7 +112,7 @@ if ($showrationotice)
 <img src="pic/ratio.png" alt="ratio" />
 <p><?php echo $lang_downloadnotice['text_private_tracker_note_four']?></p>
 <p><?php echo $lang_downloadnotice['text_private_tracker_note_five']?></p>
-&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a target="_blank" href="http://wp.qq.com/wpa/qunwpa?idkey=e4a93409574f25aa6e1a29a917ff4b3c97b5db948915d09fbcc073aeb8233bad"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="麦田PT新人注册指导" title="麦田PT新人注册指导"></a>
+&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a target="_blank" href="http://wp.qq.com/wpa/qunwpa?idkey=e4a93409574f25aa6e1a29a917ff4b3c97b5db948915d09fbcc073aeb8233bad"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="勤信PT新人注册指导" title="勤信PT新人注册指导"></a>
 </td>
 <?php
 }

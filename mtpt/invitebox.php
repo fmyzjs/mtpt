@@ -98,7 +98,7 @@ print("<tr><td align=left colspan=2>"."注意：上传路径不可写。请将�
 <tr><td class="rowhead">硬盘情况</td>
 <td class="rowfollow" align="left"><input type="text" id="disk" name="disk" autocomplete="off" style="width: 200px; border: 1px solid gray"></td><td class="rowfollow" align="left">如：500G笔记本硬盘+2T移动硬盘</td></tr>
 <tr><td class="rowhead">补充说明</td>
-<td class="rowfollow" align="left"><textarea id="self_introduction" name="self_introduction" autocomplete="off" style="width: 200px; height: 100px;border: 1px solid gray"></textarea></td><td class="rowfollow" align="left">在此说明你对PT的认识，以及为什么要加入麦田。如：“我想”</td></tr>
+<td class="rowfollow" align="left"><textarea id="self_introduction" name="self_introduction" autocomplete="off" style="width: 200px; height: 100px;border: 1px solid gray"></textarea></td><td class="rowfollow" align="left">在此说明你对PT的认识，以及为什么要加入勤信。如：“我想”</td></tr>
 <?
 	$ip = sqlesc ( getip () );
 print"<input type=hidden name=ip value=$ip>"

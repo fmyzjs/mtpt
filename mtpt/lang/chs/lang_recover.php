@@ -10,7 +10,7 @@ $lang_recover = array
 	'std_database_error' => "数据库错误。请将该错误告诉管理员。",
 	'std_unable_updating_user_data' => "无法更新用户数据。请将该错误向管理员报告。",
 	'text_recover_user' => "找回用户名或密码",
-	'text_use_form_below' => "使用以下表格重置密码，更新后的帐户信息会发送到你的邮箱。<br/><span style='color:red' >如果学校网络出现故障，则可能导致邮件发送失败。邮件将在网络恢复之后自动发送。<br/><a  target=_blank style='color:blue' href='http://nic.nwsuaf.edu.cn/tzgg/index.htm'>北京信息科技大学网络与教育中心-通知公告</a>",
+	'text_use_form_below' => "使用以下表格重置密码，更新后的帐户信息会发送到你的邮箱。<br/><span style='color:red' >如果学校网络出现故障，则可能导致邮件发送失败。邮件将在网络恢复之后自动发送。<br/><a  target=_blank style='color:blue' href='http://iflab.org'>北京信息科技大学网络实践创新联盟</a>",
 	'text_reply_to_confirmation_email' => "(请按邮件指示执行)",
 	'text_note' => "注意：连续",
 	'text_ban_ip' => "次错误尝试会导致你的IP地址被禁用！",

@@ -13,7 +13,7 @@ $lang_invite = array
 	'text_invitation' => "个剩余邀请",
 	'text_left' => "",
 	'text_email_address' => "邮箱地址",
-		'text_email_address_note' => "邮箱地址必须是有效的。被邀请人会收到你的邀请函。<br/><span style='color:red' >如果学校网络出现故障，则可能导致邮件发送失败。邮件将在网络恢复之后自动发送。<br/><a  target=_blank style='color:blue' href='http://nic.nwsuaf.edu.cn/tzgg/index.htm'>北京信息科技大学网络与教育中心-通知公告</a>",
+		'text_email_address_note' => "邮箱地址必须是有效的。被邀请人会收到你的邀请函。<br/><span style='color:red' >如果学校网络出现故障，则可能导致邮件发送失败。邮件将在网络恢复之后自动发送。<br/><a  target=_blank style='color:blue' href='http://iflab.org'>北京信息科技大学网络实践创新联盟</a>",
 	'text_message' => "信息",
 	'submit_invite' => "邀请",
 	'text_invite_status' => "被邀者当前状态",

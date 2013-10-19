@@ -8,7 +8,7 @@ $lang_ok = array
 	'account_activated_note_two' => "你的账号已成功创建。不过新用户需要在邀请者批准后才能成为注册用户并访问站点。谢谢你的理解。",
 	'std_signup_successful' => "注册成功！",
 	'std_confirmation_email_note' => "一封验证邮件已发送到你指定的邮箱(" ,
-	'std_confirmation_email_note_end' => ")。<a  target=_blank style='color:green' href='/confirm_resend.php'><b>重新发送邮件</b></a><br/>在使用账号前你必须按邮件内容指示通过验证。如果你不这样做，注册的新账号会在24h后被删除。<br/><br/><span style='color:red' >如果学校网络出现故障，则可能导致邮件发送失败。邮件将在网络恢复之后自动发送。</span><br/>如果不能在账号被删除之前通过验证，邀请码将被浪费，请重新向管理员索要。校内用户用学号重新注册即可.<br/><br/><a  target=_blank style='color:blue' href='http://nic.nwsuaf.edu.cn/tzgg/index.htm'>北京信息科技大学网络与教育中心-通知公告</a><br/><br /><br/><br />如果校园网正常但收不到邮件或者邮箱填写错误，请加新手群145543216寻求帮助",
+	'std_confirmation_email_note_end' => ")。<a  target=_blank style='color:green' href='/confirm_resend.php'><b>重新发送邮件</b></a><br/>在使用账号前你必须按邮件内容指示通过验证。如果你不这样做，注册的新账号会在24h后被删除。<br/><br/><span style='color:red' >如果学校网络出现故障，则可能导致邮件发送失败。邮件将在网络恢复之后自动发送。</span><br/>如果不能在账号被删除之前通过验证，邀请码将被浪费，请重新向管理员索要。校内用户用学号重新注册即可.<br/><br/><a  target=_blank style='color:blue' href='http://iflab.org'>北京信息科技大学网络实践创新联盟</a><br/><br /><br/><br />如果校园网正常但收不到邮件或者邮箱填写错误，请加新手群145543216寻求帮助",
 	'head_sysop_activation' => "系统操作员账号激活",
 	'std_sysop_activation_note' => "<h1>系统操作员账号成功激活！</h1>\n",
 	'std_auto_logged_in_note' => "<p>你的账号已成功激活！你已自动登录。你现在可以访问<a class=altlink href=\"/\"><b>首页</b></a>并使用你的账号。</p>\n",
